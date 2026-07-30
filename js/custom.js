@@ -3,10 +3,12 @@
   var currentScript = document.currentScript;
   if (!currentScript || !currentScript.src) return;
 
-  var revealScript = document.createElement('script');
-  revealScript.src = new URL('footer-reveal.js', currentScript.src).href;
-  revealScript.defer = true;
-  document.head.appendChild(revealScript);
+  ['footer-reveal.js', 'mobile-nav.js'].forEach(function (name) {
+    var script = document.createElement('script');
+    script.src = new URL(name, currentScript.src).href;
+    script.defer = true;
+    document.head.appendChild(script);
+  });
 })();
 
 $(document).ready(function() {
@@ -75,6 +77,7 @@ $(document).ready(function() {
         $(".nav-menu").toggleClass("open");
         $("header").toggleClass("open-menu");
         $(".full-screen-menu").toggleClass("show");      
+        $(this).attr("aria-expanded", $(this).hasClass("open") ? "true" : "false");
         var scroll = $(window).scrollTop();
         if (scroll >= 80) {
 			if (header.hasClass("open-menu"))
@@ -87,6 +90,7 @@ $(document).ready(function() {
 			}
         } 
     });  
+
     
 //open contact-form
 
