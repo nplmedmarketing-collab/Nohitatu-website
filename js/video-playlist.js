@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   videoPlayer.autoplay = true;
 
   const playlist = [
-    '/videos/1.mp4',
-    '/videos/3.mp4',
-    '/videos/4.mp4'
+    'videos/1.mp4',
+    'videos/3.mp4',
+    'videos/4.mp4'
   ];
 
   let currentIndex = 0;
