@@ -1,0 +1,105 @@
+.main-card {
+  border: 0;
+  text-decoration: none;
+}
+.main-card .card-body {
+  background: #e8effd;
+  border-radius: 20px;
+  padding: 16px 16px 20px;
+  margin-bottom: 32px;
+}
+.main-card .card-body:hover {
+  background: #e8effd;
+}
+.main-card img {
+  border-radius: 10px;
+  margin-bottom: 24px;
+  height: 280px;
+  width: -webkit-fill-available;
+  object-fit: cover;
+  object-position: top;
+}
+.main-card .blog-heading {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 35px;
+  color: #212e44;
+  margin-bottom: 16px;
+}
+.main-card .secondary-text {
+  font-size: 16px;
+  color: #5d6a82;
+}
+
+/* Side Cards  */
+.side-card {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e3e3e3;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #1c1c1c !important;
+}
+.side-card:last-child {
+  border-bottom: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0;
+}
+.side-card img {
+  width: 278px;
+  height: 126px;
+  object-fit: fill;
+  border-radius: 12px;
+}
+.side-card .blog-heading {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 8px;
+}
+.side-card .blog-cnt {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  color: #212e44;
+  margin-bottom: 10px;
+  max-height: 52px;
+}
+.side-card .ellipsis-text {
+  width: -webkit-fill-available;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+.side-card .secondary-text {
+  font-size: 14px;
+  color: #5d6a82;
+}
+
+.btn-main {
+  background: #56cbb9;
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.btn-main:hover {
+  background: #56cbb9 !important;
+  color: #023575 !important;
+}
+
+@media screen and (max-width: 578px) {
+  .side-card {
+    flex-wrap: wrap;
+  }
+  .side-card img {
+    width: -webkit-fill-available;
+    height: 172px;
+  }
+}

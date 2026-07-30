@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Insights & Articles | Nohitatu</title>
+    <meta name="description" content="Browse Nohitatu insights on custom software, AI, SaaS strategy, and software engineering." />
+    <link rel="shortcut icon" href="images/favicon/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/footer-reveal.js" defer></script>
+    <style>
+        :root {
+            --ink: #15233c;
+            --muted: #667085;
+            --line: #dfe6ee;
+            --blue: #726cf4;
+            --pale-blue: #eef8fd;
+            --paper: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .site-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+            transition: transform 0.34s ease;
+            will-change: transform;
+        }
+
+        .site-header.nav-panel-hidden {
+            transform: translateY(-110%) !important;
+        }
+
+        .header-inner {
+            width: min(1180px, calc(100% - 48px));
+            min-height: 82px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .site-logo img {
+            display: block;
+            width: 148px;
+            height: auto;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+        }
+
+        .header-nav a:hover,
+        .header-nav a[aria-current="page"] {
+            color: var(--blue);
+        }
+
+        .page-hero {
+            position: relative;
+            min-height: 650px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background: #0b1a2d url('images/blog/blog-hero-pinterest-poster.jpg') center / cover no-repeat;
+        }
+
+        .shell {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 35px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.72) saturate(0.9);
+        }
+
+        /* Vignette keeps the darkest tint behind the centred copy while the
+           footage stays readable toward the edges. */
+        .hero-shade {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(ellipse 80% 74% at 50% 50%,
+                    rgba(5, 16, 30, 0.84) 0%,
+                    rgba(5, 16, 30, 0.7) 52%,
+                    rgba(5, 16, 30, 0.44) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 92px 0 76px;
+            text-align: center;
+        }
+
+        .page-kicker {
+            margin: 0 0 17px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(3.2rem, 7vw, 6.6rem);
+            font-weight: 500;
+            letter-spacing: -0.055em;
+            line-height: 0.92;
+            color: #fff;
+        }
+
+        h1 em {
+            color: var(--blue);
+            font-weight: 500;
+        }
+
+        .hero-note {
+            max-width: 650px;
+            margin: 28px auto 0;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .directory {
+            padding: 82px 0 110px;
+        }
+
+        .directory-grid {
+            display: grid;
+            grid-template-columns: 220px minmax(0, 1fr);
+            gap: 64px;
+        }
+
+        .directory-aside {
+            align-self: start;
+            position: sticky;
+            top: 120px;
+        }
+
+        .directory-aside span {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .directory-aside h2 {
+            margin: 0 0 18px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 1.12;
+        }
+
+        .directory-aside p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .article-list {
+            border-top: 1px solid var(--ink);
+        }
+
+        .article-row {
+            display: grid;
+            grid-template-columns: 58px 150px minmax(0, 1fr) 42px;
+            align-items: center;
+            gap: 26px;
+            min-height: 184px;
+            padding: 25px 4px;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            transition: background-color 180ms ease;
+        }
+
+        .article-row.is-published:hover {
+            background: #f8fbfd;
+        }
+
+        .article-number {
+            align-self: start;
+            padding-top: 5px;
+            color: var(--blue);
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .article-thumb {
+            width: 150px;
+            height: 112px;
+            margin: 0;
+            overflow: hidden;
+            background: #eef2f6;
+        }
+
+        .article-thumb img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 320ms ease;
+        }
+
+        .article-row.is-published:hover .article-thumb img {
+            transform: scale(1.035);
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            margin-bottom: 10px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }
+
+        .article-meta .category {
+            color: var(--blue);
+        }
+
+        .article-copy h3 {
+            max-width: 670px;
+            margin: 0 0 10px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(1.45rem, 2.2vw, 2rem);
+            font-weight: 550;
+            line-height: 1.17;
+        }
+
+        .article-copy p {
+            max-width: 650px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .article-arrow {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border: 1px solid #b9dff1;
+            border-radius: 50%;
+            color: var(--blue);
+            transition: color 180ms ease, background-color 180ms ease;
+        }
+
+        .article-row.is-published:hover .article-arrow {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .article-row.is-upcoming {
+            min-height: 108px;
+            color: #98a2b3;
+            cursor: default;
+        }
+
+        .article-row.is-upcoming .article-thumb {
+            height: 62px;
+            border: 1px dashed #cdd6df;
+            background: repeating-linear-gradient(-45deg, #fff, #fff 8px, #f6f8fa 8px, #f6f8fa 16px);
+        }
+
+        .article-row.is-upcoming h3 {
+            margin: 0;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 15px;
+            font-weight: 650;
+            letter-spacing: 0;
+        }
+
+        .coming-label {
+            justify-self: end;
+            padding: 7px 10px;
+            border: 1px solid #d9e0e7;
+            border-radius: 999px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* This page does not load Bootstrap's container utility. Give the
+           shared footer the same centred bounds used throughout the site. */
+        .site-footer .container {
+            width: min(1180px, calc(100% - 48px));
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        @media (max-width: 900px) {
+            .directory-grid {
+                grid-template-columns: 1fr;
+                gap: 38px;
+            }
+
+            .directory-aside {
+                position: static;
+            }
+
+            .article-row {
+                grid-template-columns: 40px 120px minmax(0, 1fr) 38px;
+                gap: 18px;
+            }
+
+            .article-thumb {
+                width: 120px;
+                height: 94px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .header-inner,
+            .shell {
+                width: min(100% - 30px, 1180px);
+            }
+
+            .header-inner {
+                min-height: 70px;
+            }
+
+            .site-logo img {
+                width: 125px;
+            }
+
+            .header-nav a:first-child {
+                display: none;
+            }
+
+            .page-hero {
+                min-height: 610px;
+            }
+
+            .hero-content {
+                padding: 78px 0 64px;
+            }
+
+            h1 {
+                font-size: clamp(3rem, 16vw, 4.5rem);
+            }
+
+            .directory {
+                padding: 56px 0 80px;
+            }
+
+            .article-row {
+                grid-template-columns: 34px minmax(0, 1fr) 34px;
+                min-height: 0;
+                padding: 24px 0;
+            }
+
+            .article-thumb {
+                display: none;
+            }
+
+            .article-copy h3 {
+                font-size: 21px;
+            }
+
+            .article-copy p {
+                display: none;
+            }
+
+            .article-row.is-upcoming {
+                min-height: 88px;
+            }
+
+            .coming-label {
+                overflow: hidden;
+                width: 32px;
+                height: 32px;
+                padding: 0;
+                border-radius: 50%;
+                color: transparent;
+            }
+
+            .coming-label::after {
+                content: "+";
+                display: grid;
+                width: 100%;
+                height: 100%;
+                place-items: center;
+                color: #98a2b3;
+                font-size: 17px;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="site-logo" href="index.html" aria-label="Nohitatu home">
+                <img src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+            </a>
+            <nav class="header-nav" aria-label="Primary navigation">
+                <a href="index.html">Home</a>
+                <a href="blogs-page.html" aria-current="page">Blogs</a>
+                <a href="https://nohitatu.com/contact/Contactus.aspx">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <video class="hero-video" id="hero-carousel" autoplay muted loop playsinline preload="auto"
+                poster="images/blog/blog-hero-pinterest-poster.jpg" aria-hidden="true">
+                <source src="images/blog/blog-hero-pinterest-wall.mp4" type="video/mp4" />
+            </video>
+            <div class="hero-shade" aria-hidden="true"></div>
+            <div class="shell hero-content">
+                <p class="page-kicker">Nohitatu Journal · Eight Perspectives</p>
+                <h1>Ideas for a smarter <em>digital future.</em></h1>
+                <p class="hero-note">Explore our thinking on software strategy, AI, engineering, e-commerce, and technology that creates lasting business value.</p>
+                <a class="back-link" href="index.html#blog-insights">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to homepage insights
+                </a>
+            </div>
+        </section>
+
+        <section class="directory" aria-labelledby="article-directory-title">
+            <div class="shell directory-grid">
+                <aside class="directory-aside">
+                    <span>Index 01—08</span>
+                    <h2 id="article-directory-title">All articles</h2>
+                    <p>Eight published insights covering software, AI, engineering, e-commerce, and digital transformation.</p>
+                </aside>
+
+                <div class="article-list">
+                    <a class="article-row is-published" href="blogs/Top-7-Benefits-of-Custom-Software-for-Businesses.html">
+                        <span class="article-number">01</span>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/top7.jpg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">Software Strategy</span><span>08 Jan 2026</span><span>5 Min Read</span></div>
+                            <h3>Top 7 Benefits of Custom Software Development for Businesses</h3>
+                            <p>How tailored software improves efficiency, scalability, integration, security, and long-term ROI.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+
+                    <a class="article-row is-published" href="blogs/GitHub-Copilot-ChatGPT-Vibe-Coding-New-Reality-Software-Development.html">
+                        <span class="article-number">02</span>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/githubcop.jpg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">AI &amp; Coding</span><span>08 Jan 2026</span><span>6 Min Read</span></div>
+                            <h3>GitHub Copilot, ChatGPT &amp; Vibe Coding: The New Reality</h3>
+                            <p>How generative AI and autonomous assistants are transforming modern development workflows.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+
+                    <a class="article-row is-published" href="blogs/Why-Businesses-Need-AI-Driven-Custom-Software-Instead-of-Generic-SaaS-Solutions.html">
+                        <span class="article-number">03</span>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/digital_transformation.jpeg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">AI Strategy</span><span>18 Dec 2025</span><span>7 Min Read</span></div>
+                            <h3>Why Businesses Need AI-Driven Custom Software Instead of Generic SaaS</h3>
+                            <p>Why intelligent, owned platforms outperform rigid subscriptions in scalability and long-term value.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+
+                    <a class="article-row is-published" href="blogs/common_software_development_challenges.html">
+                        <span class="article-number">04</span>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/software_development.jpeg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">Engineering</span><span>13 Oct 2025</span><span>7 Min Read</span></div>
+                            <h3>10 Common Software Development Challenges and How to Overcome Them</h3>
+                            <p>Practical approaches to requirements, technology, budgets, security, integrations, and testing.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+
+                    <a class="article-row is-published" href="blogs/How-Generative-AI-Empowers-Solo-Founders-to-Build-Scalable-Digital-Ventures.html">
+                        <span class="article-number">05</span>
+                        <figure class="article-thumb"><img src="images/blog/genai-solo-founder-banner.jpg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">AI Entrepreneurship</span><span>29 Jul 2026</span><span>9 Min Read</span></div>
+                            <h3>How Generative AI Empowers Solo Founders to Build Scalable Digital Ventures</h3>
+                            <p>How founders use GenAI to build products, automate operations, and scale without a traditional startup team.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a class="article-row is-published" href="blogs/How-Artificial-Intelligence-Is-Transforming-the-E-commerce-Industry.html">
+                        <span class="article-number">06</span>
+                        <figure class="article-thumb"><img src="images/blog/ai-ecommerce-banner.jpg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">AI &amp; E-commerce</span><span>29 Jul 2026</span><span>8 Min Read</span></div>
+                            <h3>How Artificial Intelligence Is Transforming the E-commerce Industry</h3>
+                            <p>How AI personalization, pricing, search, and automation are reshaping online retail growth.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a class="article-row is-published" href="blogs/AI-Assisted-Software-Development-Opportunities-Pitfalls-and-Tools.html">
+                        <span class="article-number">07</span>
+                        <figure class="article-thumb"><img src="images/blog/ai-assisted-development-banner.jpg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">AI Engineering</span><span>29 Jul 2026</span><span>7 Min Read</span></div>
+                            <h3>AI-Assisted Software Development: Opportunities, Pitfalls, and Tools</h3>
+                            <p>A practical guide to AI coding opportunities, risks, tools, and responsible development practices.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a class="article-row is-published" href="blogs/Why-Every-Business-Needs-a-Digital-Transformation-Strategy.html">
+                        <span class="article-number">08</span>
+                        <figure class="article-thumb"><img src="images/blog/digital-transformation-strategy-banner.jpg" alt="" /></figure>
+                        <div class="article-copy">
+                            <div class="article-meta"><span class="category">Digital Transformation</span><span>13 Oct 2025</span><span>9 Min Read</span></div>
+                            <h3>Why Every Business Needs a Digital Transformation Strategy</h3>
+                            <p>A practical roadmap for aligning technology, processes, culture, and leadership with sustainable growth.</p>
+                        </div>
+                        <span class="article-arrow" aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer site-footer">
+        <div class="inner-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col footer-offices">
+                        <h3 class="footer-heading">Offices</h3>
+                        <div class="footer-office">
+                            <div class="footer-office-top">
+                                <div class="footer-office-label">
+                                    <img src="images/india-flag.png" alt="" width="18" height="12" />
+                                    <span>India Office</span>
+                                </div>
+                                <span class="footer-office-skyline skyline-india" aria-hidden="true">
+                                    <svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V14h6v12M14 26V8h8v18M24 26V16h5v10M31 26V6h7v20M40 26V12h6v14M48 26V10h8v16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5 6V3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                                </span>
+                            </div>
+                            <p>#402, 403 &amp; 405, 4th Floor, City Centre,<br />
+                                186/43 Purasawalkam High Road,<br />
+                                Chennai - 600010, Tamilnadu, India.</p>
+                        </div>
+                        <div class="footer-office">
+                            <div class="footer-office-top">
+                                <div class="footer-office-label">
+                                    <img src="images/singapore-flag.png" alt="" width="18" height="12" />
+                                    <span>Singapore Office</span>
+                                </div>
+                                <span class="footer-office-skyline skyline-sg" aria-hidden="true">
+                                    <svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M8 26V12h7v14M18 26V7h6v19M27 26V14h5v12M35 26V4c4 3 8 3 12 0v22M50 26V11h8v15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="41" cy="8" r="1.4" fill="currentColor"/></svg>
+                                </span>
+                            </div>
+                            <p>71 Bukit Batok Crescent,<br />
+                                #05-07 Prestige Centre,<br />
+                                Singapore 658071</p>
+                        </div>
+                        <div class="footer-office">
+                            <div class="footer-office-top">
+                                <div class="footer-office-label">
+                                    <img src="images/newyork-flag.png" alt="" width="18" height="12" />
+                                    <span>New York Office</span>
+                                </div>
+                                <span class="footer-office-skyline skyline-ny" aria-hidden="true">
+                                    <svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 3V1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                                </span>
+                            </div>
+                            <p>1805 5th Ave F,<br />
+                                Bay Shore,<br />
+                                NY 11706</p>
+                        </div>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3 class="footer-heading">Corporate</h3>
+                        <ul class="footernav">
+                            <li><a href="About-us.html">About Us</a></li>
+                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="Portfolio/index.html">Portfolio</a></li>
+                            <li><a href="Clients.html">Clients</a></li>
+                            <li><a href="blogs-page.html">Blogs</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3 class="footer-heading">Explore Nohitatu</h3>
+                        <ul class="footernav">
+                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills.html">Tech Skills</a></li>
+                            <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                            <li><a href="People.html">People</a></li>
+                            <li><a href="Our-advantages.html">Our Advantages</a></li>
+                            <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                            <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h3 class="footer-heading">Solutions</h3>
+                        <ul class="footernav">
+                            <li><a href="Software-Development.html">Software Development</a></li>
+                            <li><a href="Saas.html">SaaS</a></li>
+                            <li><a href="https://nohitatu.com/contact/Contactus.aspx">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col footer-contact">
+                        <h3 class="footer-heading footer-heading-accent">Have Questions?</h3>
+                        <p class="footer-contact-lead">Get in touch with us</p>
+                        <a class="footer-phone" href="tel:+16072470227" aria-label="Call +1 (607) 247-0227">
+                            <span class="footer-phone-number">+1 (607) 247-0227</span>
+                        </a>
+                        <div class="footer-trust-item">
+                            <img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" />
+                            <div class="footer-trust-copy">
+                                <strong>ISO Certified</strong>
+                                <span>Quality-driven delivery</span>
+                            </div>
+                        </div>
+                        <div class="footer-contact-meta">
+                            <a href="skype:sales.nohitatu">Skype: sales.nohitatu</a>
+                            <a href="mailto:info@nohitatu.com">info@nohitatu.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-footer">
+            <div class="container">
+                <div class="footer-bottom-row">
+                    <div class="footer-copy">
+                        <span>Copyright &copy; 2026 Nohitatu</span>
+                        <span class="footer-copy-sep" aria-hidden="true"></span>
+                        <span>Software outsourcing and offshore software development company. All rights reserved.</span>
+                    </div>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/nohitatu/?pageid=246874098678385&amp;ftentidentifier=2658692220829882&amp;padding=0"
+                            class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a>
+                        <a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a>
+                        <a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon"
+                            target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a>
+                        <a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const video = document.getElementById('hero-carousel');
+            if (!video) return;
+
+            const start = () => {
+                const attempt = video.play();
+                if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+            };
+
+            video.addEventListener('loadeddata', start);
+            video.addEventListener('canplay', start);
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) start();
+            });
+            ['pointerdown', 'keydown', 'scroll'].forEach((event) =>
+                window.addEventListener(event, start, { once: true, passive: true })
+            );
+            start();
+        })();
+
+        (function () {
+            const header = document.querySelector('.site-header');
+            if (!header) return;
+
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+
+            const updateHeader = () => {
+                const currentScrollY = Math.max(window.scrollY, 0);
+
+                if (currentScrollY < 80 || currentScrollY < lastScrollY) {
+                    header.classList.remove('nav-panel-hidden');
+                } else if (currentScrollY > lastScrollY + 5) {
+                    header.classList.add('nav-panel-hidden');
+                }
+
+                lastScrollY = currentScrollY;
+                ticking = false;
+            };
+
+            window.addEventListener('scroll', () => {
+                if (ticking) return;
+                window.requestAnimationFrame(updateHeader);
+                ticking = true;
+            }, { passive: true });
+        })();
+    </script>
+</body>
+</html>
