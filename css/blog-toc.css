@@ -1,0 +1,133 @@
+/* "On this page" index for blog articles. Injected by js/blog-toc.js. */
+
+.post-body.has-toc .container {
+    display: grid;
+    grid-template-columns: 262px minmax(0, 1fr);
+    gap: 58px;
+    align-items: start;
+}
+
+.post-body.has-toc .post-col {
+    margin: 0 auto;
+}
+
+/* Sized by js/blog-toc.js to end where the prose ends. */
+.post-toc-rail {
+    position: relative;
+}
+
+.post-body.has-toc .post-quote {
+    margin-left: calc(-1 * var(--post-col-offset, 0px));
+}
+
+.post-toc {
+    position: sticky;
+    top: 112px;
+    padding: 24px;
+    border: 1px solid #e6ebf2;
+    border-radius: 18px;
+    background: #fff;
+}
+
+.post-toc summary {
+    display: block;
+    margin-bottom: 14px;
+    color: #0f172a;
+    cursor: default;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    list-style: none;
+    text-transform: uppercase;
+}
+
+.post-toc summary::-webkit-details-marker {
+    display: none;
+}
+
+.post-toc a {
+    display: block;
+    padding: 8px 0;
+    color: #64748b;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color 160ms ease, transform 160ms ease;
+}
+
+.post-toc a:hover,
+.post-toc a:focus-visible,
+.post-toc a.is-active {
+    color: #726cf4;
+    transform: translateX(4px);
+}
+
+/* Clear the fixed header when an index link jumps to a heading. */
+.post-body.has-toc .post-col h2 {
+    scroll-margin-top: 116px;
+}
+
+@media (max-width: 991px) {
+    .post-body.has-toc .container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 34px;
+    }
+
+    .post-toc {
+        position: static;
+    }
+
+    .post-toc summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+
+    .post-toc summary::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid #726cf4;
+        border-bottom: 2px solid #726cf4;
+        transform: rotate(45deg) translateY(-2px);
+        transition: transform 180ms ease;
+    }
+
+    .post-toc[open] summary {
+        margin-bottom: 12px;
+    }
+
+    .post-toc[open] summary::after {
+        transform: rotate(-135deg) translateY(-2px);
+    }
+
+    .post-toc nav {
+        columns: 2;
+        column-gap: 30px;
+    }
+}
+
+@media (max-width: 640px) {
+    .post-toc nav {
+        columns: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .post-toc a,
+    .post-toc summary::after {
+        transition: none;
+    }
+
+    .post-toc a:hover,
+    .post-toc a:focus-visible,
+    .post-toc a.is-active {
+        transform: none;
+    }
+}

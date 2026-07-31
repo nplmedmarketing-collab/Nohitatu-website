@@ -42,7 +42,7 @@
     <link type="text/css" rel="stylesheet" href="css/aos.css" />
     <link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
     <link type="text/css" rel="stylesheet" href="css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="css/style.css?v=20260731f" />
     <link type="text/css" rel="stylesheet" href="css/responsive.css" />
     <link type="text/css" rel="stylesheet" href="css/themify-icons.css" />
     <link type="text/css" rel="stylesheet" href="css/blog.css" />
@@ -361,70 +361,76 @@
             </div>
         </div>
 
-        <!-- Prodapt-style pinned storytelling band -->
-        <section class="nh-story-band" aria-label="How Nohitatu helps businesses">
-            <div class="nh-story-sticky">
-                <div class="nh-geo" aria-hidden="true"></div>
-                <article class="nh-story-stage is-active" data-stage="0">
-                    <div class="nh-story-media" style="background-image:url('images/office-trust-parallax.jpg')"></div>
-                    <p class="nh-story-copy">We help <strong>build</strong> products by designing and delivering software that turns ideas into scalable digital platforms.</p>
-                </article>
-                <article class="nh-story-stage" data-stage="1">
-                    <div class="nh-story-panel nh-story-panel--violet"></div>
-                    <p class="nh-story-copy nh-story-copy--on-accent">We help <strong>scale</strong> businesses by modernizing applications, cloud systems, and revenue operations without friction.</p>
-                </article>
-                <article class="nh-story-stage" data-stage="2">
-                    <div class="nh-story-panel nh-story-panel--navy"></div>
-                    <p class="nh-story-copy nh-story-copy--on-accent">We help <strong>automate</strong> operations with AI-assisted workflows that keep teams lean, fast, and reliable.</p>
-                </article>
+        <!-- Curtain-stack storytelling: each slide lifts to reveal the next -->
+        <section class="nh-story-band" data-stages="3" aria-label="How Nohitatu helps businesses">
+            <div class="nh-story-slide nh-story-slide--build" data-stage="0">
+                <div class="nh-story-bg nh-story-bg--photo nh-story-bg--build" style="background-image:url('images/blog/software-challenges-banner.jpg')" aria-hidden="true"></div>
+                <div class="nh-geo nh-geo--story" aria-hidden="true"></div>
+                <div class="nh-story-copy-stack">
+                    <p class="nh-story-lead">We help</p>
+                    <strong class="nh-story-word">build</strong>
+                    <span class="nh-story-trail">products by designing and delivering software that turns ideas into scalable digital platforms.</span>
+                </div>
             </div>
-            <div class="nh-story-spacers" aria-hidden="true">
-                <div class="nh-story-spacer" data-stage="0"></div>
-                <div class="nh-story-spacer" data-stage="1"></div>
-                <div class="nh-story-spacer" data-stage="2"></div>
+            <div class="nh-story-slide nh-story-slide--scale" data-stage="1">
+                <div class="nh-story-bg nh-story-bg--photo nh-story-bg--scale" style="background-image:url('images/blog/digital-transformation-strategy-cta.jpg')" aria-hidden="true"></div>
+                <div class="nh-geo nh-geo--story" aria-hidden="true"></div>
+                <div class="nh-story-copy-stack">
+                    <p class="nh-story-lead">We help</p>
+                    <strong class="nh-story-word">scale</strong>
+                    <span class="nh-story-trail">businesses by modernizing applications, cloud systems, and revenue operations without friction.</span>
+                </div>
             </div>
+            <div class="nh-story-slide nh-story-slide--automate" data-stage="2">
+                <div class="nh-story-bg nh-story-bg--photo nh-story-bg--automate" style="background-image:url('images/blog/blog-custom-software-hero.png')" aria-hidden="true"></div>
+                <div class="nh-geo nh-geo--story" aria-hidden="true"></div>
+                <div class="nh-story-copy-stack">
+                    <p class="nh-story-lead">We help</p>
+                    <strong class="nh-story-word">automate</strong>
+                    <span class="nh-story-trail">operations with AI-assisted workflows that keep teams lean, fast, and reliable.</span>
+                </div>
+            </div>
+            <!-- Desktop-only WebGL depth layer; falls back to the plain curtains -->
+            <div class="nh-story-3d" data-story-3d aria-hidden="true"></div>
+            <div class="nh-story-progress" aria-hidden="true"><span></span></div>
         </section>
 
         <!-- Sticky services narrative 1/4 -->
-        <section class="nh-services-band" aria-label="Core services">
+        <section class="nh-services-band" data-stages="4" aria-label="Core services">
             <div class="nh-services-sticky">
                 <div class="nh-services-shell">
                     <aside class="nh-services-nav" aria-label="Service chapters">
-                        <button type="button" class="nh-services-nav-item is-active" data-service="0">Project Development</button>
-                        <button type="button" class="nh-services-nav-item" data-service="1">Product Development</button>
-                        <button type="button" class="nh-services-nav-item" data-service="2">Application Development</button>
-                        <button type="button" class="nh-services-nav-item" data-service="3">Maintenance and Support</button>
+                        <button type="button" class="nh-services-nav-item is-active" data-service="0"><span>01</span>Project Development</button>
+                        <button type="button" class="nh-services-nav-item" data-service="1"><span>02</span>Product Development</button>
+                        <button type="button" class="nh-services-nav-item" data-service="2"><span>03</span>Application Development</button>
+                        <button type="button" class="nh-services-nav-item" data-service="3"><span>04</span>Maintenance and Support</button>
                     </aside>
                     <div class="nh-services-stage">
                         <p class="nh-services-kicker">Your success depends on <span data-service-index>1</span>/4</p>
-                        <article class="nh-services-panel is-active" data-service="0">
-                            <h2>Drive clarity into every project plan.</h2>
-                            <p>Nohitatu follows industry-standard project development practices so startups, SMEs, and enterprises ship with transparent milestones and reliable delivery.</p>
-                            <a href="Software-Development.html" class="nh-text-link">Explore project development →</a>
-                        </article>
-                        <article class="nh-services-panel" data-service="1">
-                            <h2>Build products that do more with less.</h2>
-                            <p>We deliver world-class product development that helps clients work smarter—from SaaS platforms to healthcare systems designed for long-term growth.</p>
-                            <a href="Saas.html" class="nh-text-link">Explore product development →</a>
-                        </article>
-                        <article class="nh-services-panel" data-service="2">
-                            <h2>Modernize applications without the drag.</h2>
-                            <p>Application migration and modernization services that reduce the cost of maintaining and upgrading existing systems while improving performance.</p>
-                            <a href="Software-Development.html" class="nh-text-link">Explore application development →</a>
-                        </article>
-                        <article class="nh-services-panel" data-service="3">
-                            <h2>Keep critical systems supported and ready.</h2>
-                            <p>A comprehensive maintenance and support practice tailored to your stack, so operations stay stable while your team focuses on what matters next.</p>
-                            <a href="https://nohitatu.com/contact/Contactus.aspx" class="nh-text-link" target="_blank" rel="noopener">Talk to support experts →</a>
-                        </article>
+                        <div class="nh-services-panels">
+                            <article class="nh-services-panel is-active" data-service="0">
+                                <h2>Drive clarity into every project plan.</h2>
+                                <p>Nohitatu follows industry-standard project development practices so startups, SMEs, and enterprises ship with transparent milestones and reliable delivery.</p>
+                                <a href="Software-Development.html" class="nh-text-link">Explore project development →</a>
+                            </article>
+                            <article class="nh-services-panel" data-service="1">
+                                <h2>Build products that do more with less.</h2>
+                                <p>We deliver world-class product development that helps clients work smarter—from SaaS platforms to healthcare systems designed for long-term growth.</p>
+                                <a href="Saas.html" class="nh-text-link">Explore product development →</a>
+                            </article>
+                            <article class="nh-services-panel" data-service="2">
+                                <h2>Modernize applications without the drag.</h2>
+                                <p>Application migration and modernization services that reduce the cost of maintaining and upgrading existing systems while improving performance.</p>
+                                <a href="Software-Development.html" class="nh-text-link">Explore application development →</a>
+                            </article>
+                            <article class="nh-services-panel" data-service="3">
+                                <h2>Keep critical systems supported and ready.</h2>
+                                <p>A comprehensive maintenance and support practice tailored to your stack, so operations stay stable while your team focuses on what matters next.</p>
+                                <a href="https://nohitatu.com/contact/Contactus.aspx" class="nh-text-link" target="_blank" rel="noopener">Talk to support experts →</a>
+                            </article>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="nh-services-spacers" aria-hidden="true">
-                <div class="nh-services-spacer" data-service="0"></div>
-                <div class="nh-services-spacer" data-service="1"></div>
-                <div class="nh-services-spacer" data-service="2"></div>
-                <div class="nh-services-spacer" data-service="3"></div>
             </div>
         </section>
 
@@ -456,7 +462,7 @@
             </div>
         </section>
 
-        <!-- Full-bleed case banner -->
+        <!-- Full-bleed case banner, fixed-attachment photo (same as the blog quote band) -->
         <section class="nh-case-banner" aria-label="Featured success story">
             <div class="nh-geo nh-geo--light" aria-hidden="true"></div>
             <div class="nh-case-banner-inner">
@@ -466,19 +472,37 @@
             </div>
         </section>
 
-        <!-- Client trust strip -->
+        <!-- Client trust carousel -->
         <section class="nh-logo-strip" aria-labelledby="nh-logo-title">
             <div class="nh-shell">
                 <p class="nh-logo-kicker" id="nh-logo-title">Clients who trust us</p>
-                <div class="nh-logo-row">
-                    <img src="images/our-clients/nokia-big.jpg" alt="Nokia" loading="lazy" />
-                    <img src="images/our-clients/airtel-big.jpg" alt="Airtel" loading="lazy" />
-                    <img src="images/our-clients/Fmone.jpg" alt="FMO One" loading="lazy" />
-                    <img src="images/our-clients/Dojoman.jpg" alt="Dojoman" loading="lazy" />
-                    <img src="images/our-clients/Phicure.jpg" alt="PhiCare" loading="lazy" />
-                    <img src="images/our-clients/RymaxLogo.jpg" alt="Rymax" loading="lazy" />
-                    <img src="images/our-clients/Cascadebilling.jpg" alt="Cascade Billing" loading="lazy" />
-                    <img src="images/our-clients/Medallion.jpg" alt="Medallion" loading="lazy" />
+                <div class="nh-logo-carousel" role="group" aria-label="Clients who trust Nohitatu">
+                    <div class="nh-logo-track">
+                        <div class="nh-logo-group">
+                            <img src="images/our-clients/nokia-big.jpg" alt="Nokia" loading="lazy" />
+                            <img src="images/our-clients/airtel-big.jpg" alt="Airtel" loading="lazy" />
+                            <img src="images/our-clients/unilever-big.jpg" alt="Unilever" loading="lazy" />
+                            <img src="images/our-clients/Fmone.jpg" alt="FMO One" loading="lazy" />
+                            <img src="images/our-clients/Dojoman.jpg" alt="Dojoman" loading="lazy" />
+                            <img src="images/our-clients/Phicure.jpg" alt="PhiCure" loading="lazy" />
+                            <img src="images/our-clients/RymaxLogo.jpg" alt="Rymax" loading="lazy" />
+                            <img src="images/our-clients/Cascadebilling.jpg" alt="Cascade Billing" loading="lazy" />
+                            <img src="images/our-clients/Medallion.jpg" alt="Medallion" loading="lazy" />
+                            <img src="images/our-clients/Taxcana.jpg" alt="Taxcana" loading="lazy" />
+                        </div>
+                        <div class="nh-logo-group" aria-hidden="true">
+                            <img src="images/our-clients/nokia-big.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/airtel-big.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/unilever-big.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/Fmone.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/Dojoman.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/Phicure.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/RymaxLogo.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/Cascadebilling.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/Medallion.jpg" alt="" loading="lazy" />
+                            <img src="images/our-clients/Taxcana.jpg" alt="" loading="lazy" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -526,29 +550,51 @@
         <section class="nh-insights-sec" id="blog-insights" aria-labelledby="nh-insights-title">
             <div class="nh-shell">
                 <div class="nh-insights-head">
-                    <h2 id="nh-insights-title">Latest insights</h2>
+                    <div>
+                        <p class="nh-insights-kicker">From the blog</p>
+                        <h2 id="nh-insights-title">Latest insights</h2>
+                    </div>
                     <a href="blogs-page.html" class="nh-text-link">View all articles →</a>
                 </div>
                 <div class="nh-insights-grid">
-                    <a class="nh-insight-card" href="blogs/Top-7-Benefits-of-Custom-Software-for-Businesses.html">
-                        <span class="nh-insight-meta">Software Strategy · 08 Jan 2026</span>
-                        <h3>Top 7 Benefits of Custom Software Development for Businesses</h3>
-                        <p>How tailored software removes licensing bottlenecks and delivers durable architecture.</p>
+                    <a class="nh-insight-card nh-insight-card--lead" href="blogs/Top-7-Benefits-of-Custom-Software-for-Businesses.html">
+                        <span class="nh-insight-thumb">
+                            <img src="images/blog/thumbnail/top7.jpg" alt="" loading="lazy" />
+                            <span class="nh-insight-chip">Software Strategy</span>
+                        </span>
+                        <span class="nh-insight-body">
+                            <span class="nh-insight-date">08 Jan 2026</span>
+                            <h3>Top 7 Benefits of Custom Software Development for Businesses</h3>
+                            <p>How tailored software removes licensing bottlenecks and delivers durable architecture.</p>
+                            <span class="nh-insight-cue">Read article <em aria-hidden="true">→</em></span>
+                        </span>
                     </a>
-                    <a class="nh-insight-card" href="blogs/GitHub-Copilot-ChatGPT-Vibe-Coding-New-Reality-Software-Development.html">
-                        <span class="nh-insight-meta">AI &amp; Coding · 08 Jan 2026</span>
-                        <h3>GitHub Copilot, ChatGPT &amp; Vibe Coding: The New Reality</h3>
-                        <p>How generative AI and autonomous assistants are reshaping developer workflows.</p>
+                    <a class="nh-insight-card nh-insight-card--row" href="blogs/GitHub-Copilot-ChatGPT-Vibe-Coding-New-Reality-Software-Development.html">
+                        <span class="nh-insight-thumb">
+                            <img src="images/blog/thumbnail/githubcop.jpg" alt="" loading="lazy" />
+                        </span>
+                        <span class="nh-insight-body">
+                            <span class="nh-insight-date">AI &amp; Coding · 08 Jan 2026</span>
+                            <h3>GitHub Copilot, ChatGPT &amp; Vibe Coding: The New Reality</h3>
+                        </span>
                     </a>
-                    <a class="nh-insight-card" href="blogs/Why-Businesses-Need-AI-Driven-Custom-Software-Instead-of-Generic-SaaS-Solutions.html">
-                        <span class="nh-insight-meta">AI Strategy · 18 Dec 2025</span>
-                        <h3>Why Businesses Need AI-Driven Custom Software</h3>
-                        <p>Why owned intelligent platforms outperform rigid subscriptions over time.</p>
+                    <a class="nh-insight-card nh-insight-card--row" href="blogs/Why-Businesses-Need-AI-Driven-Custom-Software-Instead-of-Generic-SaaS-Solutions.html">
+                        <span class="nh-insight-thumb">
+                            <img src="images/blog/ai-custom-software-cta.jpg" alt="" loading="lazy" />
+                        </span>
+                        <span class="nh-insight-body">
+                            <span class="nh-insight-date">AI Strategy · 18 Dec 2025</span>
+                            <h3>Why Businesses Need AI-Driven Custom Software</h3>
+                        </span>
                     </a>
-                    <a class="nh-insight-card" href="blogs/common_software_development_challenges.html">
-                        <span class="nh-insight-meta">Engineering · 13 Oct 2025</span>
-                        <h3>10 Common Software Development Challenges</h3>
-                        <p>Practical ways to overcome scope, security, integration, and delivery risks.</p>
+                    <a class="nh-insight-card nh-insight-card--row" href="blogs/common_software_development_challenges.html">
+                        <span class="nh-insight-thumb">
+                            <img src="images/blog/thumbnail/software_development.jpeg" alt="" loading="lazy" />
+                        </span>
+                        <span class="nh-insight-body">
+                            <span class="nh-insight-date">Engineering · 13 Oct 2025</span>
+                            <h3>10 Common Software Development Challenges</h3>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -564,22 +610,22 @@
                 </div>
                 <ol class="nh-consult-steps">
                     <li>
-                        <span>01</span>
-                        <div>
+                        <span class="nh-step-marker">01</span>
+                        <div class="nh-step-body">
                             <h3>Scope &amp; discovery call</h3>
                             <p>Connect with senior solution architects to detail goals and technical scope.</p>
                         </div>
                     </li>
                     <li>
-                        <span>02</span>
-                        <div>
+                        <span class="nh-step-marker">02</span>
+                        <div class="nh-step-body">
                             <h3>Tailored architecture blueprint</h3>
                             <p>Receive a transparent roadmap with milestones, team allocation, and cost proposal.</p>
                         </div>
                     </li>
                     <li>
-                        <span>03</span>
-                        <div>
+                        <span class="nh-step-marker">03</span>
+                        <div class="nh-step-body">
                             <h3>Agile execution &amp; delivery</h3>
                             <p>Deploy dedicated developer teams with continuous integration and zero friction.</p>
                         </div>
@@ -1199,7 +1245,8 @@
         <script src="js/chatbot.js"></script>
         <script src="js/ai-background.js"></script>
         <script src="js/video-playlist.js"></script>
-        <script src="js/home-story.js"></script>
+        <script src="js/home-story.js?v=20260731f"></script>
+        <script src="js/home-story-3d.js?v=20260731f"></script>
         <script src="js/footer-phone.js"></script>
 
 </body>

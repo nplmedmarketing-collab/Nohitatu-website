@@ -23,6 +23,13 @@ body.bg-light,
   overflow-x: hidden;
 }
 
+body.landing-page #wrapper {
+  /* Must stay visible: any clip/hidden here makes Chromium silently downgrade
+     background-attachment: fixed on descendants (the case banner). Horizontal
+     overflow is already contained by the overflow-x: clip on html and body. */
+  overflow: visible;
+}
+
 /* ==========================================================================
    Sekar Construction Full-Width Transparent Header & Navigation Styling
    ========================================================================== */
@@ -83,7 +90,7 @@ header {
   flex: 0 0 auto !important;
   flex-shrink: 0;
   width: auto !important;
-  max-width: 180px !important;
+  max-width: 220px !important;
   height: auto !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -94,9 +101,9 @@ header {
 
 .header-logo img {
   display: block;
-  height: 42px;
+  height: 52px;
   width: auto;
-  max-width: 180px;
+  max-width: 220px;
   object-fit: contain;
 }
 
@@ -111,34 +118,34 @@ header {
 
 @media (max-width: 1199px) {
   .header-container {
-    padding-left: 170px !important;
+    padding-left: 200px !important;
   }
 
   .header-logo img {
-    height: 36px;
-    max-width: 150px;
+    height: 46px;
+    max-width: 190px;
   }
 }
 
 @media (max-width: 991px) {
   .header-container {
-    padding-left: 140px !important;
+    padding-left: 170px !important;
   }
 
   .header-logo img {
-    height: 32px;
-    max-width: 120px;
+    height: 40px;
+    max-width: 160px;
   }
 }
 
 @media (max-width: 767px) {
   .header-container {
-    padding-left: 110px !important;
+    padding-left: 140px !important;
   }
 
   .header-logo img {
-    height: 28px;
-    max-width: 100px;
+    height: 34px;
+    max-width: 140px;
   }
 }
 
@@ -383,10 +390,9 @@ header {
 
 .logo {
   display: inline-block;
-  /*width: 132px;*/
-  width: 170px;
-  height: 65px;
-  background: url(../images/nohitatu-logo_white.png) no-repeat center center/100% auto;
+  width: 200px;
+  height: 62px;
+  background: url(../images/nohitatu-logo_white.png) no-repeat center center/contain;
   float: left;
 }
 
@@ -796,12 +802,12 @@ header.white-header #navigation li.nav-item a,
 
 header.white-header .logo,
 .header-wht header .logo {
-  background: url(../images/nohitatu-logo.png) no-repeat center center/100% auto;
+  background: url(../images/nohitatu-logo.png) no-repeat center center/contain;
 }
 
 .header-wht header.open-menu .logo,
 .header-wht header.show-menu .logo {
-  background: url(../images/nohitatu-logo.png) no-repeat center center/100% auto;
+  background: url(../images/nohitatu-logo.png) no-repeat center center/contain;
 }
 
 header.white-header .contact-number,
@@ -1161,6 +1167,12 @@ header.show-menu .row.header-row {
   position: relative;
   overflow: hidden;
   background: #000;
+}
+
+/* Hero sits above the fixed story panel and slides up like a revealing screen */
+.landing-page .top-banner {
+  z-index: 50;
+  isolation: isolate;
 }
 
 .hero-video-bg {
@@ -11736,113 +11748,195 @@ body.footer-reveal-page .site-footer .inner-footer {
   transform: translateY(-1px);
 }
 
-/* Story band */
+/* Story band — cascading curtains (hero → build → scale → automate) */
 .landing-page .nh-story-band {
   position: relative;
-  height: 300vh;
-}
-
-.landing-page .nh-story-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+  height: 430vh;
+  margin: 0;
+  padding: 0;
   background: #0b1a2d;
+  z-index: 1;
 }
 
-.landing-page .nh-story-spacers {
+.landing-page .nh-story-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #0b1a2d;
+  will-change: transform;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.landing-page .nh-story-slide--build { z-index: 30; }
+.landing-page .nh-story-slide--scale { z-index: 20; }
+.landing-page .nh-story-slide--automate { z-index: 10; }
+
+.landing-page .nh-story-bg {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.landing-page .nh-story-bg--photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Soft darken for type legibility only — no blue/violet wash on scale & automate */
+.landing-page .nh-story-bg--build {
+  filter: brightness(0.58) saturate(0.95);
+}
+
+.landing-page .nh-story-bg--build::after {
+  background: linear-gradient(180deg, rgba(11, 26, 45, 0.28) 0%, rgba(11, 26, 45, 0.5) 100%);
+}
+
+.landing-page .nh-story-bg--scale {
+  filter: brightness(0.62) saturate(1);
+}
+
+.landing-page .nh-story-bg--scale::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.48) 100%);
+}
+
+.landing-page .nh-story-bg--automate {
+  filter: brightness(0.68) saturate(1);
+}
+
+.landing-page .nh-story-bg--automate::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+.landing-page .nh-geo--story {
+  z-index: 2;
+  opacity: 0.22;
+}
+
+.landing-page .nh-story-copy-stack {
+  position: relative;
+  z-index: 3;
+  width: min(920px, calc(100% - 56px));
+  text-align: center;
+  color: #fff;
+}
+
+.landing-page .nh-story-lead {
+  margin: 0 0 0.15em;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.landing-page .nh-story-word {
+  display: block;
+  margin: 0.05em 0 0.18em;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: clamp(4.2rem, 12.5vw, 9.5rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  text-transform: lowercase;
+}
+
+.landing-page .nh-story-trail {
+  display: block;
+  max-width: 34em;
+  margin: 0 auto;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: clamp(1.05rem, 2vw, 1.45rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+
+.landing-page .nh-story-progress {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 40;
+  width: min(220px, 40vw);
+  height: 2px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.28);
+  overflow: hidden;
   pointer-events: none;
 }
 
-.landing-page .nh-story-spacer {
-  height: 100vh;
-}
-
-.landing-page .nh-story-stage {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.45s ease, visibility 0.45s ease;
-}
-
-.landing-page .nh-story-stage.is-active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.landing-page .nh-story-media,
-.landing-page .nh-story-panel {
-  position: absolute;
-  inset: 0;
-}
-
-.landing-page .nh-story-media {
-  background-position: center;
-  background-size: cover;
-  filter: brightness(0.62);
-}
-
-.landing-page .nh-story-panel--violet {
-  background: #726cf4;
-}
-
-.landing-page .nh-story-panel--navy {
-  background: #022a5e;
-}
-
-.landing-page .nh-story-copy {
-  position: relative;
-  z-index: 2;
-  width: min(860px, calc(100% - 48px));
-  margin: 0;
-  color: #fff;
-  font-family: "Plus Jakarta Sans", poppins, sans-serif;
-  font-size: clamp(1.35rem, 3.4vw, 2.35rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.35;
-  text-align: center;
-}
-
-.landing-page .nh-story-copy strong {
-  display: inline;
-  font-size: 1.55em;
-  font-weight: 800;
-  letter-spacing: -0.045em;
-}
-
-.landing-page .nh-story-copy--on-accent {
-  color: #fff;
-}
-
-/* Sticky services */
-.landing-page .nh-services-band {
-  position: relative;
-  height: 400vh;
+.landing-page .nh-story-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
   background: #fff;
 }
 
+/* WebGL depth layer — rides above the curtains, masked clear of the headline.
+   Sits inside the band (z-index 1) so the hero at z-index 50 still covers it. */
+.landing-page .nh-story-3d {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 48%, rgba(0, 0, 0, 0.45) 62%, #000 76%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 48%, rgba(0, 0, 0, 0.45) 62%, #000 76%);
+}
+
+.landing-page .nh-story-3d.is-live {
+  opacity: 1;
+}
+
+.landing-page .nh-story-3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Services — same fixed-pin scrub pattern (above story when it takes over) */
+.landing-page .nh-services-band {
+  position: relative;
+  height: 440vh;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  z-index: 10;
+}
+
 .landing-page .nh-services-sticky {
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
   height: 100vh;
+  height: 100dvh;
+  width: 100%;
   display: flex;
   align-items: center;
+  background: #fff;
+  z-index: 10;
+  box-sizing: border-box;
 }
 
-.landing-page .nh-services-spacers {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.landing-page .nh-services-spacer {
-  height: 100vh;
+.landing-page .nh-services-sticky.is-after {
+  min-height: 0;
 }
 
 .landing-page .nh-services-shell {
@@ -11850,28 +11944,39 @@ body.footer-reveal-page .site-footer .inner-footer {
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
-  gap: 64px;
+  gap: 72px;
   align-items: start;
 }
 
 .landing-page .nh-services-nav {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding-top: 18px;
+  gap: 20px;
+  padding-top: 12px;
 }
 
 .landing-page .nh-services-nav-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: rgba(16, 35, 63, 0.38);
+  color: rgba(16, 35, 63, 0.34);
   font-family: "Plus Jakarta Sans", poppins, sans-serif;
   font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.01em;
   text-align: left;
   cursor: pointer;
   transition: color 0.22s ease;
+}
+
+.landing-page .nh-services-nav-item span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
 }
 
 .landing-page .nh-services-nav-item.is-active,
@@ -11879,8 +11984,13 @@ body.footer-reveal-page .site-footer .inner-footer {
   color: #10233f;
 }
 
+.landing-page .nh-services-stage {
+  position: relative;
+  min-height: 320px;
+}
+
 .landing-page .nh-services-kicker {
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   color: #726cf4;
   font-family: "Plus Jakarta Sans", poppins, sans-serif;
   font-size: 12px;
@@ -11889,19 +11999,33 @@ body.footer-reveal-page .site-footer .inner-footer {
   text-transform: uppercase;
 }
 
+.landing-page .nh-services-panels {
+  position: relative;
+  min-height: 280px;
+}
+
 .landing-page .nh-services-panel {
-  display: none;
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
 .landing-page .nh-services-panel.is-active {
-  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 1;
 }
 
 .landing-page .nh-services-panel h2 {
   margin: 0 0 18px;
   color: #726cf4;
   font-family: "Plus Jakarta Sans", poppins, sans-serif;
-  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  font-size: clamp(2.1rem, 4.6vw, 3.55rem);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 1.05;
@@ -11917,7 +12041,8 @@ body.footer-reveal-page .site-footer .inner-footer {
 
 /* Featured tiles */
 .landing-page .nh-featured-sec {
-  padding: 88px 0 100px;
+  margin-top: 0;
+  padding: 48px 0 100px;
   background: #fff;
 }
 
@@ -11980,24 +12105,51 @@ body.footer-reveal-page .site-footer .inner-footer {
   line-height: 1.65;
 }
 
-/* Case banner */
+/* Same treatment as the blog quote band: the photo is anchored to the viewport
+   and this section is a shorter window that scans across it while scrolling.
+   Nothing here may create a containing block (no transform/filter/will-change),
+   or the browser silently downgrades background-attachment: fixed. */
 .landing-page .nh-case-banner {
   position: relative;
-  min-height: 62vh;
+  min-height: 58vh;
   display: grid;
   place-items: center;
-  padding: 90px 24px;
-  overflow: hidden;
-  background:
-    linear-gradient(120deg, rgba(2, 42, 94, 0.82), rgba(114, 108, 244, 0.72)),
-    url("images/case-studies/mockup01.jpg") center / cover no-repeat;
+  padding: clamp(92px, 12vw, 150px) 24px;
+  /* No overflow:hidden — it makes this a scroll container, which is what makes
+     Chromium ignore background-attachment: fixed. The blog band has none either. */
+  background-image:
+    linear-gradient(rgba(7, 18, 31, 0.7), rgba(7, 18, 31, 0.7)),
+    url("../images/success-story-thumbs-up.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.landing-page .nh-case-banner .nh-geo--light {
+  z-index: 0;
+  opacity: 0.18;
 }
 
 .landing-page .nh-case-banner-inner {
   position: relative;
   z-index: 1;
-  width: min(920px, 100%);
+  width: min(1180px, calc(100% - 48px));
   color: #fff;
+}
+
+/* Keep the copy clear of the subject on the right of the photo. */
+.landing-page .nh-case-banner-inner h2 {
+  max-width: 620px;
+}
+
+/* On short screens, trim the padding so the section stays a window rather than
+   growing taller than the photo it is revealing. */
+@media (max-height: 760px) {
+  .landing-page .nh-case-banner {
+    min-height: 0;
+    padding: 64px 24px;
+  }
 }
 
 .landing-page .nh-case-banner-kicker,
@@ -12030,41 +12182,88 @@ body.footer-reveal-page .site-footer .inner-footer {
 }
 
 .landing-page .nh-case-banner-inner p {
-  max-width: 640px;
+  max-width: 560px;
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
   font-size: 16px;
   line-height: 1.7;
 }
 
-/* Logo strip */
+/* Logo strip — continuous marquee carousel */
 .landing-page .nh-logo-strip {
-  padding: 62px 0 70px;
+  padding: 58px 0 62px;
   background: #fff;
 }
 
-.landing-page .nh-logo-row {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 22px;
-  align-items: center;
+.landing-page .nh-logo-carousel {
+  position: relative;
+  overflow: hidden;
+  /* Feather both edges so logos glide in and out instead of cutting off. */
+  padding: 6px 0;
+  mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
 }
 
-.landing-page .nh-logo-row img {
-  width: 100%;
-  max-height: 42px;
+.landing-page .nh-logo-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: nh-logo-marquee 38s linear infinite;
+}
+
+.landing-page .nh-logo-carousel:hover .nh-logo-track,
+.landing-page .nh-logo-carousel:focus-within .nh-logo-track {
+  animation-play-state: paused;
+}
+
+.landing-page .nh-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  padding-right: 56px;
+}
+
+.landing-page .nh-logo-group img {
+  flex: 0 0 auto;
+  width: 152px;
+  max-height: 60px;
   object-fit: contain;
   filter: grayscale(1);
   opacity: 0.72;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.landing-page .nh-logo-group img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+@keyframes nh-logo-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
 /* Proof */
+/* Same anchored-photo treatment as the case banner: nothing here may create a
+   containing block (no overflow/transform/filter/will-change) or Chromium
+   silently downgrades background-attachment: fixed. */
 .landing-page .nh-proof-sec {
   position: relative;
   padding: 110px 0;
-  overflow: hidden;
-  background: #022a5e;
+  background-image:
+    linear-gradient(rgba(2, 26, 58, 0.7), rgba(2, 26, 58, 0.7)),
+    url("../images/global-trust-parallax.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #022a5e;
   color: #fff;
+}
+
+/* The photo carries the detail, so the grid overlay only whispers here. */
+.landing-page .nh-proof-sec .nh-geo {
+  opacity: 0.18;
 }
 
 .landing-page .nh-proof-sec .nh-shell {
@@ -12119,24 +12318,39 @@ body.footer-reveal-page .site-footer .inner-footer {
   background: #f7f8fc;
 }
 
+.landing-page .nh-insights-kicker {
+  margin: 0 0 10px;
+  color: #726cf4;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Editorial layout: one tall featured story beside three compact rows. */
 .landing-page .nh-insights-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+  gap: 20px;
 }
 
 .landing-page .nh-insight-card {
-  padding: 28px 26px;
-  border: 1px solid rgba(16, 35, 63, 0.1);
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgba(16, 35, 63, 0.09);
+  border-radius: 14px;
   background: #fff;
   color: inherit;
   text-decoration: none;
-  transition: border-color 0.22s ease, transform 0.22s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
 .landing-page .nh-insight-card:hover {
-  border-color: #726cf4;
-  transform: translateY(-3px);
+  border-color: rgba(114, 108, 244, 0.55);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 42px -24px rgba(16, 35, 63, 0.5);
 }
 
 .landing-page .nh-insight-card h3 {
@@ -12156,6 +12370,117 @@ body.footer-reveal-page .site-footer .inner-footer {
   line-height: 1.65;
 }
 
+.landing-page .nh-insight-thumb {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: #0b1a2d;
+}
+
+.landing-page .nh-insight-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+}
+
+.landing-page .nh-insight-card:hover .nh-insight-thumb img {
+  transform: scale(1.06);
+}
+
+.landing-page .nh-insight-chip {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(114, 108, 244, 0.94);
+  color: #fff;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.landing-page .nh-insight-date {
+  display: block;
+  margin: 0 0 10px;
+  color: #726cf4;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Featured story */
+.landing-page .nh-insight-card--lead {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  flex-direction: column;
+}
+
+.landing-page .nh-insight-card--lead .nh-insight-thumb {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.landing-page .nh-insight-card--lead .nh-insight-body {
+  display: block;
+  padding: 26px 28px 30px;
+}
+
+.landing-page .nh-insight-card--lead h3 {
+  font-size: 26px;
+}
+
+.landing-page .nh-insight-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: #726cf4;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.landing-page .nh-insight-cue em {
+  font-style: normal;
+  transition: transform 0.25s ease;
+}
+
+.landing-page .nh-insight-card--lead:hover .nh-insight-cue em {
+  transform: translateX(5px);
+}
+
+/* Compact rows */
+.landing-page .nh-insight-card--row {
+  grid-column: 2;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+}
+
+.landing-page .nh-insight-card--row .nh-insight-thumb {
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+}
+
+.landing-page .nh-insight-card--row .nh-insight-body {
+  display: block;
+  min-width: 0;
+}
+
+.landing-page .nh-insight-card--row h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
 /* Consultation */
 .landing-page .nh-consult-sec {
   padding: 100px 0;
@@ -12166,7 +12491,9 @@ body.footer-reveal-page .site-footer .inner-footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 56px;
-  align-items: start;
+  /* Stretch so the timeline can match the left column's height and
+     distribute its three steps evenly across that space. */
+  align-items: stretch;
 }
 
 .landing-page .nh-consult-copy p {
@@ -12177,37 +12504,140 @@ body.footer-reveal-page .site-footer .inner-footer {
   line-height: 1.7;
 }
 
+.landing-page .nh-consult-copy .nh-solid-btn {
+  margin-top: 28px;
+}
+
+/* Timeline: numbered nodes joined by a vertical connector. */
 .landing-page .nh-consult-steps {
   margin: 0;
   padding: 0;
   list-style: none;
+  /* Equal-height rows fill the column, so node-to-node spacing stays identical
+     even when one step's copy wraps more than another. */
+  display: grid;
+  height: 100%;
+  grid-auto-rows: 1fr;
+  row-gap: 38px;
+  align-content: stretch;
 }
 
 .landing-page .nh-consult-steps li {
+  position: relative;
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr);
-  gap: 18px;
-  padding: 22px 0;
-  border-bottom: 1px solid rgba(16, 35, 63, 0.1);
+  grid-template-columns: 46px minmax(0, 1fr);
+  column-gap: 22px;
+  align-content: start;
 }
 
-.landing-page .nh-consult-steps li:first-child {
-  border-top: 1px solid rgba(16, 35, 63, 0.1);
+/* Drives the stagger below; keeps every delay derived from one formula. */
+.landing-page .nh-consult-steps li:nth-child(1) { --nh-step-i: 0; }
+.landing-page .nh-consult-steps li:nth-child(2) { --nh-step-i: 1; }
+.landing-page .nh-consult-steps li:nth-child(3) { --nh-step-i: 2; }
+
+/* Spans exactly the row gap so it meets the ring of the node above and below.
+   The nodes are outlined rather than solid now, so there is no white halo to
+   hide an overlap behind - the line has to stop at the circle, not under it. */
+.landing-page .nh-consult-steps li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 46px;
+  bottom: -38px;
+  left: 22px;
+  width: 2px;
+  background: linear-gradient(180deg, #726cf4 0%, rgba(114, 108, 244, 0.35) 100%);
 }
 
-.landing-page .nh-consult-steps span {
+/* Scroll reveal. The pre-animation state is scoped to .is-armed, which only JS
+   adds, so the steps stay visible when scripting or IntersectionObserver is out. */
+/* The marker restates its hover transitions here: this shorthand replaces the
+   base rule's, and hover must not inherit the reveal's stagger delay. */
+.landing-page .nh-consult-steps.is-armed .nh-step-marker {
+  transition:
+    opacity 0.5s ease calc(var(--nh-step-i, 0) * 0.16s),
+    transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1) calc(var(--nh-step-i, 0) * 0.16s),
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.landing-page .nh-consult-steps.is-armed .nh-step-body {
+  transition:
+    opacity 0.5s ease calc(var(--nh-step-i, 0) * 0.16s + 0.09s),
+    transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1) calc(var(--nh-step-i, 0) * 0.16s + 0.09s);
+}
+
+.landing-page .nh-consult-steps.is-armed li:not(:last-child)::before {
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.5s ease-out calc(var(--nh-step-i, 0) * 0.16s + 0.24s);
+}
+
+.landing-page .nh-consult-steps.is-armed .nh-step-marker {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.landing-page .nh-consult-steps.is-armed .nh-step-body {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.landing-page .nh-consult-steps.is-revealed .nh-step-marker,
+.landing-page .nh-consult-steps.is-revealed .nh-step-body {
+  opacity: 1;
+  transform: none;
+}
+
+.landing-page .nh-consult-steps.is-revealed li:not(:last-child)::before {
+  transform: scaleY(1);
+}
+
+/* Outlined node: white fill, violet ring and numeral. Solid colours rather than
+   a gradient so the fill can actually animate on hover. */
+.landing-page .nh-consult-steps .nh-step-marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 46px;
+  height: 46px;
+  border: 2px solid #726cf4;
+  border-radius: 50%;
+  background-color: #fff;
   color: #726cf4;
   font-family: "Plus Jakarta Sans", poppins, sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 800;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Hovering anywhere on the row lights the node - the circle alone is too small
+   a target to ask for. */
+.landing-page .nh-consult-steps li:hover .nh-step-marker {
+  background-color: #726cf4;
+  border-color: #726cf4;
+  box-shadow: 0 10px 22px -10px rgba(114, 108, 244, 0.85);
+  color: #fff;
 }
 
 .landing-page .nh-consult-steps h3 {
-  margin: 0 0 8px;
+  margin: 11px 0 8px;
   color: #10233f;
   font-family: "Plus Jakarta Sans", poppins, sans-serif;
   font-size: 18px;
   font-weight: 700;
+  transition: color 0.25s ease;
+}
+
+.landing-page .nh-consult-steps li:hover h3 {
+  color: #726cf4;
 }
 
 .landing-page .nh-consult-steps p {
@@ -12246,23 +12676,74 @@ body.footer-reveal-page .site-footer .inner-footer {
   border: 1px solid rgba(16, 35, 63, 0.1);
   background: #fff;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
+/* The cards are presentational, not links, so the whole tile is the hover
+   target. focus-within keeps the treatment if a link is ever nested inside. */
+.landing-page .nh-case-card:hover,
+.landing-page .nh-case-card:focus-within {
+  transform: translateY(-6px);
+  border-color: rgba(114, 108, 244, 0.55);
+  box-shadow: 0 22px 40px -18px rgba(114, 108, 244, 0.45);
+}
+
+/* The mockup artwork is portrait (256x343) with the client wordmark baked into
+   the lower third, so the frame tracks the source ratio and the image is
+   contained: a landscape crop would slice the branding off. */
 .landing-page .nh-case-card figure {
+  position: relative;
   margin: 0;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 256 / 343;
   overflow: hidden;
   background: #eef1f7;
 }
 
+/* Brand rule that draws across under the artwork on hover. */
+.landing-page .nh-case-card figure::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #726cf4, #022a5e);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s ease;
+}
+
+.landing-page .nh-case-card:hover figure::after,
+.landing-page .nh-case-card:focus-within figure::after {
+  transform: scaleX(1);
+}
+
 .landing-page .nh-case-card img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+/* Mild zoom only: the frame matches the artwork ratio, so anything stronger
+   would start eating into the wordmark baked into the mockup. */
+.landing-page .nh-case-card:hover img,
+.landing-page .nh-case-card:focus-within img {
+  transform: scale(1.04);
 }
 
 .landing-page .nh-case-body {
   padding: 20px 18px 24px;
+}
+
+.landing-page .nh-case-body span {
+  transition: color 0.25s ease;
+}
+
+.landing-page .nh-case-card:hover .nh-case-body span,
+.landing-page .nh-case-card:focus-within .nh-case-body span {
+  color: #022a5e;
 }
 
 .landing-page .nh-case-body h3 {
@@ -12273,6 +12754,12 @@ body.footer-reveal-page .site-footer .inner-footer {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
+  transition: color 0.25s ease;
+}
+
+.landing-page .nh-case-card:hover .nh-case-body h3,
+.landing-page .nh-case-card:focus-within .nh-case-body h3 {
+  color: #726cf4;
 }
 
 .landing-page .nh-case-body p {
@@ -12282,28 +12769,78 @@ body.footer-reveal-page .site-footer .inner-footer {
   line-height: 1.6;
 }
 
+/* Scroll-in entrance. The pre-animation state lives on .is-armed, which JS only
+   adds when it can observe the grid, so the cards stay visible without it. */
+.landing-page .nh-cases-grid .nh-case-card:nth-child(1) { --nh-case-i: 0; }
+.landing-page .nh-cases-grid .nh-case-card:nth-child(2) { --nh-case-i: 1; }
+.landing-page .nh-cases-grid .nh-case-card:nth-child(3) { --nh-case-i: 2; }
+.landing-page .nh-cases-grid .nh-case-card:nth-child(4) { --nh-case-i: 3; }
+
+.landing-page .nh-cases-grid.is-armed .nh-case-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition:
+    opacity 0.55s ease calc(var(--nh-case-i, 0) * 0.11s),
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--nh-case-i, 0) * 0.11s),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.landing-page .nh-cases-grid.is-revealed .nh-case-card {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover still wins while the entrance is settling. */
+.landing-page .nh-cases-grid.is-revealed .nh-case-card:hover,
+.landing-page .nh-cases-grid.is-revealed .nh-case-card:focus-within {
+  transform: translateY(-6px);
+}
+
 @media (max-width: 991px) {
   .landing-page .nh-story-band,
   .landing-page .nh-services-band {
-    height: auto;
+    height: auto !important;
   }
 
-  .landing-page .nh-story-sticky,
+  .landing-page .nh-story-band {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .landing-page .nh-story-slide,
   .landing-page .nh-services-sticky {
-    position: relative;
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
     height: auto;
+    width: 100%;
+    z-index: auto !important;
   }
 
-  .landing-page .nh-story-spacers,
-  .landing-page .nh-services-spacers {
+  .landing-page .nh-story-slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+  }
+
+  .landing-page .nh-story-progress,
+  .landing-page .nh-story-3d {
     display: none;
   }
 
-  .landing-page .nh-story-stage {
-    position: relative;
-    min-height: 72vh;
-    opacity: 1;
-    visibility: visible;
+  .landing-page .nh-story-bg--scale::after,
+  .landing-page .nh-story-bg--automate::after,
+  .landing-page .nh-story-bg--build::after {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.52));
+  }
+
+  .landing-page .nh-story-word {
+    font-size: clamp(3.4rem, 18vw, 5.5rem);
   }
 
   .landing-page .nh-services-shell,
@@ -12315,22 +12852,29 @@ body.footer-reveal-page .site-footer .inner-footer {
     grid-template-columns: 1fr;
   }
 
-  .landing-page .nh-services-panel {
-    display: block;
-    padding: 28px 0 36px;
-    border-top: 1px solid rgba(16, 35, 63, 0.08);
+  .landing-page .nh-insight-card--lead,
+  .landing-page .nh-insight-card--row {
+    grid-column: 1;
+    grid-row: auto;
   }
 
-  .landing-page .nh-services-nav {
-    display: none;
-  }
-
+  .landing-page .nh-services-nav,
   .landing-page .nh-services-kicker {
     display: none;
   }
 
-  .landing-page .nh-logo-row {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .landing-page .nh-services-panels {
+    min-height: 0;
+  }
+
+  .landing-page .nh-services-panel {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+    padding: 28px 0 36px;
+    border-top: 1px solid rgba(16, 35, 63, 0.08);
   }
 
   .landing-page .nh-featured-head,
@@ -12345,8 +12889,49 @@ body.footer-reveal-page .site-footer .inner-footer {
     width: min(100% - 30px, 1180px);
   }
 
-  .landing-page .nh-logo-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .landing-page .nh-logo-group {
+    gap: 38px;
+    padding-right: 38px;
+  }
+
+  .landing-page .nh-consult-steps {
+    row-gap: 30px;
+  }
+
+  .landing-page .nh-consult-steps li {
+    grid-template-columns: 38px minmax(0, 1fr);
+    column-gap: 16px;
+  }
+
+  .landing-page .nh-consult-steps li:not(:last-child)::before {
+    top: 38px;
+    bottom: -30px;
+    left: 18px;
+  }
+
+  .landing-page .nh-consult-steps .nh-step-marker {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .landing-page .nh-consult-steps h3 {
+    margin-top: 7px;
+  }
+
+  .landing-page .nh-insight-card--row .nh-insight-thumb {
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+  }
+
+  .landing-page .nh-insight-card--row h3 {
+    font-size: 15px;
+  }
+
+  .landing-page .nh-logo-group img {
+    width: 112px;
+    max-height: 42px;
   }
 
   .landing-page .nh-proof-metrics {
@@ -12357,13 +12942,85 @@ body.footer-reveal-page .site-footer .inner-footer {
     min-height: 70vh;
     padding: 72px 20px;
   }
+
+  /* Mobile browsers scale a fixed background to the whole viewport, which crops
+     the globe badly, so the photo travels with the section here instead. */
+  .landing-page .nh-proof-sec {
+    padding: 78px 0;
+    background-attachment: scroll;
+  }
+}
+
+/* Portrait thumbnails get unwieldy in a full-width single column, so the case
+   grid pairs up and stays capped rather than dropping straight to one column. */
+@media (max-width: 991px) {
+  .landing-page .nh-cases-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 560px) {
+  .landing-page .nh-cases-grid {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .landing-page .nh-case-card {
+    width: 100%;
+    max-width: 340px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .landing-page .nh-story-stage,
+  .landing-page .nh-story-bg,
+  .landing-page .nh-story-slide,
+  .landing-page .nh-services-panel,
+  .landing-page .nh-story-progress span,
   .landing-page .nh-featured-tile,
   .landing-page .nh-insight-card,
+  .landing-page .nh-insight-thumb img,
+  .landing-page .nh-insight-cue em,
   .landing-page .nh-solid-btn {
     transition: none !important;
   }
+
+  /* Depth layer holds a single static frame instead of scrubbing. */
+  .landing-page .nh-story-3d {
+    transition: none !important;
+  }
+
+  /* Show the timeline outright instead of animating it in. */
+  .landing-page .nh-consult-steps.is-armed .nh-step-marker,
+  .landing-page .nh-consult-steps.is-armed .nh-step-body,
+  .landing-page .nh-consult-steps.is-armed li:not(:last-child)::before {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Case cards: keep the colour cues, drop the movement. */
+  .landing-page .nh-case-card,
+  .landing-page .nh-case-card img,
+  .landing-page .nh-case-card figure::after {
+    transition: none !important;
+  }
+
+  .landing-page .nh-case-card:hover,
+  .landing-page .nh-case-card:focus-within,
+  .landing-page .nh-case-card:hover img,
+  .landing-page .nh-case-card:focus-within img,
+  .landing-page .nh-cases-grid.is-revealed .nh-case-card:hover,
+  .landing-page .nh-cases-grid.is-revealed .nh-case-card:focus-within {
+    transform: none;
+  }
+
+  .landing-page .nh-cases-grid.is-armed .nh-case-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* The client marquee is requested behaviour, so it keeps running here rather
+     than degrading to a horizontally scrollable list. */
 }

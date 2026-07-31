@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?v=20260731f" />
     <script src="js/footer-reveal.js" defer></script>
     <style>
         :root {
@@ -66,10 +66,34 @@
             gap: 28px;
         }
 
+        /* Matches the shared .header-logo scale in css/style.css so the mark is
+           the same size on every page. */
         .site-logo img {
             display: block;
-            width: 148px;
-            height: auto;
+            width: auto;
+            height: 52px;
+            max-width: 220px;
+        }
+
+        @media (max-width: 1199px) {
+            .site-logo img {
+                height: 46px;
+                max-width: 190px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .site-logo img {
+                height: 40px;
+                max-width: 160px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .site-logo img {
+                height: 34px;
+                max-width: 140px;
+            }
         }
 
         .header-nav {
@@ -424,10 +448,6 @@
                 min-height: 70px;
             }
 
-            .site-logo img {
-                width: 125px;
-            }
-
             .mobile-nav-toggle {
                 display: inline-flex;
                 position: relative;
@@ -568,11 +588,7 @@
             </button>
             <nav class="header-nav" id="blog-directory-navigation" aria-label="Primary navigation">
                 <a href="index.html">Home</a>
-                <a href="About-us.html">About Us</a>
-                <a href="Clients.html">Clients</a>
-                <a href="Privacy-policy.html">Privacy Policy</a>
                 <a href="blogs-page.html" aria-current="page">Blogs</a>
-                <a href="https://nohitatu.com/contact/Contactus.aspx">Contact</a>
             </nav>
         </div>
     </header>
