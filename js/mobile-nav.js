@@ -9,6 +9,14 @@
     return (node.textContent || '').replace(/\s+/g, ' ').trim();
   }
 
+  function toDisplayLabel(text) {
+    return text
+      .toLowerCase()
+      .replace(/\b([a-z])/g, function (match) {
+        return match.toUpperCase();
+      });
+  }
+
   function isUsableLink(link) {
     var href = link.getAttribute('href');
     return Boolean(href) && href.trim() !== '#' && href.trim() !== '';
@@ -18,14 +26,14 @@
     var topLink = item.querySelector(':scope > a');
     if (!topLink) return null;
 
-    var label = cleanText(topLink);
+    var label = toDisplayLabel(cleanText(topLink));
     if (!label) return null;
 
     var children = [].slice
       .call(item.querySelectorAll('.sub-menu a'))
       .filter(isUsableLink)
       .map(function (link) {
-        return { label: cleanText(link), href: link.getAttribute('href'), target: link.getAttribute('target') };
+        return { label: toDisplayLabel(cleanText(link)), href: link.getAttribute('href'), target: link.getAttribute('target') };
       })
       .filter(function (child) {
         return child.label;
@@ -98,7 +106,9 @@
     var head = document.createElement('div');
     head.className = 'mobile-nav__head';
 
-    var logoSource = header.querySelector('.header-logo img');
+    var logoSource =
+      header.querySelector('.header-logo .logo-on-dark') ||
+      header.querySelector('.header-logo img');
     if (logoSource) {
       var logo = document.createElement('img');
       logo.className = 'mobile-nav__logo';
@@ -114,6 +124,10 @@
     close.innerHTML = '<span aria-hidden="true"></span><span aria-hidden="true"></span>';
     head.appendChild(close);
 
+    var kicker = document.createElement('p');
+    kicker.className = 'mobile-nav__kicker';
+    kicker.textContent = 'Navigate';
+
     var list = document.createElement('nav');
     list.className = 'mobile-nav__list';
     list.setAttribute('aria-label', 'Primary');
@@ -126,9 +140,10 @@
     var cta = document.createElement('a');
     cta.className = 'mobile-nav__cta';
     cta.href = CONTACT_URL;
-    cta.textContent = 'Get Free Estimation';
+    cta.textContent = 'Get a free estimate';
 
     panel.appendChild(head);
+    panel.appendChild(kicker);
     panel.appendChild(list);
     panel.appendChild(cta);
     overlay.appendChild(backdrop);

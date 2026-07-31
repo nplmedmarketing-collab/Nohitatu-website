@@ -435,7 +435,7 @@
             }
 
             /* will-change would make the header a containing block and clip the
-               fixed slide-in panel, so the hide-on-scroll hint is dropped here. */
+               fixed overlay, so the hide-on-scroll hint is dropped here. */
             .site-header {
                 will-change: auto;
             }
@@ -445,43 +445,54 @@
                 position: fixed;
                 inset: 0;
                 z-index: 0;
-                background: rgba(4, 16, 36, 0.55);
+                background:
+                    radial-gradient(circle at 12% 18%, rgba(114, 108, 244, 0.18), transparent 42%),
+                    radial-gradient(circle at 88% 82%, rgba(79, 143, 247, 0.12), transparent 38%),
+                    #061526;
             }
 
             .header-nav {
                 position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
+                inset: 0;
                 z-index: 1;
                 display: flex;
-                width: min(340px, 90vw);
-                padding: 84px 22px 30px;
-                background: #022a5e;
-                box-shadow: -18px 0 44px rgba(2, 20, 46, 0.4);
+                width: 100%;
+                padding: 84px 24px 34px;
+                background: transparent;
+                box-shadow: none;
                 flex-direction: column;
                 align-items: stretch;
-                gap: 0;
+                gap: 2px;
                 overflow-y: auto;
                 text-align: left;
-                transform: translateX(100%);
-                transition: transform 0.36s cubic-bezier(0.32, 0.72, 0.24, 1);
+                opacity: 0;
+                visibility: hidden;
+                transform: none;
+                transition: opacity 0.32s ease, visibility 0.32s ease;
             }
 
             .header-nav a {
                 display: block;
-                padding: 15px 2px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-                transition: color 0.24s ease, padding-left 0.24s ease;
+                padding: 13px 0;
+                border-bottom: 0;
+                color: #fff;
+                font-size: clamp(1.55rem, 7.2vw, 2rem);
+                font-weight: 600;
+                letter-spacing: -0.03em;
+                text-transform: none;
+                transition: color 0.22s ease, transform 0.22s ease;
             }
 
             .header-nav a:hover,
             .header-nav a[aria-current="page"] {
-                padding-left: 8px;
+                padding-left: 0;
+                color: var(--blue);
+                transform: translateX(4px);
             }
 
             .site-header.mobile-menu-open .header-nav {
-                transform: translateX(0);
+                opacity: 1;
+                visibility: visible;
             }
 
             .page-hero {
