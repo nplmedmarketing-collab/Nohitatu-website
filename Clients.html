@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css?v=20260803curtain" />
+    <link rel="stylesheet" href="css/style.css?v=20260803wave" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
     <link rel="stylesheet" href="css/chatbot.css?v=20260803chat" />
@@ -91,7 +91,7 @@
             display: grid;
             place-items: center;
             overflow: hidden;
-            padding: 128px 0 108px;
+            padding: 128px 0 56px;
             background:
                 linear-gradient(rgba(18, 20, 36, 0.56), rgba(18, 20, 36, 0.68)),
                 url("images/clients-partnership-hero.jpg") center 46% / cover no-repeat;
@@ -113,6 +113,7 @@
             mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), transparent 90%);
         }
 
+        /* Clip tall wave art so only peaks tip into the first viewport */
         .hero-wave {
             position: absolute;
             z-index: 2;
@@ -120,18 +121,22 @@
             bottom: -1px;
             left: 0;
             width: 100%;
-            height: 104px;
+            height: 42px;
             overflow: hidden;
             pointer-events: none;
         }
 
         .hero-wave__layer {
             position: absolute;
-            inset: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: auto;
+            height: 100px;
             display: block;
             background-repeat: repeat-x;
-            background-position: 0 bottom;
-            background-size: 1200px 100%;
+            background-position: 0 0;
+            background-size: 1200px 100px;
         }
 
         .hero-wave__layer--back {
@@ -684,11 +689,16 @@
             }
 
             .privacy-hero.nh-curtain-banner {
-                padding: 120px 0 105px;
+                padding: 120px 0 48px;
             }
 
             .hero-wave {
-                height: 58px;
+                height: 28px;
+            }
+
+            .hero-wave__layer {
+                height: 72px;
+                background-size: 900px 72px;
             }
 
             .privacy-intro { padding-top: 52px; }
@@ -701,7 +711,7 @@
         @media (max-width: 560px) {
             .privacy-shell { width: min(100% - 30px, 1180px); }
             .privacy-hero.nh-curtain-banner {
-                padding: 110px 0 94px;
+                padding: 110px 0 40px;
             }
             .privacy-hero h1 { font-size: clamp(3rem, 15vw, 4.4rem); }
             .privacy-toc nav { columns: 1; }
