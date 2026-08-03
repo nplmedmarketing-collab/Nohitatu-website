@@ -182,21 +182,8 @@
                                             </li>
 
                                             
-                                            <li class="nav-item"> <a href="Portfolio/index.html"> PORTFOLIO </a></li>
-                                            <li class="nav-item"> <a href="Career.html">CAREER</a></li>
-
-                                            <li class="nav-item"><a href="#">LOGIN</a>
-                                                <div class="sub corporate ">
-                                                    <ul class="sub-menu">
-                                                        <li> <a target="_blank"
-                                                                href="http://210.18.142.129:131/Task/Login"> Client
-                                                                Login</a></li>
-                                                        <li> <a target="_blank"
-                                                                href="http://210.18.142.129:131/NERP/Login"> Employee
-                                                                Login</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
+                                            <li class="nav-item"> <a href="Portfolio.html"> PORTFOLIO </a></li>
+                                            <li class="nav-item"> <a href="Careers.html">CAREER</a></li>
                                         </ul>
                                     </div>
                                 </nav>
@@ -279,18 +266,8 @@
                                         
                                     </div>
                                     
-                                    <a href="Portfolio/index.html" class="list-group-item main-link">PORTFOLIO</a>
-                                    <a href="Career.html" class="list-group-item main-link">CAREER</a>
-                                    <a href="#login" id="LOGIN" class="list-group-item main-link" data-toggle="collapse"
-                                        data-parent="#MainMenu">LOGIN <i class="menu-ti-icons ti-angle-down"></i></a>
-                                    <div class="collapse" id="login">
-                                        <ul class="inner-sub-menus">
-                                            <li> <a target="_blank" href="http://210.18.142.129:131/Task/Login"> Client
-                                                    Login</a></li>
-                                            <li> <a target="_blank" href="http://210.18.142.129:131/NERP/Login">
-                                                    Employee Login</a></li>
-                                        </ul>
-                                    </div>
+                                    <a href="Portfolio.html" class="list-group-item main-link">PORTFOLIO</a>
+                                    <a href="Careers.html" class="list-group-item main-link">CAREER</a>
                                 </div>
                             </div>
                         </div>
@@ -365,7 +342,6 @@
         <section class="nh-story-band" data-stages="3" aria-label="How Nohitatu helps businesses">
             <div class="nh-story-slide nh-story-slide--build" data-stage="0">
                 <div class="nh-story-bg nh-story-bg--photo nh-story-bg--build" style="background-image:url('images/blog/software-challenges-banner.jpg')" aria-hidden="true"></div>
-                <div class="nh-geo nh-geo--story" aria-hidden="true"></div>
                 <div class="nh-story-copy-stack">
                     <p class="nh-story-lead">We help</p>
                     <strong class="nh-story-word">build</strong>
@@ -374,7 +350,6 @@
             </div>
             <div class="nh-story-slide nh-story-slide--scale" data-stage="1">
                 <div class="nh-story-bg nh-story-bg--photo nh-story-bg--scale" style="background-image:url('images/blog/digital-transformation-strategy-cta.jpg')" aria-hidden="true"></div>
-                <div class="nh-geo nh-geo--story" aria-hidden="true"></div>
                 <div class="nh-story-copy-stack">
                     <p class="nh-story-lead">We help</p>
                     <strong class="nh-story-word">scale</strong>
@@ -383,15 +358,12 @@
             </div>
             <div class="nh-story-slide nh-story-slide--automate" data-stage="2">
                 <div class="nh-story-bg nh-story-bg--photo nh-story-bg--automate" style="background-image:url('images/blog/blog-custom-software-hero.png')" aria-hidden="true"></div>
-                <div class="nh-geo nh-geo--story" aria-hidden="true"></div>
                 <div class="nh-story-copy-stack">
                     <p class="nh-story-lead">We help</p>
                     <strong class="nh-story-word">automate</strong>
                     <span class="nh-story-trail">operations with AI-assisted workflows that keep teams lean, fast, and reliable.</span>
                 </div>
             </div>
-            <!-- Desktop-only WebGL depth layer; falls back to the plain curtains -->
-            <div class="nh-story-3d" data-story-3d aria-hidden="true"></div>
             <div class="nh-story-progress" aria-hidden="true"><span></span></div>
         </section>
 
@@ -546,59 +518,133 @@
             });
         </script>
 
-        <!-- Insights cards -->
-        <section class="nh-insights-sec" id="blog-insights" aria-labelledby="nh-insights-title">
+        <!-- Insights horizontal accordion -->
+        <section class="insights-accordion-sec" id="blog-insights" aria-labelledby="nh-insights-title" data-aos="fade-up">
             <div class="nh-shell">
-                <div class="nh-insights-head">
-                    <div>
-                        <p class="nh-insights-kicker">From the blog</p>
-                        <h2 id="nh-insights-title">Latest insights</h2>
-                    </div>
-                    <a href="blogs-page.html" class="nh-text-link">View all articles →</a>
+
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title mb-0" id="nh-insights-title">
+                        Tech Insights &amp; <span class="blue-accent-text">Growth Stories</span>
+                    </h2>
                 </div>
-                <div class="nh-insights-grid">
-                    <a class="nh-insight-card nh-insight-card--lead" href="blogs/Top-7-Benefits-of-Custom-Software-for-Businesses.html">
-                        <span class="nh-insight-thumb">
+
+                <div class="accordion-stage-grid">
+
+                    <div class="accordion-card-item active" data-accordion="0">
+                        <div class="accordion-bg-image">
                             <img src="images/blog/thumbnail/top7.jpg" alt="" loading="lazy" />
-                            <span class="nh-insight-chip">Software Strategy</span>
-                        </span>
-                        <span class="nh-insight-body">
-                            <span class="nh-insight-date">08 Jan 2026</span>
-                            <h3>Top 7 Benefits of Custom Software Development for Businesses</h3>
-                            <p>How tailored software removes licensing bottlenecks and delivers durable architecture.</p>
-                            <span class="nh-insight-cue">Read article <em aria-hidden="true">→</em></span>
-                        </span>
-                    </a>
-                    <a class="nh-insight-card nh-insight-card--row" href="blogs/GitHub-Copilot-ChatGPT-Vibe-Coding-New-Reality-Software-Development.html">
-                        <span class="nh-insight-thumb">
+                            <div class="accordion-overlay-gradient"></div>
+                        </div>
+                        <div class="accordion-collapsed-bar" aria-hidden="true">
+                            <span class="acc-num">01</span>
+                            <span class="acc-vert-title">SOFTWARE STRATEGY</span>
+                        </div>
+                        <div class="accordion-expanded-content">
+                            <div class="acc-tag-pill">SOFTWARE STRATEGY</div>
+                            <div class="acc-date-meta">08 Jan 2026 • 5 Min Read</div>
+                            <h3 class="acc-headline">Top 7 Benefits of Custom Software Development for Businesses</h3>
+                            <p class="acc-summary">Discover how custom software eliminates licensing bottlenecks and delivers tailored digital architecture.</p>
+                            <a href="blogs/Top-7-Benefits-of-Custom-Software-for-Businesses.html" class="acc-read-btn">
+                                <span>Read Article</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card-item" data-accordion="1">
+                        <div class="accordion-bg-image">
                             <img src="images/blog/thumbnail/githubcop.jpg" alt="" loading="lazy" />
-                        </span>
-                        <span class="nh-insight-body">
-                            <span class="nh-insight-date">AI &amp; Coding · 08 Jan 2026</span>
-                            <h3>GitHub Copilot, ChatGPT &amp; Vibe Coding: The New Reality</h3>
-                        </span>
-                    </a>
-                    <a class="nh-insight-card nh-insight-card--row" href="blogs/Why-Businesses-Need-AI-Driven-Custom-Software-Instead-of-Generic-SaaS-Solutions.html">
-                        <span class="nh-insight-thumb">
+                            <div class="accordion-overlay-gradient"></div>
+                        </div>
+                        <div class="accordion-collapsed-bar" aria-hidden="true">
+                            <span class="acc-num">02</span>
+                            <span class="acc-vert-title">AI &amp; CODING</span>
+                        </div>
+                        <div class="accordion-expanded-content">
+                            <div class="acc-tag-pill">AI &amp; CODING</div>
+                            <div class="acc-date-meta">08 Jan 2026 • 6 Min Read</div>
+                            <h3 class="acc-headline">GitHub Copilot, ChatGPT &amp; Vibe Coding: The New Reality</h3>
+                            <p class="acc-summary">Exploring how generative AI models and autonomous assistants transform modern developer workflows.</p>
+                            <a href="blogs/GitHub-Copilot-ChatGPT-Vibe-Coding-New-Reality-Software-Development.html" class="acc-read-btn">
+                                <span>Read Article</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card-item" data-accordion="2">
+                        <div class="accordion-bg-image">
                             <img src="images/blog/ai-custom-software-cta.jpg" alt="" loading="lazy" />
-                        </span>
-                        <span class="nh-insight-body">
-                            <span class="nh-insight-date">AI Strategy · 18 Dec 2025</span>
-                            <h3>Why Businesses Need AI-Driven Custom Software</h3>
-                        </span>
-                    </a>
-                    <a class="nh-insight-card nh-insight-card--row" href="blogs/common_software_development_challenges.html">
-                        <span class="nh-insight-thumb">
+                            <div class="accordion-overlay-gradient"></div>
+                        </div>
+                        <div class="accordion-collapsed-bar" aria-hidden="true">
+                            <span class="acc-num">03</span>
+                            <span class="acc-vert-title">AI STRATEGY</span>
+                        </div>
+                        <div class="accordion-expanded-content">
+                            <div class="acc-tag-pill">AI STRATEGY</div>
+                            <div class="acc-date-meta">18 Dec 2025 • 7 Min Read</div>
+                            <h3 class="acc-headline">Why Businesses Need AI-Driven Custom Software Instead of Generic SaaS</h3>
+                            <p class="acc-summary">Why intelligent, owned platforms outperform rigid subscriptions in scalability, integration, and long-term ROI.</p>
+                            <a href="blogs/Why-Businesses-Need-AI-Driven-Custom-Software-Instead-of-Generic-SaaS-Solutions.html" class="acc-read-btn">
+                                <span>Read Article</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card-item" data-accordion="3">
+                        <div class="accordion-bg-image">
                             <img src="images/blog/thumbnail/software_development.jpeg" alt="" loading="lazy" />
-                        </span>
-                        <span class="nh-insight-body">
-                            <span class="nh-insight-date">Engineering · 13 Oct 2025</span>
-                            <h3>10 Common Software Development Challenges</h3>
-                        </span>
+                            <div class="accordion-overlay-gradient"></div>
+                        </div>
+                        <div class="accordion-collapsed-bar" aria-hidden="true">
+                            <span class="acc-num">04</span>
+                            <span class="acc-vert-title">ENGINEERING</span>
+                        </div>
+                        <div class="accordion-expanded-content">
+                            <div class="acc-tag-pill">ENGINEERING</div>
+                            <div class="acc-date-meta">13 Oct 2025 • 7 Min Read</div>
+                            <h3 class="acc-headline">10 Common Software Development Challenges and How to Overcome Them</h3>
+                            <p class="acc-summary">Practical solutions for requirements, technology, budgets, security, integrations, scope, and testing.</p>
+                            <a href="blogs/common_software_development_challenges.html" class="acc-read-btn">
+                                <span>Read Article</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="blogs-page.html" class="insights-view-all-pill">
+                        <span>View All Articles</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </a>
                 </div>
+
             </div>
         </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var cards = document.querySelectorAll('.accordion-card-item');
+                if (!cards.length) return;
+
+                function activate(card) {
+                    cards.forEach(function (c) { c.classList.remove('active'); });
+                    card.classList.add('active');
+                }
+
+                cards.forEach(function (card) {
+                    card.addEventListener('mouseenter', function () { activate(card); });
+                    card.addEventListener('click', function (e) {
+                        if (!e.target.closest('a')) activate(card);
+                    });
+                    card.addEventListener('focusin', function () { activate(card); });
+                });
+            });
+        </script>
 
         <!-- Consultation chapter -->
         <section class="nh-consult-sec" aria-labelledby="nh-consult-title">
@@ -736,7 +782,7 @@
                                 <ul class="footernav">
                                     <li><a href="About-us.html">About Us</a></li>
                                     <li><a href="Privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="Portfolio/index.html">Portfolio</a></li>
+                                    <li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li>
                                     <li><a href="Clients.html">Clients</a></li>
                                     <li><a href="blogs-page.html">Blogs</a></li>
                                 </ul>
@@ -1246,7 +1292,6 @@
         <script src="js/ai-background.js"></script>
         <script src="js/video-playlist.js"></script>
         <script src="js/home-story.js?v=20260731f"></script>
-        <script src="js/home-story-3d.js?v=20260731f"></script>
         <script src="js/footer-phone.js"></script>
 
 </body>

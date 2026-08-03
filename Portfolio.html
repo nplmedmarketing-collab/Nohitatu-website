@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Nohitatu</title>
+    <meta name="description" content="Explore Nohitatuâ€™s portfolio of web, mobile, and desktop products â€” healthcare, CRM, fintech, sports, and more." />
+    <link rel="shortcut icon" href="images/favicon/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css?v=20260803curtain" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <script src="js/jquery.min.js"></script>
+    <!-- custom.js initialises owl sliders at document-ready; without the plugin
+         its first call throws and the rest of the shared header script never
+         runs. Loaded in the same order as index.html. -->
+    <script src="js/owl.carousel.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/footer-reveal.js" defer></script>
+    <style>
+        :root {
+            --ink: #15233c;
+            --muted: #667085;
+            --line: #dfe6ee;
+            --blue: #726cf4;
+            --blue-dark: #5f58dc;
+            --navy: #023575;
+            --paper: #fff;
+            --soft: #f6f5ff;
+            --wall-gap: 18px;
+            /* One cycle == one column height. Tall columns keep the cycle long
+               while each tile still visibly travels within a second or two. */
+            --wall-loop: 36s;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+
+        body.portfolio-page {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        body.portfolio-page a { color: inherit; }
+
+        /* â”€â”€â”€ Header over dark hero (matches interior pages) â”€â”€â”€ */
+        body.portfolio-page header.logo-navbar {
+            background: linear-gradient(180deg, rgba(9, 9, 11, 0.82), rgba(9, 9, 11, 0)) !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+        }
+
+        body.portfolio-page header.logo-navbar .logo-on-dark { display: block; }
+        body.portfolio-page header.logo-navbar .logo-on-light { display: none; }
+        body.portfolio-page header.logo-navbar #navigation > li.nav-item > a { color: #fff !important; }
+        body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a { color: #b8b5ff !important; }
+
+        body.portfolio-page header.logo-navbar.white-header {
+            background: rgba(255, 255, 255, 0.97) !important;
+            border-bottom: 1px solid #ecebf4 !important;
+        }
+
+        body.portfolio-page header.logo-navbar.white-header .logo-on-dark { display: none; }
+        body.portfolio-page header.logo-navbar.white-header .logo-on-light { display: block; }
+        body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item > a { color: #343147 !important; }
+        body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a { color: var(--blue) !important; }
+        body.portfolio-page .navbar-toggle.nav-menu { display: none; }
+
+        .shell {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        /* â”€â”€â”€ Hero: blogs-page framing + Pinterest wall â”€â”€â”€ */
+        .page-hero.nh-curtain-banner {
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            /* Neutral near-black, not navy: the wall's screenshots keep their
+               own colour instead of sitting under a blue wash. */
+            background: #0a0a0c;
+        }
+
+        .ethos.nh-curtain-panel {
+            background: #f6f5f2;
+        }
+
+        /* ------------------------------------------------------------------
+           Pinterest wall: masonry columns of live portfolio screens drifting
+           in alternating directions. Each column repeats its tile set once and
+           travels exactly one set height per cycle, so the loop has no seam.
+           Every column shares the same cycle length â€” the staggered speeds
+           come from the columns being different heights, which also means the
+           whole wall realigns on one beat and can be captured as a clean
+           looping video.
+
+           This drift deliberately ignores prefers-reduced-motion: it is the
+           hero's whole visual, so it runs everywhere. It stays safe for
+           motion-sensitive viewers by being constant-velocity, slow, and free
+           of bounce, flashing, or direction changes â€” and hovering the wall
+           stops it outright.
+           ------------------------------------------------------------------ */
+        .hero-wall {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            --wall-tilt: -7deg;
+            --tide-x: 11px;
+            -webkit-mask-image: radial-gradient(ellipse 78% 82% at 50% 50%, #000 38%, rgba(0, 0, 0, 0.62) 72%, transparent 100%);
+            mask-image: radial-gradient(ellipse 78% 82% at 50% 50%, #000 38%, rgba(0, 0, 0, 0.62) 72%, transparent 100%);
+        }
+
+        /* Three nested motions, one per element, so none of them overwrite
+           another's transform:
+             stage  â†’ whole-wall tide (slow rotate + X breathing)
+             column â†’ wave sway (X/Y/tilt oscillation, phase-shifted per column)
+             track  â†’ the seamless vertical drift
+           Every sway period divides --wall-loop, so the whole wall still
+           realigns on one 36s beat. */
+        .hero-wall__stage {
+            position: absolute;
+            inset: -24% -15%;
+            display: flex;
+            gap: var(--wall-gap);
+            transform: rotate(var(--wall-tilt));
+            animation: pfWallTide 18s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .hero-wall__col {
+            flex: 1 1 0;
+            min-width: 0;
+            /* X stays small: neighbouring columns moving apart would open up
+               the gaps between them. The Y bob carries most of the wave. */
+            --sway-x: 4px;
+            --sway-y: 13px;
+            --sway-tilt: 0.3deg;
+            --sway-dir: 1;
+            --sway-period: 12s;
+            --sway-phase: 0s;
+            animation: pfWallSway var(--sway-period) ease-in-out var(--sway-phase) infinite;
+            will-change: transform;
+        }
+
+        /* Staggered phases make the sway travel across the wall as a wave
+           instead of every column leaning at once; the mixed periods stop the
+           pattern from visibly repeating, and alternating --sway-dir has
+           neighbours lean against each other. */
+        .hero-wall__col:nth-child(1) { --sway-period: 12s; --sway-phase: -1.5s; }
+        .hero-wall__col:nth-child(2) { --sway-period: 9s; --sway-phase: -3s; --sway-dir: -1; }
+        .hero-wall__col:nth-child(3) { --sway-period: 7.2s; --sway-phase: -0.9s; }
+        .hero-wall__col:nth-child(4) { --sway-period: 18s; --sway-phase: -4.5s; --sway-dir: -1; }
+        .hero-wall__col:nth-child(5) { --sway-period: 6s; --sway-phase: -2.4s; }
+        .hero-wall__col:nth-child(6) { --sway-period: 9s; --sway-phase: -6s; --sway-dir: -1; }
+        .hero-wall__col:nth-child(7) { --sway-period: 12s; --sway-phase: -7.5s; }
+        .hero-wall__col:nth-child(8) { --sway-period: 7.2s; --sway-phase: -3.6s; --sway-dir: -1; }
+
+        .hero-wall__track {
+            animation: pfWallDrift var(--wall-loop) linear infinite;
+            will-change: transform;
+        }
+
+        .hero-wall__track--up { animation-direction: reverse; }
+
+        /* Flex + padding rather than margins, so the set height always
+           includes the trailing gap and the -50% travel stays exact. */
+        .hero-wall__set {
+            display: flex;
+            flex-direction: column;
+            gap: var(--wall-gap);
+            padding-bottom: var(--wall-gap);
+        }
+
+        .hero-wall__set img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            background: #17171a;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
+            /* Only a touch of dimming, and no desaturation â€” the screenshots
+               read in their own colours. */
+            filter: brightness(0.94);
+        }
+
+        /* Hovering the wall itself stops it. The headline block sits above the
+           wall and keeps its own pointer events, so reading the copy â€” or
+           tabbing to the buttons â€” never freezes the drift. */
+        @media (hover: hover) and (pointer: fine) {
+            .hero-wall:hover .hero-wall__stage,
+            .hero-wall:hover .hero-wall__col,
+            .hero-wall:hover .hero-wall__track {
+                animation-play-state: paused;
+            }
+        }
+
+        .hero-wall.is-paused .hero-wall__stage,
+        .hero-wall.is-paused .hero-wall__col,
+        .hero-wall.is-paused .hero-wall__track {
+            animation-play-state: paused;
+        }
+
+        /* Neutral black only â€” no blue or purple tint. The dense centre sits
+           behind the copy for contrast; the edges stay light so the wall's real
+           colour shows, with soft top/bottom fades into the header and the
+           section below. */
+        .hero-shade {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 78% 66% at 50% 50%,
+                    rgba(6, 6, 8, 0.9) 0%,
+                    rgba(6, 6, 8, 0.78) 44%,
+                    rgba(6, 6, 8, 0.34) 78%,
+                    rgba(6, 6, 8, 0.14) 100%),
+                linear-gradient(180deg,
+                    rgba(6, 6, 8, 0.8) 0%,
+                    rgba(6, 6, 8, 0) 24%,
+                    rgba(6, 6, 8, 0) 72%,
+                    rgba(6, 6, 8, 0.92) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 92px 0 76px;
+            text-align: center;
+        }
+
+        .page-kicker {
+            margin: 0 0 17px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .page-hero h1 {
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(3.2rem, 7vw, 6.6rem);
+            font-weight: 500;
+            letter-spacing: -0.055em;
+            line-height: 0.92;
+            color: #fff;
+        }
+
+        .page-hero h1 em {
+            color: var(--blue);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .hero-note {
+            max-width: 650px;
+            margin: 28px auto 0;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0 20px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+        }
+
+        .hero-actions a.primary {
+            background: var(--blue);
+            color: #fff;
+            border: 1px solid transparent;
+        }
+
+        .hero-actions a.primary:hover {
+            background: var(--blue-dark);
+            transform: translateY(-1px);
+        }
+
+        .hero-actions a.ghost {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+        }
+
+        .hero-actions a.ghost:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        @keyframes pfWallDrift {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(0, -50%, 0); }
+        }
+
+        /* Pure oscillations: both return to the origin at 0%/50%/100%, so
+           nothing creeps off-centre and the drift's 0 â†’ -50% loop is unaffected. */
+        @keyframes pfWallSway {
+            0%, 50%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            25% {
+                transform:
+                    translate3d(calc(var(--sway-x) * var(--sway-dir)), calc(var(--sway-y) * var(--sway-dir) * -1), 0)
+                    rotate(calc(var(--sway-tilt) * var(--sway-dir)));
+            }
+            75% {
+                transform:
+                    translate3d(calc(var(--sway-x) * var(--sway-dir) * -1), calc(var(--sway-y) * var(--sway-dir)), 0)
+                    rotate(calc(var(--sway-tilt) * var(--sway-dir) * -1));
+            }
+        }
+
+        @keyframes pfWallTide {
+            0%, 50%, 100% { transform: rotate(var(--wall-tilt)) translate3d(0, 0, 0); }
+            25% {
+                transform: rotate(calc(var(--wall-tilt) + 0.5deg)) translate3d(var(--tide-x), 0, 0);
+            }
+            75% {
+                transform: rotate(calc(var(--wall-tilt) - 0.5deg)) translate3d(calc(var(--tide-x) * -1), 0, 0);
+            }
+        }
+
+        /* â”€â”€â”€ Shared editorial primitives â”€â”€â”€ */
+        .eyebrow {
+            margin: 0 0 22px;
+            color: var(--blue-dark);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+
+        /* â”€â”€â”€ Statement band: warm paper break between the two dark sections â”€â”€â”€ */
+        .ethos {
+            padding: 118px 0 124px;
+            background: #f6f5f2;
+        }
+
+        .ethos-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+            gap: 0 88px;
+            align-items: start;
+        }
+
+        .ethos-grid .eyebrow {
+            grid-column: 1 / -1;
+            margin-bottom: 34px;
+        }
+
+        .ethos-statement {
+            margin: 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(2.3rem, 4.4vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -0.035em;
+            line-height: 1.04;
+            color: var(--ink);
+        }
+
+        .ethos-statement em {
+            font-style: italic;
+            color: var(--blue-dark);
+        }
+
+        .ethos-body {
+            padding-top: 10px;
+        }
+
+        .ethos-body p {
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.85;
+        }
+
+        .ethos-body p:last-child { margin-bottom: 0; }
+
+        /* â”€â”€â”€ Module reel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+           A length of film read by an instrument: sprocket pitch derived from
+           the frame pitch so holes land on exact frame boundaries, monospace
+           edge codes, hairline rules, one accent. Deliberately the opposite of
+           the hero wall above it â€” that drifts, this responds. */
+        .reel {
+            --frame-w: clamp(196px, 21vw, 288px);
+            --frame-gap: 10px;
+            --pitch: calc(var(--frame-w) + var(--frame-gap));
+            --perf-h: 22px;
+            --perf-pitch: calc(var(--pitch) / 8);
+            --perf-hole: calc(var(--perf-pitch) * 0.46);
+            /* Read by the reel script so it never pops a frame that has no
+               room to grow inside the gate. Larger scale so UI details read. */
+            --pop-scale: 1.65;
+            --pop-lift: 30px;
+            --film: #141a24;
+            --hole: #070b12;
+            --hair: rgba(255, 255, 255, 0.11);
+            --hair-2: rgba(255, 255, 255, 0.2);
+            --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+            position: relative;
+            /* Deep charcoal-navy instrument panel â€” cool undertone, not flat black.
+               Soft vertical lift only; no glow, no purple wash. */
+            background: linear-gradient(180deg, #0b1018 0%, #0e1420 48%, #121a26 100%);
+            color: #fff;
+            /* JS writes --reel-travel from the measured strip length. */
+            height: calc(100vh + var(--reel-travel, 0px));
+        }
+
+        /* Hard structural cut from the ambient hero: a ruled instrument header
+           rather than more imagery. */
+        .reel::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 1px;
+            background: var(--hair-2);
+        }
+
+        .reel__pin {
+            position: sticky;
+            top: 0;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 30px;
+            padding: 96px 0 46px;
+        }
+
+        .reel__spec {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 0 0 22px;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .reel__spec-rule {
+            flex: 1;
+            height: 1px;
+            background: var(--hair);
+        }
+
+        .reel__head h2 {
+            margin: 0 0 16px;
+            font-size: clamp(1.9rem, 3.2vw, 2.9rem);
+            font-weight: 600;
+            letter-spacing: -0.038em;
+            line-height: 1.02;
+            color: #fff;
+        }
+
+        .reel__brief {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 22px 48px;
+            align-items: end;
+        }
+
+        .reel__brief p {
+            margin: 0;
+            max-width: 60ch;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 14.5px;
+            line-height: 1.72;
+        }
+
+        .reel__controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reel__filters {
+            display: flex;
+            gap: 6px;
+        }
+
+        .reel__filters button {
+            appearance: none;
+            border: 1px solid var(--hair-2);
+            border-radius: 2px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.68);
+            min-height: 34px;
+            padding: 0 16px;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 140ms linear, border-color 140ms linear, background-color 140ms linear;
+        }
+
+        .reel__filters button:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.42);
+        }
+
+        .reel__filters button.is-active {
+            background: var(--blue);
+            border-color: var(--blue);
+            color: #fff;
+        }
+
+        .reel__tally {
+            margin-left: 12px;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 0.16em;
+            color: rgba(255, 255, 255, 0.36);
+            white-space: nowrap;
+        }
+
+        /* ---- the film ---- */
+        .reel__viewport {
+            position: relative;
+            /* Headroom so a popped frame is never clipped by the horizontal
+               overflow rule this element needs. Sized for --pop-scale ~1.65. */
+            padding: 56px 0;
+            overflow: hidden;
+        }
+
+        .reel__film {
+            position: absolute;
+            inset: 56px 0;
+            background: var(--film);
+            border-top: 1px solid var(--hair);
+            border-bottom: 1px solid var(--hair);
+            pointer-events: none;
+        }
+
+        .reel__film::before,
+        .reel__film::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: var(--perf-h);
+            background: repeating-linear-gradient(90deg,
+                transparent 0 calc((var(--perf-pitch) - var(--perf-hole)) / 2),
+                var(--hole) calc((var(--perf-pitch) - var(--perf-hole)) / 2) calc((var(--perf-pitch) + var(--perf-hole)) / 2),
+                transparent calc((var(--perf-pitch) + var(--perf-hole)) / 2) var(--perf-pitch));
+            /* Holes travel with the strip. */
+            background-position: var(--perf-shift, 0px) 0;
+        }
+
+        .reel__film::before {
+            top: 0;
+            border-bottom: 1px solid var(--hair);
+        }
+
+        .reel__film::after {
+            bottom: 0;
+            border-top: 1px solid var(--hair);
+        }
+
+        .reel__strip {
+            position: relative;
+            display: flex;
+            width: max-content;
+            gap: var(--frame-gap);
+            margin-left: var(--reel-gutter, 24px);
+            padding: calc(var(--perf-h) + 12px) 0;
+            will-change: transform;
+            touch-action: pan-y;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+
+        .reel__strip.is-dragging,
+        .reel__strip.is-dragging .frame { cursor: grabbing; }
+        .reel__strip.is-dragging .frame { transition: none; }
+
+        /* ---- frames ---- */
+        .frame {
+            position: relative;
+            flex: 0 0 auto;
+            width: var(--frame-w);
+            cursor: pointer;
+            /* Short, sharp, no overshoot: instrumentation answering the cursor.
+               Slightly longer than rest transitions so the larger pop doesn't snap. */
+            transition: transform 220ms cubic-bezier(.2, .7, .2, 1);
+        }
+
+        .frame.is-out { display: none; }
+
+        .frame__gate {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            border: 1px solid var(--hair);
+            border-radius: 2px;
+            background: #0c121c;
+            transition: border-color 170ms linear, box-shadow 170ms linear;
+        }
+
+        .frame__gate img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            -webkit-user-drag: none;
+            object-fit: cover;
+            object-position: center top;
+            /* Held back at rest so the read frame is unmistakable. */
+            filter: saturate(0.88) brightness(0.82);
+            transition: filter 170ms linear;
+        }
+
+        .frame__id {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 4px 7px 5px;
+            background: rgba(5, 5, 7, 0.82);
+            border-right: 1px solid var(--hair);
+            border-bottom: 1px solid var(--hair);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            color: rgba(255, 255, 255, 0.5);
+            transition: color 170ms linear, background-color 170ms linear;
+        }
+
+        .frame__tab {
+            position: absolute;
+            inset: auto 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding: 26px 10px 9px;
+            background: linear-gradient(180deg, rgba(5, 5, 7, 0) 0%, rgba(5, 5, 7, 0.88) 62%, rgba(5, 5, 7, 0.95) 100%);
+            opacity: 0;
+            transition: opacity 140ms linear;
+        }
+
+        .frame__tab span {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: rgba(255, 255, 255, 0.62);
+        }
+
+        .frame__tab strong {
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #fff;
+        }
+
+        /* Read-head / selection cue â€” orientation only, no scale.
+           Scale is reserved for hover, keyboard focus, and mobile tap. */
+        .frame.is-active .frame__gate {
+            border-color: rgba(114, 108, 244, 0.55);
+        }
+
+        .frame.is-active .frame__gate img {
+            filter: saturate(0.95) brightness(0.92);
+        }
+
+        .frame.is-active .frame__id {
+            background: rgba(114, 108, 244, 0.42);
+            color: #fff;
+        }
+
+        /* The pop-out: lifted clear of the strip, covering the sprockets.
+           --pop-x nudges edge frames inward so the enlarge stays inside the gate. */
+        .frame.is-popped {
+            transform: translate3d(var(--pop-x, 0px), calc(-1 * var(--pop-lift)), 0) scale(var(--pop-scale));
+            z-index: 5;
+        }
+
+        .frame.is-popped .frame__gate {
+            border-color: var(--blue);
+            box-shadow: 0 24px 56px rgba(0, 0, 0, 0.7);
+        }
+
+        .frame.is-popped .frame__gate img { filter: none; }
+        .frame.is-popped .frame__tab { opacity: 1; }
+
+        .frame.is-popped .frame__id {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .frame:focus-visible { outline: none; }
+
+        .frame:focus-visible .frame__gate {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 2px rgba(114, 108, 244, 0.5), 0 24px 56px rgba(0, 0, 0, 0.7);
+        }
+
+        /* ---- transport + readout ---- */
+        .reel__transport {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.34);
+        }
+
+        .reel__gauge {
+            position: relative;
+            flex: 1;
+            height: 1px;
+            background: var(--hair);
+        }
+
+        .reel__gauge span {
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 0;
+            background: var(--blue);
+        }
+
+        .reel__pos { white-space: nowrap; }
+        .reel__pos b { color: rgba(255, 255, 255, 0.8); font-weight: 400; }
+
+        .reel__readout {
+            display: grid;
+            grid-template-columns: minmax(0, 168px) minmax(0, 1fr);
+            gap: 18px 48px;
+            align-items: start;
+            padding-top: 20px;
+            border-top: 1px solid var(--hair);
+        }
+
+        .reel__meta {
+            margin: 0;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            line-height: 1.95;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .reel__meta b {
+            display: block;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .reel__detail h3 {
+            margin: 0 0 8px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: -0.022em;
+            line-height: 1.2;
+            color: #fff;
+        }
+
+        .reel__detail p {
+            margin: 0;
+            max-width: 78ch;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 13.5px;
+            line-height: 1.66;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 560ms ease, transform 640ms cubic-bezier(.16,1,.3,1);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* The hero wall is intentionally absent here â€” see .hero-wall above.
+           Everything else on the page still honours the preference. */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal,
+            .frame,
+            .frame__gate,
+            .frame__gate img,
+            .frame__tab {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* Fewer wall columns as the viewport narrows: 8 â†’ 7 â†’ 6 â†’ 5 â†’ 4 â†’ 3. */
+        @media (max-width: 1400px) {
+            .hero-wall__col:nth-child(8) { display: none; }
+        }
+
+        @media (max-width: 1280px) {
+            .hero-wall__col:nth-child(7) { display: none; }
+        }
+
+        @media (max-width: 1100px) {
+            .hero-wall__col:nth-child(6) { display: none; }
+
+            .reel__readout {
+                grid-template-columns: minmax(0, 148px) minmax(0, 1fr);
+                gap: 16px 32px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-wall__col:nth-child(5) { display: none; }
+
+            .reel__brief {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 20px;
+                align-items: start;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .shell { width: calc(100% - 32px); }
+
+            .hero-content { padding: 78px 0 64px; }
+
+            .page-hero h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); }
+
+            .hero-wall {
+                --wall-gap: 12px;
+                --wall-tilt: -6deg;
+                --tide-x: 7px;
+            }
+
+            .hero-wall__col {
+                --sway-x: 3px;
+                --sway-y: 9px;
+            }
+
+            .hero-wall__stage {
+                inset: -20% -22%;
+            }
+
+            .hero-wall__set img {
+                border-radius: 11px;
+            }
+
+            /* Narrow viewports put the copy over almost the whole wall, so the
+               dark centre has to reach the edges to hold contrast. */
+            .hero-shade {
+                background:
+                    radial-gradient(ellipse 104% 62% at 50% 48%,
+                        rgba(6, 6, 8, 0.9) 0%,
+                        rgba(6, 6, 8, 0.8) 52%,
+                        rgba(6, 6, 8, 0.44) 100%),
+                    linear-gradient(180deg,
+                        rgba(6, 6, 8, 0.8) 0%,
+                        rgba(6, 6, 8, 0) 22%,
+                        rgba(6, 6, 8, 0) 70%,
+                        rgba(6, 6, 8, 0.92) 100%);
+            }
+
+            .ethos {
+                padding: 78px 0 82px;
+            }
+
+            .ethos-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 30px;
+            }
+
+            .ethos-body { padding-top: 0; }
+
+            .reel {
+                --perf-h: 16px;
+                --frame-gap: 8px;
+                /* Sized so a whole frame always has room to pop inside the gate
+                   at these widths: 2 Ã— frame + gap + growth must fit. */
+                --frame-w: clamp(150px, 44vw, 196px);
+                --pop-scale: 1.42;
+                --pop-lift: 18px;
+            }
+
+            .reel__pin {
+                min-height: 100svh;
+                gap: 24px;
+                padding: 88px 0 32px;
+            }
+
+            .reel__spec { margin-bottom: 18px; }
+            .reel__head h2 { margin-bottom: 12px; }
+
+            .reel__controls {
+                margin-left: calc(-1 * var(--reel-gutter, 16px));
+                margin-right: calc(-1 * var(--reel-gutter, 16px));
+                padding: 0 var(--reel-gutter, 16px);
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .reel__controls::-webkit-scrollbar { display: none; }
+            .reel__filters button { flex: 0 0 auto; }
+
+            .reel__viewport { padding: 36px 0; }
+            .reel__film { inset: 36px 0; }
+            .reel__strip { padding: calc(var(--perf-h) + 10px) 0; }
+
+            .reel__readout {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 14px;
+            }
+
+            .reel__meta { line-height: 1.8; }
+            .reel__detail p { -webkit-line-clamp: 3; }
+        }
+
+        @media (max-width: 560px) {
+            .hero-wall__col:nth-child(4) { display: none; }
+
+            /* Everything in the pinned composition has to clear the fold on a
+               phone, so tighten the rhythm rather than let the readout fall off
+               the bottom. */
+            .reel__pin {
+                gap: 18px;
+                padding: 76px 0 26px;
+            }
+
+            /* One clean instrument line â€” the platform list is in the pills. */
+            .reel__spec {
+                gap: 12px;
+                margin-bottom: 14px;
+            }
+
+            .reel__spec-rule,
+            .reel__spec span:last-child { display: none; }
+
+            .reel__head h2 { margin-bottom: 10px; }
+
+            .reel__brief { gap: 16px; }
+
+            .reel__brief p {
+                font-size: 13.5px;
+                line-height: 1.62;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .reel__readout {
+                gap: 12px;
+                padding-top: 16px;
+            }
+
+            .reel__meta {
+                font-size: 10px;
+                line-height: 1.7;
+            }
+
+            .reel__detail h3 { font-size: 1.15rem; }
+            .reel__detail p { font-size: 13px; -webkit-line-clamp: 2; }
+        }
+    </style>
+</head>
+<body class="portfolio-page">
+    <div id="wrapper">
+        <header class="logo-navbar blnk-header">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+                <div class="header-container">
+                    <div class="inner-overlay"></div>
+                    <div class="row header-row">
+                        <a href="index.html" class="header-logo" aria-label="Nohitatu home">
+                            <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                            <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                        </a>
+                        <div class="col-sm-12 right-menu text-center">
+                            <nav id="slidemenu" aria-label="Primary navigation">
+                                <div class="inner-menu">
+                                    <button class="navbar-toggle nav-menu cross" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                                        <span class="first"></span><span class="second"></span>
+                                    </button>
+                                    <ul id="navigation" class="nav navbar-nav">
+                                        <li class="nav-item"><a href="index.html">HOME</a></li>
+                                        <li class="nav-item">
+                                            <a href="#">CORPORATE</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="About-us.html">About Us</a></li>
+                                                    <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                                                    <li><a href="Clients.html">Clients</a></li>
+                                                    <li><a href="blogs-page.html">Blogs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">EXPLORE NOHITATU</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                                                <li><a href="Tech-skills.html">Tech Skills</a></li>
+                                                <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                                                <li><a href="People.html">People</a></li>
+                                                <li><a href="Our-advantages.html">Our Advantages</a></li>
+                                                <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                                                <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">SOLUTIONS</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Software-Development.html">Software Development</a></li>
+                                                <li><a href="Saas.html">Saas</a></li>
+                                                <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item active"><a href="Portfolio.html" aria-current="page">PORTFOLIO</a></li>
+                                        <li class="nav-item"><a href="Careers.html">CAREER</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="full-screen-menu section fadeIn">
+            <div class="container-fluid"><div class="row">
+                <div class="col-sm-7 menu-content">
+                    <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
+                    <a href="https://nohitatu.com/contact/Contactus.aspx" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                </div>
+                <div class="col-sm-5 right-menu">
+                    <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
+                        <a href="index.html" class="list-group-item main-link">HOME</a>
+                        <a href="#pf-mobile-corporate" class="list-group-item main-link" data-bs-toggle="collapse">CORPORATE <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="pf-mobile-corporate"><ul class="inner-sub-menus">
+                            <li><a href="About-us.html">About Us</a></li>
+                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="Clients.html">Clients</a></li>
+                            <li><a href="blogs-page.html">Blogs</a></li>
+                        </ul></div>
+                        <a href="#pf-mobile-explore" class="list-group-item main-link" data-bs-toggle="collapse">EXPLORE NOHITATU <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="pf-mobile-explore"><ul class="inner-sub-menus">
+                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills.html">Tech Skills</a></li>
+                            <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                            <li><a href="People.html">People</a></li>
+                            <li><a href="Our-advantages.html">Our Advantages</a></li>
+                            <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                        </ul></div>
+                        <a href="#pf-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="pf-mobile-solutions"><ul class="inner-sub-menus">
+                            <li><a href="Software-Development.html">Software Development</a></li>
+                            <li><a href="Saas.html">Saas</a></li>
+                            <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                        </ul></div>
+                        <a href="Portfolio.html" class="list-group-item main-link" aria-current="page">PORTFOLIO</a>
+                        <a href="Careers.html" class="list-group-item main-link">CAREER</a>
+                    </div></div>
+                </div>
+            </div></div>
+        </div>
+
+        <main>
+            <!-- Hero framed like blogs-page.html; wall uses live portfolio product images -->
+            <div class="nh-curtain-stack">
+            <section class="page-hero nh-curtain-banner" id="portfolio-hero" aria-label="Portfolio hero">
+                <div class="hero-wall" aria-hidden="true">
+                    <div class="hero-wall__stage">
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--down">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-cms-1500.webp" width="480" height="309"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-workplace-safety-app.webp" width="480" height="467"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-healthcare-crm.webp" width="480" height="361"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-restaurant-management-app.webp" width="480" height="535"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-restaurant-management.webp" width="480" height="314"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-doctor-appointment-app.webp" width="480" height="399"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-website-design-and-development.webp" width="480" height="291"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-visitors-management-app.webp" width="480" height="454"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-cms-1500.webp" width="480" height="309"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-workplace-safety-app.webp" width="480" height="467"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-healthcare-crm.webp" width="480" height="361"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-restaurant-management-app.webp" width="480" height="535"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-restaurant-management.webp" width="480" height="314"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-doctor-appointment-app.webp" width="480" height="399"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-website-design-and-development.webp" width="480" height="291"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-visitors-management-app.webp" width="480" height="454"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--up">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-medallion-karate.webp" width="480" height="479"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-taxation-app.webp" width="480" height="290"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-hr-and-payroll.webp" width="480" height="386"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-ticket-booking-app.webp" width="480" height="546"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/desktop-fintechesh-desktop.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-sport-event-app.webp" width="480" height="448"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-task-management.webp" width="480" height="370"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-workplace-safety-app.webp" width="480" height="467"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-medallion-karate.webp" width="480" height="479"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-taxation-app.webp" width="480" height="290"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-hr-and-payroll.webp" width="480" height="386"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-ticket-booking-app.webp" width="480" height="546"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/desktop-fintechesh-desktop.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-sport-event-app.webp" width="480" height="448"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-task-management.webp" width="480" height="370"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-workplace-safety-app.webp" width="480" height="467"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--down">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-sales-crm.webp" width="480" height="469"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-mytasky.webp" width="480" height="327"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-medallion-karate.webp" width="480" height="479"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-food-delivery-app.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-healthcare-billing-software.webp" width="480" height="454"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-taxation-app.webp" width="480" height="290"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-hr-and-payroll.webp" width="480" height="386"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-real-estate-sales-crm-app.webp" width="480" height="470"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-sales-crm.webp" width="480" height="469"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-mytasky.webp" width="480" height="327"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-medallion-karate.webp" width="480" height="479"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-food-delivery-app.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-healthcare-billing-software.webp" width="480" height="454"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-taxation-app.webp" width="480" height="290"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-hr-and-payroll.webp" width="480" height="386"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-real-estate-sales-crm-app.webp" width="480" height="470"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--up">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-manamakkal.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-visitors-management-app.webp" width="480" height="454"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-website-design-and-development.webp" width="480" height="291"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-task-management-app.webp" width="401" height="573"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-cms-1500.webp" width="480" height="309"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-restaurant-management-app.webp" width="480" height="535"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-healthcare-crm.webp" width="480" height="361"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-sport-event-app.webp" width="480" height="448"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-manamakkal.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-visitors-management-app.webp" width="480" height="454"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-website-design-and-development.webp" width="480" height="291"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-task-management-app.webp" width="401" height="573"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-cms-1500.webp" width="480" height="309"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-restaurant-management-app.webp" width="480" height="535"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-healthcare-crm.webp" width="480" height="361"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-sport-event-app.webp" width="480" height="448"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--down">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-dojoman-event-management.webp" width="480" height="327"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-doctor-appointment-app.webp" width="480" height="399"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-performance-management-system.webp" width="480" height="304"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-workplace-safety-app.webp" width="480" height="467"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-manamakkal.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-ticket-booking-app.webp" width="480" height="546"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-sales-crm.webp" width="480" height="469"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-food-delivery-app.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-dojoman-event-management.webp" width="480" height="327"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-doctor-appointment-app.webp" width="480" height="399"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-performance-management-system.webp" width="480" height="304"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-workplace-safety-app.webp" width="480" height="467"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-manamakkal.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-ticket-booking-app.webp" width="480" height="546"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-sales-crm.webp" width="480" height="469"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-food-delivery-app.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--up">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-healthcare-billing-software.webp" width="480" height="454"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-smart-fitness-app.webp" width="480" height="354"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-sales-crm.webp" width="480" height="469"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-fintechesh-mobile.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-medallion-karate.webp" width="480" height="479"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-mytasky.webp" width="480" height="327"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-performance-management-system.webp" width="480" height="304"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-doctor-appointment-app.webp" width="480" height="399"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-healthcare-billing-software.webp" width="480" height="454"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-smart-fitness-app.webp" width="480" height="354"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-sales-crm.webp" width="480" height="469"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-fintechesh-mobile.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-medallion-karate.webp" width="480" height="479"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-mytasky.webp" width="480" height="327"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-performance-management-system.webp" width="480" height="304"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-doctor-appointment-app.webp" width="480" height="399"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--down">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-healthcare-software-suite.webp" width="480" height="279"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-real-estate-sales-crm-app.webp" width="480" height="470"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-sport-event-platform.webp" width="480" height="332"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-visitors-management-app.webp" width="480" height="454"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-dojoman-event-management.webp" width="480" height="327"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-task-management-app.webp" width="401" height="573"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-real-estate-sales-crm.webp" width="480" height="328"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-restaurant-management-app.webp" width="480" height="535"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-healthcare-software-suite.webp" width="480" height="279"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-real-estate-sales-crm-app.webp" width="480" height="470"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-sport-event-platform.webp" width="480" height="332"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-visitors-management-app.webp" width="480" height="454"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-dojoman-event-management.webp" width="480" height="327"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-task-management-app.webp" width="401" height="573"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-real-estate-sales-crm.webp" width="480" height="328"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-restaurant-management-app.webp" width="480" height="535"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-wall__col">
+                            <div class="hero-wall__track hero-wall__track--up">
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-task-management.webp" width="480" height="370"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-sport-event-app.webp" width="480" height="448"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-real-estate-sales-crm.webp" width="480" height="328"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-real-estate-sales-crm-app.webp" width="480" height="470"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-healthcare-software-suite.webp" width="480" height="279"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-smart-fitness-app.webp" width="480" height="354"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/web-healthcare-billing-software.webp" width="480" height="454"
+                                         alt="" decoding="async" />
+                                    <img src="images/portfolio/wall/mobile-fintechesh-mobile.webp" width="480" height="324"
+                                         alt="" decoding="async" />
+                                </div>
+                                <div class="hero-wall__set">
+                                    <img src="images/portfolio/wall/web-task-management.webp" width="480" height="370"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-sport-event-app.webp" width="480" height="448"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-real-estate-sales-crm.webp" width="480" height="328"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-real-estate-sales-crm-app.webp" width="480" height="470"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-healthcare-software-suite.webp" width="480" height="279"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-smart-fitness-app.webp" width="480" height="354"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/web-healthcare-billing-software.webp" width="480" height="454"
+                                         alt="" decoding="async" loading="lazy" />
+                                    <img src="images/portfolio/wall/mobile-fintechesh-mobile.webp" width="480" height="324"
+                                         alt="" decoding="async" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Looping export of this same wall, for social / reuse:
+                     images/portfolio/portfolio-hero-pinterest-wall.mp4 -->
+
+                <div class="hero-shade" aria-hidden="true"></div>
+                <div class="shell hero-content">
+                    <p class="page-kicker">Nohitatu Portfolio Â· Web Â· Mobile Â· Desktop</p>
+                    <h1>Products that turn complexity into <em>clarity.</em></h1>
+                    <p class="hero-note">Twenty-nine products across healthcare, CRM, fintech, sport, and operations â€” loaded onto a single reel you can run frame by frame.</p>
+                    <div class="hero-actions">
+                        <a class="primary" href="https://nohitatu.com/contact/Contactus.aspx">Request a demo</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ethos nh-curtain-panel" aria-labelledby="ethos-heading">
+                <div class="shell ethos-grid">
+                    <p class="eyebrow">Practice</p>
+                    <h2 class="ethos-statement reveal" id="ethos-heading">We build the software that runs the <em>unglamorous middle</em> of a business.</h2>
+                    <div class="ethos-body reveal">
+                        <p>Claims adjudication, payroll cycles, appraisal rounds, kitchen tickets, tournament brackets. The work that decides whether an organisation runs smoothly, and that almost never gets designed properly.</p>
+                        <p>Every module below shipped for a real operator â€” healthcare, CRM, fintech, sport, hospitality â€” and is available as a starting point rather than a blank page.</p>
+                    </div>
+                </div>
+            </section>
+            </div><!-- /.nh-curtain-stack -->
+
+            <section class="reel" id="reel" aria-labelledby="reel-heading">
+                <div class="reel__pin">
+                    <div class="reel__head shell">
+                        <p class="reel__spec">
+                            <span>Reel 01</span>
+                            <span class="reel__spec-rule" aria-hidden="true"></span>
+                            <span>16:10 gate</span>
+                            <span class="reel__spec-rule" aria-hidden="true"></span>
+                            <span>Web Â· Mobile Â· Desktop</span>
+                        </p>
+                        <h2 id="reel-heading">Completed projects</h2>
+                        <div class="reel__brief">
+                            <p>Twenty-nine products we have built and shipped, loaded onto one strip. Point at a frame to pull it out of the gate and read its specification; scroll or drag to run the reel.</p>
+                            <div class="reel__controls">
+                                <div class="reel__filters" role="tablist" aria-label="Filter the reel by platform">
+                                    <button type="button" class="is-active" data-filter="web" role="tab" aria-selected="true">Web</button>
+                                    <button type="button" data-filter="mobile" role="tab" aria-selected="false">Mobile</button>
+                                    <button type="button" data-filter="desktop" role="tab" aria-selected="false">Desktop</button>
+                                </div>
+                                <span class="reel__tally" data-reel-tally aria-live="polite">15 / 29</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reel__viewport" data-reel-viewport>
+                        <div class="reel__film" data-reel-film aria-hidden="true"></div>
+                        <div class="reel__strip" data-reel-strip role="listbox" aria-label="Completed projects â€” use the arrow keys to run the strip">
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web desktop" data-id="F01" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
+                                 data-title="CMS 1500" data-client="USA" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="The 837P (Professional) is the standard format used by health care professionals and suppliers to transmit health care claims electronically. The Form CMS-1500 is the standard paper claim form to bill Medicare Fee-For-Service (FFS) Contractors when a paper claim is allowed."
+                                 aria-label="CMS 1500 â€” Web Â· Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/1-cms-1500.webp" alt="CMS 1500 product screenshot" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F01</span>
+                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>CMS 1500</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web desktop" data-id="F02" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
+                                 data-title="Medallion Karate" data-client="Medallion karate" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Web gives information about the karate updates. Integrated with mail server, mobile responsive, one-page website with gallery view."
+                                 aria-label="Medallion Karate â€” Web Â· Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/2-medallion-karate.webp" alt="Medallion Karate website" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F02</span>
+                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>Medallion Karate</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F03" data-code="WEB" data-long="Web"
+                                 data-title="Sales CRM" data-client="In-house product" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="CRM cloud apps provide real-time visibility into their teamâ€™s activities so they can forecast sales with confidence. For sales reps, CRM cloud apps make it easy to manage customer information so reps spend less time handling data and more time with customers."
+                                 aria-label="Sales CRM â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/3-sales-crm.webp" alt="Sales CRM dashboard" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F03</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Sales CRM</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F04" data-code="WEB" data-long="Web"
+                                 data-title="Ecommerce App" data-client="India" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the orderâ€™s status. Free shipping &amp; cash on delivery."
+                                 aria-label="Ecommerce App â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/4-ecommerce-app.webp" alt="Ecommerce App" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F04</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Ecommerce App</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F05" data-code="WEB" data-long="Web"
+                                 data-title="Manamakkal" data-client="India" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Aim is to provide a unique matrimonial service to the Tamil community no matter where you are based, to help you find the perfect match. There used to be time when people thought its odd to search for life partner on the net, but now more and more people are joining online matrimonial websites to find their match."
+                                 aria-label="Manamakkal â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/5-manamakkal.webp" alt="Manamakkal matrimonial platform" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F05</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Manamakkal</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F06" data-code="WEB" data-long="Web"
+                                 data-title="Dojoman Event Management software" data-client="In-house project" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Exclusive software solution for karate activities, it helps tournament organizer to easily generate fixtures and reports in a minute. Attaining features such as Online registration, Live scoring, Live streaming videos, Online fee payment and more."
+                                 aria-label="Dojoman Event Management software â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/6-dojoman-event-management-software.webp" alt="Dojoman Event Management software" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F06</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Dojoman Event Management software</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F07" data-code="WEB" data-long="Web"
+                                 data-title="Healthcare billing software" data-client="USA" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="The software is a great product for Doctor as well, though our client mainly uses it for patient and charge entry. Checking eligibility is easy and quick and the services are great."
+                                 aria-label="Healthcare billing software â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/7-healthcare-billing-software.webp" alt="Healthcare billing software" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F07</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Healthcare billing software</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F08" data-code="WEB" data-long="Web"
+                                 data-title="Task Management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Help improve business processes by analyzing exactly where time is being spent."
+                                 aria-label="Task Management â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/8-task-management.webp" alt="Task Management dashboard" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F08</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Task Management</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F09" data-code="WEB" data-long="Web"
+                                 data-title="Healthcare CRM" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Provides the best analytics with real-time view combined with customizable smart reporting and dashboards. Healthcare CRM helps systematize interaction with patients and referring providers, personalize medical services promotion, improve care quality and patient satisfaction."
+                                 aria-label="Healthcare CRM â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/9-healthcare-crm.webp" alt="Healthcare CRM analytics" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F09</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Healthcare CRM</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web desktop" data-id="F10" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
+                                 data-title="HR and Payroll" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="The Human Resource department performs various activities such as payroll processing, maintaining salary details of every employee in the organization, keeping track of deductions, time and attendance, loans, allowances, and bonuses."
+                                 aria-label="HR and Payroll â€” Web Â· Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/10-hr-and-payroll.webp" alt="HR and Payroll application" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F10</span>
+                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>HR and Payroll</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F11" data-code="WEB" data-long="Web"
+                                 data-title="Website Design &amp; development" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="An effective website design should fulfill its intended function by conveying its particular message whilst simultaneously engaging the visitor. A good web design helps you keep your leads on your page. Website development is a way to make people aware of the services and/or products you are offering."
+                                 aria-label="Website Design &amp; development â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/11-website-design-development.webp" alt="Website design and development" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F11</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Website Design &amp; development</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F12" data-code="WEB" data-long="Web"
+                                 data-title="Sport event" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps â€” anytime, anywhere. Online Sports Registration, Online Payment Processing, Financial Management can also be done using this software."
+                                 aria-label="Sport event â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/12-sport-event.webp" alt="Sport event software" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F12</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Sport event</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web" data-id="F13" data-code="WEB" data-long="Web"
+                                 data-title="Real Estate" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management."
+                                 aria-label="Real Estate â€” Web">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/13-real-estate.webp" alt="Real Estate CRM" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F13</span>
+                                    <span class="frame__tab"><span>WEB</span><strong>Real Estate</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web desktop" data-id="F14" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
+                                 data-title="Performance Management System" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Performance Management Systems help Employees and Managers to set goals and track progress with shared tracking tools. Essentially, performance management is what organizations do to become more successful and stay ahead of their competitors."
+                                 aria-label="Performance Management System â€” Web Â· Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/14-performance-management-system.webp" alt="Performance Management System" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F14</span>
+                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>Performance Management System</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="web desktop" data-id="F15" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
+                                 data-title="Restaurant Management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables."
+                                 aria-label="Restaurant Management â€” Web Â· Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/15-restaurant-management.webp" alt="Restaurant Management" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F15</span>
+                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>Restaurant Management</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F16" data-code="MOB" data-long="Mobile"
+                                 data-title="WorkPlace Safety App" data-client="Singapore" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Application to maintain your facility, the features will be, Inspection, Incident, Regular Audit, Event manager, Assets, Work order reports, My profile, Push notification for emergency exist, QR code scanning for attendance, Report sharing, Calendar."
+                                 aria-label="WorkPlace Safety App â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/16-workplace-safety-app.webp" alt="WorkPlace Safety App" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F16</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>WorkPlace Safety App</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F17" data-code="MOB" data-long="Mobile"
+                                 data-title="Taxation App" data-client="USA" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Customer installs app and follows instructions to submit documents needed to process his/her tax return. Customer E-signs documents via app and submits signed documents to office. Tax return will get collected in customer inbox. Customer pay the fee through app."
+                                 aria-label="Taxation App â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/17-taxation-app.webp" alt="Taxation App" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F17</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Taxation App</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F18" data-code="MOB" data-long="Mobile"
+                                 data-title="Mytasky App" data-client="Singapore" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Mytasky app to monitor your task without delay. Gives everything you need to create team projects, assign and schedule tasks, and track progress so that nothing falls through the cracks. It's extremely easy to use you'll be up and running in minutes."
+                                 aria-label="Mytasky App â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/18-mytasky-app.webp" alt="Mytasky App" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F18</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Mytasky App</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F19" data-code="MOB" data-long="Mobile"
+                                 data-title="Visitors management app" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Smart Visit is a smart visitor management system with secure check-in application to offer your guests a splendid welcome. Enhance your front desk operations with use of Smart Visit to make it more secure and efficient."
+                                 aria-label="Visitors management app â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/19-visitors-management-app.webp" alt="Visitors management app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F19</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Visitors management app</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F20" data-code="MOB" data-long="Mobile"
+                                 data-title="Doctor Appointment" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Make it easier for customers to provide feedback with forms optimized for mobile. Set up appointments for your patients in the most effective way with the help of the Appointment Scheduling App. The doctors will be able to access, reception and appointments, everything in one calendar."
+                                 aria-label="Doctor Appointment â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/20-doctor-appointment.webp" alt="Doctor Appointment app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F20</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Doctor Appointment</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F21" data-code="MOB" data-long="Mobile"
+                                 data-title="Real Estate / CRM" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management."
+                                 aria-label="Real Estate / CRM â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/21-real-estate-crm.webp" alt="Real Estate CRM mobile app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F21</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Real Estate / CRM</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F22" data-code="MOB" data-long="Mobile"
+                                 data-title="Sport Event" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps â€” anytime, anywhere."
+                                 aria-label="Sport Event â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/22-sport-event.webp" alt="Sport Event mobile app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F22</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Sport Event</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F23" data-code="MOB" data-long="Mobile"
+                                 data-title="Smart Fitness" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="With the Fitness App, you can start tracking your workouts and meals, measuring results, and achieving your fitness goals, all with the help of your personal trainer. The purpose of a fitness app is to provide the user with instructions and examples of one or more types of exercise, physical activity, nutritional programs, or some other fitness topic."
+                                 aria-label="Smart Fitness â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/23-smart-fitness.webp" alt="Smart Fitness app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F23</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Smart Fitness</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F24" data-code="MOB" data-long="Mobile"
+                                 data-title="Restaurant management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables. Make it easier for customers to provide feedback with forms optimized for mobile."
+                                 aria-label="Restaurant management â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/24-restaurant-management.webp" alt="Restaurant management mobile app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F24</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Restaurant management</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F25" data-code="MOB" data-long="Mobile"
+                                 data-title="Ticket Booking" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Online Movie Ticket Booking System is a website to provide the customerâ€™s facility to book tickets for a movie online and to gather information about the movies and theaters. Customers need to register at the site to book tickets to the movie. After selecting the show, the user is presented with a seating layout so that he can select seats of his choice."
+                                 aria-label="Ticket Booking â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/25-ticket-booking.webp" alt="Ticket Booking app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F25</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Ticket Booking</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F26" data-code="MOB" data-long="Mobile"
+                                 data-title="Food delivery" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Online ordering management software can be used by independent and small restaurants, restaurant chains, coffee shops, quick-service restaurants, and fast-casual restaurants alike â€” in short, every kind of food business that offers delivery as a service."
+                                 aria-label="Food delivery â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/26-food-delivery.webp" alt="Food delivery app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F26</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Food delivery</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile" data-id="F27" data-code="MOB" data-long="Mobile"
+                                 data-title="Task Management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Task management software empowers teams to work more productively and efficiently."
+                                 aria-label="Task Management â€” Mobile">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/27-task-management.webp" alt="Task Management mobile app" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F27</span>
+                                    <span class="frame__tab"><span>MOB</span><strong>Task Management</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="mobile desktop" data-id="F28" data-code="MOBÂ·DSK" data-long="Mobile Â· Desktop"
+                                 data-title="FinTechesh" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience."
+                                 aria-label="FinTechesh â€” Mobile Â· Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/28-fintechesh.webp" alt="FinTechesh mobile" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F28</span>
+                                    <span class="frame__tab"><span>MOBÂ·DSK</span><strong>FinTechesh</strong></span>
+                                </span>
+                            </div>
+                            <div class="frame" role="option" tabindex="-1" aria-selected="false"
+                                 data-tags="desktop" data-id="F29" data-code="DSK" data-long="Desktop"
+                                 data-title="FinTechesh" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience."
+                                 aria-label="FinTechesh â€” Desktop">
+                                <span class="frame__gate">
+                                    <img src="images/portfolio/reel/29-fintechesh.webp" alt="FinTechesh desktop" width="600" height="375" loading="lazy" decoding="async">
+                                    <span class="frame__id">F29</span>
+                                    <span class="frame__tab"><span>DSK</span><strong>FinTechesh</strong></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reel__transport shell">
+                        <span>Scroll Â· drag Â· &#8592; &#8594;</span>
+                        <span class="reel__gauge" aria-hidden="true"><span data-reel-gauge></span></span>
+                        <span class="reel__pos"><b data-reel-pos>01</b> / <span data-reel-of>15</span></span>
+                    </div>
+
+                    <div class="reel__readout shell" data-reel-readout>
+                        <p class="reel__meta">
+                            <b data-reel-id>F01</b>
+                            <span data-reel-code>Web</span><br>
+                            <span data-reel-client>Client â€” USA</span>
+                        </p>
+                        <div class="reel__detail">
+                            <h3 data-reel-title>CMS 1500</h3>
+                            <p data-reel-desc></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="estimate footer-reveal-cta">
+                <div class="footer-reveal-shell">
+                    <div class="estimate-panel">
+                        <div class="estimate-copy">
+                            <span>Letâ€™s work together</span>
+                            <h2>Have a product or module in mind? Tell us what youâ€™re building.</h2>
+                        </div>
+                        <a class="estimate-button" href="https://nohitatu.com/contact/Contactus.aspx">
+                            Request for demo <span aria-hidden="true">â†’</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer site-footer">
+            <div class="inner-footer"><div class="container"><div class="footer-grid">
+                <div class="footer-col footer-offices">
+                    <h3 class="footer-heading">Offices</h3>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/india-flag.png" alt="" width="18" height="12" /><span>India Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V14h6v12M14 26V8h8v18M24 26V16h5v10M31 26V6h7v20M40 26V12h6v14M48 26V10h8v16" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>#402, 403 &amp; 405, 4th Floor, City Centre,<br>186/43 Purasawalkam High Road,<br>Chennai - 600010, Tamilnadu, India.</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/singapore-flag.png" alt="" width="18" height="12" /><span>Singapore Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M8 26V12h7v14M18 26V7h6v19M27 26V14h5v12M35 26V4c4 3 8 3 12 0v22M50 26V11h8v15" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>71 Bukit Batok Crescent,<br>#05-07 Prestige Centre,<br>Singapore 658071</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
+                </div>
+                <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
+                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
+                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="Vision-and-values.html">Vision and Values</a></li><li><a href="People.html">People</a></li><li><a href="Our-advantages.html">Our Advantages</a></li><li><a href="Who-need-us.html">Who Need Us?</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
+                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="https://nohitatu.com/contact/Contactus.aspx">Contact</a></li>
+                </ul></div>
+                <div class="footer-col footer-contact">
+                    <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
+                    <a class="footer-phone" href="tel:+16072470227"><span class="footer-phone-number">+1 (607) 247-0227</span></a>
+                    <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
+                    <div class="footer-contact-meta"><a href="skype:sales.nohitatu">Skype: sales.nohitatu</a><a href="mailto:info@nohitatu.com">info@nohitatu.com</a></div>
+                </div>
+            </div></div></div>
+            <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
+                <!-- custom.js refreshes #copyRight with the current year; scoping the
+                     id to the first span keeps the rest of the line intact. -->
+                <div class="footer-copy"><span id="copyRight">Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and offshore software development company. All rights reserved.</span></div>
+                <div class="social-icons"><a href="https://www.facebook.com/nohitatu/" class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a><a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a><a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a><a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a></div>
+            </div></div></div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            const toggle = document.querySelector(".navbar-toggle.nav-menu");
+            const menu = document.querySelector(".full-screen-menu");
+            if (!toggle || !menu) return;
+            const setMenuState = (open) => {
+                toggle.classList.toggle("open", open);
+                menu.classList.toggle("show", open);
+                document.body.classList.toggle("fixed", open);
+                toggle.setAttribute("aria-expanded", String(open));
+            };
+            toggle.addEventListener("click", () => setMenuState(!menu.classList.contains("show")));
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") setMenuState(false);
+            });
+        })();
+
+        // Wall costs nothing while the hero is scrolled away.
+        (() => {
+            const wall = document.querySelector(".hero-wall");
+            if (!wall || !("IntersectionObserver" in window)) return;
+            const observer = new IntersectionObserver(
+                (entries) => entries.forEach((entry) => {
+                    wall.classList.toggle("is-paused", !entry.isIntersecting);
+                }),
+                { threshold: 0 }
+            );
+            observer.observe(wall);
+        })();
+
+        (() => {
+            const nodes = [...document.querySelectorAll(".reveal")];
+            if (!nodes.length) return;
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+                nodes.forEach((n) => n.classList.add("is-visible"));
+                return;
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+            nodes.forEach((n, i) => {
+                n.style.transitionDelay = `${(i % 6) * 45}ms`;
+                observer.observe(n);
+            });
+        })();
+
+        /* â”€â”€ Module reel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+           Page scroll is the single source of truth for how far the strip has
+           travelled; drag and keyboard jumps move the scroll rather than the
+           strip, so nothing can desync. The read-head updates the readout /
+           active index / gauge, but scale-up is hover + keyboard focus only on
+           fine pointers. On touch (no hover), tap-to-pop centres and enlarges
+           a frame until the next scroll/drag or another tap. */
+        (() => {
+            const reel = document.getElementById("reel");
+            if (!reel) return;
+
+            const viewport = reel.querySelector("[data-reel-viewport]");
+            const strip = reel.querySelector("[data-reel-strip]");
+            const film = reel.querySelector("[data-reel-film]");
+            const head = reel.querySelector(".reel__head");
+            const readout = reel.querySelector("[data-reel-readout]");
+            const gauge = reel.querySelector("[data-reel-gauge]");
+            const posEl = reel.querySelector("[data-reel-pos]");
+            const ofEl = reel.querySelector("[data-reel-of]");
+            const tally = reel.querySelector("[data-reel-tally]");
+            const frames = [...reel.querySelectorAll(".frame")];
+            const filters = [...reel.querySelectorAll(".reel__filters button")];
+            const out = {
+                id: reel.querySelector("[data-reel-id]"),
+                code: reel.querySelector("[data-reel-code]"),
+                client: reel.querySelector("[data-reel-client]"),
+                title: reel.querySelector("[data-reel-title]"),
+                desc: reel.querySelector("[data-reel-desc]"),
+            };
+            if (!viewport || !strip || !frames.length) return;
+
+            // Strip pixels travelled per pixel of page scroll.
+            const GEAR = 1.35;
+            const DEFAULT_FILTER = "web";
+            const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+            const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+            const pad2 = (n) => String(n).padStart(2, "0");
+            const reelTop = () => reel.getBoundingClientRect().top + window.scrollY;
+            const range = () => Math.max(1, reel.offsetHeight - window.innerHeight);
+
+            let shown = [];
+            let travel = 0;
+            let progress = 0;
+            let active = -1;
+            let hovered = -1;
+            let popped = -1;
+            let tapPop = -1; // coarse pointers: last tapped frame, cleared on scroll
+            let lock = 0;
+            let dirty = true;
+            let running = false;
+            let onScreen = false;
+
+            /* ---- measurement ---- */
+            function measure() {
+                // Align the first frame with the page's shell edge exactly.
+                const gutter = head ? Math.round(head.getBoundingClientRect().left) : 24;
+                reel.style.setProperty("--reel-gutter", gutter + "px");
+                travel = Math.max(0, (gutter * 2) + strip.scrollWidth - viewport.clientWidth);
+                reel.style.setProperty("--reel-travel", Math.round(travel / GEAR) + "px");
+            }
+
+            function render() {
+                const x = -progress * travel;
+                strip.style.transform = `translate3d(${x}px, 0, 0)`;
+                if (film) film.style.setProperty("--perf-shift", `${x}px`);
+                if (gauge) gauge.style.width = `${(progress * 100).toFixed(2)}%`;
+            }
+
+            /* ---- selection ---- */
+            function paintReadout(i) {
+                const f = shown[i];
+                if (!f) return;
+                if (out.id) out.id.textContent = f.dataset.id;
+                if (out.code) out.code.textContent = f.dataset.long;
+                if (out.client) {
+                    const client = f.dataset.client;
+                    out.client.textContent = !client ? "In-house product"
+                        : /in-house/i.test(client) ? client
+                            : `Client â€” ${client}`;
+                }
+                if (out.title) out.title.textContent = f.dataset.title;
+                if (out.desc) out.desc.textContent = f.dataset.desc;
+                if (posEl) posEl.textContent = pad2(i + 1);
+                if (readout && readout.animate) {
+                    readout.animate(
+                        [{ opacity: 0.3, transform: "translateY(3px)" }, { opacity: 1, transform: "none" }],
+                        { duration: 150, easing: "cubic-bezier(.2, .7, .2, 1)" }
+                    );
+                }
+            }
+
+            function clearPopped() {
+                if (popped < 0) return;
+                const f = shown[popped] || frames.find((el) => el.classList.contains("is-popped"));
+                if (f) {
+                    f.classList.remove("is-popped");
+                    f.style.removeProperty("--pop-x");
+                }
+                popped = -1;
+            }
+
+            function setPopped(i) {
+                if (!shown.length || i < 0) {
+                    clearPopped();
+                    return;
+                }
+                i = clamp(i, 0, shown.length - 1);
+                if (i === popped) {
+                    shown[i].style.setProperty("--pop-x", `${popNudge(i)}px`);
+                    return;
+                }
+                clearPopped();
+                const f = shown[i];
+                f.style.setProperty("--pop-x", `${popNudge(i)}px`);
+                f.classList.add("is-popped");
+                popped = i;
+            }
+
+            /* Resolve which frame (if any) should be scaled. Head position never
+               forces a pop â€” only hover, keyboard focus-visible, or a sticky tap. */
+            function syncPop() {
+                let want = -1;
+                if (hovered >= 0) {
+                    want = hovered;
+                } else if (tapPop >= 0 && tapPop < shown.length) {
+                    want = tapPop;
+                } else if (fine.matches) {
+                    const ae = document.activeElement;
+                    if (ae && ae.classList && ae.classList.contains("frame")) {
+                        let kb = false;
+                        try { kb = ae.matches(":focus-visible"); } catch (err) { kb = true; }
+                        if (kb) {
+                            const i = shown.indexOf(ae);
+                            if (i >= 0) want = i;
+                        }
+                    }
+                }
+                setPopped(want);
+            }
+
+            function select(i, opts) {
+                if (!shown.length) return;
+                i = clamp(i, 0, shown.length - 1);
+                const options = opts || {};
+                if (i !== active) {
+                    const prev = shown[active];
+                    if (prev) {
+                        prev.classList.remove("is-active");
+                        prev.setAttribute("aria-selected", "false");
+                        prev.tabIndex = -1;
+                    }
+                    active = i;
+                    const f = shown[i];
+                    f.classList.add("is-active");
+                    f.setAttribute("aria-selected", "true");
+                    f.tabIndex = 0;
+                    paintReadout(i);
+                }
+                if (options.centre) travelTo(i);
+                if (options.focus) shown[i].focus({ preventScroll: true });
+                if (options.pop) {
+                    tapPop = i;
+                    setPopped(i);
+                } else {
+                    syncPop();
+                }
+            }
+
+            /* Nudge a popped frame horizontally when scale would clip the gate.
+               Positive = right, so left-edge frames grow inward. */
+            function popNudge(i) {
+                const scale = parseFloat(getComputedStyle(reel).getPropertyValue("--pop-scale")) || 1.65;
+                const f = shown[i];
+                const fw = f.offsetWidth;
+                const pad = (fw * (scale - 1)) / 2;
+                const box = viewport.getBoundingClientRect();
+                const r = f.getBoundingClientRect();
+                // Use layout centre (pre-scale) when this frame is already popped.
+                const c = (i === popped)
+                    ? r.left + (r.width / 2) - (parseFloat(f.style.getPropertyValue("--pop-x")) || 0)
+                    : r.left + (r.width / 2);
+                const leftSlack = c - (fw / 2) - pad - box.left;
+                const rightSlack = box.right - c - (fw / 2) - pad;
+                if (leftSlack < 0 && rightSlack < 0) return (rightSlack - leftSlack) / 2;
+                if (leftSlack < 0) return -leftSlack;
+                if (rightSlack < 0) return rightSlack;
+                return 0;
+            }
+
+            /* The read head sweeps the gate from left to right as the reel
+               runs, so frame one is read at the head of the strip and the last
+               frame at the end. Everything below is expressed against it. */
+            function headGeometry() {
+                const box = viewport.getBoundingClientRect();
+                const fw = shown.length ? shown[0].offsetWidth : 0;
+                const gutter = parseFloat(getComputedStyle(strip).marginLeft) || 0;
+                const sweep = Math.max(0, box.width - (gutter * 2) - fw);
+                return { box, fw, gutter, sweep, head: box.left + gutter + (fw / 2) + (progress * sweep) };
+            }
+
+            function travelTo(i) {
+                if (travel <= 0 || shown.length < 2) return;
+                const g = headGeometry();
+                // Progress at which the head lands on this frame's centre.
+                const want = clamp(shown[i].offsetLeft / (travel + g.sweep), 0, 1);
+                // Hold off head-tracking while the programmatic scroll runs.
+                lock = performance.now() + 700;
+                window.scrollTo({ top: reelTop() + (want * range()), behavior: "smooth" });
+            }
+
+            function headIndex() {
+                if (shown.length < 2) return 0;
+                const g = headGeometry();
+                // The pop-out grows the frame, so only consider frames with
+                // room to grow inside the gate â€” nothing pops half off-screen.
+                const scale = parseFloat(getComputedStyle(reel).getPropertyValue("--pop-scale")) || 1.65;
+                const pad = (g.fw * (scale - 1)) / 2;
+                let best = -1;
+                let bd = Infinity;
+                let roomiest = 0;
+                let most = -Infinity;
+                for (let i = 0; i < shown.length; i += 1) {
+                    const r = shown[i].getBoundingClientRect();
+                    const c = r.left + (r.width / 2);
+                    const d = Math.abs(c - g.head);
+                    const slack = Math.min(
+                        c - (g.fw / 2) - pad - g.box.left,
+                        g.box.right - c - (g.fw / 2) - pad
+                    );
+                    if (slack > most) { most = slack; roomiest = i; }
+                    if (slack >= 0 && d < bd) { bd = d; best = i; }
+                }
+                // If the gate is too narrow for any frame to grow cleanly, take
+                // the one with the most room rather than the closest.
+                return best < 0 ? roomiest : best;
+            }
+
+            /* ---- scroll loop ---- */
+            function readScroll() {
+                progress = clamp((window.scrollY - reelTop()) / range(), 0, 1);
+            }
+
+            function paint() {
+                running = false;
+                if (!dirty) return;
+                dirty = false;
+                render();
+                // Head tracks selection / readout only â€” never forces a scale.
+                if (hovered < 0 && performance.now() > lock) select(headIndex());
+                else syncPop();
+            }
+
+            function kick() {
+                if (running) return;
+                running = true;
+                requestAnimationFrame(paint);
+            }
+
+            window.addEventListener("scroll", () => {
+                if (!onScreen) return;
+                // User scroll (after any programmatic centre lock) clears a
+                // sticky tap-pop so nothing stays stuck large while scrubbing.
+                // Keyboard focus-visible can still keep a pop via syncPop.
+                if (tapPop >= 0 && hovered < 0 && performance.now() > lock) {
+                    tapPop = -1;
+                    syncPop();
+                }
+                readScroll();
+                dirty = true;
+                kick();
+            }, { passive: true });
+
+            window.addEventListener("resize", () => {
+                measure();
+                readScroll();
+                dirty = true;
+                kick();
+            }, { passive: true });
+
+            /* ---- filtering ---- */
+            function applyFilter(key, rewind) {
+                frames.forEach((f) => {
+                    const match = f.dataset.tags.split(" ").indexOf(key) > -1;
+                    f.classList.toggle("is-out", !match);
+                    f.classList.remove("is-active", "is-popped");
+                    f.setAttribute("aria-selected", "false");
+                    f.tabIndex = -1;
+                    f.style.removeProperty("--pop-x");
+                });
+                shown = frames.filter((f) => !f.classList.contains("is-out"));
+                active = -1;
+                hovered = -1;
+                popped = -1;
+                tapPop = -1;
+                if (tally) tally.textContent = `${shown.length} / ${frames.length}`;
+                if (ofEl) ofEl.textContent = pad2(shown.length);
+                measure();
+                // A new selection means a new reel: run it from the head.
+                if (rewind && window.scrollY > reelTop()) {
+                    window.scrollTo({ top: reelTop(), behavior: "instant" });
+                }
+                readScroll();
+                render();
+                select(0);
+            }
+
+            filters.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    filters.forEach((b) => {
+                        const on = b === btn;
+                        b.classList.toggle("is-active", on);
+                        b.setAttribute("aria-selected", String(on));
+                    });
+                    applyFilter(btn.dataset.filter, true);
+                });
+            });
+
+            /* ---- pointer: hover pops out, click centres the frame ---- */
+            let dragId = null;
+            let dragX = 0;
+            let dragY = 0;
+            let dragFrom = 0;
+            let dragging = false;
+            let justDragged = false;
+
+            strip.addEventListener("pointerover", (e) => {
+                if (!fine.matches || dragging) return;
+                const f = e.target.closest(".frame");
+                if (!f) return;
+                const i = shown.indexOf(f);
+                if (i < 0) return;
+                hovered = i;
+                select(i);
+                setPopped(i);
+            });
+
+            viewport.addEventListener("pointerleave", () => {
+                if (!fine.matches) return;
+                hovered = -1;
+                tapPop = -1;
+                // Readout follows the read head; scale drops unless keyboard focus.
+                select(headIndex());
+                syncPop();
+            });
+
+            strip.addEventListener("click", (e) => {
+                if (justDragged) return;
+                const f = e.target.closest(".frame");
+                if (!f) return;
+                const i = shown.indexOf(f);
+                if (i < 0) return;
+                // Already popped: ignore the duplicate click some touch stacks
+                // fire on the same tap that just established the pop.
+                if (i === popped) return;
+                // Fine pointer: hover already pops; click centres + focuses.
+                // Coarse: tap-to-pop (stays until scroll/drag or another tap).
+                select(i, { centre: true, focus: true, pop: true });
+            });
+
+            // Native image dragging would swallow the pointer stream.
+            strip.addEventListener("dragstart", (e) => e.preventDefault());
+
+            strip.addEventListener("pointerdown", (e) => {
+                if (e.pointerType === "mouse" && e.button !== 0) return;
+                dragId = e.pointerId;
+                dragX = e.clientX;
+                dragY = e.clientY;
+                dragFrom = window.scrollY;
+                dragging = false;
+            });
+
+            strip.addEventListener("pointermove", (e) => {
+                if (e.pointerId !== dragId || travel <= 0) return;
+                const dx = e.clientX - dragX;
+                if (!dragging) {
+                    if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(e.clientY - dragY)) return;
+                    dragging = true;
+                    strip.classList.add("is-dragging");
+                    if (strip.setPointerCapture) strip.setPointerCapture(dragId);
+                    // Dragging clears a coarse tap-pop so nothing stays stuck large.
+                    if (!fine.matches) {
+                        tapPop = -1;
+                        clearPopped();
+                    }
+                }
+                lock = performance.now() + 140;
+                window.scrollTo({ top: Math.max(0, dragFrom - (dx / GEAR)), behavior: "instant" });
+            });
+
+            const endDrag = (e) => {
+                if (dragId === null || (e && e.pointerId !== dragId)) return;
+                if (dragging) {
+                    justDragged = true;
+                    setTimeout(() => { justDragged = false; }, 80);
+                    if (strip.hasPointerCapture && strip.hasPointerCapture(dragId)) strip.releasePointerCapture(dragId);
+                    // The drag suppressed head-tracking; resettle on release.
+                    lock = 0;
+                    dirty = true;
+                    kick();
+                }
+                strip.classList.remove("is-dragging");
+                dragId = null;
+                dragging = false;
+            };
+            strip.addEventListener("pointerup", endDrag);
+            strip.addEventListener("pointercancel", endDrag);
+
+            /* ---- keyboard ---- */
+            strip.addEventListener("focusin", (e) => {
+                const f = e.target.closest(".frame");
+                if (!f) return;
+                const i = shown.indexOf(f);
+                if (i < 0) return;
+                hovered = -1;
+                let kb = !fine.matches;
+                try { if (fine.matches) kb = f.matches(":focus-visible"); } catch (err) { kb = true; }
+                if (i !== active) select(i, { centre: true, pop: kb });
+                else if (kb) setPopped(i);
+                else syncPop();
+            });
+
+            strip.addEventListener("focusout", (e) => {
+                if (strip.contains(e.relatedTarget)) return;
+                if (hovered >= 0) return;
+                tapPop = -1;
+                syncPop();
+            });
+
+            strip.addEventListener("keydown", (e) => {
+                const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+                if (step) {
+                    e.preventDefault();
+                    hovered = -1;
+                    select(active + step, { centre: true, focus: true, pop: true });
+                } else if (e.key === "Home" || e.key === "End") {
+                    e.preventDefault();
+                    hovered = -1;
+                    select(e.key === "Home" ? 0 : shown.length - 1, { centre: true, focus: true, pop: true });
+                } else if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    select(active, { centre: true, focus: true, pop: true });
+                }
+            });
+
+            /* ---- lifecycle: only work while on screen, and never let the
+                   ambient hero wall run at the same time as the reel ---- */
+            let warmed = false;
+            function warm() {
+                if (warmed) return;
+                warmed = true;
+                let k = 0;
+                const next = () => {
+                    if (k >= frames.length) return;
+                    const img = frames[k].querySelector("img");
+                    k += 1;
+                    // Horizontal travel is unreliable for native lazy loading, so
+                    // walk the strip and promote each frame in turn.
+                    if (img && img.loading === "lazy") img.loading = "eager";
+                    setTimeout(next, 40);
+                };
+                next();
+            }
+
+            if ("IntersectionObserver" in window) {
+                new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        onScreen = entry.isIntersecting;
+                        if (!onScreen) return;
+                        warm();
+                        measure();
+                        readScroll();
+                        dirty = true;
+                        kick();
+                    });
+                }, { rootMargin: "40% 0px" }).observe(reel);
+
+                const wall = document.querySelector(".hero-wall");
+                if (wall) {
+                    // Only once the reel has taken the upper half of the screen,
+                    // so this can never freeze the wall while it is still
+                    // visible; the wall's own observer resumes it.
+                    new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) wall.classList.add("is-paused");
+                        });
+                    }, { rootMargin: "0px 0px -50% 0px" }).observe(reel);
+                }
+            } else {
+                onScreen = true;
+                warm();
+            }
+
+            const initial = filters.find((b) => b.dataset.filter === DEFAULT_FILTER) || filters[0];
+            filters.forEach((b) => {
+                const on = b === initial;
+                b.classList.toggle("is-active", on);
+                b.setAttribute("aria-selected", String(on));
+            });
+            applyFilter(initial ? initial.dataset.filter : DEFAULT_FILTER, false);
+
+            window.addEventListener("load", () => { measure(); readScroll(); dirty = true; kick(); });
+
+            window.__reel = {
+                state: () => ({
+                    shown: shown.length,
+                    total: frames.length,
+                    active,
+                    popped,
+                    id: shown[active] ? shown[active].dataset.id : null,
+                    title: shown[active] ? shown[active].dataset.title : null,
+                    progress: +progress.toFixed(4),
+                    travel: Math.round(travel),
+                    x: Math.round(-progress * travel),
+                }),
+            };
+        })();
+    </script>
+</body>
+</html>

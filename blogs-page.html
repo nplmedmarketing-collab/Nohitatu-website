@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20260731f" />
+    <link rel="stylesheet" href="css/style.css?v=20260803curtain" />
     <script src="js/footer-reveal.js" defer></script>
     <style>
         :root {
@@ -146,13 +146,15 @@
             transform: translateY(-4.5px) rotate(-45deg);
         }
 
-        .page-hero {
-            position: relative;
-            min-height: 650px;
+        .page-hero.nh-curtain-banner {
             display: grid;
             place-items: center;
             overflow: hidden;
             background: #0b1a2d url('images/blog/blog-hero-pinterest-poster.jpg') center / cover no-repeat;
+        }
+
+        .nh-curtain-panel.directory {
+            background: var(--paper, #fff);
         }
 
         .shell {
@@ -515,10 +517,6 @@
                 visibility: visible;
             }
 
-            .page-hero {
-                min-height: 610px;
-            }
-
             .hero-content {
                 padding: 78px 0 64px;
             }
@@ -594,7 +592,8 @@
     </header>
 
     <main>
-        <section class="page-hero">
+        <div class="nh-curtain-stack">
+        <section class="page-hero nh-curtain-banner">
             <video class="hero-video" id="hero-carousel" autoplay muted loop playsinline preload="auto"
                 poster="images/blog/blog-hero-pinterest-poster.jpg" aria-hidden="true">
                 <source src="images/blog/blog-hero-pinterest-wall.mp4" type="video/mp4" />
@@ -614,7 +613,7 @@
             </div>
         </section>
 
-        <section class="directory" aria-labelledby="article-directory-title">
+        <section class="directory nh-curtain-panel" aria-labelledby="article-directory-title">
             <div class="shell directory-grid">
                 <aside class="directory-aside">
                     <span>Index 01—08</span>
@@ -710,6 +709,7 @@
                 </div>
             </div>
         </section>
+        </div><!-- /.nh-curtain-stack -->
     </main>
 
     <footer class="footer site-footer">
@@ -767,7 +767,7 @@
                         <ul class="footernav">
                             <li><a href="About-us.html">About Us</a></li>
                             <li><a href="Privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="Portfolio/index.html">Portfolio</a></li>
+                            <li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li>
                             <li><a href="Clients.html">Clients</a></li>
                             <li><a href="blogs-page.html">Blogs</a></li>
                         </ul>

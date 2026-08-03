@@ -2642,6 +2642,42 @@ header.logo-navbar,
   }
 }
 
+@media (max-width: 650px) {
+  .accordion-card-item.active {
+    height: 420px;
+  }
+  .accordion-expanded-content {
+    padding: 26px 22px;
+  }
+  .acc-summary {
+    max-width: 100%;
+    font-size: 13.5px;
+    margin-bottom: 18px;
+  }
+  .acc-headline {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-card-item,
+  .accordion-bg-image img,
+  .accordion-collapsed-bar,
+  .accordion-expanded-content,
+  .acc-read-btn,
+  .insights-view-all-pill {
+    transition: none !important;
+  }
+
+  .accordion-card-item.active .accordion-bg-image img {
+    transform: none;
+  }
+
+  .accordion-expanded-content {
+    transform: none;
+  }
+}
+
 /* ==========================================================================
    Luxury 3-Step Consultation Workflow Styling
    ========================================================================== */
@@ -13023,4 +13059,70 @@ body.footer-reveal-page .site-footer .inner-footer {
 
   /* The client marquee is requested behaviour, so it keeps running here rather
      than degrading to a horizontally scrollable list. */
+}
+
+/* story geometry disabled � photo + copy only */
+.landing-page .nh-geo--story,
+.landing-page .nh-story-3d,
+.landing-page .nh-story-3d-canvas {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+/* ==========================================================================
+   Sticky banner curtain (Careers-style)
+   Full-bleed sticky banner; opaque panel scrolls over it via stacking.
+   Mid-page dual curtains (Careers life) may also use --nh-curtain-pull.
+   ========================================================================== */
+html:has(.nh-curtain-stack),
+body:has(.nh-curtain-stack) {
+  overflow-x: visible !important;
+}
+
+body:has(.nh-curtain-stack) #wrapper {
+  overflow-x: visible !important;
+  overflow: visible !important;
+}
+
+.nh-curtain-stack {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.nh-curtain-banner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: max(100vh, 560px);
+  min-height: max(100svh, 560px);
+  height: max(100vh, 560px);
+  height: max(100svh, 560px);
+  margin: 0;
+}
+
+.nh-curtain-panel {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  /* Optional pull-up: set --nh-curtain-pull on the stack (e.g. Careers life).
+     Page-top heroes leave this at 0 so the banner is visible on load. */
+  margin-top: var(--nh-curtain-pull, 0px);
+  background-color: #fff;
+}
+
+@media (max-width: 820px) {
+  .nh-curtain-banner {
+    min-height: max(100vh, 520px);
+    min-height: max(100svh, 520px);
+    height: max(100vh, 520px);
+    height: max(100svh, 520px);
+  }
 }

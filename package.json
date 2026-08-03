@@ -13,5 +13,18 @@
   },
   "dependencies": {
     "lucide": "^0.468.0"
-  }
+  },
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nplmedmarketing-collab/Nohitatu-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nplmedmarketing-collab/Nohitatu-website/issues"
+  },
+  "homepage": "https://github.com/nplmedmarketing-collab/Nohitatu-website#readme",
+  "description": ""
 }
