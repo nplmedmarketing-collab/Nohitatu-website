@@ -3,7 +3,12 @@
   'use strict';
 
   var MOBILE_QUERY = '(max-width: 767px)';
-  var CONTACT_URL = 'https://nohitatu.com/contact/Contactus.aspx';
+
+  function contactUrl() {
+    var path = (location.pathname || '').replace(/\\/g, '/');
+    var base = /\/blogs\//i.test(path) ? '../' : '';
+    return base + 'Contact-us.html';
+  }
 
   function cleanText(node) {
     return (node.textContent || '').replace(/\s+/g, ' ').trim();
@@ -139,7 +144,7 @@
 
     var cta = document.createElement('a');
     cta.className = 'mobile-nav__cta';
-    cta.href = CONTACT_URL;
+    cta.href = contactUrl();
     cta.textContent = 'Get a free estimate';
 
     panel.appendChild(head);

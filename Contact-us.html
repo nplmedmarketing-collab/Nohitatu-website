@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | Nohitatu</title>
+    <meta name="description" content="Contact Nohitatu — email, phone, offices, and a short form to start a project or request a free estimation." />
+    <link rel="shortcut icon" href="images/favicon/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css?v=20260803contact" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260803chat" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/custom.js"></script>
+    <style>
+        :root {
+            --ink: #14243d;
+            --muted: #5f6c7d;
+            --blue: #726cf4;
+            --blue-dark: #5f58dc;
+            --line: #d4d4d4;
+            --navy: #0b1a2d;
+            --ground: #e4e4e4;
+            --ground-image: url("images/careers-page-bg.png");
+            --ground-size: 41px 88px;
+            --paper: #f7f7f7;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body.contact-page,
+        body.contact-page.home_body,
+        body.contact-page.footer-reveal-page {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
+            overflow-x: visible !important;
+        }
+
+        html:has(body.contact-page) { overflow-x: visible !important; }
+
+        body.contact-page #wrapper,
+        body.contact-page #wrapper.footer-reveal-content {
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
+            overflow: visible !important;
+        }
+
+        .shell {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        body.contact-page header.logo-navbar {
+            background: linear-gradient(180deg, rgba(10, 16, 32, 0.58), transparent) !important;
+            border-bottom: 0 !important;
+            backdrop-filter: none !important;
+        }
+
+        body.contact-page header.logo-navbar .logo-on-dark { display: block; }
+        body.contact-page header.logo-navbar .logo-on-light { display: none; }
+
+        body.contact-page header.logo-navbar #navigation > li.nav-item > a {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        body.contact-page header.logo-navbar #navigation > li.nav-item:hover > a {
+            color: #a855f7 !important;
+            -webkit-text-fill-color: #a855f7 !important;
+        }
+
+        body.contact-page header.logo-navbar #navigation > li.nav-item.active > a {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.contact-page header.logo-navbar #navigation > li.nav-item > a::after {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+        }
+
+        body.contact-page header.logo-navbar.white-header {
+            background-color: rgba(228, 228, 228, 0.96) !important;
+            background-image: var(--ground-image) !important;
+            background-repeat: repeat !important;
+            background-size: var(--ground-size) !important;
+            border-bottom: 1px solid #d4d4d4 !important;
+            backdrop-filter: blur(14px) !important;
+        }
+
+        body.contact-page header.logo-navbar.white-header .logo-on-dark { display: none; }
+        body.contact-page header.logo-navbar.white-header .logo-on-light { display: block; }
+
+        body.contact-page header.logo-navbar.white-header #navigation > li.nav-item > a {
+            color: var(--ink) !important;
+            -webkit-text-fill-color: var(--ink) !important;
+        }
+
+        body.contact-page header.logo-navbar.white-header #navigation > li.nav-item:hover > a {
+            color: #a855f7 !important;
+            -webkit-text-fill-color: #a855f7 !important;
+        }
+
+        body.contact-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.contact-page .navbar-toggle.nav-menu { display: none; }
+
+        body.contact-page .contact-hero {
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            min-height: 560px;
+            padding: 128px 0 108px;
+            display: grid;
+            place-items: center;
+            background:
+                linear-gradient(rgba(18, 20, 36, 0.62), rgba(18, 20, 36, 0.68)),
+                url("images/office-trust-parallax.jpg") center 42% / cover no-repeat;
+            color: #fff;
+        }
+
+        body.contact-page .contact-hero-grid {
+            position: relative;
+            z-index: 2;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        body.contact-page .hero-copy { max-width: 860px; margin: 0 auto; }
+
+        body.contact-page h1 {
+            max-width: 860px;
+            margin: 0 auto;
+            color: #fff;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(3.2rem, 6vw, 5.2rem);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 1.08;
+        }
+
+        body.contact-page .hero-intro {
+            max-width: 640px;
+            margin: 24px auto 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1rem, 1.5vw, 1.18rem);
+            font-weight: 400;
+            line-height: 1.75;
+        }
+
+        .hero-wave {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 104px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-wave__layer {
+            position: absolute;
+            inset: 0;
+            display: block;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            background-size: 1200px 100%;
+        }
+
+        .hero-wave__layer--back {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C75,85 225,85 300,60 C375,35 525,35 600,60 C675,85 825,85 900,60 C975,35 1125,35 1200,60 L1200,120 L0,120 Z' fill='rgba(228,228,228,0.45)'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 17s linear infinite reverse;
+        }
+
+        .hero-wave__layer--front {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C75,20 225,20 300,50 C375,80 525,80 600,50 C675,20 825,20 900,50 C975,80 1125,80 1200,50 L1200,120 L0,120 Z' fill='%23e4e4e4'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 11s linear infinite;
+        }
+
+        @keyframes heroWaveDrift {
+            from { background-position: 0 bottom; }
+            to { background-position: 1200px bottom; }
+        }
+
+        body.contact-page .contact-panel {
+            position: relative;
+            z-index: 1;
+            padding: 56px 0 96px;
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size);
+        }
+
+        body.contact-page .contact-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+            gap: 48px;
+            align-items: start;
+        }
+
+        body.contact-page .contact-aside h2,
+        body.contact-page .contact-form-card h2 {
+            margin: 0 0 12px;
+            font-size: clamp(1.55rem, 2.4vw, 2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+        }
+
+        body.contact-page .contact-aside > p,
+        body.contact-page .contact-form-lead {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 1.02rem;
+            line-height: 1.7;
+        }
+
+        body.contact-page .contact-channels {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 18px;
+        }
+
+        body.contact-page .contact-channels a {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        body.contact-page .contact-channels a:hover {
+            color: var(--blue-dark);
+        }
+
+        body.contact-page .contact-channels span {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        body.contact-page .contact-offices {
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(20, 36, 61, 0.12);
+        }
+
+        body.contact-page .contact-offices h3 {
+            margin: 0 0 16px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        body.contact-page .office-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        body.contact-page .office-list strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.98rem;
+            color: var(--ink);
+        }
+
+        body.contact-page .office-list p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.94rem;
+            line-height: 1.55;
+        }
+
+        body.contact-page .contact-form-card {
+            padding: 32px 36px 36px;
+            background: rgba(247, 247, 247, 0.92);
+            border: 1px solid rgba(20, 36, 61, 0.1);
+            border-radius: 18px;
+            box-shadow: 0 18px 40px rgba(11, 26, 45, 0.06);
+        }
+
+        body.contact-page .contact-form {
+            display: grid;
+            gap: 18px;
+        }
+
+        body.contact-page .contact-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        body.contact-page .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        body.contact-page .field label {
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        body.contact-page .field input,
+        body.contact-page .field textarea,
+        body.contact-page .field select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(20, 36, 61, 0.16);
+            border-radius: 12px;
+            background: #fff;
+            color: var(--ink);
+            font: inherit;
+            font-size: 0.98rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        body.contact-page .field textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        body.contact-page .field input:focus,
+        body.contact-page .field textarea:focus,
+        body.contact-page .field select:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(114, 108, 244, 0.18);
+        }
+
+        body.contact-page .contact-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 6px;
+            padding: 14px 28px;
+            border: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #726cf4 0%, #5f58dc 100%);
+            color: #fff;
+            font: inherit;
+            font-size: 0.98rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        body.contact-page .contact-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(95, 88, 220, 0.28);
+        }
+
+        body.contact-page .contact-form-note {
+            margin: 14px 0 0;
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+
+        body.contact-page .contact-form-note a {
+            color: var(--blue-dark);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        body.contact-page .contact-form-status {
+            display: none;
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(114, 108, 244, 0.1);
+            color: var(--ink);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        body.contact-page .contact-form-status.is-visible { display: block; }
+
+        @media (max-width: 980px) {
+            body.contact-page .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            body.contact-page .contact-form-card {
+                padding: 28px 22px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body.contact-page .contact-hero {
+                min-height: 460px;
+                padding: 112px 0 88px;
+            }
+
+            body.contact-page .contact-form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-wave { height: 72px; }
+        }
+    </style>
+</head>
+<body class="home_body contact-page">
+    <div id="wrapper">
+        <header class="logo-navbar blnk-header">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+                <div class="header-container">
+                    <div class="inner-overlay"></div>
+                    <div class="row header-row">
+                        <a href="index.html" class="header-logo" aria-label="Nohitatu home">
+                            <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                            <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                        </a>
+                        <div class="col-sm-12 right-menu text-center">
+                            <nav id="slidemenu" aria-label="Primary navigation">
+                                <div class="inner-menu">
+                                    <button class="navbar-toggle nav-menu cross" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                                        <span class="first"></span><span class="second"></span>
+                                    </button>
+                                    <ul id="navigation" class="nav navbar-nav">
+                                        <li class="nav-item"><a href="index.html">HOME</a></li>
+                                        <li class="nav-item">
+                                            <a href="#">CORPORATE</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="About-us.html">About Us</a></li>
+                                                    <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                                                    <li><a href="Clients.html">Clients</a></li>
+                                                    <li><a href="blogs-page.html">Blogs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">EXPLORE NOHITATU</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                                                <li><a href="Tech-skills.html">Tech Skills</a></li>
+                                                <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                                                <li><a href="People.html">People</a></li>
+                                                <li><a href="Our-advantages.html">Our Advantages</a></li>
+                                                <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                                                <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">SOLUTIONS</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Software-Development.html">Software Development</a></li>
+                                                <li><a href="Saas.html">Saas</a></li>
+                                                <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item"><a href="Portfolio.html">PORTFOLIO</a></li>
+                                        <li class="nav-item"><a href="Careers.html">CAREER</a></li>
+                                        <li class="nav-item active"><a href="Contact-us.html" aria-current="page">CONTACT US</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="full-screen-menu section fadeIn">
+            <div class="container-fluid"><div class="row">
+                <div class="col-sm-7 menu-content">
+                    <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
+                    <a href="Contact-us.html" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                </div>
+                <div class="col-sm-5 right-menu">
+                    <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
+                        <a href="index.html" class="list-group-item main-link">HOME</a>
+                        <a href="#contact-mobile-corporate" class="list-group-item main-link" data-bs-toggle="collapse">CORPORATE <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="contact-mobile-corporate"><ul class="inner-sub-menus">
+                            <li><a href="About-us.html">About Us</a></li>
+                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="Clients.html">Clients</a></li>
+                            <li><a href="blogs-page.html">Blogs</a></li>
+                        </ul></div>
+                        <a href="#contact-mobile-explore" class="list-group-item main-link" data-bs-toggle="collapse">EXPLORE NOHITATU <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="contact-mobile-explore"><ul class="inner-sub-menus">
+                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills.html">Tech Skills</a></li>
+                            <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                            <li><a href="People.html">People</a></li>
+                            <li><a href="Our-advantages.html">Our Advantages</a></li>
+                            <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                        </ul></div>
+                        <a href="#contact-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="contact-mobile-solutions"><ul class="inner-sub-menus">
+                            <li><a href="Software-Development.html">Software Development</a></li>
+                            <li><a href="Saas.html">Saas</a></li>
+                            <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                        </ul></div>
+                        <a href="Portfolio.html" class="list-group-item main-link">PORTFOLIO</a>
+                        <a href="Careers.html" class="list-group-item main-link">CAREER</a>
+                        <a href="Contact-us.html" class="list-group-item main-link" aria-current="page">CONTACT US</a>
+                    </div></div>
+                </div>
+            </div></div>
+        </div>
+
+        <main>
+            <section class="contact-hero">
+                <div class="shell contact-hero-grid">
+                    <div class="hero-copy">
+                        <h1>Contact Us</h1>
+                        <p class="hero-intro">Tell us about your product, modernization goal, or support need — we’ll help you start with clarity.</p>
+                    </div>
+                </div>
+                <div class="hero-wave" aria-hidden="true">
+                    <span class="hero-wave__layer hero-wave__layer--back"></span>
+                    <span class="hero-wave__layer hero-wave__layer--front"></span>
+                </div>
+            </section>
+
+            <section class="contact-panel" aria-labelledby="contact-details-title">
+                <div class="shell contact-layout">
+                    <aside class="contact-aside">
+                        <h2 id="contact-details-title">Get in touch</h2>
+                        <p>Reach our team for a free estimation, demo request, or partnership conversation.</p>
+                        <ul class="contact-channels">
+                            <li>
+                                <span>Sales email</span>
+                                <a href="mailto:sales@nohitatu.com">sales@nohitatu.com</a>
+                            </li>
+                            <li>
+                                <span>General email</span>
+                                <a href="mailto:info@nohitatu.com">info@nohitatu.com</a>
+                            </li>
+                            <li>
+                                <span>Phone</span>
+                                <a href="tel:+16072470227">+1 (607) 247-0227</a>
+                            </li>
+                            <li>
+                                <span>Skype</span>
+                                <a href="skype:sales.nohitatu">sales.nohitatu</a>
+                            </li>
+                            <li>
+                                <span>LinkedIn</span>
+                                <a href="https://www.linkedin.com/company/nohitatu" target="_blank" rel="noopener noreferrer">linkedin.com/company/nohitatu</a>
+                            </li>
+                        </ul>
+
+                        <div class="contact-offices">
+                            <h3>Offices</h3>
+                            <div class="office-list">
+                                <div>
+                                    <strong>India</strong>
+                                    <p>#402, 403 &amp; 405, 4th Floor, City Centre,<br>186/43 Purasawalkam High Road,<br>Chennai - 600010, Tamilnadu, India.</p>
+                                </div>
+                                <div>
+                                    <strong>Singapore</strong>
+                                    <p>71 Bukit Batok Crescent,<br>#05-07 Prestige Centre,<br>Singapore 658071</p>
+                                </div>
+                                <div>
+                                    <strong>New York</strong>
+                                    <p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="contact-form-card">
+                        <h2>Send a message</h2>
+                        <p class="contact-form-lead">Share a few details and we’ll open a draft email to our sales desk so you can send it from your inbox.</p>
+                        <form class="contact-form" id="contact-form" novalidate>
+                            <div class="contact-form-row">
+                                <div class="field">
+                                    <label for="contact-name">Full name</label>
+                                    <input id="contact-name" name="name" type="text" autocomplete="name" required />
+                                </div>
+                                <div class="field">
+                                    <label for="contact-email">Work email</label>
+                                    <input id="contact-email" name="email" type="email" autocomplete="email" required />
+                                </div>
+                            </div>
+                            <div class="contact-form-row">
+                                <div class="field">
+                                    <label for="contact-phone">Phone <span style="font-weight:500;color:var(--muted)">(optional)</span></label>
+                                    <input id="contact-phone" name="phone" type="tel" autocomplete="tel" />
+                                </div>
+                                <div class="field">
+                                    <label for="contact-company">Company <span style="font-weight:500;color:var(--muted)">(optional)</span></label>
+                                    <input id="contact-company" name="company" type="text" autocomplete="organization" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="contact-interest">I’m interested in</label>
+                                <select id="contact-interest" name="interest">
+                                    <option value="Free estimation">Free estimation</option>
+                                    <option value="Custom software project">Custom software project</option>
+                                    <option value="Product / SaaS development">Product / SaaS development</option>
+                                    <option value="Demo request">Demo request</option>
+                                    <option value="Partnership">Partnership</option>
+                                    <option value="Something else">Something else</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="contact-message">How can we help?</label>
+                                <textarea id="contact-message" name="message" required placeholder="Briefly describe your goals, timeline, or questions."></textarea>
+                            </div>
+                            <button class="contact-submit" type="submit">Open email draft</button>
+                            <p class="contact-form-note">Prefer another path? Email <a href="mailto:sales@nohitatu.com">sales@nohitatu.com</a> directly.</p>
+                            <div class="contact-form-status" id="contact-form-status" role="status" aria-live="polite"></div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer site-footer">
+            <div class="inner-footer"><div class="container"><div class="footer-grid">
+                <div class="footer-col footer-offices">
+                    <h3 class="footer-heading">Offices</h3>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/india-flag.png" alt="" width="18" height="12" /><span>India Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V14h6v12M14 26V8h8v18M24 26V16h5v10M31 26V6h7v20M40 26V12h6v14M48 26V10h8v16" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>#402, 403 &amp; 405, 4th Floor, City Centre,<br>186/43 Purasawalkam High Road,<br>Chennai - 600010, Tamilnadu, India.</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/singapore-flag.png" alt="" width="18" height="12" /><span>Singapore Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M8 26V12h7v14M18 26V7h6v19M27 26V14h5v12M35 26V4c4 3 8 3 12 0v22M50 26V11h8v15" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>71 Bukit Batok Crescent,<br>#05-07 Prestige Centre,<br>Singapore 658071</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
+                </div>
+                <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
+                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
+                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="Vision-and-values.html">Vision and Values</a></li><li><a href="People.html">People</a></li><li><a href="Our-advantages.html">Our Advantages</a></li><li><a href="Who-need-us.html">Who Need Us?</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
+                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
+                </ul></div>
+                <div class="footer-col footer-contact">
+                    <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
+                    <a class="footer-phone" href="tel:+16072470227"><span class="footer-phone-number">+1 (607) 247-0227</span></a>
+                    <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
+                    <div class="footer-contact-meta"><a href="skype:sales.nohitatu">Skype: sales.nohitatu</a><a href="mailto:info@nohitatu.com">info@nohitatu.com</a></div>
+                </div>
+            </div></div></div>
+            <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
+                <div class="footer-copy"><span>Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and offshore software development company. All rights reserved.</span></div>
+                <div class="social-icons"><a href="https://www.facebook.com/nohitatu/" class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a><a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a><a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a><a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a></div>
+            </div></div></div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            const toggle = document.querySelector(".navbar-toggle.nav-menu");
+            const menu = document.querySelector(".full-screen-menu");
+            if (!toggle || !menu) return;
+            const setMenuState = (open) => {
+                toggle.classList.toggle("open", open);
+                menu.classList.toggle("show", open);
+                document.body.classList.toggle("fixed", open);
+                toggle.setAttribute("aria-expanded", String(open));
+            };
+            toggle.addEventListener("click", () => setMenuState(!menu.classList.contains("show")));
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") setMenuState(false);
+            });
+        })();
+    </script>
+    <script>
+        (() => {
+            const form = document.getElementById("contact-form");
+            const status = document.getElementById("contact-form-status");
+            if (!form) return;
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                const name = (document.getElementById("contact-name").value || "").trim();
+                const email = (document.getElementById("contact-email").value || "").trim();
+                const phone = (document.getElementById("contact-phone").value || "").trim();
+                const company = (document.getElementById("contact-company").value || "").trim();
+                const interest = (document.getElementById("contact-interest").value || "").trim();
+                const message = (document.getElementById("contact-message").value || "").trim();
+
+                if (!name || !email || !message) {
+                    if (status) {
+                        status.textContent = "Please fill in your name, email, and message.";
+                        status.classList.add("is-visible");
+                    }
+                    return;
+                }
+
+                const lines = [
+                    "Hello Nohitatu team,",
+                    "",
+                    message,
+                    "",
+                    "—",
+                    "Name: " + name,
+                    "Email: " + email,
+                    phone ? "Phone: " + phone : null,
+                    company ? "Company: " + company : null,
+                    "Interest: " + interest
+                ].filter(Boolean);
+
+                const subject = encodeURIComponent("Website inquiry — " + interest);
+                const body = encodeURIComponent(lines.join("\n"));
+                window.location.href = "mailto:sales@nohitatu.com?subject=" + subject + "&body=" + body;
+
+                if (status) {
+                    status.textContent = "Opening your email app with a draft to sales@nohitatu.com…";
+                    status.classList.add("is-visible");
+                }
+            });
+        })();
+    </script>
+
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-window" class="chatbot-window hidden">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <div class="chatbot-avatar-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            <circle cx="9" cy="10" r="1" fill="#726cf4"></circle>
+                            <circle cx="15" cy="10" r="1" fill="#726cf4"></circle>
+                            <path d="M9.5 13.5c1 .8 2 1 3 0" stroke="#726cf4"></path>
+                        </svg>
+                    </div>
+                    <div class="chatbot-header-text">
+                        <h4>Nohitatu Advisor</h4>
+                        <small><span class="status-dot"></span> Live Concierge Desk</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-content">
+                        <p>Welcome to Nohitatu. I can help you apply for a role, explore our work, or connect with the team.</p>
+                        <p>What brings you here?</p>
+                    </div>
+                </div>
+                <div class="quick-chips" role="group" aria-label="Choose one">
+                    <span class="quick-chips-label">Choose one</span>
+                    <button class="chip-btn" data-query="Looking for a job">Looking for a job</button>
+                    <button class="chip-btn" data-query="See our work">See our work</button>
+                    <button class="chip-btn" data-query="Start a project">Start a project</button>
+                    <button class="chip-btn" data-query="Something else">Something else</button>
+                </div>
+            </div>
+
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask your digital concierge..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with Nohitatu Digital Concierge">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <script src="js/chatbot.js?v=20260803contact"></script>
+</body>
+</html>

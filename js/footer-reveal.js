@@ -1,6 +1,11 @@
 (function () {
   "use strict";
 
+  function contactHref() {
+    var path = (location.pathname || "").replace(/\\/g, "/");
+    return /\/blogs\//i.test(path) ? "../Contact-us.html" : "Contact-us.html";
+  }
+
   function createCta() {
     var section = document.createElement("section");
     section.className = "estimate footer-reveal-cta";
@@ -12,7 +17,7 @@
             '<span>Let\u2019s work together</span>' +
             '<h2 id="footer-reveal-title">Schedule an appointment with us to discuss your goals and needs.</h2>' +
           '</div>' +
-          '<a class="estimate-button" href="https://nohitatu.com/contact/Contactus.aspx">' +
+          '<a class="estimate-button" href="' + contactHref() + '">' +
             'Let\u2019s get in touch <span aria-hidden="true">\u2192</span>' +
           '</a>' +
         '</div>' +

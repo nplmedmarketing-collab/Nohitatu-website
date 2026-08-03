@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio | Nohitatu</title>
-    <meta name="description" content="Explore Nohitatuâ€™s portfolio of web, mobile, and desktop products â€” healthcare, CRM, fintech, sports, and more." />
+    <meta name="description" content="Explore Nohitatu's portfolio of web, mobile, and desktop products &mdash; healthcare, CRM, fintech, sports, and more." />
     <link rel="shortcut icon" href="images/favicon/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/style.css?v=20260803curtain" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260803chat" />
     <script src="js/jquery.min.js"></script>
     <!-- custom.js initialises owl sliders at document-ready; without the plugin
          its first call throws and the rest of the shared header script never
@@ -51,7 +52,7 @@
 
         body.portfolio-page a { color: inherit; }
 
-        /* â”€â”€â”€ Header over dark hero (matches interior pages) â”€â”€â”€ */
+        /* --------- Header over dark hero (matches interior pages) --------- */
         body.portfolio-page header.logo-navbar {
             background: linear-gradient(180deg, rgba(9, 9, 11, 0.82), rgba(9, 9, 11, 0)) !important;
             border: 0 !important;
@@ -80,7 +81,7 @@
             margin: 0 auto;
         }
 
-        /* â”€â”€â”€ Hero: blogs-page framing + Pinterest wall â”€â”€â”€ */
+        /* --------- Hero: blogs-page framing + Pinterest wall --------- */
         .page-hero.nh-curtain-banner {
             display: grid;
             place-items: center;
@@ -98,7 +99,7 @@
            Pinterest wall: masonry columns of live portfolio screens drifting
            in alternating directions. Each column repeats its tile set once and
            travels exactly one set height per cycle, so the loop has no seam.
-           Every column shares the same cycle length â€” the staggered speeds
+           Every column shares the same cycle length &mdash; the staggered speeds
            come from the columns being different heights, which also means the
            whole wall realigns on one beat and can be captured as a clean
            looping video.
@@ -106,7 +107,7 @@
            This drift deliberately ignores prefers-reduced-motion: it is the
            hero's whole visual, so it runs everywhere. It stays safe for
            motion-sensitive viewers by being constant-velocity, slow, and free
-           of bounce, flashing, or direction changes â€” and hovering the wall
+           of bounce, flashing, or direction changes &mdash; and hovering the wall
            stops it outright.
            ------------------------------------------------------------------ */
         .hero-wall {
@@ -122,9 +123,9 @@
 
         /* Three nested motions, one per element, so none of them overwrite
            another's transform:
-             stage  â†’ whole-wall tide (slow rotate + X breathing)
-             column â†’ wave sway (X/Y/tilt oscillation, phase-shifted per column)
-             track  â†’ the seamless vertical drift
+             stage  &#8594; whole-wall tide (slow rotate + X breathing)
+             column &#8594; wave sway (X/Y/tilt oscillation, phase-shifted per column)
+             track  &#8594; the seamless vertical drift
            Every sway period divides --wall-loop, so the whole wall still
            realigns on one 36s beat. */
         .hero-wall__stage {
@@ -189,14 +190,14 @@
             border-radius: 14px;
             background: #17171a;
             box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45);
-            /* Only a touch of dimming, and no desaturation â€” the screenshots
+            /* Only a touch of dimming, and no desaturation &mdash; the screenshots
                read in their own colours. */
             filter: brightness(0.94);
         }
 
         /* Hovering the wall itself stops it. The headline block sits above the
-           wall and keeps its own pointer events, so reading the copy â€” or
-           tabbing to the buttons â€” never freezes the drift. */
+           wall and keeps its own pointer events, so reading the copy &mdash; or
+           tabbing to the buttons &mdash; never freezes the drift. */
         @media (hover: hover) and (pointer: fine) {
             .hero-wall:hover .hero-wall__stage,
             .hero-wall:hover .hero-wall__col,
@@ -211,7 +212,7 @@
             animation-play-state: paused;
         }
 
-        /* Neutral black only â€” no blue or purple tint. The dense centre sits
+        /* Neutral black only &mdash; no blue or purple tint. The dense centre sits
            behind the copy for contrast; the edges stay light so the wall's real
            colour shows, with soft top/bottom fades into the header and the
            section below. */
@@ -323,7 +324,7 @@
         }
 
         /* Pure oscillations: both return to the origin at 0%/50%/100%, so
-           nothing creeps off-centre and the drift's 0 â†’ -50% loop is unaffected. */
+           nothing creeps off-centre and the drift's 0 &#8594; -50% loop is unaffected. */
         @keyframes pfWallSway {
             0%, 50%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
             25% {
@@ -348,7 +349,7 @@
             }
         }
 
-        /* â”€â”€â”€ Shared editorial primitives â”€â”€â”€ */
+        /* --------- Shared editorial primitives --------- */
         .eyebrow {
             margin: 0 0 22px;
             color: var(--blue-dark);
@@ -358,7 +359,7 @@
             text-transform: uppercase;
         }
 
-        /* â”€â”€â”€ Statement band: warm paper break between the two dark sections â”€â”€â”€ */
+        /* --------- Statement band: warm paper break between the two dark sections --------- */
         .ethos {
             padding: 118px 0 124px;
             background: #f6f5f2;
@@ -404,11 +405,11 @@
 
         .ethos-body p:last-child { margin-bottom: 0; }
 
-        /* â”€â”€â”€ Module reel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        /* --------- Module reel ------------------------------------------------------------------------------------------------------------------------------------------------------
            A length of film read by an instrument: sprocket pitch derived from
            the frame pitch so holes land on exact frame boundaries, monospace
            edge codes, hairline rules, one accent. Deliberately the opposite of
-           the hero wall above it â€” that drifts, this responds. */
+           the hero wall above it &mdash; that drifts, this responds. */
         .reel {
             --frame-w: clamp(196px, 21vw, 288px);
             --frame-gap: 10px;
@@ -427,7 +428,7 @@
             --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
             position: relative;
-            /* Deep charcoal-navy instrument panel â€” cool undertone, not flat black.
+            /* Deep charcoal-navy instrument panel &mdash; cool undertone, not flat black.
                Soft vertical lift only; no glow, no purple wash. */
             background: linear-gradient(180deg, #0b1018 0%, #0e1420 48%, #121a26 100%);
             color: #fff;
@@ -684,7 +685,7 @@
             color: #fff;
         }
 
-        /* Read-head / selection cue â€” orientation only, no scale.
+        /* Read-head / selection cue &mdash; orientation only, no scale.
            Scale is reserved for hover, keyboard focus, and mobile tap. */
         .frame.is-active .frame__gate {
             border-color: rgba(114, 108, 244, 0.55);
@@ -812,7 +813,7 @@
             transform: none;
         }
 
-        /* The hero wall is intentionally absent here â€” see .hero-wall above.
+        /* The hero wall is intentionally absent here &mdash; see .hero-wall above.
            Everything else on the page still honours the preference. */
         @media (prefers-reduced-motion: reduce) {
             .reveal,
@@ -830,7 +831,7 @@
             }
         }
 
-        /* Fewer wall columns as the viewport narrows: 8 â†’ 7 â†’ 6 â†’ 5 â†’ 4 â†’ 3. */
+        /* Fewer wall columns as the viewport narrows: 8 &#8594; 7 &#8594; 6 &#8594; 5 &#8594; 4 &#8594; 3. */
         @media (max-width: 1400px) {
             .hero-wall__col:nth-child(8) { display: none; }
         }
@@ -914,7 +915,7 @@
                 --perf-h: 16px;
                 --frame-gap: 8px;
                 /* Sized so a whole frame always has room to pop inside the gate
-                   at these widths: 2 Ã— frame + gap + growth must fit. */
+                   at these widths: 2 &times; frame + gap + growth must fit. */
                 --frame-w: clamp(150px, 44vw, 196px);
                 --pop-scale: 1.42;
                 --pop-lift: 18px;
@@ -964,7 +965,7 @@
                 padding: 76px 0 26px;
             }
 
-            /* One clean instrument line â€” the platform list is in the pills. */
+            /* One clean instrument line &mdash; the platform list is in the pills. */
             .reel__spec {
                 gap: 12px;
                 margin-bottom: 14px;
@@ -1053,6 +1054,7 @@
                                         </li>
                                         <li class="nav-item active"><a href="Portfolio.html" aria-current="page">PORTFOLIO</a></li>
                                         <li class="nav-item"><a href="Careers.html">CAREER</a></li>
+                                            <li class="nav-item"><a href="Contact-us.html">CONTACT US</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -1066,7 +1068,7 @@
             <div class="container-fluid"><div class="row">
                 <div class="col-sm-7 menu-content">
                     <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
-                    <a href="https://nohitatu.com/contact/Contactus.aspx" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                    <a href="Contact-us.html" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
                 </div>
                 <div class="col-sm-5 right-menu">
                     <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
@@ -1095,6 +1097,7 @@
                         </ul></div>
                         <a href="Portfolio.html" class="list-group-item main-link" aria-current="page">PORTFOLIO</a>
                         <a href="Careers.html" class="list-group-item main-link">CAREER</a>
+                                    <a href="Contact-us.html" class="list-group-item main-link">CONTACT US</a>
                     </div></div>
                 </div>
             </div></div>
@@ -1434,11 +1437,11 @@
 
                 <div class="hero-shade" aria-hidden="true"></div>
                 <div class="shell hero-content">
-                    <p class="page-kicker">Nohitatu Portfolio Â· Web Â· Mobile Â· Desktop</p>
+                    <p class="page-kicker">Nohitatu Portfolio &middot; Web &middot; Mobile &middot; Desktop</p>
                     <h1>Products that turn complexity into <em>clarity.</em></h1>
-                    <p class="hero-note">Twenty-nine products across healthcare, CRM, fintech, sport, and operations â€” loaded onto a single reel you can run frame by frame.</p>
+                    <p class="hero-note">Twenty-nine products across healthcare, CRM, fintech, sport, and operations &mdash; loaded onto a single reel you can run frame by frame.</p>
                     <div class="hero-actions">
-                        <a class="primary" href="https://nohitatu.com/contact/Contactus.aspx">Request a demo</a>
+                        <a class="primary" href="Contact-us.html">Request a demo</a>
                     </div>
                 </div>
             </section>
@@ -1449,7 +1452,7 @@
                     <h2 class="ethos-statement reveal" id="ethos-heading">We build the software that runs the <em>unglamorous middle</em> of a business.</h2>
                     <div class="ethos-body reveal">
                         <p>Claims adjudication, payroll cycles, appraisal rounds, kitchen tickets, tournament brackets. The work that decides whether an organisation runs smoothly, and that almost never gets designed properly.</p>
-                        <p>Every module below shipped for a real operator â€” healthcare, CRM, fintech, sport, hospitality â€” and is available as a starting point rather than a blank page.</p>
+                        <p>Every module below shipped for a real operator &mdash; healthcare, CRM, fintech, sport, hospitality &mdash; and is available as a starting point rather than a blank page.</p>
                     </div>
                 </div>
             </section>
@@ -1463,7 +1466,7 @@
                             <span class="reel__spec-rule" aria-hidden="true"></span>
                             <span>16:10 gate</span>
                             <span class="reel__spec-rule" aria-hidden="true"></span>
-                            <span>Web Â· Mobile Â· Desktop</span>
+                            <span>Web &middot; Mobile &middot; Desktop</span>
                         </p>
                         <h2 id="reel-heading">Completed projects</h2>
                         <div class="reel__brief">
@@ -1481,34 +1484,34 @@
 
                     <div class="reel__viewport" data-reel-viewport>
                         <div class="reel__film" data-reel-film aria-hidden="true"></div>
-                        <div class="reel__strip" data-reel-strip role="listbox" aria-label="Completed projects â€” use the arrow keys to run the strip">
+                        <div class="reel__strip" data-reel-strip role="listbox" aria-label="Completed projects &mdash; use the arrow keys to run the strip">
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
-                                 data-tags="web desktop" data-id="F01" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
-                                 data-title="CMS 1500" data-client="USA" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-tags="web desktop" data-id="F01" data-code="WEB&middot;DSK" data-long="Web &middot; Desktop"
+                                 data-title="CMS 1500" data-client="USA" data-cta="Contact-us.html"
                                  data-desc="The 837P (Professional) is the standard format used by health care professionals and suppliers to transmit health care claims electronically. The Form CMS-1500 is the standard paper claim form to bill Medicare Fee-For-Service (FFS) Contractors when a paper claim is allowed."
-                                 aria-label="CMS 1500 â€” Web Â· Desktop">
+                                 aria-label="CMS 1500 &mdash; Web &middot; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/1-cms-1500.webp" alt="CMS 1500 product screenshot" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F01</span>
-                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>CMS 1500</strong></span>
+                                    <span class="frame__tab"><span>WEB&middot;DSK</span><strong>CMS 1500</strong></span>
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
-                                 data-tags="web desktop" data-id="F02" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
-                                 data-title="Medallion Karate" data-client="Medallion karate" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-tags="web desktop" data-id="F02" data-code="WEB&middot;DSK" data-long="Web &middot; Desktop"
+                                 data-title="Medallion Karate" data-client="Medallion karate" data-cta="Contact-us.html"
                                  data-desc="Web gives information about the karate updates. Integrated with mail server, mobile responsive, one-page website with gallery view."
-                                 aria-label="Medallion Karate â€” Web Â· Desktop">
+                                 aria-label="Medallion Karate &mdash; Web &middot; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/2-medallion-karate.webp" alt="Medallion Karate website" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F02</span>
-                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>Medallion Karate</strong></span>
+                                    <span class="frame__tab"><span>WEB&middot;DSK</span><strong>Medallion Karate</strong></span>
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F03" data-code="WEB" data-long="Web"
-                                 data-title="Sales CRM" data-client="In-house product" data-cta="https://nohitatu.com/contact/Contactus.aspx"
-                                 data-desc="CRM cloud apps provide real-time visibility into their teamâ€™s activities so they can forecast sales with confidence. For sales reps, CRM cloud apps make it easy to manage customer information so reps spend less time handling data and more time with customers."
-                                 aria-label="Sales CRM â€” Web">
+                                 data-title="Sales CRM" data-client="In-house product" data-cta="Contact-us.html"
+                                 data-desc="CRM cloud apps provide real-time visibility into their team's activities so they can forecast sales with confidence. For sales reps, CRM cloud apps make it easy to manage customer information so reps spend less time handling data and more time with customers."
+                                 aria-label="Sales CRM &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/3-sales-crm.webp" alt="Sales CRM dashboard" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F03</span>
@@ -1517,9 +1520,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F04" data-code="WEB" data-long="Web"
-                                 data-title="Ecommerce App" data-client="India" data-cta="https://nohitatu.com/contact/Contactus.aspx"
-                                 data-desc="An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the orderâ€™s status. Free shipping &amp; cash on delivery."
-                                 aria-label="Ecommerce App â€” Web">
+                                 data-title="Ecommerce App" data-client="India" data-cta="Contact-us.html"
+                                 data-desc="An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the order's status. Free shipping &amp; cash on delivery."
+                                 aria-label="Ecommerce App &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/4-ecommerce-app.webp" alt="Ecommerce App" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F04</span>
@@ -1528,9 +1531,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F05" data-code="WEB" data-long="Web"
-                                 data-title="Manamakkal" data-client="India" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Manamakkal" data-client="India" data-cta="Contact-us.html"
                                  data-desc="Aim is to provide a unique matrimonial service to the Tamil community no matter where you are based, to help you find the perfect match. There used to be time when people thought its odd to search for life partner on the net, but now more and more people are joining online matrimonial websites to find their match."
-                                 aria-label="Manamakkal â€” Web">
+                                 aria-label="Manamakkal &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/5-manamakkal.webp" alt="Manamakkal matrimonial platform" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F05</span>
@@ -1539,9 +1542,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F06" data-code="WEB" data-long="Web"
-                                 data-title="Dojoman Event Management software" data-client="In-house project" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Dojoman Event Management software" data-client="In-house project" data-cta="Contact-us.html"
                                  data-desc="Exclusive software solution for karate activities, it helps tournament organizer to easily generate fixtures and reports in a minute. Attaining features such as Online registration, Live scoring, Live streaming videos, Online fee payment and more."
-                                 aria-label="Dojoman Event Management software â€” Web">
+                                 aria-label="Dojoman Event Management software &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/6-dojoman-event-management-software.webp" alt="Dojoman Event Management software" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F06</span>
@@ -1550,9 +1553,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F07" data-code="WEB" data-long="Web"
-                                 data-title="Healthcare billing software" data-client="USA" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Healthcare billing software" data-client="USA" data-cta="Contact-us.html"
                                  data-desc="The software is a great product for Doctor as well, though our client mainly uses it for patient and charge entry. Checking eligibility is easy and quick and the services are great."
-                                 aria-label="Healthcare billing software â€” Web">
+                                 aria-label="Healthcare billing software &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/7-healthcare-billing-software.webp" alt="Healthcare billing software" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F07</span>
@@ -1561,9 +1564,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F08" data-code="WEB" data-long="Web"
-                                 data-title="Task Management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Task Management" data-client="" data-cta="Contact-us.html"
                                  data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Help improve business processes by analyzing exactly where time is being spent."
-                                 aria-label="Task Management â€” Web">
+                                 aria-label="Task Management &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/8-task-management.webp" alt="Task Management dashboard" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F08</span>
@@ -1572,9 +1575,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F09" data-code="WEB" data-long="Web"
-                                 data-title="Healthcare CRM" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Healthcare CRM" data-client="" data-cta="Contact-us.html"
                                  data-desc="Provides the best analytics with real-time view combined with customizable smart reporting and dashboards. Healthcare CRM helps systematize interaction with patients and referring providers, personalize medical services promotion, improve care quality and patient satisfaction."
-                                 aria-label="Healthcare CRM â€” Web">
+                                 aria-label="Healthcare CRM &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/9-healthcare-crm.webp" alt="Healthcare CRM analytics" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F09</span>
@@ -1582,21 +1585,21 @@
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
-                                 data-tags="web desktop" data-id="F10" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
-                                 data-title="HR and Payroll" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-tags="web desktop" data-id="F10" data-code="WEB&middot;DSK" data-long="Web &middot; Desktop"
+                                 data-title="HR and Payroll" data-client="" data-cta="Contact-us.html"
                                  data-desc="The Human Resource department performs various activities such as payroll processing, maintaining salary details of every employee in the organization, keeping track of deductions, time and attendance, loans, allowances, and bonuses."
-                                 aria-label="HR and Payroll â€” Web Â· Desktop">
+                                 aria-label="HR and Payroll &mdash; Web &middot; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/10-hr-and-payroll.webp" alt="HR and Payroll application" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F10</span>
-                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>HR and Payroll</strong></span>
+                                    <span class="frame__tab"><span>WEB&middot;DSK</span><strong>HR and Payroll</strong></span>
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F11" data-code="WEB" data-long="Web"
-                                 data-title="Website Design &amp; development" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Website Design &amp; development" data-client="" data-cta="Contact-us.html"
                                  data-desc="An effective website design should fulfill its intended function by conveying its particular message whilst simultaneously engaging the visitor. A good web design helps you keep your leads on your page. Website development is a way to make people aware of the services and/or products you are offering."
-                                 aria-label="Website Design &amp; development â€” Web">
+                                 aria-label="Website Design &amp; development &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/11-website-design-development.webp" alt="Website design and development" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F11</span>
@@ -1605,9 +1608,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F12" data-code="WEB" data-long="Web"
-                                 data-title="Sport event" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
-                                 data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps â€” anytime, anywhere. Online Sports Registration, Online Payment Processing, Financial Management can also be done using this software."
-                                 aria-label="Sport event â€” Web">
+                                 data-title="Sport event" data-client="" data-cta="Contact-us.html"
+                                 data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps &mdash; anytime, anywhere. Online Sports Registration, Online Payment Processing, Financial Management can also be done using this software."
+                                 aria-label="Sport event &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/12-sport-event.webp" alt="Sport event software" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F12</span>
@@ -1616,9 +1619,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="web" data-id="F13" data-code="WEB" data-long="Web"
-                                 data-title="Real Estate" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Real Estate" data-client="" data-cta="Contact-us.html"
                                  data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management."
-                                 aria-label="Real Estate â€” Web">
+                                 aria-label="Real Estate &mdash; Web">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/13-real-estate.webp" alt="Real Estate CRM" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F13</span>
@@ -1626,32 +1629,32 @@
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
-                                 data-tags="web desktop" data-id="F14" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
-                                 data-title="Performance Management System" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-tags="web desktop" data-id="F14" data-code="WEB&middot;DSK" data-long="Web &middot; Desktop"
+                                 data-title="Performance Management System" data-client="" data-cta="Contact-us.html"
                                  data-desc="Performance Management Systems help Employees and Managers to set goals and track progress with shared tracking tools. Essentially, performance management is what organizations do to become more successful and stay ahead of their competitors."
-                                 aria-label="Performance Management System â€” Web Â· Desktop">
+                                 aria-label="Performance Management System &mdash; Web &middot; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/14-performance-management-system.webp" alt="Performance Management System" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F14</span>
-                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>Performance Management System</strong></span>
+                                    <span class="frame__tab"><span>WEB&middot;DSK</span><strong>Performance Management System</strong></span>
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
-                                 data-tags="web desktop" data-id="F15" data-code="WEBÂ·DSK" data-long="Web Â· Desktop"
-                                 data-title="Restaurant Management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-tags="web desktop" data-id="F15" data-code="WEB&middot;DSK" data-long="Web &middot; Desktop"
+                                 data-title="Restaurant Management" data-client="" data-cta="Contact-us.html"
                                  data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables."
-                                 aria-label="Restaurant Management â€” Web Â· Desktop">
+                                 aria-label="Restaurant Management &mdash; Web &middot; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/15-restaurant-management.webp" alt="Restaurant Management" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F15</span>
-                                    <span class="frame__tab"><span>WEBÂ·DSK</span><strong>Restaurant Management</strong></span>
+                                    <span class="frame__tab"><span>WEB&middot;DSK</span><strong>Restaurant Management</strong></span>
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F16" data-code="MOB" data-long="Mobile"
-                                 data-title="WorkPlace Safety App" data-client="Singapore" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="WorkPlace Safety App" data-client="Singapore" data-cta="Contact-us.html"
                                  data-desc="Application to maintain your facility, the features will be, Inspection, Incident, Regular Audit, Event manager, Assets, Work order reports, My profile, Push notification for emergency exist, QR code scanning for attendance, Report sharing, Calendar."
-                                 aria-label="WorkPlace Safety App â€” Mobile">
+                                 aria-label="WorkPlace Safety App &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/16-workplace-safety-app.webp" alt="WorkPlace Safety App" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F16</span>
@@ -1660,9 +1663,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F17" data-code="MOB" data-long="Mobile"
-                                 data-title="Taxation App" data-client="USA" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Taxation App" data-client="USA" data-cta="Contact-us.html"
                                  data-desc="Customer installs app and follows instructions to submit documents needed to process his/her tax return. Customer E-signs documents via app and submits signed documents to office. Tax return will get collected in customer inbox. Customer pay the fee through app."
-                                 aria-label="Taxation App â€” Mobile">
+                                 aria-label="Taxation App &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/17-taxation-app.webp" alt="Taxation App" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F17</span>
@@ -1671,9 +1674,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F18" data-code="MOB" data-long="Mobile"
-                                 data-title="Mytasky App" data-client="Singapore" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Mytasky App" data-client="Singapore" data-cta="Contact-us.html"
                                  data-desc="Mytasky app to monitor your task without delay. Gives everything you need to create team projects, assign and schedule tasks, and track progress so that nothing falls through the cracks. It's extremely easy to use you'll be up and running in minutes."
-                                 aria-label="Mytasky App â€” Mobile">
+                                 aria-label="Mytasky App &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/18-mytasky-app.webp" alt="Mytasky App" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F18</span>
@@ -1682,9 +1685,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F19" data-code="MOB" data-long="Mobile"
-                                 data-title="Visitors management app" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Visitors management app" data-client="" data-cta="Contact-us.html"
                                  data-desc="Smart Visit is a smart visitor management system with secure check-in application to offer your guests a splendid welcome. Enhance your front desk operations with use of Smart Visit to make it more secure and efficient."
-                                 aria-label="Visitors management app â€” Mobile">
+                                 aria-label="Visitors management app &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/19-visitors-management-app.webp" alt="Visitors management app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F19</span>
@@ -1693,9 +1696,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F20" data-code="MOB" data-long="Mobile"
-                                 data-title="Doctor Appointment" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Doctor Appointment" data-client="" data-cta="Contact-us.html"
                                  data-desc="Make it easier for customers to provide feedback with forms optimized for mobile. Set up appointments for your patients in the most effective way with the help of the Appointment Scheduling App. The doctors will be able to access, reception and appointments, everything in one calendar."
-                                 aria-label="Doctor Appointment â€” Mobile">
+                                 aria-label="Doctor Appointment &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/20-doctor-appointment.webp" alt="Doctor Appointment app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F20</span>
@@ -1704,9 +1707,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F21" data-code="MOB" data-long="Mobile"
-                                 data-title="Real Estate / CRM" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Real Estate / CRM" data-client="" data-cta="Contact-us.html"
                                  data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management."
-                                 aria-label="Real Estate / CRM â€” Mobile">
+                                 aria-label="Real Estate / CRM &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/21-real-estate-crm.webp" alt="Real Estate CRM mobile app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F21</span>
@@ -1715,9 +1718,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F22" data-code="MOB" data-long="Mobile"
-                                 data-title="Sport Event" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
-                                 data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps â€” anytime, anywhere."
-                                 aria-label="Sport Event â€” Mobile">
+                                 data-title="Sport Event" data-client="" data-cta="Contact-us.html"
+                                 data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps &mdash; anytime, anywhere."
+                                 aria-label="Sport Event &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/22-sport-event.webp" alt="Sport Event mobile app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F22</span>
@@ -1726,9 +1729,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F23" data-code="MOB" data-long="Mobile"
-                                 data-title="Smart Fitness" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Smart Fitness" data-client="" data-cta="Contact-us.html"
                                  data-desc="With the Fitness App, you can start tracking your workouts and meals, measuring results, and achieving your fitness goals, all with the help of your personal trainer. The purpose of a fitness app is to provide the user with instructions and examples of one or more types of exercise, physical activity, nutritional programs, or some other fitness topic."
-                                 aria-label="Smart Fitness â€” Mobile">
+                                 aria-label="Smart Fitness &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/23-smart-fitness.webp" alt="Smart Fitness app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F23</span>
@@ -1737,9 +1740,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F24" data-code="MOB" data-long="Mobile"
-                                 data-title="Restaurant management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Restaurant management" data-client="" data-cta="Contact-us.html"
                                  data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables. Make it easier for customers to provide feedback with forms optimized for mobile."
-                                 aria-label="Restaurant management â€” Mobile">
+                                 aria-label="Restaurant management &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/24-restaurant-management.webp" alt="Restaurant management mobile app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F24</span>
@@ -1748,9 +1751,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F25" data-code="MOB" data-long="Mobile"
-                                 data-title="Ticket Booking" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
-                                 data-desc="Online Movie Ticket Booking System is a website to provide the customerâ€™s facility to book tickets for a movie online and to gather information about the movies and theaters. Customers need to register at the site to book tickets to the movie. After selecting the show, the user is presented with a seating layout so that he can select seats of his choice."
-                                 aria-label="Ticket Booking â€” Mobile">
+                                 data-title="Ticket Booking" data-client="" data-cta="Contact-us.html"
+                                 data-desc="Online Movie Ticket Booking System is a website to provide the customer's facility to book tickets for a movie online and to gather information about the movies and theaters. Customers need to register at the site to book tickets to the movie. After selecting the show, the user is presented with a seating layout so that he can select seats of his choice."
+                                 aria-label="Ticket Booking &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/25-ticket-booking.webp" alt="Ticket Booking app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F25</span>
@@ -1759,9 +1762,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F26" data-code="MOB" data-long="Mobile"
-                                 data-title="Food delivery" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
-                                 data-desc="Online ordering management software can be used by independent and small restaurants, restaurant chains, coffee shops, quick-service restaurants, and fast-casual restaurants alike â€” in short, every kind of food business that offers delivery as a service."
-                                 aria-label="Food delivery â€” Mobile">
+                                 data-title="Food delivery" data-client="" data-cta="Contact-us.html"
+                                 data-desc="Online ordering management software can be used by independent and small restaurants, restaurant chains, coffee shops, quick-service restaurants, and fast-casual restaurants alike &mdash; in short, every kind of food business that offers delivery as a service."
+                                 aria-label="Food delivery &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/26-food-delivery.webp" alt="Food delivery app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F26</span>
@@ -1770,9 +1773,9 @@
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="mobile" data-id="F27" data-code="MOB" data-long="Mobile"
-                                 data-title="Task Management" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="Task Management" data-client="" data-cta="Contact-us.html"
                                  data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Task management software empowers teams to work more productively and efficiently."
-                                 aria-label="Task Management â€” Mobile">
+                                 aria-label="Task Management &mdash; Mobile">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/27-task-management.webp" alt="Task Management mobile app" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F27</span>
@@ -1780,21 +1783,21 @@
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
-                                 data-tags="mobile desktop" data-id="F28" data-code="MOBÂ·DSK" data-long="Mobile Â· Desktop"
-                                 data-title="FinTechesh" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-tags="mobile desktop" data-id="F28" data-code="MOB&middot;DSK" data-long="Mobile &middot; Desktop"
+                                 data-title="FinTechesh" data-client="" data-cta="Contact-us.html"
                                  data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience."
-                                 aria-label="FinTechesh â€” Mobile Â· Desktop">
+                                 aria-label="FinTechesh &mdash; Mobile &middot; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/28-fintechesh.webp" alt="FinTechesh mobile" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F28</span>
-                                    <span class="frame__tab"><span>MOBÂ·DSK</span><strong>FinTechesh</strong></span>
+                                    <span class="frame__tab"><span>MOB&middot;DSK</span><strong>FinTechesh</strong></span>
                                 </span>
                             </div>
                             <div class="frame" role="option" tabindex="-1" aria-selected="false"
                                  data-tags="desktop" data-id="F29" data-code="DSK" data-long="Desktop"
-                                 data-title="FinTechesh" data-client="" data-cta="https://nohitatu.com/contact/Contactus.aspx"
+                                 data-title="FinTechesh" data-client="" data-cta="Contact-us.html"
                                  data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience."
-                                 aria-label="FinTechesh â€” Desktop">
+                                 aria-label="FinTechesh &mdash; Desktop">
                                 <span class="frame__gate">
                                     <img src="images/portfolio/reel/29-fintechesh.webp" alt="FinTechesh desktop" width="600" height="375" loading="lazy" decoding="async">
                                     <span class="frame__id">F29</span>
@@ -1805,7 +1808,7 @@
                     </div>
 
                     <div class="reel__transport shell">
-                        <span>Scroll Â· drag Â· &#8592; &#8594;</span>
+                        <span>Scroll &middot; drag &middot; &#8592; &#8594;</span>
                         <span class="reel__gauge" aria-hidden="true"><span data-reel-gauge></span></span>
                         <span class="reel__pos"><b data-reel-pos>01</b> / <span data-reel-of>15</span></span>
                     </div>
@@ -1814,7 +1817,7 @@
                         <p class="reel__meta">
                             <b data-reel-id>F01</b>
                             <span data-reel-code>Web</span><br>
-                            <span data-reel-client>Client â€” USA</span>
+                            <span data-reel-client>Client &mdash; USA</span>
                         </p>
                         <div class="reel__detail">
                             <h3 data-reel-title>CMS 1500</h3>
@@ -1828,11 +1831,11 @@
                 <div class="footer-reveal-shell">
                     <div class="estimate-panel">
                         <div class="estimate-copy">
-                            <span>Letâ€™s work together</span>
-                            <h2>Have a product or module in mind? Tell us what youâ€™re building.</h2>
+                            <span>Let's work together</span>
+                            <h2>Have a product or module in mind? Tell us what you're building.</h2>
                         </div>
-                        <a class="estimate-button" href="https://nohitatu.com/contact/Contactus.aspx">
-                            Request for demo <span aria-hidden="true">â†’</span>
+                        <a class="estimate-button" href="Contact-us.html">
+                            Request for demo <span aria-hidden="true">&#8594;</span>
                         </a>
                     </div>
                 </div>
@@ -1848,13 +1851,13 @@
                     <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
                 </div>
                 <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
-                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
                     <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="Vision-and-values.html">Vision and Values</a></li><li><a href="People.html">People</a></li><li><a href="Our-advantages.html">Our Advantages</a></li><li><a href="Who-need-us.html">Who Need Us?</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
-                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="https://nohitatu.com/contact/Contactus.aspx">Contact</a></li>
+                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
                 </ul></div>
                 <div class="footer-col footer-contact">
                     <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
@@ -1925,7 +1928,7 @@
             });
         })();
 
-        /* â”€â”€ Module reel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        /* ------ Module reel ---------------------------------------------------------------------------------------------------------------------------------------------------------
            Page scroll is the single source of truth for how far the strip has
            travelled; drag and keyboard jumps move the scroll rather than the
            strip, so nothing can desync. The read-head updates the readout /
@@ -2004,7 +2007,7 @@
                     const client = f.dataset.client;
                     out.client.textContent = !client ? "In-house product"
                         : /in-house/i.test(client) ? client
-                            : `Client â€” ${client}`;
+                            : `Client &mdash; ${client}`;
                 }
                 if (out.title) out.title.textContent = f.dataset.title;
                 if (out.desc) out.desc.textContent = f.dataset.desc;
@@ -2045,7 +2048,7 @@
             }
 
             /* Resolve which frame (if any) should be scaled. Head position never
-               forces a pop â€” only hover, keyboard focus-visible, or a sticky tap. */
+               forces a pop &mdash; only hover, keyboard focus-visible, or a sticky tap. */
             function syncPop() {
                 let want = -1;
                 if (hovered >= 0) {
@@ -2140,7 +2143,7 @@
                 if (shown.length < 2) return 0;
                 const g = headGeometry();
                 // The pop-out grows the frame, so only consider frames with
-                // room to grow inside the gate â€” nothing pops half off-screen.
+                // room to grow inside the gate &mdash; nothing pops half off-screen.
                 const scale = parseFloat(getComputedStyle(reel).getPropertyValue("--pop-scale")) || 1.65;
                 const pad = (g.fw * (scale - 1)) / 2;
                 let best = -1;
@@ -2173,7 +2176,7 @@
                 if (!dirty) return;
                 dirty = false;
                 render();
-                // Head tracks selection / readout only â€” never forces a scale.
+                // Head tracks selection / readout only &mdash; never forces a scale.
                 if (hovered < 0 && performance.now() > lock) select(headIndex());
                 else syncPop();
             }
@@ -2443,5 +2446,69 @@
             };
         })();
     </script>
+
+    <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-window" class="chatbot-window hidden">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <div class="chatbot-avatar-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            <circle cx="9" cy="10" r="1" fill="#726cf4"></circle>
+                            <circle cx="15" cy="10" r="1" fill="#726cf4"></circle>
+                            <path d="M9.5 13.5c1 .8 2 1 3 0" stroke="#726cf4"></path>
+                        </svg>
+                    </div>
+                    <div class="chatbot-header-text">
+                        <h4>Nohitatu Advisor</h4>
+                        <small><span class="status-dot"></span> Live Concierge Desk</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-content">
+                        <p>Welcome to Nohitatu. I can help you apply for a role, explore our work, or connect with the team.</p>
+                        <p>What brings you here?</p>
+                    </div>
+                </div>
+                <div class="quick-chips" role="group" aria-label="Choose one">
+                    <span class="quick-chips-label">Choose one</span>
+                    <button class="chip-btn" data-query="Looking for a job">Looking for a job</button>
+                    <button class="chip-btn" data-query="See our work">See our work</button>
+                    <button class="chip-btn" data-query="Start a project">Start a project</button>
+                    <button class="chip-btn" data-query="Something else">Something else</button>
+                </div>
+            </div>
+
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask your digital concierge..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Terracotta Coral Toggle Button -->
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with Nohitatu Digital Concierge">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <script src="js/chatbot.js?v=20260803contact"></script>
 </body>
 </html>
