@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job application | Nohitatu</title>
+    <meta name="description" content="Apply for an open role at Nohitatu — complete your profile and submit your resume." />
+    <link rel="shortcut icon" href="images/favicon/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css?v=20260804postresume6" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260804postresume6" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/custom.js?v=20260804postresume6"></script>
+    <script src="js/career-details.js?v=20260804loc"></script>
+    <style>
+        :root {
+            --ink: #14243d;
+            --muted: #5f6c7d;
+            --blue: #726cf4;
+            --blue-dark: #5f58dc;
+            --line: #d4d4d4;
+            --navy: #0b1a2d;
+            --ground: #e4e4e4;
+            --ground-image: url("images/careers-page-bg.png");
+            --ground-size: 41px 88px;
+            --paper: #f4f5f8;
+            --paper-solid: #eef0f4;
+            --font-sans: "Plus Jakarta Sans", sans-serif;
+            --font-display: "Playfair Display", Georgia, serif;
+            --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body.post-resume-page,
+        body.post-resume-page.home_body,
+        body.post-resume-page.footer-reveal-page {
+            margin: 0;
+            color: var(--ink);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
+            overflow-x: visible !important;
+        }
+
+        html:has(body.post-resume-page) { overflow-x: visible !important; }
+
+        body.post-resume-page #wrapper,
+        body.post-resume-page #wrapper.footer-reveal-content {
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
+            overflow: visible !important;
+        }
+
+        .shell {
+            width: min(880px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        body.post-resume-page header.logo-navbar {
+            background: linear-gradient(180deg, rgba(10, 16, 32, 0.58), transparent) !important;
+            border-bottom: 0 !important;
+            backdrop-filter: none !important;
+        }
+
+        body.post-resume-page header.logo-navbar .logo-on-dark { display: block; }
+        body.post-resume-page header.logo-navbar .logo-on-light { display: none; }
+
+        body.post-resume-page header.logo-navbar #navigation > li.nav-item > a {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        body.post-resume-page header.logo-navbar #navigation > li.nav-item:hover > a {
+            color: #a855f7 !important;
+            -webkit-text-fill-color: #a855f7 !important;
+        }
+
+        body.post-resume-page header.logo-navbar #navigation > li.nav-item.active > a {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.post-resume-page header.logo-navbar #navigation > li.nav-item > a::after {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+        }
+
+        body.post-resume-page header.logo-navbar.white-header {
+            background-color: rgba(228, 228, 228, 0.96) !important;
+            background-image: var(--ground-image) !important;
+            background-repeat: repeat !important;
+            background-size: var(--ground-size) !important;
+            border-bottom: 1px solid #d4d4d4 !important;
+            backdrop-filter: blur(14px) !important;
+        }
+
+        body.post-resume-page header.logo-navbar.white-header .logo-on-dark { display: none; }
+        body.post-resume-page header.logo-navbar.white-header .logo-on-light { display: block; }
+
+        body.post-resume-page header.logo-navbar.white-header #navigation > li.nav-item > a {
+            color: var(--ink) !important;
+            -webkit-text-fill-color: var(--ink) !important;
+        }
+
+        body.post-resume-page header.logo-navbar.white-header #navigation > li.nav-item:hover > a {
+            color: #a855f7 !important;
+            -webkit-text-fill-color: #a855f7 !important;
+        }
+
+        body.post-resume-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.post-resume-page .navbar-toggle.nav-menu { display: none; }
+
+        body.post-resume-page .pr-hero.nh-curtain-banner {
+            overflow: hidden;
+            padding: 128px 0 64px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(
+                    185deg,
+                    rgba(6, 14, 28, 0.86) 0%,
+                    rgba(11, 26, 45, 0.72) 42%,
+                    rgba(11, 26, 45, 0.48) 72%,
+                    rgba(8, 16, 30, 0.62) 100%
+                ),
+                url("images/career-details-biometric-hero.jpg?v=20260804postresume6") center 38% / cover no-repeat;
+            color: #fff;
+        }
+
+        body.post-resume-page .pr-hero-grid {
+            position: relative;
+            z-index: 2;
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            text-align: left;
+        }
+
+        body.post-resume-page .pr-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 24px;
+            color: rgba(255, 255, 255, 0.78);
+            font-family: var(--font-sans);
+            font-size: 0.86rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        body.post-resume-page .pr-back:hover { color: #fff; }
+        body.post-resume-page .pr-back:hover span[aria-hidden="true"] { transform: translateX(-3px); }
+        body.post-resume-page .pr-back span[aria-hidden="true"] {
+            font-size: 1.05em;
+            transition: transform 0.2s ease;
+        }
+
+        body.post-resume-page h1 {
+            max-width: 100%;
+            margin: 0;
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: clamp(1.95rem, 3.8vw, 3.05rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            white-space: nowrap;
+            text-shadow: 0 10px 36px rgba(0, 0, 0, 0.28);
+        }
+
+        body.post-resume-page .pr-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            margin: 24px 0 0;
+            padding: 16px 0 0;
+            list-style: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        body.post-resume-page .pr-meta li {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 0;
+            padding: 0 24px 0 0;
+            margin-right: 24px;
+            border-right: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        body.post-resume-page .pr-meta li:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: 0;
+        }
+
+        body.post-resume-page .pr-meta-label {
+            color: rgba(255, 255, 255, 0.58);
+            font-family: var(--font-sans);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        body.post-resume-page .pr-meta-value {
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 1.02rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.35;
+        }
+
+        body.post-resume-page .pr-code {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+        }
+
+        /* Hero entrance */
+        @keyframes prHeroIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            body.post-resume-page .pr-hero-grid > .pr-back,
+            body.post-resume-page .pr-hero-grid > h1,
+            body.post-resume-page .pr-hero-grid > .pr-meta {
+                opacity: 0;
+                animation: prHeroIn 0.75s var(--ease-out) forwards;
+            }
+
+            body.post-resume-page .pr-hero-grid > .pr-back { animation-delay: 0.06s; }
+            body.post-resume-page .pr-hero-grid > h1 { animation-delay: 0.16s; }
+            body.post-resume-page .pr-hero-grid > .pr-meta { animation-delay: 0.3s; }
+        }
+
+        .hero-wave {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 42px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-wave__layer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: auto;
+            height: 100px;
+            display: block;
+            background-repeat: repeat-x;
+            background-position: 0 0;
+            background-size: 1200px 100px;
+        }
+
+        .hero-wave__layer--back {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C75,85 225,85 300,60 C375,35 525,35 600,60 C675,85 825,85 900,60 C975,35 1125,35 1200,60 L1200,120 L0,120 Z' fill='rgba(238,240,244,0.5)'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 17s linear infinite reverse;
+        }
+
+        .hero-wave__layer--front {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C75,20 225,20 300,50 C375,80 525,80 600,50 C675,20 825,20 900,50 C975,80 1125,80 1200,50 L1200,120 L0,120 Z' fill='%23eef0f4'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 11s linear infinite;
+        }
+
+        @keyframes heroWaveDrift {
+            from { background-position-x: 0; }
+            to { background-position-x: -1200px; }
+        }
+
+        /* Keep tip wave swaying (match Careers / Careerdetails) */
+        @media (prefers-reduced-motion: reduce) {
+            body.post-resume-page .hero-wave__layer--back {
+                animation: heroWaveDrift 17s linear infinite reverse !important;
+            }
+            body.post-resume-page .hero-wave__layer--front {
+                animation: heroWaveDrift 11s linear infinite !important;
+            }
+        }
+
+        body.post-resume-page .nh-curtain-panel {
+            background-color: var(--paper-solid);
+            background-image:
+                linear-gradient(
+                    165deg,
+                    rgba(255, 255, 255, 0.72) 0%,
+                    rgba(238, 240, 244, 0.94) 38%,
+                    rgba(228, 230, 238, 0.98) 100%
+                ),
+                radial-gradient(ellipse 70% 45% at 12% 0%, rgba(114, 108, 244, 0.07), transparent 58%),
+                radial-gradient(ellipse 50% 40% at 92% 18%, rgba(11, 26, 45, 0.05), transparent 55%),
+                var(--ground-image);
+            background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+            background-size: auto, auto, auto, var(--ground-size);
+            box-shadow: 0 -1px 0 rgba(20, 36, 61, 0.06);
+        }
+
+        body.post-resume-page .pr-panel { padding: 52px 0 108px; }
+
+        .pr-lead {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-family: var(--font-sans);
+            font-size: 0.98rem;
+            line-height: 1.65;
+            max-width: 52ch;
+        }
+
+        .pr-req { color: #c43c5a; font-weight: 700; }
+
+        /* Editorial form sections — subtle cards, not dashboard chrome */
+        .pr-section {
+            margin: 0 0 22px;
+            padding: 30px 30px 14px;
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid rgba(20, 36, 61, 0.07);
+            border-radius: 18px;
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.92) inset,
+                0 14px 36px rgba(11, 26, 45, 0.035);
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .pr-section:focus-within {
+            border-color: rgba(114, 108, 244, 0.28);
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.95) inset,
+                0 16px 40px rgba(95, 88, 220, 0.08),
+                0 0 0 3px rgba(114, 108, 244, 0.08);
+        }
+
+        .pr-section-head {
+            /* Must not be a <header> (global header rule is position:fixed). */
+            position: relative;
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin: 0 0 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(20, 36, 61, 0.07);
+            background: transparent;
+            z-index: auto;
+            width: auto;
+            max-width: none;
+            transform: none;
+        }
+
+        .pr-section-kicker {
+            flex-shrink: 0;
+            color: var(--blue-dark);
+            font-family: var(--font-sans);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            line-height: 1.4;
+        }
+
+        .pr-section h2 {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 2.2vw, 1.7rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            line-height: 1.2;
+        }
+
+        .pr-subh {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 12px 0 4px;
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue-dark);
+        }
+
+        .pr-subh::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(114, 108, 244, 0.28), transparent);
+        }
+
+        .pr-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 22px;
+        }
+
+        .pr-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+        .pr-field--full { grid-column: 1 / -1; }
+
+        .pr-field label {
+            font-family: var(--font-sans);
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+        }
+
+        .pr-field input[type="text"],
+        .pr-field input[type="email"],
+        .pr-field input[type="tel"],
+        .pr-field input[type="date"],
+        .pr-field input[type="file"],
+        .pr-field select,
+        .pr-field textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(20, 36, 61, 0.12);
+            border-radius: 11px;
+            background: #fff;
+            color: var(--ink);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.22s ease,
+                background 0.2s ease;
+        }
+
+        .pr-field input::placeholder,
+        .pr-field textarea::placeholder {
+            color: rgba(95, 108, 125, 0.72);
+            font-weight: 400;
+        }
+
+        .pr-field textarea { resize: vertical; min-height: 100px; line-height: 1.55; }
+
+        .pr-field input[type="file"] {
+            padding: 11px 12px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--muted);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 245, 248, 0.9));
+            cursor: pointer;
+        }
+
+        .pr-field input[type="file"]::file-selector-button {
+            margin-right: 12px;
+            padding: 7px 12px;
+            border: 0;
+            border-radius: 8px;
+            background: rgba(114, 108, 244, 0.12);
+            color: var(--blue-dark);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+        }
+
+        .pr-field input:hover:not(:disabled):not(:focus),
+        .pr-field select:hover:not(:disabled):not(:focus),
+        .pr-field textarea:hover:not(:disabled):not(:focus) {
+            border-color: rgba(20, 36, 61, 0.2);
+        }
+
+        .pr-field input:focus,
+        .pr-field select:focus,
+        .pr-field textarea:focus {
+            outline: none;
+            border-color: rgba(114, 108, 244, 0.55);
+            box-shadow: 0 0 0 3px rgba(114, 108, 244, 0.14);
+            background: #fff;
+        }
+
+        .pr-radios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            padding-top: 4px;
+        }
+
+        .pr-radios label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: rgba(20, 36, 61, 0.03);
+            font-family: var(--font-sans);
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--ink);
+            cursor: pointer;
+            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+        }
+
+        .pr-radios label:has(input:checked) {
+            background: rgba(114, 108, 244, 0.1);
+            border-color: rgba(114, 108, 244, 0.28);
+            color: var(--blue-dark);
+            font-weight: 600;
+        }
+
+        .pr-radios label:hover {
+            border-color: rgba(114, 108, 244, 0.18);
+        }
+
+        .pr-same label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+        }
+
+        .pr-hint {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .pr-skills-list { display: grid; gap: 4px; }
+
+        .pr-skill-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            gap: 12px 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(20, 36, 61, 0.07);
+        }
+
+        .pr-skill-row:last-child { border-bottom: 0; }
+
+        .pr-skill-name {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            padding-top: 30px;
+            color: var(--ink);
+        }
+
+        .pr-languages { display: grid; gap: 18px; }
+
+        .pr-lang-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px 18px;
+            padding: 18px 0 4px;
+            border-bottom: 1px solid rgba(20, 36, 61, 0.07);
+        }
+
+        .pr-lang-row:last-child { border-bottom: 0; }
+
+        .pr-lang-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-bottom: 6px;
+        }
+
+        .pr-lang-actions .pr-btn {
+            padding: 9px 16px;
+            font-size: 0.86rem;
+            border-radius: 10px;
+        }
+
+        .pr-hint-inline {
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        @media (max-width: 720px) {
+            .pr-skill-row {
+                grid-template-columns: 1fr;
+            }
+            .pr-skill-name { padding-top: 0; }
+        }
+
+        .pr-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .pr-status {
+            margin: 0 0 22px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-family: var(--font-sans);
+            font-size: 0.94rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .pr-status--error {
+            background: rgba(196, 60, 90, 0.1);
+            color: #9b2340;
+            border: 1px solid rgba(196, 60, 90, 0.22);
+        }
+
+        .pr-status--ok {
+            background: rgba(34, 140, 96, 0.1);
+            color: #1a6b48;
+            border: 1px solid rgba(34, 140, 96, 0.22);
+        }
+
+        .pr-status--info {
+            background: rgba(114, 108, 244, 0.1);
+            color: #3f3a9e;
+            border: 1px solid rgba(114, 108, 244, 0.22);
+        }
+
+        .pr-declare {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 0 0 24px;
+            font-family: var(--font-sans);
+            font-size: 0.94rem;
+            line-height: 1.55;
+            color: var(--ink);
+            cursor: pointer;
+        }
+
+        .pr-declare input { margin-top: 4px; accent-color: var(--blue); }
+
+        .pr-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 14px;
+        }
+
+        .pr-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: 12px;
+            border: 0;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+                transform 0.22s var(--ease-out),
+                box-shadow 0.22s ease,
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .pr-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .pr-btn-ink {
+            background: linear-gradient(135deg, #726cf4 0%, #5f58dc 72%, #4f48c8 100%);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(95, 88, 220, 0.22);
+        }
+
+        .pr-btn-ink:hover:not(:disabled) {
+            transform: translateY(-2px);
+            color: #fff;
+            box-shadow: 0 14px 28px rgba(95, 88, 220, 0.32);
+        }
+
+        .pr-btn-ink:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .pr-btn-panel {
+            background: rgba(20, 36, 61, 0.06);
+            color: var(--ink);
+            border: 1px solid rgba(20, 36, 61, 0.1);
+        }
+
+        .pr-btn-panel:hover {
+            background: rgba(20, 36, 61, 0.1);
+            color: var(--ink);
+        }
+
+        .pr-btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid rgba(20, 36, 61, 0.12);
+            font-weight: 600;
+        }
+
+        .pr-btn-ghost:hover {
+            color: var(--ink);
+            border-color: rgba(20, 36, 61, 0.2);
+        }
+
+        .pr-section--submit {
+            margin-top: 8px;
+            padding: 8px 4px 20px;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .pr-section--submit:focus-within {
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+        .pr-not-found {
+            text-align: center;
+            padding: 48px 24px 24px;
+        }
+
+        .pr-not-found h2 {
+            margin: 0 0 12px;
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .pr-not-found p {
+            margin: 0 auto 28px;
+            max-width: 42ch;
+            color: var(--muted);
+            font-family: var(--font-sans);
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+
+        .pr-grid-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 22px;
+            width: 100%;
+        }
+
+        /* Staggered form section reveal (Contact-style curtain settle) */
+        @media (prefers-reduced-motion: no-preference) {
+            body.post-resume-page .pr-form.pr-form--motion > .pr-lead,
+            body.post-resume-page .pr-form.pr-form--motion > .pr-status,
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section {
+                opacity: 0;
+                transform: translateY(20px);
+                transition:
+                    opacity 0.65s var(--ease-out),
+                    transform 0.65s var(--ease-out);
+            }
+
+            body.post-resume-page .pr-form.pr-form--motion > .pr-lead { transition-delay: 0.02s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-status { transition-delay: 0.06s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(1) { transition-delay: 0.08s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(2) { transition-delay: 0.14s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(3) { transition-delay: 0.2s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(4) { transition-delay: 0.26s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(5) { transition-delay: 0.32s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(6) { transition-delay: 0.38s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(7) { transition-delay: 0.44s; }
+            body.post-resume-page .pr-form.pr-form--motion > .pr-section:nth-of-type(8) { transition-delay: 0.5s; }
+
+            body.post-resume-page .pr-form.pr-form--motion.is-revealed > .pr-lead,
+            body.post-resume-page .pr-form.pr-form--motion.is-revealed > .pr-status,
+            body.post-resume-page .pr-form.pr-form--motion.is-revealed > .pr-section {
+                opacity: 1;
+                transform: none;
+            }
+
+            body.post-resume-page .pr-not-found {
+                opacity: 0;
+                transform: translateY(16px);
+                animation: prHeroIn 0.7s var(--ease-out) 0.1s forwards;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body.post-resume-page .pr-btn:hover:not(:disabled),
+            body.post-resume-page .pr-btn-ink:hover:not(:disabled) {
+                transform: none;
+            }
+
+            body.post-resume-page .pr-back:hover span[aria-hidden="true"] {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 820px) {
+            body.post-resume-page .pr-hero.nh-curtain-banner { padding: 120px 0 48px; }
+            body.post-resume-page .pr-panel { padding: 40px 0 80px; }
+            body.post-resume-page .navbar-toggle.nav-menu { display: flex; }
+            .pr-grid,
+            .pr-grid-inner,
+            .pr-skill-row { grid-template-columns: 1fr; }
+            .pr-skill-name { padding-top: 0; }
+            .pr-section { padding: 22px 18px 10px; }
+            .pr-section-head { gap: 10px; margin-bottom: 18px; }
+        }
+
+        @media (max-width: 640px) {
+            .shell { width: min(100% - 32px, 880px); }
+            body.post-resume-page h1 {
+                max-width: none;
+                white-space: normal;
+                font-size: clamp(1.85rem, 8.5vw, 2.5rem);
+            }
+            body.post-resume-page .pr-meta {
+                flex-direction: column;
+                gap: 14px;
+            }
+            body.post-resume-page .pr-meta li {
+                margin: 0;
+                padding: 0;
+                border-right: 0;
+            }
+            .hero-wave { height: 28px; }
+            .hero-wave__layer {
+                height: 72px;
+                background-size: 900px 72px;
+            }
+            .pr-actions { flex-direction: column; align-items: stretch; }
+            .pr-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body class="home_body post-resume-page">
+    <div id="wrapper">
+        <header class="logo-navbar blnk-header">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+                <div class="header-container">
+                    <div class="inner-overlay"></div>
+                    <div class="row header-row">
+                        <a href="index.html" class="header-logo" aria-label="Nohitatu home">
+                            <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                            <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                        </a>
+                        <div class="col-sm-12 right-menu text-center">
+                            <nav id="slidemenu" aria-label="Primary navigation">
+                                <div class="inner-menu">
+                                    <button class="navbar-toggle nav-menu cross" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                                        <span class="first"></span><span class="second"></span>
+                                    </button>
+                                    <ul id="navigation" class="nav navbar-nav">
+                                        <li class="nav-item"><a href="index.html">HOME</a></li>
+                                        <li class="nav-item">
+                                            <a href="#">CORPORATE</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="About-us.html">About Us</a></li>
+                                                    <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                                                    <li><a href="Clients.html">Clients</a></li>
+                                                    <li><a href="blogs-page.html">Blogs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">EXPLORE NOHITATU</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                                                <li><a href="Tech-skills.html">Tech Skills</a></li>
+                                                <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                                                <li><a href="People.html">People</a></li>
+                                                <li><a href="Our-advantages.html">Our Advantages</a></li>
+                                                <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                                                <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">SOLUTIONS</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Software-Development.html">Software Development</a></li>
+                                                <li><a href="Saas.html">Saas</a></li>
+                                                <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item"><a href="Portfolio.html">PORTFOLIO</a></li>
+                                        <li class="nav-item active"><a href="Careers.html" aria-current="page">CAREER</a></li>
+                                        <li class="nav-item"><a href="Contact-us.html">CONTACT US</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="full-screen-menu section fadeIn">
+            <div class="container-fluid"><div class="row">
+                <div class="col-sm-7 menu-content">
+                    <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
+                    <a href="Contact-us.html" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                </div>
+                <div class="col-sm-5 right-menu">
+                    <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
+                        <a href="index.html" class="list-group-item main-link">HOME</a>
+                        <a href="#pr-mobile-corporate" class="list-group-item main-link" data-bs-toggle="collapse">CORPORATE <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="pr-mobile-corporate"><ul class="inner-sub-menus">
+                            <li><a href="About-us.html">About Us</a></li>
+                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="Clients.html">Clients</a></li>
+                            <li><a href="blogs-page.html">Blogs</a></li>
+                        </ul></div>
+                        <a href="#pr-mobile-explore" class="list-group-item main-link" data-bs-toggle="collapse">EXPLORE NOHITATU <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="pr-mobile-explore"><ul class="inner-sub-menus">
+                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills.html">Tech Skills</a></li>
+                            <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                            <li><a href="People.html">People</a></li>
+                            <li><a href="Our-advantages.html">Our Advantages</a></li>
+                            <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                        </ul></div>
+                        <a href="#pr-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="pr-mobile-solutions"><ul class="inner-sub-menus">
+                            <li><a href="Software-Development.html">Software Development</a></li>
+                            <li><a href="Saas.html">Saas</a></li>
+                            <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                        </ul></div>
+                        <a href="Portfolio.html" class="list-group-item main-link">PORTFOLIO</a>
+                        <a href="Careers.html" class="list-group-item main-link" aria-current="page">CAREER</a>
+                        <a href="Contact-us.html" class="list-group-item main-link">CONTACT US</a>
+                    </div></div>
+                </div>
+            </div></div>
+        </div>
+
+        <main>
+            <div class="nh-curtain-stack">
+            <section class="pr-hero nh-curtain-banner" id="pr-hero">
+                <div class="shell pr-hero-grid">
+                    <a class="pr-back" id="pr-back" href="Careers.html"><span aria-hidden="true">&#8592;</span> Back to careers</a>
+                    <h1 id="pr-title">Loading application…</h1>
+                    <ul class="pr-meta" id="pr-meta" hidden></ul>
+                </div>
+                <div class="hero-wave" aria-hidden="true">
+                    <span class="hero-wave__layer hero-wave__layer--back"></span>
+                    <span class="hero-wave__layer hero-wave__layer--front"></span>
+                </div>
+            </section>
+
+            <div class="nh-curtain-panel">
+            <section class="pr-panel" aria-labelledby="pr-title">
+                <div class="shell" id="pr-main">
+                    <p class="pr-lead">Loading application form…</p>
+                </div>
+            </section>
+            </div>
+            </div>
+        </main>
+
+        <footer class="footer site-footer">
+            <div class="inner-footer"><div class="container"><div class="footer-grid">
+                <div class="footer-col footer-offices">
+                    <h3 class="footer-heading">Offices</h3>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/india-flag.png" alt="" width="18" height="12" /><span>India Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V14h6v12M14 26V8h8v18M24 26V16h5v10M31 26V6h7v20M40 26V12h6v14M48 26V10h8v16" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>#402, 403 &amp; 405, 4th Floor, City Centre,<br>186/43 Purasawalkam High Road,<br>Chennai - 600010, Tamilnadu, India.</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/singapore-flag.png" alt="" width="18" height="12" /><span>Singapore Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M8 26V12h7v14M18 26V7h6v19M27 26V14h5v12M35 26V4c4 3 8 3 12 0v22M50 26V11h8v15" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>71 Bukit Batok Crescent,<br>#05-07 Prestige Centre,<br>Singapore 658071</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
+                </div>
+                <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
+                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
+                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="Vision-and-values.html">Vision and Values</a></li><li><a href="People.html">People</a></li><li><a href="Our-advantages.html">Our Advantages</a></li><li><a href="Who-need-us.html">Who Need Us?</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
+                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
+                </ul></div>
+                <div class="footer-col footer-contact">
+                    <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
+                    <a class="footer-phone" href="tel:+16072470227"><span class="footer-phone-number">+1 (607) 247-0227</span></a>
+                    <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
+                    <div class="footer-contact-meta"><a href="skype:sales.nohitatu">Skype: sales.nohitatu</a><a href="mailto:info@nohitatu.com">info@nohitatu.com</a></div>
+                </div>
+            </div></div></div>
+            <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
+                <div class="footer-copy"><span>Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and offshore software development company. All rights reserved.</span></div>
+                <div class="social-icons"><a href="https://www.facebook.com/nohitatu/" class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a><a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a><a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a><a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a></div>
+            </div></div></div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            const toggle = document.querySelector(".navbar-toggle.nav-menu");
+            const menu = document.querySelector(".full-screen-menu");
+            if (!toggle || !menu) return;
+            const setMenuState = (open) => {
+                toggle.classList.toggle("open", open);
+                menu.classList.toggle("show", open);
+                document.body.classList.toggle("fixed", open);
+                toggle.setAttribute("aria-expanded", String(open));
+            };
+            toggle.addEventListener("click", () => setMenuState(!menu.classList.contains("show")));
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") setMenuState(false);
+            });
+            const id = (new URLSearchParams(window.location.search).get("id") || "").trim();
+            const back = document.getElementById("pr-back");
+            if (back && id) back.href = "Careerdetails.html?id=" + encodeURIComponent(id);
+        })();
+    </script>
+    <script src="js/post-resume.js?v=20260804postresume6"></script>
+
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-window" class="chatbot-window hidden">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <div class="chatbot-avatar-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            <circle cx="9" cy="10" r="1" fill="#726cf4"></circle>
+                            <circle cx="15" cy="10" r="1" fill="#726cf4"></circle>
+                            <path d="M9.5 13.5c1 .8 2 1 3 0" stroke="#726cf4"></path>
+                        </svg>
+                    </div>
+                    <div class="chatbot-header-text">
+                        <h4>Nohitatu Advisor</h4>
+                        <small><span class="status-dot"></span> Live Concierge Desk</small>
+                    </div>
+                </div>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-content">
+                        <p>Welcome to Nohitatu. I can help you apply for a role, explore our work, or connect with the team.</p>
+                        <p>What brings you here?</p>
+                    </div>
+                </div>
+                <div class="quick-chips" role="group" aria-label="Choose one">
+                    <span class="quick-chips-label">Choose one</span>
+                    <button class="chip-btn" data-query="Looking for a job">Looking for a job</button>
+                    <button class="chip-btn" data-query="See our work">See our work</button>
+                    <button class="chip-btn" data-query="Start a project">Start a project</button>
+                    <button class="chip-btn" data-query="Something else">Something else</button>
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask your digital concierge..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with Nohitatu Digital Concierge">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+    <script src="js/chatbot.js?v=20260804postresume6"></script>
+</body>
+</html>

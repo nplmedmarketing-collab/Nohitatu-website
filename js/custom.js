@@ -5,7 +5,12 @@
 
   ['footer-reveal.js', 'mobile-nav.js'].forEach(function (name) {
     var script = document.createElement('script');
-    script.src = new URL(name, currentScript.src).href;
+    var url = new URL(name, currentScript.src);
+    // Soft-bump when custom.js itself is versioned (?v=…) so CTA/footer fixes land.
+    if (currentScript.src.indexOf('?') !== -1) {
+      url.search = currentScript.src.split('?')[1];
+    }
+    script.src = url.href;
     script.defer = true;
     document.head.appendChild(script);
   });

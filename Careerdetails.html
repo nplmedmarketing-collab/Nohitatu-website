@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Role details | Nohitatu</title>
+    <meta name="description" content="Open role details and how to apply at Nohitatu." />
+    <link rel="shortcut icon" href="images/favicon/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css?v=20260804cdetail3" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260804cdetail3" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/custom.js?v=20260804cdetail3"></script>
+    <script src="js/career-details.js?v=20260804cdetail3"></script>
+    <style>
+        :root {
+            --ink: #14243d;
+            --muted: #5f6c7d;
+            --blue: #726cf4;
+            --blue-dark: #5f58dc;
+            --line: #d4d4d4;
+            --navy: #0b1a2d;
+            --ground: #e4e4e4;
+            --ground-image: url("images/careers-page-bg.png");
+            --ground-size: 41px 88px;
+            --paper: #f4f5f8;
+            --paper-solid: #eef0f4;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body.career-detail-page,
+        body.career-detail-page.home_body,
+        body.career-detail-page.footer-reveal-page {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
+            overflow-x: visible !important;
+        }
+
+        html:has(body.career-detail-page) { overflow-x: visible !important; }
+
+        body.career-detail-page #wrapper,
+        body.career-detail-page #wrapper.footer-reveal-content {
+            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
+            overflow: visible !important;
+        }
+
+        .shell {
+            width: min(1080px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        body.career-detail-page header.logo-navbar {
+            background: linear-gradient(180deg, rgba(10, 16, 32, 0.58), transparent) !important;
+            border-bottom: 0 !important;
+            backdrop-filter: none !important;
+        }
+
+        body.career-detail-page header.logo-navbar .logo-on-dark { display: block; }
+        body.career-detail-page header.logo-navbar .logo-on-light { display: none; }
+
+        body.career-detail-page header.logo-navbar #navigation > li.nav-item > a {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        body.career-detail-page header.logo-navbar #navigation > li.nav-item:hover > a {
+            color: #a855f7 !important;
+            -webkit-text-fill-color: #a855f7 !important;
+        }
+
+        body.career-detail-page header.logo-navbar #navigation > li.nav-item.active > a {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.career-detail-page header.logo-navbar #navigation > li.nav-item > a::after {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+        }
+
+        body.career-detail-page header.logo-navbar.white-header {
+            background-color: rgba(228, 228, 228, 0.96) !important;
+            background-image: var(--ground-image) !important;
+            background-repeat: repeat !important;
+            background-size: var(--ground-size) !important;
+            border-bottom: 1px solid #d4d4d4 !important;
+            backdrop-filter: blur(14px) !important;
+        }
+
+        body.career-detail-page header.logo-navbar.white-header .logo-on-dark { display: none; }
+        body.career-detail-page header.logo-navbar.white-header .logo-on-light { display: block; }
+
+        body.career-detail-page header.logo-navbar.white-header #navigation > li.nav-item > a {
+            color: var(--ink) !important;
+            -webkit-text-fill-color: var(--ink) !important;
+        }
+
+        body.career-detail-page header.logo-navbar.white-header #navigation > li.nav-item:hover > a {
+            color: #a855f7 !important;
+            -webkit-text-fill-color: #a855f7 !important;
+        }
+
+        body.career-detail-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
+            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.career-detail-page .navbar-toggle.nav-menu { display: none; }
+
+        body.career-detail-page .cd-hero.nh-curtain-banner {
+            overflow: hidden;
+            padding: 128px 0 72px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(
+                    185deg,
+                    rgba(6, 14, 28, 0.86) 0%,
+                    rgba(11, 26, 45, 0.72) 42%,
+                    rgba(11, 26, 45, 0.48) 72%,
+                    rgba(8, 16, 30, 0.62) 100%
+                ),
+                url("images/career-details-biometric-hero.jpg?v=20260804cdetail3") center 38% / cover no-repeat;
+            color: #fff;
+        }
+
+        body.career-detail-page .cd-hero-grid {
+            position: relative;
+            z-index: 2;
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            text-align: left;
+        }
+
+        body.career-detail-page .cd-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 28px;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.86rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        body.career-detail-page .cd-back:hover {
+            color: #fff;
+        }
+
+        body.career-detail-page .cd-back span[aria-hidden="true"] {
+            font-size: 1.05em;
+            transition: transform 0.2s ease;
+        }
+
+        body.career-detail-page .cd-back:hover span[aria-hidden="true"] {
+            transform: translateX(-3px);
+        }
+
+        body.career-detail-page h1 {
+            max-width: 100%;
+            margin: 0;
+            color: #fff;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(1.95rem, 3.8vw, 3.05rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            white-space: nowrap;
+            text-shadow: 0 10px 36px rgba(0, 0, 0, 0.28);
+        }
+
+        body.career-detail-page .cd-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            margin: 28px 0 0;
+            padding: 18px 0 0;
+            list-style: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        body.career-detail-page .cd-meta li {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 0;
+            padding: 0 28px 0 0;
+            margin-right: 28px;
+            border-right: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        body.career-detail-page .cd-meta li:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: 0;
+        }
+
+        body.career-detail-page .cd-meta-label {
+            color: rgba(255, 255, 255, 0.58);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        body.career-detail-page .cd-meta-value {
+            margin: 0;
+            color: #fff;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.35;
+        }
+
+        body.career-detail-page .cd-code {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+        }
+
+        body.career-detail-page .cd-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        body.career-detail-page .cd-btn span[aria-hidden="true"] {
+            transition: transform 0.2s ease;
+        }
+
+        body.career-detail-page .cd-btn-ink:hover span[aria-hidden="true"] {
+            transform: translateX(3px);
+        }
+
+        /* Clip tall wave art so only peaks tip into the first viewport */
+        .hero-wave {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 42px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-wave__layer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: auto;
+            height: 100px;
+            display: block;
+            background-repeat: repeat-x;
+            background-position: 0 0;
+            background-size: 1200px 100px;
+        }
+
+        .hero-wave__layer--back {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C75,85 225,85 300,60 C375,35 525,35 600,60 C675,85 825,85 900,60 C975,35 1125,35 1200,60 L1200,120 L0,120 Z' fill='rgba(238,240,244,0.5)'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 17s linear infinite reverse;
+        }
+
+        .hero-wave__layer--front {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C75,20 225,20 300,50 C375,80 525,80 600,50 C675,20 825,20 900,50 C975,80 1125,80 1200,50 L1200,120 L0,120 Z' fill='%23eef0f4'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 11s linear infinite;
+        }
+
+        @keyframes heroWaveDrift {
+            from { background-position-x: 0; }
+            to { background-position-x: -1200px; }
+        }
+
+        /* Keep hero wave swaying even when OS asks for reduced motion (match Careers/About tip wave) */
+        @media (prefers-reduced-motion: reduce) {
+            body.career-detail-page .hero-wave__layer--back {
+                animation: heroWaveDrift 17s linear infinite reverse !important;
+            }
+            body.career-detail-page .hero-wave__layer--front {
+                animation: heroWaveDrift 11s linear infinite !important;
+            }
+        }
+
+        body.career-detail-page .nh-curtain-panel {
+            background-color: var(--paper-solid);
+            background-image:
+                linear-gradient(
+                    165deg,
+                    rgba(255, 255, 255, 0.72) 0%,
+                    rgba(238, 240, 244, 0.94) 38%,
+                    rgba(228, 230, 238, 0.98) 100%
+                ),
+                radial-gradient(ellipse 70% 45% at 12% 0%, rgba(114, 108, 244, 0.07), transparent 58%),
+                radial-gradient(ellipse 50% 40% at 92% 18%, rgba(11, 26, 45, 0.05), transparent 55%),
+                var(--ground-image);
+            background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+            background-size: auto, auto, auto, var(--ground-size);
+            box-shadow: 0 -1px 0 rgba(20, 36, 61, 0.06);
+        }
+
+        body.career-detail-page .cd-panel {
+            padding: 56px 0 100px;
+        }
+
+        body.career-detail-page .cd-sections {
+            display: grid;
+            gap: 36px;
+        }
+
+        body.career-detail-page .cd-section h2 {
+            margin: 0 0 16px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(1.55rem, 2.4vw, 1.85rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+        }
+
+        body.career-detail-page .cd-body {
+            color: var(--ink);
+            font-size: 1.02rem;
+            line-height: 1.75;
+        }
+
+        /* Override css/reset.css `ul, li { list-style: none }` */
+        body.career-detail-page .cd-body ul,
+        body.career-detail-page .cd-body .cd-list {
+            margin: 0.1em 0 0.85em;
+            padding: 0 0 0 1.4em;
+            list-style: disc outside !important;
+            list-style-type: disc !important;
+        }
+
+        body.career-detail-page .cd-body li {
+            display: list-item !important;
+            list-style: disc outside !important;
+            list-style-type: disc !important;
+            margin: 0 0 0.55em;
+            padding-left: 0.2em;
+            line-height: 1.65;
+        }
+
+        body.career-detail-page .cd-body li:last-child { margin-bottom: 0; }
+
+        body.career-detail-page .cd-body p {
+            margin: 0.35em 0 0.85em;
+            line-height: 1.7;
+        }
+
+        body.career-detail-page .cd-body p:last-child { margin-bottom: 0; }
+
+        body.career-detail-page .cd-body font {
+            font-family: inherit !important;
+        }
+
+        body.career-detail-page .cd-body ul ul,
+        body.career-detail-page .cd-body .cd-list ul {
+            margin: 0.4em 0 0.35em;
+            list-style: circle outside !important;
+            list-style-type: circle !important;
+        }
+
+        body.career-detail-page .cd-body ul ul li {
+            list-style-type: circle !important;
+        }
+
+        body.career-detail-page .cd-foot-cta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px 20px;
+            margin-top: 40px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(20, 36, 61, 0.1);
+        }
+
+        body.career-detail-page .cd-foot-note {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        body.career-detail-page .cd-foot-note a {
+            color: var(--blue-dark);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        body.career-detail-page .cd-foot-note a:hover { text-decoration: underline; }
+
+        body.career-detail-page .cd-not-found {
+            text-align: center;
+            padding: 48px 24px 24px;
+        }
+
+        body.career-detail-page .cd-not-found h2 {
+            margin: 0 0 12px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        body.career-detail-page .cd-not-found p {
+            margin: 0 auto 28px;
+            max-width: 42ch;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+
+        body.career-detail-page .cd-btn-ink {
+            background: linear-gradient(135deg, #726cf4 0%, #5f58dc 72%, #4f48c8 100%);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(95, 88, 220, 0.22);
+        }
+
+        body.career-detail-page .cd-btn-ink:hover {
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        body.career-detail-page .cd-btn-panel {
+            background: rgba(20, 36, 61, 0.06);
+            color: var(--ink);
+            border: 1px solid rgba(20, 36, 61, 0.1);
+        }
+
+        body.career-detail-page .cd-btn-panel:hover {
+            background: rgba(20, 36, 61, 0.1);
+            color: var(--ink);
+        }
+
+        body.career-detail-page .cd-hero.is-not-found h1 {
+            max-width: none;
+        }
+
+        @media (max-width: 820px) {
+            body.career-detail-page .cd-hero.nh-curtain-banner {
+                padding: 120px 0 48px;
+            }
+
+            body.career-detail-page .cd-panel {
+                padding: 44px 0 80px;
+            }
+
+            body.career-detail-page .navbar-toggle.nav-menu {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .shell { width: min(100% - 32px, 1080px); }
+
+            body.career-detail-page .cd-hero.nh-curtain-banner {
+                padding: 112px 0 48px;
+                background-position: 62% center;
+            }
+
+            body.career-detail-page .cd-hero-grid {
+                min-height: 0;
+            }
+
+            body.career-detail-page h1 {
+                max-width: none;
+                white-space: normal;
+                font-size: clamp(1.85rem, 8.5vw, 2.5rem);
+            }
+
+            body.career-detail-page .cd-meta {
+                flex-direction: column;
+                gap: 16px;
+                margin-top: 22px;
+                padding-top: 16px;
+            }
+
+            body.career-detail-page .cd-meta li {
+                margin: 0;
+                padding: 0;
+                border-right: 0;
+            }
+
+            .hero-wave { height: 28px; }
+
+            .hero-wave__layer {
+                height: 72px;
+                background-size: 900px 72px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body.career-detail-page .cd-btn:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body class="home_body career-detail-page">
+    <div id="wrapper">
+        <header class="logo-navbar blnk-header">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+                <div class="header-container">
+                    <div class="inner-overlay"></div>
+                    <div class="row header-row">
+                        <a href="index.html" class="header-logo" aria-label="Nohitatu home">
+                            <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                            <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                        </a>
+                        <div class="col-sm-12 right-menu text-center">
+                            <nav id="slidemenu" aria-label="Primary navigation">
+                                <div class="inner-menu">
+                                    <button class="navbar-toggle nav-menu cross" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                                        <span class="first"></span><span class="second"></span>
+                                    </button>
+                                    <ul id="navigation" class="nav navbar-nav">
+                                        <li class="nav-item"><a href="index.html">HOME</a></li>
+                                        <li class="nav-item">
+                                            <a href="#">CORPORATE</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="About-us.html">About Us</a></li>
+                                                    <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                                                    <li><a href="Clients.html">Clients</a></li>
+                                                    <li><a href="blogs-page.html">Blogs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">EXPLORE NOHITATU</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                                                <li><a href="Tech-skills.html">Tech Skills</a></li>
+                                                <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                                                <li><a href="People.html">People</a></li>
+                                                <li><a href="Our-advantages.html">Our Advantages</a></li>
+                                                <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                                                <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">SOLUTIONS</a>
+                                            <div class="sub corporate"><ul class="sub-menu">
+                                                <li><a href="Software-Development.html">Software Development</a></li>
+                                                <li><a href="Saas.html">Saas</a></li>
+                                                <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                                            </ul></div>
+                                        </li>
+                                        <li class="nav-item"><a href="Portfolio.html">PORTFOLIO</a></li>
+                                        <li class="nav-item active"><a href="Careers.html" aria-current="page">CAREER</a></li>
+                                        <li class="nav-item"><a href="Contact-us.html">CONTACT US</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="full-screen-menu section fadeIn">
+            <div class="container-fluid"><div class="row">
+                <div class="col-sm-7 menu-content">
+                    <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
+                    <a href="Contact-us.html" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                </div>
+                <div class="col-sm-5 right-menu">
+                    <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
+                        <a href="index.html" class="list-group-item main-link">HOME</a>
+                        <a href="#cd-mobile-corporate" class="list-group-item main-link" data-bs-toggle="collapse">CORPORATE <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="cd-mobile-corporate"><ul class="inner-sub-menus">
+                            <li><a href="About-us.html">About Us</a></li>
+                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="Clients.html">Clients</a></li>
+                            <li><a href="blogs-page.html">Blogs</a></li>
+                        </ul></div>
+                        <a href="#cd-mobile-explore" class="list-group-item main-link" data-bs-toggle="collapse">EXPLORE NOHITATU <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="cd-mobile-explore"><ul class="inner-sub-menus">
+                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills.html">Tech Skills</a></li>
+                            <li><a href="Vision-and-values.html">Vision and Values</a></li>
+                            <li><a href="People.html">People</a></li>
+                            <li><a href="Our-advantages.html">Our Advantages</a></li>
+                            <li><a href="Who-need-us.html">Who Need Us?</a></li>
+                        </ul></div>
+                        <a href="#cd-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="cd-mobile-solutions"><ul class="inner-sub-menus">
+                            <li><a href="Software-Development.html">Software Development</a></li>
+                            <li><a href="Saas.html">Saas</a></li>
+                            <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                        </ul></div>
+                        <a href="Portfolio.html" class="list-group-item main-link">PORTFOLIO</a>
+                        <a href="Careers.html" class="list-group-item main-link" aria-current="page">CAREER</a>
+                        <a href="Contact-us.html" class="list-group-item main-link">CONTACT US</a>
+                    </div></div>
+                </div>
+            </div></div>
+        </div>
+
+        <main>
+            <div class="nh-curtain-stack">
+            <section class="cd-hero nh-curtain-banner" id="cd-hero">
+                <div class="shell cd-hero-grid">
+                    <a class="cd-back" href="Careers.html"><span aria-hidden="true">&#8592;</span> All open positions</a>
+                    <h1 id="cd-title">Loading role…</h1>
+                    <ul class="cd-meta" id="cd-meta" hidden></ul>
+                </div>
+                <div class="hero-wave" aria-hidden="true">
+                    <span class="hero-wave__layer hero-wave__layer--back"></span>
+                    <span class="hero-wave__layer hero-wave__layer--front"></span>
+                </div>
+            </section>
+
+            <div class="nh-curtain-panel">
+            <section class="cd-panel" aria-labelledby="cd-title">
+                <div class="shell" id="cd-content">
+                    <p class="cd-body" style="color:var(--muted)">Loading job details…</p>
+                </div>
+            </section>
+            </div><!-- /.nh-curtain-panel -->
+            </div><!-- /.nh-curtain-stack -->
+        </main>
+
+        <footer class="footer site-footer">
+            <div class="inner-footer"><div class="container"><div class="footer-grid">
+                <div class="footer-col footer-offices">
+                    <h3 class="footer-heading">Offices</h3>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/india-flag.png" alt="" width="18" height="12" /><span>India Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V14h6v12M14 26V8h8v18M24 26V16h5v10M31 26V6h7v20M40 26V12h6v14M48 26V10h8v16" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>#402, 403 &amp; 405, 4th Floor, City Centre,<br>186/43 Purasawalkam High Road,<br>Chennai - 600010, Tamilnadu, India.</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/singapore-flag.png" alt="" width="18" height="12" /><span>Singapore Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M8 26V12h7v14M18 26V7h6v19M27 26V14h5v12M35 26V4c4 3 8 3 12 0v22M50 26V11h8v15" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>71 Bukit Batok Crescent,<br>#05-07 Prestige Centre,<br>Singapore 658071</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
+                </div>
+                <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
+                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
+                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="Vision-and-values.html">Vision and Values</a></li><li><a href="People.html">People</a></li><li><a href="Our-advantages.html">Our Advantages</a></li><li><a href="Who-need-us.html">Who Need Us?</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
+                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
+                </ul></div>
+                <div class="footer-col footer-contact">
+                    <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
+                    <a class="footer-phone" href="tel:+16072470227"><span class="footer-phone-number">+1 (607) 247-0227</span></a>
+                    <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
+                    <div class="footer-contact-meta"><a href="skype:sales.nohitatu">Skype: sales.nohitatu</a><a href="mailto:info@nohitatu.com">info@nohitatu.com</a></div>
+                </div>
+            </div></div></div>
+            <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
+                <div class="footer-copy"><span>Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and offshore software development company. All rights reserved.</span></div>
+                <div class="social-icons"><a href="https://www.facebook.com/nohitatu/" class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a><a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a><a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a><a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a></div>
+            </div></div></div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            const toggle = document.querySelector(".navbar-toggle.nav-menu");
+            const menu = document.querySelector(".full-screen-menu");
+            if (!toggle || !menu) return;
+            const setMenuState = (open) => {
+                toggle.classList.toggle("open", open);
+                menu.classList.toggle("show", open);
+                document.body.classList.toggle("fixed", open);
+                toggle.setAttribute("aria-expanded", String(open));
+            };
+            toggle.addEventListener("click", () => setMenuState(!menu.classList.contains("show")));
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") setMenuState(false);
+            });
+        })();
+    </script>
+    <script>
+        (() => {
+            const catalog = window.NOHITATU_CAREER_DETAILS || {};
+
+            function getId() {
+                const params = new URLSearchParams(window.location.search);
+                return (params.get("id") || "").trim();
+            }
+
+            function escapeHtml(str) {
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
+            }
+
+            function looksLikeHtml(str) {
+                return /<\/?[a-z][\s\S]*>/i.test(str || "");
+            }
+
+            /** Collapse whitespace and casual typo cleanup for list/note text. */
+            function cleanItemText(str) {
+                let t = String(str || "")
+                    .replace(/\u00a0/g, " ")
+                    .replace(/&nbsp;/gi, " ")
+                    .replace(/\s+/g, " ")
+                    .trim();
+                t = t.replace(/\(\s*Without\b/gi, "(without");
+                return t;
+            }
+
+            function toUlHtml(items) {
+                const cleaned = (items || []).map(cleanItemText).filter(Boolean);
+                if (!cleaned.length) return "";
+                return (
+                    '<ul class="cd-list">' +
+                    cleaned.map((item) => "<li>" + escapeHtml(item) + "</li>").join("") +
+                    "</ul>"
+                );
+            }
+
+            function toPHtml(text) {
+                const t = cleanItemText(text);
+                return t ? "<p>" + escapeHtml(t) + "</p>" : "";
+            }
+
+            /** Decode a few entities after stripping tags (DOM textContent already decodes most). */
+            function nodePlainText(el) {
+                if (!el) return "";
+                return cleanItemText(el.textContent || "");
+            }
+
+            /**
+             * Pull list items from a <ul>/<ol>, including invalid sibling nested lists
+             * (Word/HTML paste often put nested <ul> next to <li>).
+             */
+            function collectListItems(listEl, into) {
+                Array.prototype.forEach.call(listEl.childNodes, (child) => {
+                    if (child.nodeType !== 1) return;
+                    const tag = child.tagName.toLowerCase();
+                    if (tag === "li") {
+                        const clone = child.cloneNode(true);
+                        Array.prototype.forEach.call(clone.querySelectorAll("ul, ol"), (sub) => sub.remove());
+                        const text = cleanItemText(clone.textContent || "");
+                        if (text) into.push(text);
+                        Array.prototype.forEach.call(child.children || [], (grand) => {
+                            const gTag = grand.tagName && grand.tagName.toLowerCase();
+                            if (gTag === "ul" || gTag === "ol") collectListItems(grand, into);
+                        });
+                    } else if (tag === "ul" || tag === "ol") {
+                        collectListItems(child, into);
+                    }
+                });
+            }
+
+            /**
+             * Normalize rich HTML from the API into clean <ul class="cd-list"> + optional <p> notes.
+             */
+            function normalizeHtml(html) {
+                if (!html) return "";
+                const root = document.createElement("div");
+                root.innerHTML = String(html);
+
+                const chunks = [];
+                let listBuf = [];
+
+                function flushList() {
+                    if (!listBuf.length) return;
+                    chunks.push({ type: "ul", items: listBuf.slice() });
+                    listBuf = [];
+                }
+
+                function pushNote(text) {
+                    const t = cleanItemText(text);
+                    if (!t) return;
+                    flushList();
+                    chunks.push({ type: "p", text: t });
+                }
+
+                function walk(node) {
+                    if (!node) return;
+                    if (node.nodeType === 3) {
+                        const t = cleanItemText(node.textContent || "");
+                        if (t) pushNote(t);
+                        return;
+                    }
+                    if (node.nodeType !== 1) return;
+
+                    const tag = node.tagName.toLowerCase();
+                    if (tag === "br") return;
+
+                    if (tag === "ul" || tag === "ol") {
+                        collectListItems(node, listBuf);
+                        return;
+                    }
+
+                    if (tag === "li") {
+                        const clone = node.cloneNode(true);
+                        Array.prototype.forEach.call(clone.querySelectorAll("ul, ol"), (sub) => sub.remove());
+                        const text = cleanItemText(clone.textContent || "");
+                        if (text) listBuf.push(text);
+                        return;
+                    }
+
+                    if (tag === "p" || tag === "div") {
+                        if (node.querySelector("ul, ol, li")) {
+                            Array.prototype.forEach.call(node.childNodes, walk);
+                            return;
+                        }
+                        const text = nodePlainText(node);
+                        if (text) pushNote(text);
+                        return;
+                    }
+
+                    /* span, font, etc. — descent if they wrap structured content */
+                    if (node.querySelector && node.querySelector("ul, ol, li, p, div")) {
+                        Array.prototype.forEach.call(node.childNodes, walk);
+                        return;
+                    }
+
+                    const leaf = nodePlainText(node);
+                    if (leaf) pushNote(leaf);
+                }
+
+                Array.prototype.forEach.call(root.childNodes, walk);
+                flushList();
+
+                if (!chunks.length) {
+                    const fallback = cleanItemText(root.textContent || "");
+                    return fallback ? toPHtml(fallback) : "";
+                }
+
+                /* Promote multi-paragraph note-only blocks into a single list (plain skill dumps). */
+                if (chunks.every((c) => c.type === "p") && chunks.length >= 2) {
+                    return toUlHtml(chunks.map((c) => c.text));
+                }
+
+                return chunks
+                    .map((c) => (c.type === "ul" ? toUlHtml(c.items) : toPHtml(c.text)))
+                    .join("");
+            }
+
+            function formatBlock(raw) {
+                const text = cleanItemText(raw || "");
+                if (!text) return "<p>Details will be shared during the interview process.</p>";
+
+                if (looksLikeHtml(raw)) {
+                    const out = normalizeHtml(raw);
+                    return out || "<p>Details will be shared during the interview process.</p>";
+                }
+
+                if (text.indexOf("||") >= 0) {
+                    const items = text.split("||").map((s) => cleanItemText(s.replace(/\r?\n/g, " "))).filter(Boolean);
+                    if (items.length) return toUlHtml(items);
+                }
+
+                /* Newline-separated plain lines → bullets */
+                if (/\r?\n/.test(String(raw || ""))) {
+                    const items = String(raw)
+                        .split(/\r?\n+/)
+                        .map((s) => cleanItemText(s))
+                        .filter(Boolean);
+                    if (items.length >= 2) return toUlHtml(items);
+                    if (items.length === 1) return toPHtml(items[0]);
+                }
+
+                return toPHtml(text);
+            }
+
+            function renderNotFound(id) {
+                const hero = document.getElementById("cd-hero");
+                const title = document.getElementById("cd-title");
+                const meta = document.getElementById("cd-meta");
+                const content = document.getElementById("cd-content");
+
+                if (hero) hero.classList.add("is-not-found");
+                if (title) title.textContent = "Role not found";
+                if (meta) {
+                    meta.hidden = true;
+                    meta.innerHTML = "";
+                }
+                document.title = "Role not found | Nohitatu";
+
+                if (content) {
+                    content.innerHTML =
+                        '<div class="cd-not-found">' +
+                        "<h2>We couldn\u2019t find that opening</h2>" +
+                        "<p>" +
+                        (id
+                            ? "Job code <strong>" + escapeHtml(id) + "</strong> is not in our current openings, or the link may be outdated."
+                            : "No job code was provided in the URL.") +
+                        "</p>" +
+                        '<a class="cd-btn cd-btn-ink" href="Careers.html">View open positions <span aria-hidden="true">&#8594;</span></a>' +
+                        "</div>";
+                }
+            }
+
+            function renderJob(job) {
+                const title = document.getElementById("cd-title");
+                const meta = document.getElementById("cd-meta");
+                const content = document.getElementById("cd-content");
+                const post = job.post || "Open role";
+
+                document.title = post + " | Careers | Nohitatu";
+                const desc = document.querySelector('meta[name="description"]');
+                if (desc) {
+                    desc.setAttribute(
+                        "content",
+                        post + " at Nohitatu — " + (job.experience || "") + ", " + (job.location || "") + ". View responsibilities and apply."
+                    );
+                }
+
+                if (title) title.textContent = post;
+
+                if (meta) {
+                    meta.hidden = false;
+                    meta.innerHTML =
+                        '<li><span class="cd-meta-label">Job code</span><span class="cd-meta-value cd-code">' + escapeHtml(String(job.jobid)) + "</span></li>" +
+                        '<li><span class="cd-meta-label">Experience</span><span class="cd-meta-value">' + escapeHtml(job.experience || "—") + "</span></li>" +
+                        '<li><span class="cd-meta-label">Location</span><span class="cd-meta-value">' + escapeHtml(job.location || "—") + "</span></li>";
+                }
+
+                const applyUrl = job.applyUrl || ("PostResume.html?id=" + job.jobid);
+
+                if (content) {
+                    content.innerHTML =
+                        '<div class="cd-sections">' +
+                        '<section class="cd-section">' +
+                        "<h2>Requirements / Responsibilities</h2>" +
+                        '<div class="cd-body">' + formatBlock(job.responsibilities) + "</div>" +
+                        "</section>" +
+                        '<section class="cd-section">' +
+                        "<h2>Must have</h2>" +
+                        '<div class="cd-body">' + formatBlock(job.musthave) + "</div>" +
+                        "</section>" +
+                        "</div>" +
+                        '<div class="cd-foot-cta">' +
+                        '<a class="cd-btn cd-btn-ink" href="' + escapeHtml(applyUrl) + '">Apply now <span aria-hidden="true">&#8594;</span></a>' +
+                        '<a class="cd-btn cd-btn-panel" href="Careers.html">Back to careers</a>' +
+                        '<p class="cd-foot-note">Questions? Write to <a href="mailto:info@nohitatu.com">info@nohitatu.com</a> with job code <strong class="cd-code">' +
+                        escapeHtml(String(job.jobid)) +
+                        "</strong>.</p>" +
+                        "</div>";
+                }
+            }
+
+            const id = getId();
+            const job = id ? catalog[id] : null;
+            if (!job) {
+                renderNotFound(id);
+            } else {
+                renderJob(job);
+            }
+        })();
+    </script>
+
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-window" class="chatbot-window hidden">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <div class="chatbot-avatar-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            <circle cx="9" cy="10" r="1" fill="#726cf4"></circle>
+                            <circle cx="15" cy="10" r="1" fill="#726cf4"></circle>
+                            <path d="M9.5 13.5c1 .8 2 1 3 0" stroke="#726cf4"></path>
+                        </svg>
+                    </div>
+                    <div class="chatbot-header-text">
+                        <h4>Nohitatu Advisor</h4>
+                        <small><span class="status-dot"></span> Live Concierge Desk</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-content">
+                        <p>Welcome to Nohitatu. I can help you apply for a role, explore our work, or connect with the team.</p>
+                        <p>What brings you here?</p>
+                    </div>
+                </div>
+                <div class="quick-chips" role="group" aria-label="Choose one">
+                    <span class="quick-chips-label">Choose one</span>
+                    <button class="chip-btn" data-query="Looking for a job">Looking for a job</button>
+                    <button class="chip-btn" data-query="See our work">See our work</button>
+                    <button class="chip-btn" data-query="Start a project">Start a project</button>
+                    <button class="chip-btn" data-query="Something else">Something else</button>
+                </div>
+            </div>
+
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask your digital concierge..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with Nohitatu Digital Concierge">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    <script src="js/chatbot.js?v=20260804cdetail3"></script>
+</body>
+</html>

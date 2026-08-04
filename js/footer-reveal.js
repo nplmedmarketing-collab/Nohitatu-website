@@ -30,11 +30,12 @@
     var footer = document.querySelector(".site-footer");
     if (!body || !footer || body.classList.contains("footer-reveal-page")) return;
 
+    var isContactPage = body.classList.contains("contact-page");
     var wrapper = footer.closest("#wrapper");
     var cta = document.querySelector(".footer-reveal-cta");
     var content;
 
-    if (!cta) {
+    if (!cta && !isContactPage) {
       cta = createCta();
       if (wrapper) {
         footer.parentNode.insertBefore(cta, footer);
@@ -46,7 +47,7 @@
           footer.parentNode.insertBefore(cta, footer);
         }
       }
-    } else {
+    } else if (cta) {
       cta.classList.add("footer-reveal-cta");
     }
 
@@ -56,7 +57,7 @@
         wrapper.parentNode.insertBefore(footer, wrapper.nextSibling);
       }
     } else {
-      content = cta.closest("main") || document.querySelector("main");
+      content = (cta && cta.closest("main")) || document.querySelector("main");
     }
 
     if (!content) return;

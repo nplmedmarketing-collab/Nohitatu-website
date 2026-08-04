@@ -13089,6 +13089,9 @@ body:has(.nh-curtain-stack) #wrapper {
   z-index: 1;
   isolation: isolate;
   overflow: visible;
+  transform: none;
+  filter: none;
+  contain: none;
 }
 
 .nh-curtain-banner {
