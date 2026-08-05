@@ -1175,6 +1175,85 @@ header.show-menu .row.header-row {
   isolation: isolate;
 }
 
+/* ---------- Home hero: full-bleed Spline (iframe embed) ---------- */
+.top-banner--spline {
+  background: #000000;
+}
+
+/* Kill legacy blue pattern / solid cover that would bury the 3D scene */
+.top-banner--spline::before {
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.hero-spline-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  left: auto;
+  z-index: 0;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* Ambient rim backlight contained strictly inside the right robot column */
+.hero-spline-bg::before {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 15%;
+  width: 70%;
+  height: 65%;
+  background: radial-gradient(circle, rgba(114, 108, 244, 0.5) 0%, rgba(86, 203, 185, 0.3) 45%, rgba(0, 0, 0, 0) 75%);
+  border-radius: 50%;
+  filter: blur(45px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 991px) {
+  .hero-spline-bg {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* Full-bleed iframe / canvas for hero media */
+.hero-spline-frame,
+.hero-spline-viewer,
+.hero-spline-bg iframe,
+.hero-boxes-canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  display: block !important;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto !important;
+  min-width: 100%;
+  min-height: 100%;
+  background: #000000;
+  touch-action: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.hero-boxes-canvas {
+  z-index: 0;
+  /* Ensure paint even before JS sizes it */
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .hero-video-bg {
   position: absolute;
   top: 50%;
@@ -1189,10 +1268,6 @@ header.show-menu .row.header-row {
   opacity: 1;
 }
 
-.hero-ai-canvas {
-  display: none;
-}
-
 .hero-video-overlay {
   position: absolute;
   top: 0;
@@ -1202,6 +1277,237 @@ header.show-menu .row.header-row {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.42) 50%, rgba(0, 0, 0, 0.65) 100%) !important;
   pointer-events: none !important;
   z-index: 1 !important;
+}
+
+@media (min-width: 992px) {
+  .top-banner--spline .hero-spline-frame,
+  .top-banner--spline .hero-spline-bg iframe {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    opacity: 0.95 !important;
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: crisp-edges !important;
+    filter: brightness(1.4) contrast(1.12) saturate(1.3) drop-shadow(0 0 25px rgba(114, 108, 244, 0.4)) !important;
+  }
+}
+
+/* Completely disable hero video overlay to guarantee 0% color seams or dark tint overlays */
+.hero-video-overlay,
+.hero-video-overlay.hero-spline-scrim,
+.top-banner--spline .hero-video-overlay.clean-hero-overlay,
+.hero-video-overlay.clean-hero-overlay {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Stretch hero text block wider to the right */
+.top-banner--spline .banner-content.ai-era-hero.hero-content,
+.top-banner--spline .hero-content {
+  left: 0 !important;
+  transform: translateY(-50%) !important;
+  width: 100% !important;
+  max-width: 680px !important;
+  padding-left: max(40px, 3.5vw) !important;
+  padding-right: 20px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.top-banner--spline .hero-content .ai-era-wrapper {
+  pointer-events: none !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+.top-banner--spline .hero-content .ai-era-title {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: clamp(2.0rem, 3.4vw, 3.2rem) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.035em !important;
+  gap: 0.18em !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.top-banner--spline .hero-content .ai-era-subtitle {
+  text-align: left !important;
+  font-size: clamp(0.95rem, 1.4vw, 1.22rem) !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.015em !important;
+  max-width: 640px !important;
+  margin-bottom: 20px !important;
+}
+
+.top-banner--spline .hero-content a,
+.top-banner--spline .hero-content button {
+  pointer-events: auto !important;
+}
+
+
+
+.hero-micro-badge:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(114, 108, 244, 0.5) !important;
+  transform: translateY(-2px) !important;
+  color: #ffffff !important;
+}
+
+.badge-spark {
+  font-size: 14px;
+}
+
+.badge-arrow {
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.hero-micro-badge:hover .badge-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* 2. Dual-CTA Action Buttons */
+.dual-cta-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 22px !important;
+}
+
+.ai-era-btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: linear-gradient(135deg, #726cf4 0%, #5f58dc 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  padding: 11px 24px !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 22px rgba(114, 108, 244, 0.45) !important;
+  transition: all 0.25s ease !important;
+}
+
+.ai-era-btn-primary:hover {
+  background: linear-gradient(135deg, #817bf7 0%, #6c65e8 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(114, 108, 244, 0.6) !important;
+  color: #ffffff !important;
+}
+
+.ai-era-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  padding: 11px 22px !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  transition: all 0.25s ease !important;
+}
+
+.ai-era-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-2px) !important;
+  color: #ffffff !important;
+}
+
+.btn-arrow, .btn-play {
+  transition: transform 0.2s ease;
+}
+
+.ai-era-btn-primary:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+.ai-era-btn-secondary:hover .btn-play {
+  transform: scale(1.15);
+}
+
+/* 3. Social Proof & Micro Metrics Bar */
+.hero-proof-bar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 8px 16px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.proof-item {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 5px !important;
+}
+
+.proof-val {
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  color: #56CBB9 !important;
+}
+
+.proof-lbl {
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: 500 !important;
+}
+
+.proof-divider {
+  width: 1px !important;
+  height: 14px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+@media (max-width: 767px) {
+  .top-banner--spline {
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .hero-spline-frame,
+  .hero-spline-viewer,
+  .hero-spline-bg iframe {
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-banner--spline .hero-spline-bg {
+    pointer-events: none;
+  }
+
+  .top-banner--spline .hero-video-overlay.hero-spline-scrim {
+    background: linear-gradient(180deg, rgba(8, 10, 16, 0.55) 0%, rgba(8, 10, 16, 0.45) 100%) !important;
+  }
 }
 
 .medical-billing {
@@ -1279,14 +1585,8 @@ header.logo-navbar,
 }
 
 .hero-video-overlay.clean-hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.15) 100%);
-  z-index: 2;
-  pointer-events: none;
+  display: none !important;
+  background: transparent !important;
 }
 
 /* ==========================================================================

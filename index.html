@@ -42,8 +42,8 @@
     <link type="text/css" rel="stylesheet" href="css/aos.css" />
     <link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
     <link type="text/css" rel="stylesheet" href="css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="css/style.css?v=20260731f" />
-    <link type="text/css" rel="stylesheet" href="css/responsive.css" />
+    <link type="text/css" rel="stylesheet" href="css/style.css?v=20260805boxes2" />
+    <link type="text/css" rel="stylesheet" href="css/responsive.css?v=20260805boxes1" />
     <link type="text/css" rel="stylesheet" href="css/themify-icons.css" />
     <link type="text/css" rel="stylesheet" href="css/blog.css" />
     <link type="text/css" rel="stylesheet" href="css/chatbot.css?v=20260803chat" />
@@ -312,28 +312,60 @@
         </div>
 
         
-        <div class="top-banner" style="">
-            <video id="hero-playlist-video" autoplay muted playsinline class="hero-video-bg">
-                <source src="videos/1.mp4" type="video/mp4">
-            </video>
-            <canvas id="ai-code-canvas" class="hero-ai-canvas"></canvas>
-            <div class="hero-video-overlay clean-hero-overlay"></div>
-            
-            <div class="banner-content ai-era-hero">
+        <div class="top-banner top-banner--spline">
+            <!-- Genkub Greeting Robot: full-bleed public embed iframe.
+                 Scene: https://my.spline.design/genkubgreetingrobot-rSaNfDPiGUgo5q8mAwYEc8kq/ -->
+            <div class="hero-spline-bg" aria-hidden="true">
+                <iframe
+                    class="hero-spline-frame"
+                    src="https://my.spline.design/genkubgreetingrobot-rSaNfDPiGUgo5q8mAwYEc8kq/"
+                    title="Genkub Greeting Robot"
+                    allow="autoplay; fullscreen; xr-spatial-tracking"
+                    allowfullscreen
+                    loading="eager"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+            </div>
+
+            <div class="banner-content ai-era-hero hero-content">
                 <div class="ai-era-wrapper">
-                    
+
+                    <!-- Main Headline -->
                     <h1 class="ai-era-title">
                         <span class="gradient-heavy">Architecting</span> <span class="thin-light">AI-DRIVEN</span> <span class="gradient-heavy">Innovation</span>
                     </h1>
 
+                    <!-- Subtitle (Item 5 Copy Polish) -->
                     <div class="ai-era-subtitle">
-                        That Outthinks the Competition
+                        We design, scale, and automate enterprise software with global offshore engineering teams.
                     </div>
 
-                    <div class="ai-era-cta">
-                        <a href="Contact-us.html" target="_blank" class="ai-era-btn-blue">
-                            GET A QUOTE
+                    <!-- 2. Dual-CTA Action Buttons -->
+                    <div class="ai-era-cta dual-cta-group">
+                        <a href="Contact-us.html" target="_blank" class="ai-era-btn-primary">
+                            Get Free Estimation <span class="btn-arrow">→</span>
                         </a>
+                        <a href="Portfolio.html" class="ai-era-btn-secondary">
+                            Explore Solutions <span class="btn-play">▷</span>
+                        </a>
+                    </div>
+
+                    <!-- 3. Social Proof & Micro Metrics -->
+                    <div class="hero-proof-bar">
+                        <div class="proof-item">
+                            <span class="proof-val">100+</span>
+                            <span class="proof-lbl">Products Built</span>
+                        </div>
+                        <div class="proof-divider"></div>
+                        <div class="proof-item">
+                            <span class="proof-val">99.9%</span>
+                            <span class="proof-lbl">Reliability</span>
+                        </div>
+                        <div class="proof-divider"></div>
+                        <div class="proof-item">
+                            <span class="proof-val">Global</span>
+                            <span class="proof-lbl">Offshore Teams</span>
+                        </div>
                     </div>
 
                 </div>
@@ -1226,9 +1258,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"></script>
-        <script src="js/ai-background.js"></script>
-        <script src="js/video-playlist.js"></script>
-        <script src="js/home-story.js?v=20260731f"></script>
+        <!-- Home story stack script -->
+        <script src="js/home-story.js?v=20260805boxes2"></script>
         <script src="js/footer-phone.js"></script>
 
     <!-- Concierge chatbot: must be a direct body child (outside footer-reveal .site-footer)
