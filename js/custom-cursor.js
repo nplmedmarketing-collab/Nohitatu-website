@@ -26,11 +26,10 @@
     let mouseX = -100, mouseY = -100;
     let auraX = -100, auraY = -100;
     let isVisible = false;
-    let isMoving = false;
 
-    window.addEventListener('mousemove', function (e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    function updatePosition(x, y) {
+      mouseX = x;
+      mouseY = y;
       
       if (!isVisible) {
         isVisible = true;
@@ -38,9 +37,11 @@
         aura.style.opacity = '1';
       }
 
-      // Direct instant update for 0ms pointer lag
       pointer.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-      isMoving = true;
+    }
+
+    window.addEventListener('mousemove', function (e) {
+      updatePosition(e.clientX, e.clientY);
     }, { passive: true });
 
     document.addEventListener('mouseleave', function () {

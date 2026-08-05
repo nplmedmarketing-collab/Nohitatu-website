@@ -1238,7 +1238,8 @@ header.show-menu .row.header-row {
   outline: none;
   margin: 0;
   padding: 0;
-  pointer-events: none !important;
+  pointer-events: auto !important;
+  cursor: none !important;
   min-width: 100%;
   min-height: 100%;
   background: #000000;
