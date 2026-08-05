@@ -1238,7 +1238,7 @@ header.show-menu .row.header-row {
   outline: none;
   margin: 0;
   padding: 0;
-  pointer-events: auto !important;
+  pointer-events: none !important;
   min-width: 100%;
   min-height: 100%;
   background: #000000;
@@ -13427,5 +13427,75 @@ body:has(.nh-curtain-stack) #wrapper {
     min-height: max(100svh, 520px);
     height: max(100vh, 520px);
     height: max(100svh, 520px);
+  }
+}
+
+/* ==========================================================================
+   Custom Tech Arrow Pointer (Modern Sleek Dark & Neon Accent Arrow)
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-enabled,
+  body.custom-cursor-enabled a,
+  body.custom-cursor-enabled button,
+  body.custom-cursor-enabled input,
+  body.custom-cursor-enabled select,
+  body.custom-cursor-enabled textarea,
+  body.custom-cursor-enabled [role="button"] {
+    cursor: none !important;
+  }
+
+  /* Custom Tech Arrow SVG Container - 0ms Instant Hardware Pointer Tracking */
+  .custom-cursor-pointer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 999999;
+    opacity: 0;
+    filter: drop-shadow(0 0 6px rgba(86, 203, 185, 0.8));
+    transition: opacity 0.15s ease, filter 0.2s ease;
+    will-change: transform;
+  }
+
+  .custom-cursor-pointer svg path {
+    transition: stroke 0.25s ease, fill 0.25s ease;
+  }
+
+  /* Trailing Accent Aura */
+  .custom-cursor-aura {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(86, 203, 185, 0.4);
+    background: rgba(86, 203, 185, 0.05);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999998;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease, width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    will-change: transform;
+  }
+
+  /* Hover State (CTAs, Links, Buttons) */
+  body.cursor-hover .custom-cursor-pointer {
+    filter: drop-shadow(0 0 10px rgba(114, 108, 244, 0.95));
+  }
+
+  body.cursor-hover .custom-cursor-pointer svg path {
+    stroke: #726CF4;
+    fill: rgba(114, 108, 244, 0.3);
+  }
+
+  body.cursor-hover .custom-cursor-aura {
+    width: 44px;
+    height: 44px;
+    border-color: rgba(114, 108, 244, 0.8);
+    background: rgba(114, 108, 244, 0.12);
+    box-shadow: 0 0 20px rgba(114, 108, 244, 0.3);
   }
 }
