@@ -1200,13 +1200,13 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   visibility: hidden !important;
 }
 
-@keyframes robotEntranceFromRight {
+@keyframes robotFadeInPosition {
   0% {
-    transform: translate(500px, 50px) translateZ(0);
+    transform: translate(350px, 35px) scale(0.96) translateZ(0);
     opacity: 0;
   }
   100% {
-    transform: translate(160px, 50px) translateZ(0);
+    transform: translate(350px, 35px) scale(1) translateZ(0);
     opacity: 1;
   }
 }
@@ -1305,13 +1305,13 @@ header.logo-navbar #navigation li.nav-item > a:hover {
     height: calc(100% + 60px) !important;
     left: 0 !important;
     top: 0 !important;
-    transform: translate(160px, 50px) translateZ(0) !important;
+    transform: translate(350px, 35px) translateZ(0) !important;
     opacity: 1 !important;
     image-rendering: auto !important;
     filter: none !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
-    animation: robotEntranceFromRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    animation: robotFadeInPosition 0.9s ease-out forwards !important;
   }
 }
 
