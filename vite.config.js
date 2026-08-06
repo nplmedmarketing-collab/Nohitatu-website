@@ -3,6 +3,8 @@ import path from 'path';
 import fs from 'fs';
 
 export default defineConfig({
+  // Relative base keeps assets working on GH project pages (/Nohitatu-website/) and root custom domains.
+  base: './',
   server: {
     fs: {
       allow: ['.']
