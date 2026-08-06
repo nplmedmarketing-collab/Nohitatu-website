@@ -30,7 +30,6 @@
     position: fixed;
     bottom: 35px;
     right: 90px;
-    /* Below custom-cursor (2147483646) so the site pointer still draws over the widget */
     z-index: 2147483000;
     /* Let page content receive clicks outside the FAB / open panel */
     pointer-events: none;

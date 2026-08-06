@@ -3,7 +3,7 @@
   var currentScript = document.currentScript;
   if (!currentScript || !currentScript.src) return;
 
-  ['footer-reveal.js', 'mobile-nav.js', 'custom-cursor.js'].forEach(function (name) {
+  ['footer-reveal.js', 'mobile-nav.js'].forEach(function (name) {
     var script = document.createElement('script');
     var url = new URL(name, currentScript.src);
     // Soft-bump when custom.js itself is versioned (?v=…) so CTA/footer fixes land.
