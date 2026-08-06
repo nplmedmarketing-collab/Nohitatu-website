@@ -1,0 +1,73 @@
+# Nohitatu Technologies Private Limited — Company Knowledge Base
+
+## About
+Nohitatu Technologies Private Limited (Nohitatu) is a software development and SaaS partner specializing in offshore software delivery, healthcare Revenue Cycle Management (RCM), medical billing, and custom digital products. The company helps providers, payers, health-tech companies, and product teams modernize systems, scale delivery, and improve operational efficiency.
+
+Tagline themes from the public site: Offshore Software & SaaS; Medical Billing & Revenue Cycle Management experts.
+
+## Core services
+
+### 1. Custom & offshore software development
+- Custom software for teams that need to scale
+- Cloud-native SaaS and product engineering
+- Application development, maintenance, and support
+- Global outsourcing / offshore engineering delivery
+- Dedicated offshore developer teams that plug into client roadmaps
+- Staff augmentation and long-term partnership models
+- Cost-effective global delivery without sacrificing engineering quality
+
+### 2. Healthcare software / medical billing / RCM
+- Healthcare Revenue Cycle Management (RCM)
+- Medical billing services
+- Claims, denials, and billing workflow support
+- Workflow automation for healthcare operations
+- Software and services tailored to providers, payers, and health-tech companies
+- Focus on operational efficiency in healthcare revenue processes
+
+### 3. Web & mobile app development, ERP, AI
+- Web application development
+- Mobile application development
+- ERP solutions and enterprise workflows (including in-house ERP experience)
+- AI-assisted software and AI-driven custom software (vs generic SaaS-only approaches)
+- Digital transformation partnerships
+- Product modernization and legacy system replacement
+
+### 4. Hiring offshore developers
+- Dedicated offshore engineering teams
+- Help companies hire / engage offshore developers through Nohitatu
+- Teams that integrate with client tools, processes, and product roadmaps
+- Suitable for scaling product, platform, and enterprise initiatives
+
+### 5. Careers / job applications
+- Open roles are listed on the Careers page: Careers.html
+- Candidates can apply via the careers section / job application flows on the site
+- Career detail pages (Careerdetails.html) and resume submission (PostResume.html) support applications
+- For job-related questions, guide users to Careers.html and info@nohitatu.com when needed
+
+## Portfolio / work
+- Showcase of completed projects is on Portfolio.html
+- Case studies span SaaS, healthcare/RCM-related delivery, product work, and specialized automations (e.g. sports automation notes on the site)
+- When users ask for examples of work, point them to the Portfolio page
+
+## Contact & sales
+Primary contact channels (public site):
+- Sales email: sales@nohitatu.com
+- General email: info@nohitatu.com
+- Phone: +1 (607) 247-0227
+- Skype: sales.nohitatu
+- Contact form: Contact-us.html
+
+Offices:
+- India (Chennai): #402, 403 & 405, 4th Floor, City Centre, 186/43 Purasawalkam High Road, Chennai - 600010, Tamilnadu, India
+- Singapore: 71 Bukit Batok Crescent, #05-07 Prestige Centre, Singapore 658071
+- New York (Bay Shore): 1805 5th Ave F, Bay Shore, NY 11706
+
+## Recommended user journeys
+- Looking for a job → Careers.html (apply / open roles)
+- See our work / portfolio → Portfolio.html
+- Start a project / free estimation / talk to sales → Contact-us.html or sales@nohitatu.com / phone
+- Healthcare RCM / medical billing questions → describe RCM capabilities; offer contact with the team
+- Offshore developers / dedicated team → describe offshore model; offer consultation
+
+## Tone for answers
+Be polite, professional, and concise. Prefer clear next steps: consultation, email, phone, or the correct website page. Do not invent client names, pricing, certifications, or guarantees that are not listed here. If unsure, invite the user to contact sales@nohitatu.com or +1 (607) 247-0227.

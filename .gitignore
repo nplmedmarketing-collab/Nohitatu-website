@@ -6,6 +6,13 @@ dist/
 .env.*
 !.env.example
 
+# Chatbot local env / venv (never commit keys)
+chatbot/.env
+chatbot/.venv/
+chatbot/venv/
+chatbot/__pycache__/
+chatbot/**/__pycache__/
+
 *.log
 tmp-*
 playwright-report/
@@ -18,3 +25,7 @@ test-results/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Local pip install target (not for deploy)
+chatbot/.pypkgs/
+

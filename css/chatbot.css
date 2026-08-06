@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Nohitatu Digital Concierge — v20260803chat
+   NohiAI — Nohitatu AI Support widget (v20260806nohiai)
    Self-contained: loads Plus Jakarta Sans here so any page linking only
    chatbot.css still gets the brand UI font (not Georgia / system serif).
    Direction: soft white panel + site violet accents — unlike cream/serif
@@ -30,7 +30,10 @@
     position: fixed;
     bottom: 35px;
     right: 90px;
+    /* Below custom-cursor (2147483646) so the site pointer still draws over the widget */
     z-index: 2147483000;
+    /* Let page content receive clicks outside the FAB / open panel */
+    pointer-events: none;
     font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
     -webkit-font-smoothing: antialiased;
     color: var(--cb-ink);
@@ -53,6 +56,7 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     position: relative;
     outline: none !important;
+    pointer-events: auto;
 }
 
 .chatbot-toggle:hover {
@@ -95,6 +99,7 @@
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: auto;
 }
 
 /* Closed by default — match #chatbot-window.chatbot-window specificity */

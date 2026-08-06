@@ -1,7 +1,9 @@
 /* ==========================================================================
-   Nohitatu Digital Concierge — guided conversation (flow3)
-   Cache: ?v=20260803contact
-   Panel starts closed (FAB only); opened only via toggle.
+   NohiAI — Nohitatu AI Support widget
+   Calls FastAPI /api/chat; keeps branded panel + quick chips.
+   Config: window.NOHI_CHAT_API or #chatbot-container[data-api]
+   Default API: http://localhost:8010 (avoids common :8000 conflicts)
+   Cache: ?v=20260806nohiai
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,13 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const messagesContainer = document.getElementById('chatbot-messages');
   const inputField = document.getElementById('chatbot-input');
   const sendBtn = document.getElementById('chatbot-send');
+  const container = document.getElementById('chatbot-container');
 
-  if (!toggleBtn || !chatWindow) return;
+  if (!toggleBtn || !chatWindow || !messagesContainer) return;
 
   const CONTACT_EMAIL = 'sales@nohitatu.com';
-  const TYPING_MS = 550;
+  const INFO_EMAIL = 'info@nohitatu.com';
+  const MAX_HISTORY = 20;
+  const HISTORY_CONTENT_MAX = 1500;
 
-  /** Relative base for Careers / Portfolio / Contact (blogs live one level down). */
+  /** @type {{ role: 'user'|'assistant', content: string }[]} */
+  let conversationHistory = [];
+  let isSending = false;
+
   function pageBase() {
     const path = (location.pathname || '').replace(/\\/g, '/');
     if (/\/blogs\//i.test(path)) return '../';
@@ -37,11 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return pageBase() + 'Contact-us.html';
   }
 
-  /**
-   * Conversation steps:
-   * idle → awaiting_portfolio → awaiting_contact → done
-   */
-  let funnelStep = 'idle';
+  function resolveApiBase() {
+    const fromWindow = typeof window.NOHI_CHAT_API === 'string' ? window.NOHI_CHAT_API.trim() : '';
+    const fromData = container && container.getAttribute('data-api')
+      ? container.getAttribute('data-api').trim()
+      : '';
+    const base = (fromWindow || fromData || 'http://localhost:8010').replace(/\/$/, '');
+    return base;
+  }
 
   function setOpen(open) {
     chatWindow.classList.toggle('hidden', !open);
@@ -54,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Always start closed (FAB only) — never auto-open on load
   setOpen(false);
 
   function toggleChat() {
@@ -69,45 +79,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, m => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
     })[m]);
   }
 
-  function addUserMessage(text) {
-    const userMsg = document.createElement('div');
-    userMsg.className = 'chatbot-message user-message';
-    userMsg.innerHTML = `<div class="message-content"><p>${escapeHtml(text)}</p></div>`;
-    messagesContainer.appendChild(userMsg);
-    scrollToBottom();
+  /** Escape bot text, preserve line breaks, link only known-safe patterns. */
+  function formatBotHtml(raw) {
+    let safe = escapeHtml(raw || '');
+    safe = safe.replace(/\r\n|\r|\n/g, '<br>');
+    // Auto-link company emails
+    safe = safe.replace(
+      /\b([a-zA-Z0-9._%+-]+@nohitatu\.com)\b/g,
+      '<a class="cb-cta" href="mailto:$1">$1</a>'
+    );
+    // Phone published on site
+    safe = safe.replace(
+      /\+1\s*\(?607\)?\s*247[-\s]?0227/g,
+      '<a class="cb-cta" href="tel:+16072470227">+1 (607) 247-0227</a>'
+    );
+    // Internal page names the model is instructed to mention
+    const pages = [
+      ['Careers.html', careersUrl()],
+      ['Portfolio.html', portfolioUrl()],
+      ['Contact-us.html', contactUrl()],
+      ['PostResume.html', pageBase() + 'PostResume.html']
+    ];
+    pages.forEach(([name, href]) => {
+      const re = new RegExp(name.replace('.', '\\.'), 'gi');
+      safe = safe.replace(re, `<a class="cb-cta" href="${href}">${name}</a>`);
+    });
+    return safe;
   }
 
   function mainPathChips() {
     return [
       { label: 'Looking for a job', query: 'Looking for a job' },
       { label: 'See our work', query: 'See our work' },
-      { label: 'Start a project', query: 'Start a project' }
+      { label: 'Start a project', query: 'Start a project' },
+      { label: 'Our services', query: 'What services does Nohitatu offer?' }
     ];
   }
 
-  function addBotMessage(html, chips, chipLabel) {
+  function addUserMessage(text) {
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chatbot-message user-message';
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    const p = document.createElement('p');
+    p.textContent = text;
+    content.appendChild(p);
+    userMsg.appendChild(content);
+    messagesContainer.appendChild(userMsg);
+    scrollToBottom();
+  }
+
+  function addBotMessage(text, chips, chipLabel) {
     const botMsg = document.createElement('div');
     botMsg.className = 'chatbot-message bot-message';
-    botMsg.innerHTML = `
-      <div class="message-content">
-        <p>${html}</p>
-      </div>
-    `;
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    const p = document.createElement('p');
+    p.innerHTML = formatBotHtml(text);
+    content.appendChild(p);
+    botMsg.appendChild(content);
     messagesContainer.appendChild(botMsg);
 
     if (chips && chips.length) {
       const wrap = document.createElement('div');
       wrap.className = 'quick-chips' + (chips.length <= 2 ? ' quick-chips--row' : '');
       wrap.setAttribute('role', 'group');
-      wrap.setAttribute('aria-label', chipLabel || 'Choose a reply');
+      wrap.setAttribute('aria-label', chipLabel || 'Suggested next steps');
 
       const hint = document.createElement('span');
       hint.className = 'quick-chips-label';
-      hint.textContent = chipLabel || 'Choose a reply';
+      hint.textContent = chipLabel || 'Suggested';
       wrap.appendChild(hint);
 
       chips.forEach(chip => {
@@ -128,9 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showTypingIndicator() {
+    if (document.getElementById('active-typing-indicator')) return;
     const indicator = document.createElement('div');
     indicator.id = 'active-typing-indicator';
     indicator.className = 'chatbot-message bot-message';
+    indicator.setAttribute('aria-live', 'polite');
     indicator.innerHTML = `
       <div class="message-content">
         <div class="typing-dots">
@@ -147,227 +198,181 @@ document.addEventListener('DOMContentLoaded', () => {
     if (indicator) indicator.remove();
   }
 
-  function replyWithTyping(res) {
-    showTypingIndicator();
-    setTimeout(() => {
-      removeTypingIndicator();
-      addBotMessage(res.html, res.chips, res.chipLabel);
-    }, TYPING_MS);
+  function setInputBusy(busy) {
+    isSending = busy;
+    if (inputField) inputField.disabled = busy;
+    if (sendBtn) {
+      sendBtn.disabled = busy;
+      sendBtn.setAttribute('aria-busy', busy ? 'true' : 'false');
+    }
   }
 
-  function isYes(q) {
-    return /^(yes|yeah|yep|yup|sure|ok|okay|please|absolutely|definitely|of course|sounds good|let'?s go|i'?d like|i want)\b/.test(q)
-      || q === 'y'
-      || /\b(yes please|show me|take me)\b/.test(q);
+  function pushHistory(role, content) {
+    const trimmed = String(content || '').trim().slice(0, HISTORY_CONTENT_MAX);
+    if (!trimmed) return;
+    conversationHistory.push({ role, content: trimmed });
+    if (conversationHistory.length > MAX_HISTORY) {
+      conversationHistory = conversationHistory.slice(-MAX_HISTORY);
+    }
   }
 
-  function isNo(q) {
-    return /^(no|nope|nah|not now|maybe later|skip|pass)\b/.test(q)
-      || q === 'n'
-      || /\b(no thanks|not interested|not right now)\b/.test(q);
+  function chipsForReply(text) {
+    const t = (text || '').toLowerCase();
+    if (/\bcareer|job|hiring|apply|vacanc|resume\b/.test(t)) {
+      return [
+        { label: 'Open Careers', query: 'Open Careers', nav: careersUrl(), openOnly: true, cta: true },
+        { label: 'Contact HR', query: 'How do I contact about careers?' }
+      ];
+    }
+    if (/\bportfolio|case stud|project we|our work\b/.test(t)) {
+      return [
+        { label: 'Open portfolio', query: 'Open portfolio', nav: portfolioUrl(), openOnly: true, cta: true },
+        { label: 'Start a project', query: 'Start a project' }
+      ];
+    }
+    if (/\bcontact|sales@|email|phone|consultation|estimation\b/.test(t)) {
+      return [
+        { label: 'Open Contact form', query: 'Open contact form', nav: contactUrl(), openOnly: true, cta: true },
+        { label: 'Email sales', query: 'Email sales' }
+      ];
+    }
+    return [
+      { label: 'Careers', query: 'Looking for a job' },
+      { label: 'Portfolio', query: 'See our work' },
+      { label: 'Contact', query: 'Start a project' }
+    ];
   }
 
-  function isCareersIntent(q) {
-    return /\b(looking for a job|job|jobs|career|careers|hiring|apply|application|vacanc|opening|work with (you|us)|join (your |the )?team)\b/.test(q)
-      || /apply for a job/.test(q);
-  }
-
-  function isPortfolioIntent(q) {
-    return /\b(see our work|portfolio|projects?|case stud|work we('ve| have)? (done|completed)|see (your |our )?work)\b/.test(q);
-  }
-
-  function isContactIntent(q) {
-    return /\b(start a project|contact|call|estimation|estimate|email|demo|get started|talk to (sales|someone)|free estimation|let'?s talk)\b/.test(q);
-  }
-
-  function isSomethingElse(q) {
-    return /\b(something else|other|not sure|just browsing)\b/.test(q);
-  }
-
-  function careersReply() {
-    funnelStep = 'awaiting_portfolio';
-    const href = careersUrl();
-    return {
-      html:
-        `Great — open roles and the apply form are on our Careers page.<br>` +
-        `<a class="cb-cta" href="${href}">Open Careers</a><br><br>` +
-        `Want to see projects we’ve completed?`,
-      chipLabel: 'Reply',
-      chips: [
-        { label: 'Yes', query: 'Yes' },
-        { label: 'No', query: 'No' }
-      ]
-    };
-  }
-
-  function portfolioOfferReply() {
-    funnelStep = 'awaiting_contact';
-    const href = portfolioUrl();
-    return {
-      html:
-        `Here’s a look at work we’ve shipped.<br>` +
-        `<a class="cb-cta" href="${href}">Open portfolio</a><br><br>` +
-        `Ready to start a project with us?`,
-      chipLabel: 'Reply',
-      chips: [
-        { label: 'Open portfolio', query: 'Open portfolio', nav: href, openOnly: true, cta: true },
-        { label: 'Yes — let’s talk', query: 'Yes, get started' },
-        { label: 'Not right now', query: 'Not right now' }
-      ]
-    };
-  }
-
-  function contactReply() {
-    funnelStep = 'done';
-    const href = contactUrl();
-    return {
-      html:
-        `Happy to help you get started.<br>` +
-        `Email <a class="cb-cta" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a> or use the contact form.`,
-      chipLabel: 'Next step',
-      chips: [
-        { label: 'Open Contact form', query: 'Open contact form', nav: href, openOnly: true, cta: true },
-        { label: 'Looking for a job', query: 'Looking for a job' },
-        { label: 'See our work', query: 'See our work' }
-      ]
-    };
-  }
-
-  function declinePortfolioReply() {
-    funnelStep = 'awaiting_contact';
-    return {
-      html: `No problem. Ready to start a project with us?`,
-      chipLabel: 'Reply',
-      chips: [
-        { label: 'Yes — let’s talk', query: 'Yes, get started' },
-        { label: 'Not right now', query: 'Not right now' }
-      ]
-    };
-  }
-
-  function declineContactReply() {
-    funnelStep = 'idle';
-    return {
-      html: `Understood — I’m here whenever you need me. What would you like to do?`,
-      chipLabel: 'Choose one',
-      chips: mainPathChips()
-    };
-  }
-
-  function somethingElseReply() {
-    funnelStep = 'idle';
-    return {
-      html: `No problem — tell me what you need, or pick one of these:`,
-      chipLabel: 'Choose one',
-      chips: mainPathChips()
-    };
-  }
-
-  function topicSoftware() {
-    funnelStep = 'idle';
-    return {
-      html:
-        `We build cloud-native SaaS, web apps, and custom software for teams that need to scale.<br><br>` +
-        `What would you like to do next?`,
-      chipLabel: 'Choose one',
-      chips: mainPathChips()
-    };
-  }
-
-  function topicHealthcare() {
-    funnelStep = 'idle';
-    return {
-      html:
-        `Our healthcare RCM desk covers billing, denials, claims, and workflow automation.<br><br>` +
-        `What would you like to do next?`,
-      chipLabel: 'Choose one',
-      chips: mainPathChips()
-    };
-  }
-
-  function topicOffshore() {
-    funnelStep = 'idle';
-    return {
-      html:
-        `We help you build dedicated offshore engineering teams that plug into your roadmap.<br><br>` +
-        `What would you like to do next?`,
-      chipLabel: 'Choose one',
-      chips: mainPathChips()
-    };
-  }
-
-  function fallbackReply() {
-    funnelStep = 'idle';
-    return {
-      html: `Thanks — I can help with careers, our portfolio, or starting a project. What brings you here?`,
-      chipLabel: 'Choose one',
-      chips: [
-        ...mainPathChips(),
-        { label: 'Something else', query: 'Something else' }
-      ]
-    };
-  }
-
-  function generateResponse(query) {
+  /** Offline / API-down guidance so the widget still helps visitors */
+  function localFallbackReply(query) {
     const q = query.toLowerCase().trim();
-
-    // Funnel: after careers — portfolio yes/no
-    if (funnelStep === 'awaiting_portfolio') {
-      if (isYes(q) || isPortfolioIntent(q)) return portfolioOfferReply();
-      if (isNo(q)) return declinePortfolioReply();
-      // Fall through if they switch topic
+    if (/\b(job|career|hiring|apply|vacanc|resume)\b/.test(q)) {
+      return (
+        'Open roles and applications are on our Careers page: Careers.html. ' +
+        `You can also write to ${INFO_EMAIL}. ` +
+        '(Live AI is temporarily unavailable.)'
+      );
     }
-
-    // Funnel: after portfolio — contact yes/no
-    if (funnelStep === 'awaiting_contact') {
-      if (isYes(q) || isContactIntent(q)) return contactReply();
-      if (isNo(q)) return declineContactReply();
+    if (/\b(portfolio|work|project|case stud)\b/.test(q)) {
+      return (
+        'You can browse selected work on Portfolio.html. ' +
+        `For a tailored walkthrough, email ${CONTACT_EMAIL} or call +1 (607) 247-0227. ` +
+        '(Live AI is temporarily unavailable.)'
+      );
     }
-
-    if (isSomethingElse(q)) return somethingElseReply();
-
-    if (isCareersIntent(q)) return careersReply();
-
-    if (isPortfolioIntent(q)) return portfolioOfferReply();
-
-    if (isContactIntent(q)) return contactReply();
-
-    if (/\b(software|saas|web app|custom software|product)\b/.test(q) || q === 'software services') {
-      return topicSoftware();
+    if (/\b(contact|sales|project|estimate|demo|talk|call)\b/.test(q)) {
+      return (
+        `Happy to connect you with the team. Email ${CONTACT_EMAIL}, call +1 (607) 247-0227, ` +
+        'or use Contact-us.html. (Live AI is temporarily unavailable.)'
+      );
     }
-
     if (/\b(health|rcm|billing|medical)\b/.test(q)) {
-      return topicHealthcare();
+      return (
+        'Nohitatu supports healthcare RCM, medical billing, and related software/workflows. ' +
+        `For a consultation: ${CONTACT_EMAIL} or +1 (607) 247-0227. ` +
+        '(Live AI is temporarily unavailable.)'
+      );
     }
-
-    if (/\b(offshore|dedicated team|staff augment|outsource)\b/.test(q)) {
-      return topicOffshore();
+    if (/\b(offshore|developer|software|saas|mobile|erp|ai)\b/.test(q)) {
+      return (
+        'Nohitatu offers custom & offshore software development, web & mobile apps, ERP, and AI solutions, ' +
+        `plus dedicated offshore teams. Contact ${CONTACT_EMAIL} or use Contact-us.html. ` +
+        '(Live AI is temporarily unavailable.)'
+      );
     }
-
-    return fallbackReply();
+    return (
+      'I can help with custom software, healthcare/RCM, offshore teams, careers, and contact options. ' +
+      `Please try again shortly, or email ${CONTACT_EMAIL}.`
+    );
   }
 
-  function handleSendMessage(customText) {
+  async function fetchBotReply(userText) {
+    const apiBase = resolveApiBase();
+    const history = conversationHistory.slice(-MAX_HISTORY).map(m => ({
+      role: m.role === 'assistant' ? 'assistant' : 'user',
+      content: String(m.content).slice(0, HISTORY_CONTENT_MAX)
+    }));
+
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = controller ? setTimeout(() => controller.abort(), 45000) : null;
+
+    try {
+      const res = await fetch(`${apiBase}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          message: userText.slice(0, 2000),
+          conversation_history: history
+        }),
+        signal: controller ? controller.signal : undefined
+      });
+
+      if (!res.ok) {
+        let detail = '';
+        try {
+          const errBody = await res.json();
+          detail = errBody && errBody.detail ? String(errBody.detail) : '';
+        } catch (_) { /* ignore */ }
+        if (res.status === 503 || res.status === 502) {
+          return localFallbackReply(userText);
+        }
+        if (res.status === 429) {
+          return detail || 'You are sending messages too quickly. Please wait a moment and try again.';
+        }
+        return detail || localFallbackReply(userText);
+      }
+
+      const data = await res.json();
+      const reply = data && data.reply != null ? String(data.reply).trim() : '';
+      return reply || localFallbackReply(userText);
+    } catch (_) {
+      return localFallbackReply(userText);
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  }
+
+  async function handleSendMessage(customText) {
     const text = (customText || (inputField && inputField.value) || '').trim();
-    if (!text) return;
+    if (!text || isSending) return;
 
     if (!customText && inputField) inputField.value = '';
 
+    // Remove trailing chip rows after a free-text or chip submission
+    messagesContainer.querySelectorAll('.quick-chips').forEach(el => el.remove());
+
     addUserMessage(text);
-    replyWithTyping(generateResponse(text));
+    setInputBusy(true);
+    showTypingIndicator();
+
+    try {
+      const reply = await fetchBotReply(text);
+      removeTypingIndicator();
+      pushHistory('user', text);
+      pushHistory('assistant', reply);
+      addBotMessage(reply, chipsForReply(reply), 'Next step');
+    } catch (_) {
+      removeTypingIndicator();
+      const reply = localFallbackReply(text);
+      pushHistory('user', text);
+      pushHistory('assistant', reply);
+      addBotMessage(reply, mainPathChips(), 'Try one of these');
+    } finally {
+      setInputBusy(false);
+      if (inputField) inputField.focus();
+    }
   }
 
-  /** Explicit “Open …” chips: navigate only when the user clicks — no surprise redirect. */
   function handleOpenOnly(label, navUrl) {
     addUserMessage(label);
     showTypingIndicator();
     setTimeout(() => {
       removeTypingIndicator();
-      addBotMessage(`Opening that page for you…`);
+      addBotMessage('Opening that page for you…');
       setTimeout(() => {
         window.location.href = navUrl;
-      }, 400);
-    }, Math.min(TYPING_MS, 400));
+      }, 350);
+    }, 280);
   }
 
   function bindChipEvents(root) {
@@ -375,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     scope.querySelectorAll('.chip-btn').forEach(btn => {
       if (btn.dataset.bound === '1') return;
       btn.dataset.bound = '1';
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         const el = e.currentTarget;
         const query = el.getAttribute('data-query') || el.textContent;
         const nav = el.getAttribute('data-nav');
@@ -393,8 +398,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (sendBtn) sendBtn.addEventListener('click', () => handleSendMessage());
   if (inputField) {
-    inputField.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') handleSendMessage();
+    inputField.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSendMessage();
+      }
     });
   }
 

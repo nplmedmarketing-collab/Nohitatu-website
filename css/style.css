@@ -1175,9 +1175,20 @@ header.show-menu .row.header-row {
   isolation: isolate;
 }
 
-/* ---------- Home hero: full-bleed Spline (iframe embed) ---------- */
+/* ---------- Home hero: full-bleed Spline (iframe embed - 100% Pure White Uniform Theme) ---------- */
 .top-banner--spline {
-  background: #000000;
+  background: #ffffff !important;
+}
+
+/* Header navbar navigation links over Pure White Hero */
+header.logo-navbar #navigation li.nav-item > a {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+
+header.logo-navbar #navigation li.nav-item.active > a,
+header.logo-navbar #navigation li.nav-item > a:hover {
+  color: #726cf4 !important;
 }
 
 /* Kill legacy blue pattern / solid cover that would bury the 3D scene */
@@ -1197,23 +1208,32 @@ header.show-menu .row.header-row {
   left: auto;
   z-index: 0;
   overflow: hidden;
-  background: transparent;
+  background: transparent !important;
   pointer-events: auto;
 }
 
-/* Ambient rim backlight contained strictly inside the right robot column */
+/* Kill center backlight aura to guarantee 0% vertical color seam or line down the middle */
 .hero-spline-bg::before {
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Front Studio Key Light: illuminates the front torso, face, and arms of the 3D robot */
+.hero-spline-bg::after {
   content: '';
   position: absolute;
-  top: 35%;
-  left: 15%;
-  width: 70%;
-  height: 65%;
-  background: radial-gradient(circle, rgba(114, 108, 244, 0.5) 0%, rgba(86, 203, 185, 0.3) 45%, rgba(0, 0, 0, 0) 75%);
+  top: 15%;
+  left: 20%;
+  width: 65%;
+  height: 70%;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.95) 0%, rgba(230, 240, 255, 0.5) 45%, rgba(255, 255, 255, 0) 75%);
   border-radius: 50%;
-  filter: blur(45px);
+  filter: blur(30px);
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
+  mix-blend-mode: soft-light;
 }
 
 @media (max-width: 991px) {
@@ -1242,7 +1262,7 @@ header.show-menu .row.header-row {
   cursor: none !important;
   min-width: 100%;
   min-height: 100%;
-  background: #000000;
+  background: transparent !important;
   touch-action: none;
   will-change: transform;
   transform: translateZ(0);
@@ -1270,28 +1290,25 @@ header.show-menu .row.header-row {
 }
 
 .hero-video-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.42) 50%, rgba(0, 0, 0, 0.65) 100%) !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  background: transparent !important;
 }
 
 @media (min-width: 992px) {
   .top-banner--spline .hero-spline-frame,
   .top-banner--spline .hero-spline-bg iframe {
     width: 100% !important;
-    height: 100% !important;
+    height: calc(100% + 60px) !important;
     left: 0 !important;
     top: 0 !important;
-    transform: none !important;
-    opacity: 0.95 !important;
-    image-rendering: -webkit-optimize-contrast !important;
-    image-rendering: crisp-edges !important;
-    filter: brightness(1.4) contrast(1.12) saturate(1.3) drop-shadow(0 0 25px rgba(114, 108, 244, 0.4)) !important;
+    transform: translate(50px, 50px) translateZ(0) !important;
+    opacity: 1 !important;
+    image-rendering: auto !important;
+    filter: none !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
   }
 }
 
@@ -1332,13 +1349,34 @@ header.show-menu .row.header-row {
 }
 
 .top-banner--spline .hero-content .ai-era-title {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
   justify-content: flex-start !important;
   text-align: left !important;
-  font-size: clamp(2.0rem, 3.4vw, 3.2rem) !important;
-  line-height: 1.05 !important;
-  letter-spacing: -0.035em !important;
-  gap: 0.18em !important;
-  margin: 0 0 12px 0 !important;
+  font-family: 'Unbounded', 'Bricolage Grotesque', 'Syne', sans-serif !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  gap: 2px !important;
+  margin: 0 0 22px 0 !important;
+  transform: none !important;
+}
+
+.hero-title-line {
+  display: block !important;
+  font-size: clamp(2.0rem, 3.4vw, 3.3rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.04em !important;
+  text-transform: uppercase !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hero-title-dark {
+  color: #0f172a !important;
+  font-weight: 900 !important;
+  -webkit-text-fill-color: #0f172a !important;
 }
 
 .top-banner--spline .hero-content .ai-era-subtitle {
@@ -1378,7 +1416,7 @@ header.show-menu .row.header-row {
   transform: translateX(3px);
 }
 
-/* 2. Dual-CTA Action Buttons */
+/* 2. Dual-CTA Action Buttons (White Theme Support) */
 .dual-cta-group {
   display: flex !important;
   align-items: center !important;
@@ -1414,23 +1452,22 @@ header.show-menu .row.header-row {
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
+  background: #FAF8F5 !important;
+  border: 1.5px solid #1e293b !important;
+  color: #0f172a !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 14px !important;
   font-weight: 600 !important;
   padding: 11px 22px !important;
   border-radius: 10px !important;
   text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
   transition: all 0.25s ease !important;
 }
 
 .ai-era-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.16) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
+  background: #0f172a !important;
+  border-color: #0f172a !important;
   transform: translateY(-2px) !important;
   color: #ffffff !important;
 }
@@ -1447,17 +1484,16 @@ header.show-menu .row.header-row {
   transform: scale(1.15);
 }
 
-/* 3. Social Proof & Micro Metrics Bar */
+/* 3. Social Proof & Micro Metrics Bar (Cream White Theme) */
 .hero-proof-bar {
   display: flex !important;
   align-items: center !important;
   gap: 14px !important;
   padding: 8px 16px !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background: #F0EDE6 !important;
   border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #E2DDD2 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
 }
 
 .proof-item {
@@ -1469,19 +1505,31 @@ header.show-menu .row.header-row {
 .proof-val {
   font-weight: 800 !important;
   font-size: 14px !important;
-  color: #56CBB9 !important;
+  color: #0d9488 !important;
 }
 
 .proof-lbl {
   font-size: 11px !important;
-  color: rgba(255, 255, 255, 0.75) !important;
-  font-weight: 500 !important;
+  color: #475569 !important;
+  font-weight: 600 !important;
 }
 
 .proof-divider {
   width: 1px !important;
   height: 14px !important;
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: #cbd5e1 !important;
+}
+
+/* Light Theme Overrides for Text */
+.top-banner--spline .thin-light {
+  color: #0f172a !important;
+  font-weight: 400 !important;
+  opacity: 1 !important;
+}
+
+.top-banner--spline .ai-era-subtitle {
+  color: #334155 !important;
+  text-shadow: none !important;
 }
 
 @media (max-width: 767px) {
@@ -13445,7 +13493,9 @@ body:has(.nh-curtain-stack) #wrapper {
     cursor: none !important;
   }
 
-  /* Custom Tech Arrow SVG Container - 0ms Instant Hardware Pointer Tracking */
+  /* Custom Tech Arrow SVG Container - 0ms Instant Hardware Pointer Tracking.
+     z-index must sit above #chatbot-container (2147483000) so the pointer
+     remains visible over the floating chat FAB / panel (pointer-events: none). */
   .custom-cursor-pointer {
     position: fixed;
     top: 0;
@@ -13453,7 +13503,7 @@ body:has(.nh-curtain-stack) #wrapper {
     width: 24px;
     height: 24px;
     pointer-events: none;
-    z-index: 999999;
+    z-index: 2147483646;
     opacity: 0;
     filter: drop-shadow(0 0 6px rgba(86, 203, 185, 0.8));
     transition: opacity 0.15s ease, filter 0.2s ease;
@@ -13475,7 +13525,7 @@ body:has(.nh-curtain-stack) #wrapper {
     background: rgba(86, 203, 185, 0.05);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 999998;
+    z-index: 2147483645;
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.2s ease, width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;

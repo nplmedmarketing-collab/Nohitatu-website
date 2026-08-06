@@ -1,0 +1,56 @@
+[
+  {
+    "id": "about",
+    "title": "About Nohitatu",
+    "tags": ["about", "company", "nohitatu", "who"],
+    "text": "Nohitatu Technologies Private Limited is a software development and SaaS partner specializing in offshore software delivery, healthcare Revenue Cycle Management (RCM), medical billing, and custom digital products for providers, payers, health-tech, and product teams."
+  },
+  {
+    "id": "custom-software",
+    "title": "Custom & offshore software development",
+    "tags": ["custom", "software", "offshore", "saas", "development", "outsourcing", "cloud"],
+    "text": "Nohitatu builds custom software, cloud-native SaaS, web apps, and provides application development, maintenance, and support. Delivery uses a cost-effective global/offshore model with dedicated engineering teams that plug into client roadmaps."
+  },
+  {
+    "id": "healthcare-rcm",
+    "title": "Healthcare software, medical billing, RCM",
+    "tags": ["healthcare", "medical", "billing", "rcm", "claims", "denials", "revenue", "payer", "provider"],
+    "text": "Nohitatu specializes in healthcare RCM and medical billing: claims, denials, billing workflows, and automation for operational efficiency. Services suit providers, payers, and health-tech companies."
+  },
+  {
+    "id": "web-mobile-erp-ai",
+    "title": "Web, mobile, ERP, and AI",
+    "tags": ["web", "mobile", "app", "erp", "ai", "digital", "transformation", "product"],
+    "text": "Services include web and mobile app development, ERP/enterprise workflows, AI-driven custom software, digital transformation, product modernization, and legacy replacement."
+  },
+  {
+    "id": "offshore-hiring",
+    "title": "Hiring offshore developers",
+    "tags": ["hire", "hiring", "offshore", "dedicated", "team", "staff", "augmentation", "developers"],
+    "text": "Nohitatu helps clients engage dedicated offshore developer teams that integrate with existing processes and roadmaps—suitable for scaling product, platform, and enterprise initiatives."
+  },
+  {
+    "id": "careers",
+    "title": "Careers and job applications",
+    "tags": ["career", "careers", "job", "jobs", "hiring", "apply", "application", "vacancy", "resume"],
+    "text": "Open roles and applications are on Careers.html. Related pages: Careerdetails.html and PostResume.html. Candidates with questions can also email info@nohitatu.com."
+  },
+  {
+    "id": "portfolio",
+    "title": "Portfolio and case studies",
+    "tags": ["portfolio", "work", "project", "projects", "case", "study", "examples"],
+    "text": "Completed work and case studies are showcased on Portfolio.html (SaaS, healthcare/RCM-related delivery, product engineering, specialized automations)."
+  },
+  {
+    "id": "contact",
+    "title": "Contact and sales",
+    "tags": ["contact", "sales", "email", "phone", "office", "estimation", "demo", "consult"],
+    "text": "Contact: sales@nohitatu.com, info@nohitatu.com, phone +1 (607) 247-0227, Skype sales.nohitatu, form on Contact-us.html. Offices in Chennai (India), Singapore, and Bay Shore NY."
+  },
+  {
+    "id": "offices",
+    "title": "Office locations",
+    "tags": ["office", "address", "chennai", "india", "singapore", "new york", "location"],
+    "text": "India: City Centre, 186/43 Purasawalkam High Road, Chennai 600010. Singapore: 71 Bukit Batok Crescent, #05-07 Prestige Centre, 658071. New York: 1805 5th Ave F, Bay Shore, NY 11706."
+  }
+]
