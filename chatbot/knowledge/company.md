@@ -53,8 +53,9 @@ Tagline themes from the public site: Offshore Software & SaaS; Medical Billing &
 Primary contact channels (public site):
 - Sales email: sales@nohitatu.com
 - General email: info@nohitatu.com
-- Sales phone: +91 99413 33444 (for sales, business, consultations, project inquiries)
-- HR phone: +91 73974 59131 (for careers, jobs, resume, recruitment / HR queries)
+- Sales phone: +91 99413 33444 (tel:+919941333344) — sales, business, consultations, projects
+- HR phone: +91 73974 59131 (tel:+917397459131) — careers, jobs, resume, recruitment / HR
+- If asked only for a phone or contact number (no Sales/HR intent): share both numbers, labeled Sales and HR
 - Skype: sales.nohitatu
 - Contact form: Contact-us.html
 

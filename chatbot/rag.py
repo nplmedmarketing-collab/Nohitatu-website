@@ -17,8 +17,13 @@ CHUNKS_PATH = KNOWLEDGE_DIR / "chunks.json"
 COMPANY_MD_PATH = KNOWLEDGE_DIR / "company.md"
 
 
+# Keep short tokens that matter for contact/career matching (default min length is 3)
+_SHORT_KEEP = frozenset({"hr"})
+
+
 def _tokenize(text: str) -> set[str]:
-    return {t for t in re.findall(r"[a-z0-9]+", text.lower()) if len(t) > 2}
+    tokens = re.findall(r"[a-z0-9]+", text.lower())
+    return {t for t in tokens if len(t) > 2 or t in _SHORT_KEEP}
 
 
 @lru_cache(maxsize=1)

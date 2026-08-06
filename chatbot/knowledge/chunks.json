@@ -44,14 +44,20 @@
   {
     "id": "contact",
     "title": "Contact and sales",
-    "tags": ["contact", "sales", "email", "phone", "office", "estimation", "demo", "consult"],
-    "text": "Contact: sales@nohitatu.com, info@nohitatu.com. Sales phone +91 99413 33444 (tel:+919941333344). HR phone +91 73974 59131 (tel:+917397459131) for careers, jobs, and resume/recruitment. Skype sales.nohitatu, form on Contact-us.html. Offices in Chennai (India), Singapore, and Bay Shore NY."
+    "tags": ["contact", "sales", "email", "phone", "telephone", "number", "mobile", "call", "office", "estimation", "demo", "consult"],
+    "text": "Public contact FAQ. Emails: sales@nohitatu.com (sales/business), info@nohitatu.com (general). Sales phone +91 99413 33444 (tel:+919941333344) for sales, projects, consultations, demos, free estimation. HR phone +91 73974 59131 (tel:+917397459131) for careers, jobs, resume, and recruitment. When someone asks for phone or contact without specifying Sales or HR, give both labeled numbers. Skype sales.nohitatu. Form on Contact-us.html. Offices in Chennai (India), Singapore, and Bay Shore NY."
+  },
+  {
+    "id": "phone-numbers",
+    "title": "Phone numbers FAQ",
+    "tags": ["phone", "phones", "telephone", "number", "numbers", "mobile", "call", "contact", "sales", "hr"],
+    "text": "Official Nohitatu phone numbers: Sales +91 99413 33444 (tel:+919941333344) — business, project, and consultation calls. HR +91 73974 59131 (tel:+917397459131) — careers, jobs, resume, recruitment. Answer 'What is your phone number?' or 'How can I call you?' with both Sales and HR, clearly labeled. Do not use any other phone numbers."
   },
   {
     "id": "hr-contact",
     "title": "HR and careers contact",
-    "tags": ["hr", "career", "careers", "job", "jobs", "resume", "recruitment", "hiring", "apply"],
-    "text": "For HR, careers, job applications, and resume questions: call +91 73974 59131 or use Careers.html / PostResume.html. Email info@nohitatu.com when needed. Sales inquiries use +91 99413 33444 or sales@nohitatu.com."
+    "tags": ["hr", "career", "careers", "job", "jobs", "resume", "recruitment", "hiring", "apply", "phone", "contact"],
+    "text": "For HR, careers, job applications, and resume questions: call HR +91 73974 59131 (tel:+917397459131) or use Careers.html / PostResume.html. Email info@nohitatu.com when needed. Sales and business inquiries use Sales +91 99413 33444 or sales@nohitatu.com — do not route job seekers only to Sales."
   },
   {
     "id": "offices",

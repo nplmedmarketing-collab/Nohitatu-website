@@ -3,7 +3,7 @@
    Calls FastAPI /api/chat; keeps branded panel + quick chips.
    Config: window.NOHI_CHAT_API or #chatbot-container[data-api]
    Default API: http://localhost:8010 (avoids common :8000 conflicts)
-   Cache: ?v=20260806nohiai
+   Cache: ?v=20260806phones
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -252,21 +252,33 @@ document.addEventListener('DOMContentLoaded', () => {
   /** Offline / API-down guidance so the widget still helps visitors */
   function localFallbackReply(query) {
     const q = query.toLowerCase().trim();
-    if (/\b(job|career|hiring|apply|vacanc|resume|hr)\b/.test(q)) {
+    // Explicit phone / "how to call" — always both labeled numbers
+    if (/\b(phone|telephone|phones)\b/.test(q) ||
+        /\b(contact|sales|hr)\s+numbers?\b/.test(q) ||
+        /\bphone\s*numbers?\b/.test(q) ||
+        /\bhow (can|do) i (call|reach|contact)\b/.test(q)) {
+      return (
+        `You can reach us by phone: Sales ${SALES_PHONE} (business & projects), ` +
+        `HR ${HR_PHONE} (careers & recruitment). ` +
+        `Email ${CONTACT_EMAIL} or use Contact-us.html. (Live AI is temporarily unavailable.)`
+      );
+    }
+    if (/\b(job|career|hiring|apply|vacanc|resume|hr|recruit)\b/.test(q)) {
       return (
         'Open roles and applications are on our Careers page: Careers.html. ' +
         `For HR: call ${HR_PHONE} or write to ${INFO_EMAIL}. ` +
+        `For sales/business: ${SALES_PHONE} or ${CONTACT_EMAIL}. ` +
         '(Live AI is temporarily unavailable.)'
       );
     }
-    if (/\b(portfolio|work|project|case stud)\b/.test(q)) {
+    if (/\b(portfolio|work|case stud)\b/.test(q)) {
       return (
         'You can browse selected work on Portfolio.html. ' +
         `For a tailored walkthrough, email ${CONTACT_EMAIL} or call Sales at ${SALES_PHONE}. ` +
         '(Live AI is temporarily unavailable.)'
       );
     }
-    if (/\b(contact|sales|project|estimate|demo|talk|call)\b/.test(q)) {
+    if (/\b(contact|sales|project|estimate|estimation|demo|talk|call|consult)\b/.test(q)) {
       return (
         `Happy to connect you with the team. Email ${CONTACT_EMAIL}, call Sales at ${SALES_PHONE}, ` +
         `HR at ${HR_PHONE}, or use Contact-us.html. (Live AI is temporarily unavailable.)`
@@ -282,13 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (/\b(offshore|developer|software|saas|mobile|erp|ai)\b/.test(q)) {
       return (
         'Nohitatu offers custom & offshore software development, web & mobile apps, ERP, and AI solutions, ' +
-        `plus dedicated offshore teams. Contact ${CONTACT_EMAIL} or use Contact-us.html. ` +
+        `plus dedicated offshore teams. Contact ${CONTACT_EMAIL}, Sales at ${SALES_PHONE}, or use Contact-us.html. ` +
         '(Live AI is temporarily unavailable.)'
       );
     }
     return (
       'I can help with custom software, healthcare/RCM, offshore teams, careers, and contact options. ' +
-      `Please try again shortly, or email ${CONTACT_EMAIL}.`
+      `Please try again shortly, email ${CONTACT_EMAIL}, or call Sales ${SALES_PHONE} / HR ${HR_PHONE}.`
     );
   }
 
