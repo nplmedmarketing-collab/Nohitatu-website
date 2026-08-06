@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const CONTACT_EMAIL = 'sales@nohitatu.com';
   const INFO_EMAIL = 'info@nohitatu.com';
+  const SALES_PHONE = '+91 99413 33444';
+  const HR_PHONE = '+91 73974 59131';
   const MAX_HISTORY = 20;
   const HISTORY_CONTENT_MAX = 1500;
 
@@ -96,10 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
       /\b([a-zA-Z0-9._%+-]+@nohitatu\.com)\b/g,
       '<a class="cb-cta" href="mailto:$1">$1</a>'
     );
-    // Phone published on site
+    // Phones published on site (Sales + HR)
     safe = safe.replace(
-      /\+1\s*\(?607\)?\s*247[-\s]?0227/g,
-      '<a class="cb-cta" href="tel:+16072470227">+1 (607) 247-0227</a>'
+      /\+91\s*99413\s*33444|\+919941333344/g,
+      '<a class="cb-cta" href="tel:+919941333344">+91 99413 33444</a>'
+    );
+    safe = safe.replace(
+      /\+91\s*73974\s*59131|\+917397459131/g,
+      '<a class="cb-cta" href="tel:+917397459131">+91 73974 59131</a>'
     );
     // Internal page names the model is instructed to mention
     const pages = [
@@ -246,30 +252,30 @@ document.addEventListener('DOMContentLoaded', () => {
   /** Offline / API-down guidance so the widget still helps visitors */
   function localFallbackReply(query) {
     const q = query.toLowerCase().trim();
-    if (/\b(job|career|hiring|apply|vacanc|resume)\b/.test(q)) {
+    if (/\b(job|career|hiring|apply|vacanc|resume|hr)\b/.test(q)) {
       return (
         'Open roles and applications are on our Careers page: Careers.html. ' +
-        `You can also write to ${INFO_EMAIL}. ` +
+        `For HR: call ${HR_PHONE} or write to ${INFO_EMAIL}. ` +
         '(Live AI is temporarily unavailable.)'
       );
     }
     if (/\b(portfolio|work|project|case stud)\b/.test(q)) {
       return (
         'You can browse selected work on Portfolio.html. ' +
-        `For a tailored walkthrough, email ${CONTACT_EMAIL} or call +1 (607) 247-0227. ` +
+        `For a tailored walkthrough, email ${CONTACT_EMAIL} or call Sales at ${SALES_PHONE}. ` +
         '(Live AI is temporarily unavailable.)'
       );
     }
     if (/\b(contact|sales|project|estimate|demo|talk|call)\b/.test(q)) {
       return (
-        `Happy to connect you with the team. Email ${CONTACT_EMAIL}, call +1 (607) 247-0227, ` +
-        'or use Contact-us.html. (Live AI is temporarily unavailable.)'
+        `Happy to connect you with the team. Email ${CONTACT_EMAIL}, call Sales at ${SALES_PHONE}, ` +
+        `HR at ${HR_PHONE}, or use Contact-us.html. (Live AI is temporarily unavailable.)`
       );
     }
     if (/\b(health|rcm|billing|medical)\b/.test(q)) {
       return (
         'Nohitatu supports healthcare RCM, medical billing, and related software/workflows. ' +
-        `For a consultation: ${CONTACT_EMAIL} or +1 (607) 247-0227. ` +
+        `For a consultation: ${CONTACT_EMAIL} or Sales at ${SALES_PHONE}. ` +
         '(Live AI is temporarily unavailable.)'
       );
     }

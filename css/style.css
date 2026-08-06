@@ -1200,6 +1200,17 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   visibility: hidden !important;
 }
 
+@keyframes robotEntranceFromRight {
+  0% {
+    transform: translate(500px, 50px) translateZ(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(160px, 50px) translateZ(0);
+    opacity: 1;
+  }
+}
+
 .hero-spline-bg {
   position: absolute;
   top: 0;
@@ -1294,12 +1305,13 @@ header.logo-navbar #navigation li.nav-item > a:hover {
     height: calc(100% + 60px) !important;
     left: 0 !important;
     top: 0 !important;
-    transform: translate(50px, 50px) translateZ(0) !important;
+    transform: translate(160px, 50px) translateZ(0) !important;
     opacity: 1 !important;
     image-rendering: auto !important;
     filter: none !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
+    animation: robotEntranceFromRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
   }
 }
 
@@ -4836,11 +4848,21 @@ header.logo-navbar,
   color: #64748b;
 }
 
-.site-footer .footer-phone {
-  display: inline-block;
+.site-footer .footer-phones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   margin: 0 0 16px;
+}
+
+.site-footer .footer-phone {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.2;
@@ -4852,6 +4874,21 @@ header.logo-navbar,
 
 .site-footer .footer-phone:hover {
   color: #726cf4 !important;
+}
+
+.site-footer .footer-phone-role {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  line-height: 1;
+}
+
+.site-footer .footer-phone:hover .footer-phone-role {
+  color: #726cf4;
 }
 
 .site-footer .footer-phone-number {
@@ -12001,6 +12038,11 @@ body.footer-reveal-page .site-footer .inner-footer {
 .site-footer .footer-phone,
 .site-footer .footer-phone:hover {
   color: #fff !important;
+}
+
+.site-footer .footer-phone-role,
+.site-footer .footer-phone:hover .footer-phone-role {
+  color: rgba(255, 255, 255, 0.72) !important;
 }
 
 .site-footer .footer-heading {

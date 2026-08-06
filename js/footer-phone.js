@@ -1,13 +1,15 @@
-/* Simple footer phone hover */
+/* Simple footer phone hover (Sales + HR links) */
 document.addEventListener('DOMContentLoaded', () => {
-  const phone = document.getElementById('footer-phone-cta');
-  if (!phone) return;
+  const phones = document.querySelectorAll('.site-footer .footer-phone');
+  if (!phones.length) return;
 
-  phone.addEventListener('mouseenter', () => {
-    phone.style.color = '#019add';
-  });
+  phones.forEach((phone) => {
+    phone.addEventListener('mouseenter', () => {
+      phone.style.color = '#019add';
+    });
 
-  phone.addEventListener('mouseleave', () => {
-    phone.style.color = '';
+    phone.addEventListener('mouseleave', () => {
+      phone.style.color = '';
+    });
   });
 });
