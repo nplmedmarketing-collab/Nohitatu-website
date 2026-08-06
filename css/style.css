@@ -13483,38 +13483,50 @@ body:has(.nh-curtain-stack) #wrapper {
    Custom Tech Arrow Pointer (Modern Sleek Dark & Neon Accent Arrow)
    ========================================================================== */
 @media (hover: hover) and (pointer: fine) {
+  /* Hide native cursor on every node (chatbot, cards, etc. set cursor:pointer). */
   body.custom-cursor-enabled,
-  body.custom-cursor-enabled a,
-  body.custom-cursor-enabled button,
-  body.custom-cursor-enabled input,
-  body.custom-cursor-enabled select,
-  body.custom-cursor-enabled textarea,
-  body.custom-cursor-enabled [role="button"] {
+  body.custom-cursor-enabled * {
     cursor: none !important;
   }
 
-  /* Custom Tech Arrow SVG Container - 0ms Instant Hardware Pointer Tracking.
+  /* Native text caret over form fields — custom cursor is hidden via .cursor-native-text. */
+  body.custom-cursor-enabled.cursor-native-text input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+  body.custom-cursor-enabled.cursor-native-text textarea,
+  body.custom-cursor-enabled.cursor-native-text select,
+  body.custom-cursor-enabled.cursor-native-text [contenteditable="true"] {
+    cursor: text !important;
+  }
+
+  /* Custom Tech Arrow SVG Container.
      z-index must sit above #chatbot-container (2147483000) so the pointer
-     remains visible over the floating chat FAB / panel (pointer-events: none). */
+     remains visible over the floating chat FAB / panel (pointer-events: none).
+     No filter on the moving tip — drop-shadow filters thrash with transform. */
   .custom-cursor-pointer {
     position: fixed;
     top: 0;
     left: 0;
     width: 24px;
     height: 24px;
+    margin: 0;
+    padding: 0;
     pointer-events: none;
     z-index: 2147483646;
     opacity: 0;
-    filter: drop-shadow(0 0 6px rgba(86, 203, 185, 0.8));
-    transition: opacity 0.15s ease, filter 0.2s ease;
+    transition: opacity 0.12s ease;
     will-change: transform;
+    contain: layout style;
+  }
+
+  .custom-cursor-pointer svg {
+    display: block;
+    overflow: visible;
   }
 
   .custom-cursor-pointer svg path {
-    transition: stroke 0.25s ease, fill 0.25s ease;
+    transition: stroke 0.2s ease, fill 0.2s ease;
   }
 
-  /* Trailing Accent Aura */
+  /* Trailing Accent Aura (may lag slightly; tip does not) */
   .custom-cursor-aura {
     position: fixed;
     top: 0;
@@ -13528,15 +13540,18 @@ body:has(.nh-curtain-stack) #wrapper {
     z-index: 2147483645;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 0.2s ease, width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    transition: opacity 0.15s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     will-change: transform;
+    contain: layout style;
+  }
+
+  body.cursor-native-text .custom-cursor-pointer,
+  body.cursor-native-text .custom-cursor-aura {
+    opacity: 0 !important;
+    visibility: hidden;
   }
 
   /* Hover State (CTAs, Links, Buttons) */
-  body.cursor-hover .custom-cursor-pointer {
-    filter: drop-shadow(0 0 10px rgba(114, 108, 244, 0.95));
-  }
-
   body.cursor-hover .custom-cursor-pointer svg path {
     stroke: #726CF4;
     fill: rgba(114, 108, 244, 0.3);
@@ -13547,6 +13562,5 @@ body:has(.nh-curtain-stack) #wrapper {
     height: 44px;
     border-color: rgba(114, 108, 244, 0.8);
     background: rgba(114, 108, 244, 0.12);
-    box-shadow: 0 0 20px rgba(114, 108, 244, 0.3);
   }
 }
