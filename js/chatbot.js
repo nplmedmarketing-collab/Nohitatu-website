@@ -3,7 +3,7 @@
    Calls FastAPI /api/chat; keeps branded panel + quick chips.
    Config: window.NOHI_CHAT_API or #chatbot-container[data-api]
    Default API: http://localhost:8010 (avoids common :8000 conflicts)
-   Cache: ?v=20260807openfix
+   Cache: ?v=20260807noflicker
    ========================================================================== */
 
 function initNohiChatbot() {
@@ -60,12 +60,23 @@ function initNohiChatbot() {
 
   function setOpen(open) {
     chatWindow.classList.toggle('hidden', !open);
+    // Keep focus out of the closed panel (we no longer use display:none)
+    if (open) {
+      chatWindow.removeAttribute('inert');
+      chatWindow.setAttribute('aria-hidden', 'false');
+    } else {
+      chatWindow.setAttribute('inert', '');
+      chatWindow.setAttribute('aria-hidden', 'true');
+    }
     if (iconChat) iconChat.classList.toggle('hidden', open);
     if (iconClose) iconClose.classList.toggle('hidden', !open);
     toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     if (open && inputField) {
-      inputField.focus();
-      scrollToBottom();
+      // Focus after opacity/visibility paint so open doesn't flash solid white
+      requestAnimationFrame(() => {
+        inputField.focus({ preventScroll: true });
+        scrollToBottom();
+      });
     }
   }
 
@@ -85,8 +96,26 @@ function initNohiChatbot() {
   const robotHotspot = document.getElementById('robot-interactive-overlay');
   const robotBubble = document.getElementById('robot-speech-bubble');
 
+  function triggerEnergyWave(clientX, clientY) {
+    const wave = document.createElement('div');
+    wave.className = 'nohi-energy-wave';
+    const x = clientX || window.innerWidth / 2;
+    const y = clientY || window.innerHeight / 2;
+    wave.style.left = `${x}px`;
+    wave.style.top = `${y}px`;
+    document.body.appendChild(wave);
+    setTimeout(() => {
+      wave.remove();
+    }, 700);
+  }
+
   function handleRobotClick(e) {
-    if (e) e.stopPropagation();
+    if (e) {
+      e.stopPropagation();
+      triggerEnergyWave(e.clientX, e.clientY);
+    } else {
+      triggerEnergyWave();
+    }
     setOpen(true);
   }
 
@@ -102,6 +131,32 @@ function initNohiChatbot() {
 
   if (robotBubble) {
     robotBubble.addEventListener('click', handleRobotClick);
+
+    // Dynamic Rotating Speech Prompts
+    const badgeTextEl = robotBubble.querySelector('.badge-text');
+    if (badgeTextEl) {
+      const speechPrompts = [
+        "Hi I am NohiAI, How can i help ?",
+        "Need a free project quote or estimation?",
+        "Looking for dedicated developer teams?",
+        "Ask about Healthcare Tech & RCM solutions!",
+        "Explore open career roles & join our team!"
+      ];
+      let promptIndex = 0;
+
+      setInterval(() => {
+        badgeTextEl.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        badgeTextEl.style.opacity = '0';
+        badgeTextEl.style.transform = 'translateY(-3px)';
+
+        setTimeout(() => {
+          promptIndex = (promptIndex + 1) % speechPrompts.length;
+          badgeTextEl.textContent = speechPrompts[promptIndex];
+          badgeTextEl.style.opacity = '1';
+          badgeTextEl.style.transform = 'translateY(0)';
+        }, 350);
+      }, 5500);
+    }
   }
 
   function scrollToBottom() {

@@ -1222,6 +1222,8 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   overflow: hidden;
   background: transparent !important;
   pointer-events: auto;
+  contain: layout paint;
+  isolation: isolate;
 }
 
 /* Kill center backlight aura to guarantee 0% vertical color seam or line down the middle */
@@ -1265,9 +1267,12 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   min-width: 100%;
   min-height: 100%;
   background: transparent !important;
+  background-color: transparent !important;
   touch-action: none;
-  will-change: transform;
-  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: strict;
+  transform: translate3d(0, 0, 0);
 }
 
 .hero-boxes-canvas {
@@ -1340,45 +1345,56 @@ header.logo-navbar #navigation li.nav-item > a:hover {
 .hero-robot-interactive-wrapper:active {
   transform: scale(0.97);
 }
-
 .robot-speech-bubble {
   position: relative;
-  background: rgba(15, 23, 42, 0.88) !important;
+  background: rgba(15, 23, 42, 0.92) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(129, 140, 248, 0.45) !important;
-  border-radius: 30px !important;
-  padding: 9px 20px 9px 16px;
+  border: 1.5px solid rgba(129, 140, 248, 0.55) !important;
+  border-radius: 20px 20px 20px 4px !important;
+  padding: 10px 20px 10px 16px;
   display: flex;
   align-items: center;
   gap: 10px;
   color: #ffffff;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.45), 0 0 18px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.5), 0 0 22px rgba(99, 102, 241, 0.28);
   animation: floatRobotBubble 4s ease-in-out infinite;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.robot-speech-bubble::before,
-.robot-speech-bubble::after {
-  display: none !important;
+/* Asymmetric speech pointer tail (Left side) */
+.robot-speech-bubble::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute;
+  bottom: -10px;
+  left: 22px;
+  width: 0;
+  height: 0;
+  border-right: 9px solid transparent;
+  border-left: 3px solid transparent;
+  border-top: 11px solid rgba(129, 140, 248, 0.7);
+  z-index: 1;
 }
 
-.badge-icon-wrap {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(99, 102, 241, 0.2);
-  border: 1px solid rgba(129, 140, 248, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.robot-speech-bubble::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute;
+  bottom: -7px;
+  left: 23px;
+  width: 0;
+  height: 0;
+  border-right: 7px solid transparent;
+  border-left: 2px solid transparent;
+  border-top: 9px solid #0f172a;
+  z-index: 2;
 }
 
 .badge-text {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
-  font-size: 0.84rem !important;
+  font-size: 0.86rem !important;
   font-weight: 600 !important;
   color: #f8fafc !important;
   letter-spacing: 0.2px;
@@ -1392,7 +1408,6 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   background: #10b981;
   box-shadow: 0 0 8px #10b981, 0 0 14px rgba(16, 185, 129, 0.6);
   flex-shrink: 0;
-  margin-left: 2px;
   animation: pulseStatusDot 2s ease-in-out infinite;
 }
 
@@ -1402,25 +1417,48 @@ header.logo-navbar #navigation li.nav-item > a:hover {
 }
 
 .hero-robot-interactive-wrapper:hover .robot-speech-bubble {
-  background: rgba(30, 41, 59, 0.95) !important;
-  border-color: rgba(129, 140, 248, 0.75) !important;
-  box-shadow: 0 14px 40px rgba(99, 102, 241, 0.35), 0 0 25px rgba(99, 102, 241, 0.3);
-  transform: translateY(-2px) scale(1.05);
+  background: rgba(30, 41, 59, 0.96) !important;
+  border-color: rgba(129, 140, 248, 0.85) !important;
+  box-shadow: 0 16px 45px rgba(99, 102, 241, 0.4), 0 0 30px rgba(99, 102, 241, 0.35);
+  transform: translateY(-2px) scale(1.04);
 }
 
 .hero-robot-interactive-wrapper:hover .robot-speech-bubble::before {
-  border-top-color: #8b85f9;
+  border-top-color: rgba(129, 140, 248, 0.95);
 }
 
 .hero-robot-interactive-wrapper:hover .robot-speech-bubble::after {
-  border-top-color: #25334a;
+  border-top-color: #1e293b;
 }
 
-.bubble-content {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.3;
-  text-align: left;
+/* Futuristic Energy Wave Pulse on 3D Robot Click */
+.nohi-energy-wave {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(129, 140, 248, 0.95);
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.45) 0%, rgba(99, 102, 241, 0.12) 60%, transparent 80%);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.85), inset 0 0 18px rgba(129, 140, 248, 0.6);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%) scale(1);
+  animation: energyWaveExpand 0.65s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes energyWaveExpand {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    border-width: 3px;
+  }
+  100% {
+    width: 340px;
+    height: 340px;
+    opacity: 0;
+    border-width: 1px;
+  }
 }
 
 .bubble-title {
@@ -1491,13 +1529,15 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   }
 
   .robot-speech-bubble::before {
-    right: 50%;
-    transform: translateX(50%);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
   }
 
   .robot-speech-bubble::after {
-    right: 50%;
-    transform: translateX(50%);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
   }
 }
 

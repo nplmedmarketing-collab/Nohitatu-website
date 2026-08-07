@@ -1,11 +1,13 @@
 /* ==========================================================================
-   NohiAI — Nohitatu AI Support widget (v20260806nohiai)
+   NohiAI — Nohitatu AI Support widget (v20260807noflicker)
    Self-contained: loads Plus Jakarta Sans here so any page linking only
    chatbot.css still gets the brand UI font (not Georgia / system serif).
    Direction: soft white panel + site violet accents — unlike cream/serif
    and unlike navy/orange ui2.
    Panel starts closed: #chatbot-window.chatbot-window.hidden must beat the
    open-state #chatbot-window.chatbot-window rule (ID+class specificity).
+   Open/close uses opacity + visibility only (no display:none / transform
+   slide) so composited white layers cannot ghost-flash behind the panel.
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
@@ -79,7 +81,11 @@
     display: none !important;
 }
 
-/* Panel — white / soft light */
+/* Panel — white / soft light
+   Keep display:flex always. Toggling display:none↔flex with opacity/transform
+   transitions paints a full solid-white layer for a frame (or leaves a
+   semi-transparent “ghost” twin offset during compositing) — the white flicker
+   users see behind the open widget on GPU-heavy heroes (Spline robot). */
 #chatbot-window.chatbot-window,
 .chatbot-window {
     position: absolute;
@@ -88,27 +94,31 @@
     width: 370px;
     height: 500px;
     max-height: calc(100vh - 120px);
-    background: var(--cb-paper);
+    background: #ffffff !important;
     border: 1px solid var(--cb-line);
     border-radius: var(--cb-radius);
-    box-shadow: var(--cb-shadow);
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.22), 0 0 1px rgba(15, 23, 42, 0.15) !important;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: auto;
+    /* Stable composite without permanent will-change (avoids layer thrash/flicker) */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
-/* Closed by default — match #chatbot-window.chatbot-window specificity */
+/* Closed by default — match #chatbot-window.chatbot-window specificity.
+   No display:none, no translate/scale open animation (those cause white ghosts). */
 #chatbot-window.chatbot-window.hidden,
 .chatbot-window.hidden {
     opacity: 0 !important;
     pointer-events: none !important;
     visibility: hidden !important;
-    transform: translateY(12px);
-    display: none !important;
+    transform: none;
 }
 
 /* Header — white/light with dark navy text */
