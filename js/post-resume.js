@@ -1271,7 +1271,7 @@
           setStatus(
             "Something went wrong, try again. (HTTP " +
               res.status +
-              "). Or email info@nohitatu.com with job code " +
+              "). Or email hrd@nohitatu.com with job code " +
               job.jobid +
               ".",
             "error"
@@ -1280,7 +1280,7 @@
       } catch (err) {
         console.error(err);
         setStatus(
-          "Something went wrong, try again. Network error posting application. Email info@nohitatu.com with job code " +
+          "Something went wrong, try again. Network error posting application. Email hrd@nohitatu.com with job code " +
             job.jobid +
             " if this continues.",
           "error"

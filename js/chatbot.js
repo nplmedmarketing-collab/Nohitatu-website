@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!toggleBtn || !chatWindow || !messagesContainer) return;
 
   const CONTACT_EMAIL = 'sales@nohitatu.com';
-  const INFO_EMAIL = 'info@nohitatu.com';
+  const HR_EMAIL = 'hrd@nohitatu.com';
   const SALES_PHONE = '+91 99413 33444';
   const HR_PHONE = '+91 73974 59131';
   const MAX_HISTORY = 20;
@@ -73,7 +73,34 @@ document.addEventListener('DOMContentLoaded', () => {
     setOpen(chatWindow.classList.contains('hidden'));
   }
 
+  window.openNohiChat = function () {
+    setOpen(true);
+  };
+
   toggleBtn.addEventListener('click', toggleChat);
+
+  // Robot interactive bubble & hotspot listeners (Hero 3D Robot)
+  const robotHotspot = document.getElementById('robot-interactive-overlay');
+  const robotBubble = document.getElementById('robot-speech-bubble');
+
+  function handleRobotClick(e) {
+    if (e) e.stopPropagation();
+    setOpen(true);
+  }
+
+  if (robotHotspot) {
+    robotHotspot.addEventListener('click', handleRobotClick);
+    robotHotspot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleRobotClick(e);
+      }
+    });
+  }
+
+  if (robotBubble) {
+    robotBubble.addEventListener('click', handleRobotClick);
+  }
 
   function scrollToBottom() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -123,10 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function mainPathChips() {
     return [
-      { label: 'Looking for a job', query: 'Looking for a job' },
-      { label: 'See our work', query: 'See our work' },
-      { label: 'Start a project', query: 'Start a project' },
-      { label: 'Our services', query: 'What services does Nohitatu offer?' }
+      { label: 'Custom AI & Software', query: 'Tell me about custom AI and software engineering' },
+      { label: 'Dedicated Developer Teams', query: 'How do dedicated developer teams work?' },
+      { label: 'Free Project Quote', query: 'Start a project' },
+      { label: 'Healthcare Tech & RCM', query: 'Tell me about healthcare tech and RCM solutions' },
+      { label: 'Join Our Team', query: 'Looking for a job' }
     ];
   }
 
@@ -252,55 +280,63 @@ document.addEventListener('DOMContentLoaded', () => {
   /** Offline / API-down guidance so the widget still helps visitors */
   function localFallbackReply(query) {
     const q = query.toLowerCase().trim();
-    // Explicit phone / "how to call" — always both labeled numbers
+    // Explicit phone / "how to call" — labeled numbers
     if (/\b(phone|telephone|phones)\b/.test(q) ||
         /\b(contact|sales|hr)\s+numbers?\b/.test(q) ||
         /\bphone\s*numbers?\b/.test(q) ||
         /\bhow (can|do) i (call|reach|contact)\b/.test(q)) {
       return (
-        `You can reach us by phone: Sales ${SALES_PHONE} (business & projects), ` +
-        `HR ${HR_PHONE} (careers & recruitment). ` +
-        `Email ${CONTACT_EMAIL} or use Contact-us.html. (Live AI is temporarily unavailable.)`
+        "Contact Numbers:\n\n" +
+        "• Sales & Projects: +91 99413 33444 (sales@nohitatu.com)\n" +
+        "• HR & Recruitment: +91 73974 59131 (hrd@nohitatu.com)"
       );
     }
+    // HR & Career Queries — Clean professional text without emojis
     if (/\b(job|career|hiring|apply|vacanc|resume|hr|recruit)\b/.test(q)) {
       return (
-        'Open roles and applications are on our Careers page: Careers.html. ' +
-        `For HR: call ${HR_PHONE} or write to ${INFO_EMAIL}. ` +
-        `For sales/business: ${SALES_PHONE} or ${CONTACT_EMAIL}. ` +
-        '(Live AI is temporarily unavailable.)'
+        "We'd love to have you on our team! You can check out all our current open roles and apply on our Careers.html page.\n\n" +
+        "If you have any questions, feel free to call our HR team at +91 73974 59131 or email hrd@nohitatu.com. We'd love to connect!"
       );
     }
     if (/\b(portfolio|work|case stud)\b/.test(q)) {
       return (
-        'You can browse selected work on Portfolio.html. ' +
-        `For a tailored walkthrough, email ${CONTACT_EMAIL} or call Sales at ${SALES_PHONE}. ` +
-        '(Live AI is temporarily unavailable.)'
+        "We're proud of the digital products and custom software solutions we've built! You can explore our featured case studies and live projects on Portfolio.html.\n\n" +
+        "Request a tailored walkthrough:\n" +
+        "• Email: sales@nohitatu.com\n" +
+        "• Phone: +91 99413 33444"
       );
     }
     if (/\b(contact|sales|project|estimate|estimation|demo|talk|call|consult)\b/.test(q)) {
       return (
-        `Happy to connect you with the team. Email ${CONTACT_EMAIL}, call Sales at ${SALES_PHONE}, ` +
-        `HR at ${HR_PHONE}, or use Contact-us.html. (Live AI is temporarily unavailable.)`
+        "We'd love to help bring your ideas to life! Whether you need custom software development, an AI solution, or a dedicated developer team, we're ready to jump in.\n\n" +
+        "Reach our team directly:\n" +
+        "• Email: sales@nohitatu.com\n" +
+        "• Phone: +91 99413 33444\n" +
+        "• Form: Contact-us.html"
       );
     }
     if (/\b(health|rcm|billing|medical)\b/.test(q)) {
       return (
-        'Nohitatu supports healthcare RCM, medical billing, and related software/workflows. ' +
-        `For a consultation: ${CONTACT_EMAIL} or Sales at ${SALES_PHONE}. ` +
-        '(Live AI is temporarily unavailable.)'
+        "Nohitatu brings deep expertise in healthcare RCM, medical billing, and custom health-tech software.\n\n" +
+        "Schedule a consultation:\n" +
+        "• Email: sales@nohitatu.com\n" +
+        "• Phone: +91 99413 33444"
       );
     }
-    if (/\b(offshore|developer|software|saas|mobile|erp|ai)\b/.test(q)) {
+    if (/\b(global|developer|software|saas|mobile|erp|ai)\b/.test(q)) {
       return (
-        'Nohitatu offers custom & offshore software development, web & mobile apps, ERP, and AI solutions, ' +
-        `plus dedicated offshore teams. Contact ${CONTACT_EMAIL}, Sales at ${SALES_PHONE}, or use Contact-us.html. ` +
-        '(Live AI is temporarily unavailable.)'
+        "We build scalable custom software, web & mobile applications, AI solutions, and dedicated engineering teams to accelerate your business goals.\n\n" +
+        "Chat directly with our team:\n" +
+        "• Email: sales@nohitatu.com\n" +
+        "• Phone: +91 99413 33444\n" +
+        "• Contact: Contact-us.html"
       );
     }
     return (
-      'I can help with custom software, healthcare/RCM, offshore teams, careers, and contact options. ' +
-      `Please try again shortly, email ${CONTACT_EMAIL}, or call Sales ${SALES_PHONE} / HR ${HR_PHONE}.`
+      "I'm here to help with whatever you need! Whether you're building custom software, exploring healthcare solutions, or looking to join our team, we'd love to assist.\n\n" +
+      "Direct Contacts:\n" +
+      "• Sales: sales@nohitatu.com | +91 99413 33444\n" +
+      "• HR: hrd@nohitatu.com | +91 73974 59131"
     );
   }
 
@@ -422,6 +458,21 @@ document.addEventListener('DOMContentLoaded', () => {
         handleSendMessage();
       }
     });
+
+    // Dynamic cycling sample prompts for chat text box
+    const samplePrompts = [
+      "Ask about custom AI & software engineering...",
+      "How do dedicated developer teams work?",
+      "Need a free project quote or consultation?",
+      "Looking to join our engineering team?",
+      "Ask about healthcare tech & RCM solutions..."
+    ];
+    setInterval(() => {
+      if (!inputField.value.trim()) {
+        promptIndex = (promptIndex + 1) % samplePrompts.length;
+        inputField.placeholder = samplePrompts[promptIndex];
+      }
+    }, 3500);
   }
 
   bindChipEvents(messagesContainer);
