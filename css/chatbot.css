@@ -446,8 +446,8 @@
     40% { transform: scale(1.15); opacity: 1; }
 }
 
-/* Mobile */
-@media (max-width: 480px) {
+/* Mobile + tablets — keep FAB on-screen and panel within the viewport */
+@media (max-width: 991px) {
     .chatbot-container {
         bottom: 20px;
         right: 16px;
@@ -458,6 +458,7 @@
         height: min(500px, calc(100vh - 100px));
         max-height: calc(100vh - 100px);
         right: 0;
+        left: auto;
         bottom: 66px;
     }
 

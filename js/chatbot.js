@@ -3,10 +3,10 @@
    Calls FastAPI /api/chat; keeps branded panel + quick chips.
    Config: window.NOHI_CHAT_API or #chatbot-container[data-api]
    Default API: http://localhost:8010 (avoids common :8000 conflicts)
-   Cache: ?v=20260806phones
+   Cache: ?v=20260807openfix
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initNohiChatbot() {
   const toggleBtn = document.getElementById('chatbot-toggle');
   const chatWindow = document.getElementById('chatbot-window');
   const iconChat = document.getElementById('toggle-icon-chat');
@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('chatbot-container');
 
   if (!toggleBtn || !chatWindow || !messagesContainer) return;
+  if (toggleBtn.dataset.nohiBound === '1') return;
+  toggleBtn.dataset.nohiBound = '1';
 
   const CONTACT_EMAIL = 'sales@nohitatu.com';
   const HR_EMAIL = 'hrd@nohitatu.com';
@@ -467,6 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "Looking to join our engineering team?",
       "Ask about healthcare tech & RCM solutions..."
     ];
+    let promptIndex = 0;
     setInterval(() => {
       if (!inputField.value.trim()) {
         promptIndex = (promptIndex + 1) % samplePrompts.length;
@@ -476,4 +479,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   bindChipEvents(messagesContainer);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initNohiChatbot);
+} else {
+  initNohiChatbot();
+}
