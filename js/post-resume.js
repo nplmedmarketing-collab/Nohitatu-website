@@ -1151,10 +1151,39 @@
     );
   }
 
-  async function mount() {
+  async function resolveJob(jobId) {
+    if (!jobId) return null;
+    try {
+      var res = await fetch("/api/careers/" + encodeURIComponent(jobId), {
+        credentials: "same-origin",
+      });
+      if (res.ok) {
+        var data = await res.json();
+        if (data && data.career && data.career.detail) return data.career.detail;
+        if (data && data.career) {
+          return {
+            jobid: data.career.job_code,
+            post: data.career.title,
+            experience: data.career.experience,
+            location: data.career.location,
+            responsibilities: data.career.responsibilities,
+            musthave: data.career.requirements,
+            applyUrl: data.career.apply_url,
+            expireDate: data.career.expire_date,
+            validationType: data.career.validation_type,
+          };
+        }
+      }
+    } catch (_err) {
+      /* offline fallback */
+    }
     var catalog = window.NOHITATU_CAREER_DETAILS || {};
+    return catalog[jobId] || null;
+  }
+
+  async function mount() {
     var id = getId();
-    var job = id ? catalog[id] : null;
+    var job = await resolveJob(id);
 
     if (!job) {
       renderNotFound(id);

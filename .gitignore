@@ -6,6 +6,14 @@ dist/
 .env.*
 !.env.example
 
+# Portfolio admin runtime (secrets + writable store)
+data/admin-auth.json
+data/projects.db
+data/projects.db-*
+data/projects.json
+uploads/portfolio/
+server/node_modules/
+
 # Chatbot local env / venv (never commit keys)
 chatbot/.env
 chatbot/.venv/

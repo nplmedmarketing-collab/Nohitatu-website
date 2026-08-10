@@ -1,0 +1,25 @@
+{
+  "name": "nohitatu-portfolio-admin",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Internal super-admin for Nohitatu portfolio projects and career positions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node scripts/extract-seed.cjs",
+    "seed:careers": "node scripts/extract-careers-seed.cjs",
+    "postinstall": "node -e \"try{require('better-sqlite3');console.log('better-sqlite3 ok')}catch(e){console.warn('better-sqlite3 unavailable — JSON store will be used')}\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}

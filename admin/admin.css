@@ -1,0 +1,245 @@
+:root {
+  --bg: #0b1220;
+  --bg-elev: #121a2b;
+  --bg-soft: #18233a;
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #e8eefc;
+  --muted: #93a0b8;
+  --accent: #3d8bfd;
+  --accent-2: #6bb0ff;
+  --danger: #ff6b7a;
+  --ok: #4ade80;
+  --radius: 12px;
+  --font: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(900px 420px at 10% -10%, rgba(61, 139, 253, 0.18), transparent 55%),
+    radial-gradient(700px 380px at 100% 0%, rgba(90, 70, 180, 0.12), transparent 50%),
+    var(--bg);
+}
+
+.shell { max-width: 1100px; margin: 0 auto; padding: 24px 20px 64px; }
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: grid; place-items: center;
+  background: linear-gradient(145deg, #2f6fed, #1b3f8a);
+  font-weight: 700;
+}
+.brand strong { display: block; letter-spacing: 0.02em; }
+.muted, .lede { color: var(--muted); font-size: 0.92rem; }
+.top-actions { display: flex; align-items: center; gap: 10px; }
+.user-pill {
+  font-size: 0.85rem;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+.card, .table-wrap, .editor {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.login-card { max-width: 420px; margin: 48px auto 0; padding: 28px; }
+.admin-badge {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #cfe3ff;
+  border: 1px solid rgba(61, 139, 253, 0.45);
+  background: rgba(61, 139, 253, 0.12);
+  border-radius: 6px;
+}
+.login-card h1, .app-head h1 { margin: 0 0 6px; font-size: 1.55rem; font-weight: 650; }
+.login-card form { display: grid; gap: 14px; margin-top: 18px; }
+label { display: grid; gap: 6px; font-size: 0.85rem; color: var(--muted); }
+input, select, textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid rgba(61, 139, 253, 0.35);
+  border-color: rgba(61, 139, 253, 0.55);
+}
+textarea { resize: vertical; min-height: 96px; }
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+.btn:hover { border-color: rgba(255,255,255,0.18); }
+.btn.primary {
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  border-color: transparent;
+  color: #04101f;
+  font-weight: 650;
+}
+.btn.ghost { background: transparent; }
+.btn.danger { color: var(--danger); border-color: rgba(255, 107, 122, 0.35); }
+.btn.small { padding: 6px 10px; font-size: 0.82rem; }
+
+.form-error {
+  color: var(--danger);
+  background: rgba(255, 107, 122, 0.1);
+  border: 1px solid rgba(255, 107, 122, 0.25);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.app-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.table-wrap { overflow: auto; }
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.projects-table th,
+.projects-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.projects-table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.projects-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+.v-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: var(--accent-2);
+  background: rgba(61, 139, 253, 0.12);
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.editor {
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: var(--bg-elev);
+  border-radius: 14px;
+  width: min(720px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  padding: 0;
+  overflow: auto;
+}
+.editor::backdrop { background: rgba(4, 8, 16, 0.72); }
+.editor-form { padding: 18px 20px 20px; }
+.editor-head, .editor-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.editor-head h2 { margin: 0; font-size: 1.15rem; }
+.editor-foot { margin-top: 16px; justify-content: flex-end; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.span-2 { grid-column: 1 / -1; }
+
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 100%;
+}
+.admin-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.admin-tab:hover { color: var(--text); }
+.admin-tab.is-active {
+  color: #04101f;
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+}
+
+.status-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  padding: 3px 8px;
+  text-transform: capitalize;
+}
+.status-open {
+  color: var(--ok);
+  background: rgba(74, 222, 128, 0.12);
+}
+.status-closed {
+  color: var(--muted);
+  background: rgba(147, 160, 184, 0.14);
+}
+
+.editor--wide {
+  width: min(880px, calc(100vw - 32px));
+}
+
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+  .span-2 { grid-column: auto; }
+  .app-head { flex-direction: column; align-items: stretch; }
+  .admin-tabs { width: 100%; }
+  .admin-tab { flex: 1; text-align: center; }
+}

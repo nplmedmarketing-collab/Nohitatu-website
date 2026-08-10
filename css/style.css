@@ -1211,6 +1211,18 @@ header.logo-navbar #navigation li.nav-item > a:hover {
   }
 }
 
+/* Interactive Constellation Particle Canvas */
+.hero-particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
 .hero-spline-bg {
   position: absolute;
   top: 0;

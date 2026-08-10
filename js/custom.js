@@ -17,8 +17,9 @@
 })();
 
 $(document).ready(function() {
-// header jquery
-  var header = $("header");
+// header jquery — only the site chrome; never content <header>s (e.g. section heads)
+  var header = $("header.logo-navbar");
+  if (!header.length) header = $("body > header").first();
   var owl = $('.testimonial-slider');
   owl.owlCarousel({
     margin: 10,
@@ -80,7 +81,7 @@ $(document).ready(function() {
 // sidemenu open
     $(".nav-menu").click(function(){
         $(".nav-menu").toggleClass("open");
-        $("header").toggleClass("open-menu");
+        header.toggleClass("open-menu");
         $(".full-screen-menu").toggleClass("show");      
         $(this).attr("aria-expanded", $(this).hasClass("open") ? "true" : "false");
         var scroll = $(window).scrollTop();
@@ -116,7 +117,7 @@ $(document).ready(function() {
     $(".nav-menu-close").click(function(){
         $(".contact-form-popup").toggleClass("show"); 
         $("body").toggleClass("fixed"); 
-        $("header").toggleClass("show-menu");
+        header.toggleClass("show-menu");
        	updateHeader();
     });
     
@@ -145,7 +146,8 @@ $(document).ready(function() {
 
 $(document).ready(function() { 
 	var scroll = $(window).scrollTop();
-	var header = $("header");
+	var header = $("header.logo-navbar");
+	if (!header.length) header = $("body > header").first();
 	if (scroll >= 80) {			
 		header.removeClass("blnk-header").addClass("white-header");
 	}

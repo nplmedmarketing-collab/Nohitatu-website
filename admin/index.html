@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-nh-admin-shell="1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <!-- Marker for ops/curl: correct host must include this title, not the marketing homepage. -->
+  <title>Nohitatu Admin Login</title>
+  <meta name="nh-admin" content="login-portal" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body data-nh-admin-portal="login" class="nh-admin-body">
+  <!-- NH-ADMIN-PORTAL: if you see the marketing homepage instead, port 5173 is Vite/other — run: cd server && npm start -->
+  <div class="shell" id="nh-admin-root">
+    <header class="top">
+      <div class="brand">
+        <span class="brand-mark">N</span>
+        <div>
+          <strong>Nohitatu Admin Portal</strong>
+          <span class="muted">Internal only · Portfolio &amp; Careers</span>
+        </div>
+      </div>
+      <div class="top-actions" id="top-actions" hidden>
+        <span class="user-pill" id="user-label"></span>
+        <button type="button" class="btn ghost" id="btn-logout">Log out</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="view-login" class="card login-card" data-nh-view="login">
+        <p class="admin-badge" aria-hidden="true">ADMIN PORTAL</p>
+        <h1>Admin sign in</h1>
+        <p class="lede">Username and password required. Super-admin access for portfolio projects and career positions. No public signup.</p>
+        <form id="form-login" autocomplete="on">
+          <label>
+            <span>Username</span>
+            <input name="username" type="text" required autocomplete="username" />
+          </label>
+          <label>
+            <span>Password</span>
+            <input name="password" type="password" required autocomplete="current-password" />
+          </label>
+          <p class="form-error" id="login-error" hidden></p>
+          <button type="submit" class="btn primary">Log in</button>
+        </form>
+      </section>
+
+      <section id="view-app" hidden>
+        <nav class="admin-tabs" role="tablist" aria-label="Admin sections">
+          <button type="button" class="admin-tab is-active" role="tab" aria-selected="true" data-tab="projects" id="tab-projects">Projects</button>
+          <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="careers" id="tab-careers">Careers</button>
+        </nav>
+
+        <div id="panel-projects" class="tab-panel" role="tabpanel" aria-labelledby="tab-projects">
+          <div class="app-head">
+            <div>
+              <h1>Projects</h1>
+              <p class="lede" id="store-meta">Loading…</p>
+            </div>
+            <button type="button" class="btn primary" id="btn-new">Add project</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="projects-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Vertical</th>
+                  <th>Platform</th>
+                  <th>Client</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="project-rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="panel-careers" class="tab-panel" role="tabpanel" aria-labelledby="tab-careers" hidden>
+          <div class="app-head">
+            <div>
+              <h1>Careers</h1>
+              <p class="lede" id="careers-meta">Loading…</p>
+            </div>
+            <button type="button" class="btn primary" id="btn-new-career">Add position</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="projects-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Code</th>
+                  <th>Title</th>
+                  <th>Location</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="career-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <dialog id="editor" class="editor">
+        <form method="dialog" id="form-editor" class="editor-form">
+          <header class="editor-head">
+            <h2 id="editor-title">Add project</h2>
+            <button type="button" class="btn ghost" id="btn-cancel" value="cancel">Close</button>
+          </header>
+          <input type="hidden" name="id" id="field-id" />
+          <div class="grid">
+            <label class="span-2">
+              <span>Title</span>
+              <input name="title" id="field-title" type="text" required maxlength="200" />
+            </label>
+            <label>
+              <span>Vertical</span>
+              <select name="vertical" id="field-vertical" required></select>
+            </label>
+            <label>
+              <span>Platform</span>
+              <select name="platform" id="field-platform">
+                <option value="web">Web</option>
+                <option value="mobile">Mobile</option>
+                <option value="desktop">Desktop</option>
+                <option value="web desktop">Web · Desktop</option>
+                <option value="mobile desktop">Mobile · Desktop</option>
+                <option value="web mobile">Web · Mobile</option>
+                <option value="web mobile desktop">Web · Mobile · Desktop</option>
+              </select>
+            </label>
+            <label>
+              <span>Client</span>
+              <input name="client" id="field-client" type="text" maxlength="200" placeholder="e.g. USA or leave blank" />
+            </label>
+            <label>
+              <span>Order</span>
+              <input name="order" id="field-order" type="number" min="0" step="1" />
+            </label>
+            <label>
+              <span>Frame ID</span>
+              <input name="frame_id" id="field-frame" type="text" maxlength="16" placeholder="Auto (F30…)" />
+            </label>
+            <label class="span-2">
+              <span>Description</span>
+              <textarea name="description" id="field-desc" rows="4" maxlength="4000"></textarea>
+            </label>
+            <label class="span-2">
+              <span>Stage image path</span>
+              <input name="image" id="field-image" type="text" maxlength="500" placeholder="images/portfolio/example.png" />
+            </label>
+            <label>
+              <span>Or upload stage image</span>
+              <input name="image_file" id="field-image-file" type="file" accept="image/*" />
+            </label>
+            <label>
+              <span>Thumb path (optional)</span>
+              <input name="thumb" id="field-thumb" type="text" maxlength="500" placeholder="defaults to stage image" />
+            </label>
+            <label>
+              <span>Or upload thumb</span>
+              <input name="thumb_file" id="field-thumb-file" type="file" accept="image/*" />
+            </label>
+            <label class="span-2">
+              <span>Alt text</span>
+              <input name="alt" id="field-alt" type="text" maxlength="200" />
+            </label>
+            <label class="span-2">
+              <span>CTA link</span>
+              <input name="cta" id="field-cta" type="text" maxlength="200" value="Contact-us.html" />
+            </label>
+          </div>
+          <p class="form-error" id="editor-error" hidden></p>
+          <footer class="editor-foot">
+            <button type="submit" class="btn primary" id="btn-save">Save</button>
+          </footer>
+        </form>
+      </dialog>
+
+      <dialog id="career-editor" class="editor editor--wide">
+        <form method="dialog" id="form-career-editor" class="editor-form">
+          <header class="editor-head">
+            <h2 id="career-editor-title">Add position</h2>
+            <button type="button" class="btn ghost" id="btn-career-cancel" value="cancel">Close</button>
+          </header>
+          <input type="hidden" name="id" id="cf-id" />
+          <div class="grid">
+            <label class="span-2">
+              <span>Title / role</span>
+              <input name="title" id="cf-title" type="text" required maxlength="200" />
+            </label>
+            <label>
+              <span>Job code</span>
+              <input name="job_code" id="cf-job-code" type="text" required maxlength="32" placeholder="e.g. 570" />
+            </label>
+            <label>
+              <span>Sort order</span>
+              <input name="sort_order" id="cf-sort" type="number" min="0" step="1" />
+            </label>
+            <label>
+              <span>Department</span>
+              <input name="department" id="cf-department" type="text" maxlength="120" placeholder="optional" />
+            </label>
+            <label>
+              <span>Location</span>
+              <input name="location" id="cf-location" type="text" maxlength="120" placeholder="Chennai" />
+            </label>
+            <label>
+              <span>Experience</span>
+              <input name="experience" id="cf-experience" type="text" maxlength="80" placeholder="e.g. 1-2 Years" />
+            </label>
+            <label>
+              <span>Employment type</span>
+              <select name="employment_type" id="cf-type">
+                <option value="full-time">Full-time</option>
+                <option value="part-time">Part-time</option>
+                <option value="contract">Contract</option>
+                <option value="remote">Remote</option>
+                <option value="internship">Internship</option>
+              </select>
+            </label>
+            <label>
+              <span>Status</span>
+              <select name="status" id="cf-status">
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+              </select>
+            </label>
+            <label>
+              <span>Shift timings</span>
+              <input name="shift_timings" id="cf-shift" type="text" maxlength="120" placeholder="optional" />
+            </label>
+            <label>
+              <span>Validation type</span>
+              <select name="validation_type" id="cf-validation">
+                <option value="J">J (job)</option>
+                <option value="I">I (internship)</option>
+              </select>
+            </label>
+            <label class="span-2">
+              <span>Short description</span>
+              <textarea name="description" id="cf-description" rows="2" maxlength="8000" placeholder="optional blurb"></textarea>
+            </label>
+            <label class="span-2">
+              <span>Responsibilities (HTML or plain; use || or newlines for lists)</span>
+              <textarea name="responsibilities" id="cf-responsibilities" rows="6"></textarea>
+            </label>
+            <label class="span-2">
+              <span>Requirements / must-have (HTML or plain)</span>
+              <textarea name="requirements" id="cf-requirements" rows="5"></textarea>
+            </label>
+            <label>
+              <span>Apply URL</span>
+              <input name="apply_url" id="cf-apply" type="text" maxlength="300" placeholder="PostResume.html?id=…" />
+            </label>
+            <label>
+              <span>Expire date</span>
+              <input name="expire_date" id="cf-expire" type="text" maxlength="40" placeholder="2026-08-31T00:00:00" />
+            </label>
+          </div>
+          <p class="form-error" id="career-editor-error" hidden></p>
+          <footer class="editor-foot">
+            <button type="submit" class="btn primary" id="btn-career-save">Save</button>
+          </footer>
+        </form>
+      </dialog>
+    </main>
+  </div>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

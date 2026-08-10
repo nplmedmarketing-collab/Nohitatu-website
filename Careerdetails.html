@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css?v=20260807noflicker10" />
+    <link rel="stylesheet" href="css/style.css?v=20260810particles11" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
     <link rel="stylesheet" href="css/chatbot.css?v=20260807noflicker" />
@@ -984,12 +984,40 @@
             }
 
             const id = getId();
-            const job = id ? catalog[id] : null;
-            if (!job) {
-                renderNotFound(id);
-            } else {
-                renderJob(job);
+
+            async function resolveJob(jobId) {
+                if (!jobId) return null;
+                try {
+                    const res = await fetch("/api/careers/" + encodeURIComponent(jobId), {
+                        credentials: "same-origin",
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && data.career && data.career.detail) return data.career.detail;
+                        if (data && data.career) {
+                            return {
+                                jobid: data.career.job_code,
+                                post: data.career.title,
+                                experience: data.career.experience,
+                                location: data.career.location,
+                                responsibilities: data.career.responsibilities,
+                                musthave: data.career.requirements,
+                                applyUrl: data.career.apply_url,
+                                expireDate: data.career.expire_date,
+                                validationType: data.career.validation_type,
+                            };
+                        }
+                    }
+                } catch (_err) {
+                    /* offline — use static catalog */
+                }
+                return catalog[jobId] || null;
             }
+
+            resolveJob(id).then((job) => {
+                if (!job) renderNotFound(id);
+                else renderJob(job);
+            });
         })();
     </script>
 
