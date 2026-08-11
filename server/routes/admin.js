@@ -5,13 +5,16 @@ const crypto = require("crypto");
 const multer = require("multer");
 const { VERTICALS, platformMeta, EMPLOYMENT_TYPES, CAREER_STATUSES } = require("../db");
 
-const ALLOWED_IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
+const ALLOWED_IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp"]);
 const ALLOWED_MIME = new Set([
   "image/jpeg",
   "image/png",
   "image/webp",
   "image/gif",
   "image/svg+xml",
+  "image/pjpeg",
+  "image/x-png",
+  "application/octet-stream",
 ]);
 
 function safeBasename(original) {
@@ -38,13 +41,14 @@ function createUpload(workspaceRoot) {
 
   return multer({
     storage,
-    limits: { fileSize: 8 * 1024 * 1024, files: 2 },
+    limits: { fileSize: 16 * 1024 * 1024, files: 4 },
     fileFilter: (_req, file, cb) => {
       const ext = path.extname(file.originalname || "").toLowerCase();
-      if (!ALLOWED_IMAGE_EXT.has(ext) && !ALLOWED_MIME.has(file.mimetype)) {
-        return cb(new Error("Only image uploads are allowed"));
+      const mime = (file.mimetype || "").toLowerCase();
+      if (ALLOWED_IMAGE_EXT.has(ext) || ALLOWED_MIME.has(mime) || mime.startsWith("image/")) {
+        return cb(null, true);
       }
-      return cb(null, true);
+      return cb(new Error("Only image uploads (.png, .jpg, .webp, .gif, .svg) are allowed"));
     },
   });
 }
@@ -57,10 +61,14 @@ function bodyToProject(body, files) {
   const meta = platformMeta(body.platform || "web");
   const imageFromFile =
     files &&
-    ((files.imageFile && files.imageFile[0]) || (files.image && files.image[0]));
+    ((files.imageFile && files.imageFile[0]) ||
+      (files.image_file && files.image_file[0]) ||
+      (files.image && files.image[0]));
   const thumbFromFile =
     files &&
-    ((files.thumbFile && files.thumbFile[0]) || (files.thumb && files.thumb[0]));
+    ((files.thumbFile && files.thumbFile[0]) ||
+      (files.thumb_file && files.thumb_file[0]) ||
+      (files.thumb && files.thumb[0]));
   const image = imageFromFile
     ? publicPathForUpload(imageFromFile.filename)
     : String(body.image || "").trim();
@@ -212,6 +220,10 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
   const dualFields = upload.fields([
     { name: "imageFile", maxCount: 1 },
     { name: "thumbFile", maxCount: 1 },
+    { name: "image_file", maxCount: 1 },
+    { name: "thumb_file", maxCount: 1 },
+    { name: "image", maxCount: 1 },
+    { name: "thumb", maxCount: 1 },
   ]);
 
   router.post(
@@ -332,6 +344,11 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
     const ok = store.removeCareer(req.params.id);
     if (!ok) return res.status(404).json({ error: "Not found" });
     return res.json({ ok: true });
+  });
+
+  router.get("/demo-requests", auth.requireAuth, (_req, res) => {
+    const requests = typeof store.listDemoRequests === "function" ? store.listDemoRequests() : [];
+    return res.json({ requests, count: requests.length });
   });
 
   return router;

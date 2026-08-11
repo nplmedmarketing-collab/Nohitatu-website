@@ -18,6 +18,7 @@
   };
 
   const els = {
+    topHeader: document.getElementById("top-header"),
     loginView: document.getElementById("view-login"),
     appView: document.getElementById("view-app"),
     topActions: document.getElementById("top-actions"),
@@ -77,6 +78,8 @@
     if (opts.body && !(opts.body instanceof FormData)) {
       opts.headers["Content-Type"] = "application/json";
       opts.body = JSON.stringify(opts.body);
+    } else if (opts.body && opts.body instanceof FormData) {
+      delete opts.headers["Content-Type"];
     }
     if (opts.method && opts.method !== "GET" && opts.method !== "HEAD") {
       opts.headers["X-CSRF-Token"] = csrfToken;
@@ -90,6 +93,12 @@
       data = { error: text || "Invalid response" };
     }
     if (!res.ok) {
+      if (res.status === 401 && !isLoginRoute()) {
+        const err = new Error("Session expired. Redirecting to login…");
+        err.status = 401;
+        setTimeout(() => goTo(LOGIN_PATH), 1200);
+        throw err;
+      }
       const err = new Error((data && data.error) || res.statusText || "Request failed");
       err.status = res.status;
       err.data = data;
@@ -107,10 +116,12 @@
     if (!el) return;
     if (!msg) {
       el.hidden = true;
+      el.style.display = "none";
       el.textContent = "";
       return;
     }
     el.hidden = false;
+    el.style.display = "flex";
     el.textContent = msg;
   }
 
@@ -122,14 +133,49 @@
 
   function setAuthed(user) {
     const on = Boolean(user);
+    if (els.topHeader) els.topHeader.hidden = !on;
     els.loginView.hidden = on;
     els.appView.hidden = !on;
     els.topActions.hidden = !on;
     els.userLabel.textContent = on ? user : "";
   }
 
+  async function fetchDemoRequests() {
+    try {
+      const res = await fetch("/api/admin/demo-requests", { headers: { Accept: "application/json" } });
+      if (!res.ok) return;
+      const data = await res.json();
+      const rows = data.requests || [];
+      const tbody = document.getElementById("demo-rows");
+      const meta = document.getElementById("demos-meta");
+      if (meta) meta.textContent = `${rows.length} total demo requests received`;
+      if (!tbody) return;
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No demo requests received yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = rows
+        .map(
+          (r) => `
+          <tr>
+            <td><code>#${r.id}</code></td>
+            <td><strong>${escapeHtml(r.project_title)}</strong> <span style="font-size:11px; opacity:0.7;">(${escapeHtml(r.project_badge || "")})</span></td>
+            <td>${escapeHtml(r.name)}</td>
+            <td><a href="mailto:${escapeHtml(r.email)}" style="color:#726cf4;">${escapeHtml(r.email)}</a></td>
+            <td>${escapeHtml(r.phone || "—")}</td>
+            <td style="max-width:240px; font-size:12px; color:rgba(255,255,255,0.7);">${escapeHtml(r.notes || "—")}</td>
+            <td style="font-size:12px; white-space:nowrap;">${new Date(r.created_at).toLocaleDateString()} ${new Date(r.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+          </tr>
+        `
+        )
+        .join("");
+    } catch (err) {
+      console.warn("Failed to fetch demo requests:", err);
+    }
+  }
+
   function setTab(tab) {
-    activeTab = tab === "careers" ? "careers" : "projects";
+    activeTab = tab;
     document.querySelectorAll(".admin-tab").forEach((btn) => {
       const isActive = btn.getAttribute("data-tab") === activeTab;
       btn.classList.toggle("is-active", isActive);
@@ -137,6 +183,9 @@
     });
     if (els.panelProjects) els.panelProjects.hidden = activeTab !== "projects";
     if (els.panelCareers) els.panelCareers.hidden = activeTab !== "careers";
+    const panelDemos = document.getElementById("panel-demos");
+    if (panelDemos) panelDemos.hidden = activeTab !== "demos";
+    if (activeTab === "demos") fetchDemoRequests();
   }
 
   function openEditor(project) {
@@ -158,13 +207,98 @@
     document.getElementById("field-cta").value = isEdit ? project.cta || "Contact-us.html" : "Contact-us.html";
     document.getElementById("field-image-file").value = "";
     document.getElementById("field-thumb-file").value = "";
+    
+    // Clear / render initial previews
+    const pMain = document.getElementById("preview-main");
+    const pThumb = document.getElementById("preview-thumb");
+    if (pMain) pMain.innerHTML = project && project.image ? `<img src="../${project.image}" style="max-height: 70px; border-radius: 8px; margin-top: 8px;" />` : "";
+    if (pThumb) pThumb.innerHTML = project && project.thumb ? `<img src="../${project.thumb}" style="max-height: 70px; border-radius: 8px; margin-top: 8px;" />` : "";
+
     if (typeof els.editor.showModal === "function") els.editor.showModal();
     else els.editor.setAttribute("open", "");
   }
 
+  function setupDragAndDrop() {
+    const setupBox = (zoneId, fileInputId, previewId) => {
+      const zone = document.getElementById(zoneId);
+      const fileInput = document.getElementById(fileInputId);
+      const preview = document.getElementById(previewId);
+      if (!zone || !fileInput) return;
+
+      const showFilePreview = (file) => {
+        if (!file || !preview) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-height: 70px; border-radius: 8px; margin-top: 8px;" />`;
+        };
+        reader.readAsDataURL(file);
+      };
+
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files && fileInput.files[0]) {
+          showFilePreview(fileInput.files[0]);
+        }
+      });
+
+      zone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        zone.classList.add("drag-over");
+      });
+
+      zone.addEventListener("dragleave", () => {
+        zone.classList.remove("drag-over");
+      });
+
+      zone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        zone.classList.remove("drag-over");
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          fileInput.files = e.dataTransfer.files;
+          showFilePreview(e.dataTransfer.files[0]);
+        }
+      });
+    };
+
+    setupBox("drop-zone-main", "field-image-file", "preview-main");
+    setupBox("drop-zone-thumb", "field-thumb-file", "preview-thumb");
+  }
+
+  setupDragAndDrop();
+
   function closeEditor() {
     if (typeof els.editor.close === "function") els.editor.close();
     else els.editor.removeAttribute("open");
+  }
+
+  function cleanHtmlToText(raw) {
+    if (!raw) return "";
+    let str = String(raw).trim();
+    if (!/<[a-z][\s\S]*>/i.test(str)) {
+      if (str.indexOf("||") >= 0) {
+        return str.split("||").map((s) => s.trim()).filter(Boolean).join("\n");
+      }
+      return str;
+    }
+    try {
+      const doc = new DOMParser().parseFromString(str, "text/html");
+      const items = [];
+      const blockEls = doc.querySelectorAll("li, p, div");
+      if (blockEls.length > 0) {
+        blockEls.forEach((el) => {
+          if (el.tagName === "DIV" && el.querySelector("li, p")) return;
+          const txt = (el.textContent || "").replace(/\u00a0/g, " ").trim();
+          if (txt && !items.includes(txt)) {
+            items.push(txt);
+          }
+        });
+      }
+      if (items.length > 0) {
+        return items.join("\n");
+      }
+      return (doc.body.textContent || "").replace(/\u00a0/g, " ").trim();
+    } catch {
+      return str.replace(/<[^>]+>/g, "").trim();
+    }
   }
 
   function openCareerEditor(career) {
@@ -184,8 +318,8 @@
     document.getElementById("cf-shift").value = isEdit ? career.shift_timings || "" : "";
     document.getElementById("cf-validation").value = isEdit ? career.validation_type || "J" : "J";
     document.getElementById("cf-description").value = isEdit ? career.description || "" : "";
-    document.getElementById("cf-responsibilities").value = isEdit ? career.responsibilities || "" : "";
-    document.getElementById("cf-requirements").value = isEdit ? career.requirements || "" : "";
+    document.getElementById("cf-responsibilities").value = isEdit ? cleanHtmlToText(career.responsibilities) : "";
+    document.getElementById("cf-requirements").value = isEdit ? cleanHtmlToText(career.requirements) : "";
     document.getElementById("cf-apply").value = isEdit ? career.apply_url || "" : "";
     document.getElementById("cf-expire").value = isEdit ? career.expire_date || "" : "";
     if (typeof els.careerEditor.showModal === "function") els.careerEditor.showModal();
@@ -416,8 +550,16 @@
     if (frame) fd.set("frame_id", frame);
     const imgFile = document.getElementById("field-image-file").files[0];
     const thumbFile = document.getElementById("field-thumb-file").files[0];
-    if (imgFile) fd.set("imageFile", imgFile);
-    if (thumbFile) fd.set("thumbFile", thumbFile);
+    if (imgFile) {
+      fd.set("imageFile", imgFile);
+      fd.set("image_file", imgFile);
+      if (!fd.get("image")) fd.set("image", "uploads/portfolio/" + imgFile.name);
+    }
+    if (thumbFile) {
+      fd.set("thumbFile", thumbFile);
+      fd.set("thumb_file", thumbFile);
+      if (!fd.get("thumb")) fd.set("thumb", "uploads/portfolio/" + thumbFile.name);
+    }
 
     try {
       if (id) {

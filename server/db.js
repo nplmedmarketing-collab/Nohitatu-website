@@ -405,6 +405,19 @@ class SqliteStore {
       );
       CREATE INDEX IF NOT EXISTS idx_careers_order ON careers(sort_order);
       CREATE INDEX IF NOT EXISTS idx_careers_status ON careers(status);
+
+      CREATE TABLE IF NOT EXISTS demo_requests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_title TEXT NOT NULL,
+        project_badge TEXT NOT NULL DEFAULT '',
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL DEFAULT '',
+        notes TEXT NOT NULL DEFAULT '',
+        status TEXT NOT NULL DEFAULT 'pending',
+        created_at TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS idx_demo_requests_created ON demo_requests(created_at);
     `);
     const count = this.db.prepare("SELECT COUNT(*) AS c FROM projects").get().c;
     if (count === 0) {
@@ -687,6 +700,27 @@ class SqliteStore {
   removeCareer(id) {
     const info = this.db.prepare("DELETE FROM careers WHERE id = ?").run(Number(id));
     return info.changes > 0;
+  }
+
+  createDemoRequest(input) {
+    const ts = nowIso();
+    const info = this.db.prepare(`
+      INSERT INTO demo_requests (project_title, project_badge, name, email, phone, notes, status, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)
+    `).run(
+      input.project_title || "General",
+      input.project_badge || "",
+      input.name || "",
+      input.email || "",
+      input.phone || "",
+      input.notes || "",
+      ts
+    );
+    return { id: info.lastInsertRowid, ...input, status: "pending", created_at: ts };
+  }
+
+  listDemoRequests() {
+    return this.db.prepare("SELECT * FROM demo_requests ORDER BY id DESC").all();
   }
 }
 

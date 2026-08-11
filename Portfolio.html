@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio | Nohitatu</title>
+    <title>Portfolio & Case Studies | Nohitatu Technology</title>
     <meta name="description" content="Explore Nohitatu's portfolio of web, mobile, and desktop products &mdash; healthcare, CRM, fintech, sports, and more." />
+    <!-- OpenGraph & SEO Meta -->
+    <meta property="og:title" content="Portfolio & Case Studies | Nohitatu Technology" />
+    <meta property="og:description" content="Explore Nohitatu's portfolio of web, mobile, and desktop products across Healthcare, Retail, Fintech, CRM, and Sports Management." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nohitatu.com/Portfolio.html" />
+    <meta property="og:image" content="https://nohitatu.com/images/portfolio/Manamakkal.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Portfolio & Case Studies | Nohitatu Technology" />
+    <meta name="twitter:description" content="Explore 29+ products shipped across Healthcare, Retail, Fintech, and CRM." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PortfolioPage",
+      "name": "Nohitatu Technology Portfolio",
+      "description": "29+ products shipped across Healthcare, Retail, Fintech, CRM, and Sports Management.",
+      "url": "https://nohitatu.com/Portfolio.html",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Nohitatu Technology",
+        "logo": "https://nohitatu.com/images/logo.png"
+      }
+    }
+    </script>
     <link rel="shortcut icon" href="images/favicon/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -533,7 +556,7 @@
                 <div class="pf-shell pf-hero__copy">
                     <p class="pf-hero__kicker">Nohitatu Portfolio &middot; Web &middot; Mobile &middot; Desktop</p>
                     <h1>Products that turn complexity into <em>clarity.</em></h1>
-                    <p class="pf-hero__note">Twenty-nine products across healthcare, CRM, fintech, sport, and operations &mdash; open the atlas to filter by industry vertical and study each shipment on the stage.</p>
+                    <p class="pf-hero__note"><span data-atlas-total-count>29</span> products across healthcare, CRM, fintech, sport, and operations &mdash; open the atlas to filter by industry vertical and study each shipment on the stage.</p>
                     <a class="pf-hero__cta" href="#atlas">Browse completed projects</a>
                 </div>
             </section>
@@ -556,26 +579,29 @@
                         <p class="atlas__kicker">
                             <span>Shipment atlas</span>
                             <span class="atlas__kicker-rule" aria-hidden="true"></span>
-                            <span>29 products shipped</span>
+                            <span data-atlas-total-kicker>29 products shipped</span>
                             <span class="atlas__kicker-rule" aria-hidden="true"></span>
                             <span>By industry vertical</span>
                         </p>
                         <div class="atlas__title-row">
                             <div>
-                                <h2 id="atlas-heading">Completed projects</h2>
-                                <p class="atlas__lede">Twenty-nine products we have built and shipped. Filter by vertical.</p>
+                                <h2 id="atlas-heading">Completed projects <span class="atlas__tally" data-atlas-tally aria-live="polite">7 / 7</span></h2>
+                                <p class="atlas__lede"><span data-atlas-total-count>29</span> products we have built and shipped. Filter by vertical.</p>
                             </div>
                             <div class="atlas__controls">
+                                <div class="atlas__search">
+                                    <span class="search-icon" aria-hidden="true">🔍</span>
+                                    <input type="search" id="atlas-search" placeholder="Search by tech, name, or keyword..." aria-label="Search projects">
+                                </div>
                                 <div class="atlas__filters" role="tablist" aria-label="Filter projects by industry vertical">
-                                    <button type="button" class="is-active" data-filter="retail" role="tab" aria-selected="true">Retail</button>
+                                    <button type="button" class="is-active" data-filter="health-care" role="tab" aria-selected="true">Health care</button>
+                                    <button type="button" data-filter="retail" role="tab" aria-selected="false">Retail</button>
                                     <button type="button" data-filter="supply-chain" role="tab" aria-selected="false">Supply chain</button>
                                     <button type="button" data-filter="sports-management" role="tab" aria-selected="false">Sports management</button>
-                                    <button type="button" data-filter="health-care" role="tab" aria-selected="false">Health care</button>
                                     <button type="button" data-filter="facility-management" role="tab" aria-selected="false">Facility management</button>
                                     <button type="button" data-filter="human-resource-management" role="tab" aria-selected="false">Human Resource Management</button>
                                     <button type="button" data-filter="project-management" role="tab" aria-selected="false">Project Management</button>
                                 </div>
-                                <span class="atlas__tally" data-atlas-tally aria-live="polite">7 / 7</span>
                             </div>
                         </div>
                     </div>
@@ -603,6 +629,11 @@
                             </p>
                             <h3 data-atlas-title>Ecommerce App</h3>
                             <p class="atlas__client" data-atlas-client>Client &mdash; India</p>
+                            <div class="atlas__tags" data-atlas-tags>
+                                <span class="tech-tag">Next.js</span>
+                                <span class="tech-tag">Stripe</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                            </div>
                             <p class="atlas__desc" data-atlas-desc>An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the order's status. Free shipping &amp; cash on delivery.</p>
                             <div class="atlas__actions">
                                 <a class="atlas__cta" data-atlas-cta href="Contact-us.html" aria-label="Request a demo of Ecommerce App">
@@ -619,7 +650,7 @@
 
                     <div class="atlas__rail-wrap">
                         <p class="atlas__rail-label">
-                            <span>Browse the strip</span>
+                            <span>Project Gallery</span>
                             <span aria-hidden="true"></span>
                         </p>
                         <div class="atlas__rail">
@@ -996,7 +1027,7 @@
                                 </a>
                             </div>
                     <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
-                    <div class="footer-contact-meta"><a href="skype:sales.nohitatu">Skype: sales.nohitatu</a><a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a></div>
+                    <div class="footer-contact-meta"><a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a></div>
                 </div>
             </div></div></div>
             <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
@@ -1125,6 +1156,52 @@
             </div>
         </button>
     </div>
+
+    <!-- 1-Click Interactive Demo Request Drawer -->
+    <div class="demo-drawer-backdrop" id="demo-drawer-backdrop" hidden></div>
+    <aside class="demo-drawer" id="demo-drawer" aria-labelledby="demo-drawer-title" hidden>
+        <div class="demo-drawer__header">
+            <div>
+                <span class="demo-drawer__eyebrow">Interactive Live Demo</span>
+                <h3 id="demo-drawer-title">Request Project Demo</h3>
+            </div>
+            <button type="button" class="demo-drawer__close" id="btn-close-demo-drawer" aria-label="Close demo request drawer">&times;</button>
+        </div>
+        <form class="demo-drawer__form" id="demo-request-form">
+            <div class="demo-drawer__target">
+                <span class="target-label">Selected Project:</span>
+                <strong id="demo-project-name">Ecommerce App</strong>
+                <span class="target-badge" id="demo-project-badge">F04 · Web</span>
+            </div>
+
+            <div class="demo-drawer__field">
+                <label for="demo-user-name">Your Full Name *</label>
+                <input type="text" id="demo-user-name" name="name" required placeholder="e.g. Alex Vance" />
+            </div>
+
+            <div class="demo-drawer__field">
+                <label for="demo-user-email">Work Email Address *</label>
+                <input type="email" id="demo-user-email" name="email" required placeholder="e.g. alex@company.com" />
+            </div>
+
+            <div class="demo-drawer__field">
+                <label for="demo-user-phone">Phone / WhatsApp Number</label>
+                <input type="tel" id="demo-user-phone" name="phone" placeholder="e.g. +1 (555) 019-2834" />
+            </div>
+
+            <div class="demo-drawer__field">
+                <label for="demo-user-notes">Project Requirements / Notes (Optional)</label>
+                <textarea id="demo-user-notes" name="notes" rows="3" placeholder="Tell us about your timeline, tech stack, or specific features you'd like to evaluate…"></textarea>
+            </div>
+
+            <div class="demo-drawer__status" id="demo-drawer-status" hidden></div>
+
+            <button type="submit" class="demo-drawer__submit">
+                <span>Submit Live Demo Request</span>
+                <span aria-hidden="true">&rarr;</span>
+            </button>
+        </form>
+    </aside>
 
     <script src="js/portfolio-atlas.js?v=20260810admin1"></script>
     <script src="js/chatbot.js?v=20260807noflicker"></script>

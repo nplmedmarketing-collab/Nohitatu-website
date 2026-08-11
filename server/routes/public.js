@@ -81,6 +81,22 @@ function createPublicRouter({ store }) {
     });
   });
 
+  router.post("/demo-request", (req, res) => {
+    const { name, email, phone, notes, project_title, project_badge } = req.body || {};
+    if (!name || !email) {
+      return res.status(400).json({ error: "Name and work email are required" });
+    }
+    const record = store.createDemoRequest({
+      name: String(name).trim(),
+      email: String(email).trim(),
+      phone: String(phone || "").trim(),
+      notes: String(notes || "").trim(),
+      project_title: String(project_title || "General").trim(),
+      project_badge: String(project_badge || "").trim(),
+    });
+    res.status(201).json({ success: true, record });
+  });
+
   return router;
 }
 

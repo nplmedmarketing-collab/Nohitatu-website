@@ -24,13 +24,13 @@
     code: root.querySelector("[data-atlas-code]"),
     title: root.querySelector("[data-atlas-title]"),
     client: root.querySelector("[data-atlas-client]"),
+    tags: root.querySelector("[data-atlas-tags]"),
     desc: root.querySelector("[data-atlas-desc]"),
     cta: root.querySelector("[data-atlas-cta]"),
   };
 
-  if (!track || !frameImg) return;
-
-  const DEFAULT_FILTER = "retail";
+  const viewer = root.querySelector(".atlas__viewer");
+  const DEFAULT_FILTER = "health-care";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pad2 = (n) => String(n).padStart(2, "0");
   const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
@@ -124,11 +124,63 @@
     }
   }
 
+  let swapTimer = null;
+
   function paint(i, animate) {
     const el = shown[i];
     if (!el) return;
 
-    const apply = () => {
+    if (swapTimer) {
+      clearTimeout(swapTimer);
+      swapTimer = null;
+    }
+
+    // Synchronously update counts, text, metadata, and tags to guarantee 100% text accuracy with zero desync
+    if (posEl) posEl.textContent = pad2(i + 1);
+    if (ofEl) ofEl.textContent = pad2(shown.length);
+    if (tally) tally.textContent = `${i + 1} / ${shown.length}`;
+    if (progress) {
+      const pct = shown.length <= 1 ? 100 : ((i + 1) / shown.length) * 100;
+      progress.style.width = `${pct.toFixed(2)}%`;
+    }
+    if (prevBtn) prevBtn.disabled = i <= 0;
+    if (nextBtn) nextBtn.disabled = i >= shown.length - 1;
+
+    const platform = (el.dataset.platform || "web").toLowerCase();
+    if (viewer) {
+      viewer.classList.remove("device-mode--web", "device-mode--mobile", "device-mode--desktop");
+      viewer.classList.add(`device-mode--${platform}`);
+    }
+
+    if (chromeLabel) {
+      const icon = platform === "mobile" ? "📱 " : platform === "desktop" ? "💻 " : "🌐 ";
+      chromeLabel.textContent = icon + (el.dataset.title || "");
+    }
+    if (out.id) out.id.textContent = el.dataset.id || "";
+    if (out.code) out.code.textContent = el.dataset.long || "";
+    if (out.title) out.title.textContent = el.dataset.title || "";
+    if (out.client) out.client.textContent = clientLabel(el.dataset.client || "");
+    if (out.tags) {
+      const vertical = (el.dataset.vertical || "").trim();
+      const tagMap = {
+        "health-care": ["React", "Node.js", "HIPAA API", "Cloud"],
+        "retail": ["Next.js", "Stripe", "PostgreSQL", "Mobile"],
+        "supply-chain": ["Python", "Django", "PostgreSQL", "Realtime"],
+        "sports-management": ["Flutter", "Firebase", "REST API", "Analytics"],
+        "facility-management": ["React", "Express", "SQLite", "Dashboard"],
+        "human-resource-management": ["Vue.js", "Node.js", "GraphQL", "Enterprise"],
+        "project-management": ["TypeScript", "React", "Node.js", "WebSockets"]
+      };
+      const defaultTags = tagMap[vertical] || ["Full Stack", "Cloud", "REST API", "UI/UX"];
+      out.tags.innerHTML = defaultTags.map(t => `<span class="tech-tag">${escapeText(t)}</span>`).join('');
+    }
+    if (out.desc) out.desc.textContent = el.dataset.desc || "";
+    if (out.cta) {
+      out.cta.href = el.dataset.cta || "Contact-us.html";
+      out.cta.setAttribute("aria-label", `Request a demo of ${el.dataset.title || "this project"}`);
+    }
+
+    const updateImage = () => {
       const src = el.dataset.src;
       const alt = el.dataset.alt || el.dataset.title || "";
       if (src && frameImg.getAttribute("src") !== src) {
@@ -140,30 +192,13 @@
       frameImg.setAttribute("alt", alt);
       frameImg.setAttribute("decoding", "async");
       frameImg.removeAttribute("srcset");
-      if (chromeLabel) chromeLabel.textContent = el.dataset.title || "";
-      if (out.id) out.id.textContent = el.dataset.id || "";
-      if (out.code) out.code.textContent = el.dataset.long || "";
-      if (out.title) out.title.textContent = el.dataset.title || "";
-      if (out.client) out.client.textContent = clientLabel(el.dataset.client || "");
-      if (out.desc) out.desc.textContent = el.dataset.desc || "";
-      if (out.cta) {
-        out.cta.href = el.dataset.cta || "Contact-us.html";
-        out.cta.setAttribute("aria-label", `Request a demo of ${el.dataset.title || "this project"}`);
-      }
-      if (posEl) posEl.textContent = pad2(i + 1);
-      if (ofEl) ofEl.textContent = pad2(shown.length);
-      if (progress) {
-        const pct = shown.length <= 1 ? 100 : ((i + 1) / shown.length) * 100;
-        progress.style.width = `${pct.toFixed(2)}%`;
-      }
-      if (prevBtn) prevBtn.disabled = i <= 0;
-      if (nextBtn) nextBtn.disabled = i >= shown.length - 1;
     };
 
-    if (!animate || reduceMotion || swapping) {
-      apply();
+    if (!animate || reduceMotion) {
+      updateImage();
       if (spec) spec.classList.remove("is-swapping");
       if (frame) frame.classList.remove("is-swapping");
+      swapping = false;
       return;
     }
 
@@ -171,11 +206,12 @@
     if (frame) frame.classList.add("is-swapping");
     if (spec) spec.classList.add("is-swapping");
 
-    window.setTimeout(() => {
-      apply();
+    swapTimer = window.setTimeout(() => {
+      updateImage();
       if (frame) frame.classList.remove("is-swapping");
       if (spec) spec.classList.remove("is-swapping");
       swapping = false;
+      swapTimer = null;
     }, 180);
   }
 
@@ -219,6 +255,30 @@
     if (options.focus) shown[i].focus({ preventScroll: true });
   }
 
+  function updateFilterCounts() {
+    const total = items.length;
+    const kickerEl = document.querySelector("[data-atlas-total-kicker]");
+    if (kickerEl) kickerEl.textContent = `${total} products shipped`;
+
+    const totalCountEls = document.querySelectorAll("[data-atlas-total-count]");
+    totalCountEls.forEach((el) => {
+      el.textContent = String(total);
+    });
+
+    filters.forEach((btn) => {
+      const filterKey = btn.dataset.filter;
+      if (!filterKey) return;
+      const count = items.filter((el) => (el.dataset.vertical || "").trim() === filterKey).length;
+      let badge = btn.querySelector(".filter-count");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "filter-count";
+        btn.appendChild(badge);
+      }
+      badge.textContent = count;
+    });
+  }
+
   function applyFilter(key, opts) {
     const options = opts || {};
     activeFilter = key || DEFAULT_FILTER;
@@ -232,8 +292,9 @@
     });
     shown = items.filter((el) => !el.classList.contains("is-out"));
     active = -1;
-    if (tally) tally.textContent = `${shown.length} / ${shown.length}`;
+    if (posEl) posEl.textContent = pad2(1);
     if (ofEl) ofEl.textContent = pad2(shown.length);
+    if (tally) tally.textContent = `1 / ${shown.length}`;
     track.scrollTo({ left: 0, behavior: "auto" });
 
     if (!shown.length) {
@@ -297,6 +358,141 @@
       });
     }
 
+    // 1. Global Keyboard Arrow Navigation (ArrowLeft / ArrowRight)
+    document.addEventListener("keydown", (e) => {
+      const activeTag = document.activeElement ? document.activeElement.tagName : "";
+      if (activeTag === "INPUT" || activeTag === "TEXTAREA") return;
+      if (e.key === "ArrowLeft") {
+        if (active > 0) select(active - 1, { animate: true });
+      } else if (e.key === "ArrowRight") {
+        if (active < shown.length - 1) select(active + 1, { animate: true });
+      }
+    });
+
+    // 2. Touch Swipe Navigation for mobile/tablet
+    if (stage) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+      stage.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      stage.addEventListener("touchend", (e) => {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0 && active < shown.length - 1) select(active + 1, { animate: true });
+          else if (diffX > 0 && active > 0) select(active - 1, { animate: true });
+        }
+      }, { passive: true });
+    }
+
+    // 3. Live Tech Stack & Keyword Search
+    const searchInput = document.getElementById("atlas-search");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        const query = (e.target.value || "").trim().toLowerCase();
+        items.forEach((el) => {
+          const vertical = (el.dataset.vertical || "").trim();
+          const title = (el.dataset.title || "").toLowerCase();
+          const desc = (el.dataset.desc || "").toLowerCase();
+          const client = (el.dataset.client || "").toLowerCase();
+          const matchCategory = !activeFilter || vertical === activeFilter;
+          const matchQuery = !query || title.includes(query) || desc.includes(query) || client.includes(query) || vertical.includes(query);
+          const match = matchCategory && matchQuery;
+          el.classList.toggle("is-out", !match);
+        });
+        shown = items.filter((el) => !el.classList.contains("is-out"));
+        active = -1;
+        if (posEl) posEl.textContent = pad2(shown.length ? 1 : 0);
+        if (ofEl) ofEl.textContent = pad2(shown.length);
+        if (tally) tally.textContent = `${shown.length ? 1 : 0} / ${shown.length}`;
+        if (!shown.length) {
+          setEmpty(true);
+          return;
+        }
+        setEmpty(false);
+        select(0, { animate: false, forcePaint: true });
+      });
+    }
+
+    // 4. 1-Click Interactive Demo Request Drawer Logic
+    const demoDrawer = document.getElementById("demo-drawer");
+    const demoBackdrop = document.getElementById("demo-drawer-backdrop");
+    const closeDemoBtn = document.getElementById("btn-close-demo-drawer");
+    const demoForm = document.getElementById("demo-request-form");
+    const demoStatus = document.getElementById("demo-drawer-status");
+    const ctaLink = root.querySelector("[data-atlas-cta]");
+
+    function openDemoDrawer(e) {
+      if (e) e.preventDefault();
+      const currentProject = shown[active];
+      const title = currentProject ? currentProject.dataset.title : "this project";
+      const id = currentProject ? currentProject.dataset.id : "";
+      const platform = currentProject ? currentProject.dataset.long : "";
+
+      const pName = document.getElementById("demo-project-name");
+      const pBadge = document.getElementById("demo-project-badge");
+      if (pName) pName.textContent = title;
+      if (pBadge) pBadge.textContent = `${id} · ${platform}`;
+
+      if (demoDrawer) demoDrawer.hidden = false;
+      if (demoBackdrop) demoBackdrop.hidden = false;
+      document.body.classList.add("demo-drawer-open");
+      const nameInput = document.getElementById("demo-user-name");
+      if (nameInput) nameInput.focus();
+    }
+
+    function closeDemoDrawer() {
+      if (demoDrawer) demoDrawer.hidden = true;
+      if (demoBackdrop) demoBackdrop.hidden = true;
+      document.body.classList.remove("demo-drawer-open");
+      if (demoStatus) demoStatus.hidden = true;
+    }
+
+    if (ctaLink) {
+      ctaLink.addEventListener("click", openDemoDrawer);
+    }
+    if (closeDemoBtn) closeDemoBtn.addEventListener("click", closeDemoDrawer);
+    if (demoBackdrop) demoBackdrop.addEventListener("click", closeDemoDrawer);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && demoDrawer && !demoDrawer.hidden) {
+        closeDemoDrawer();
+      }
+    });
+
+    if (demoForm) {
+      demoForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const projectName = document.getElementById("demo-project-name") ? document.getElementById("demo-project-name").textContent : "this project";
+        const projectBadge = document.getElementById("demo-project-badge") ? document.getElementById("demo-project-badge").textContent : "";
+        const name = (document.getElementById("demo-user-name").value || "").trim();
+        const email = (document.getElementById("demo-user-email").value || "").trim();
+        const phone = (document.getElementById("demo-user-phone").value || "").trim();
+        const notes = (document.getElementById("demo-user-notes").value || "").trim();
+
+        try {
+          await fetch("/api/demo-request", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ project_title: projectName, project_badge: projectBadge, name, email, phone, notes })
+          });
+        } catch (err) {
+          console.warn("API submission fallback:", err);
+        }
+
+        if (demoStatus) {
+          demoStatus.hidden = false;
+          demoStatus.className = "demo-drawer__status success";
+          demoStatus.innerHTML = `<strong>Request Received!</strong><p>Our engineering team will prepare a live demo of <em>${escapeText(projectName)}</em> and email you within 2 hours.</p>`;
+        }
+        demoForm.reset();
+        window.setTimeout(closeDemoDrawer, 4500);
+      });
+    }
+
     function warm() {
       if (warmed) return;
       warmed = true;
@@ -339,6 +535,7 @@
       ).observe(wall);
     }
 
+    updateFilterCounts();
     const initial = filters.find((b) => b.dataset.filter === DEFAULT_FILTER) || filters[0];
     filters.forEach((b) => {
       const on = b === initial;

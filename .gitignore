@@ -37,3 +37,10 @@ desktop.ini
 # Local pip install target (not for deploy)
 chatbot/.pypkgs/
 
+# Backup & QA temporary files
+*.bak
+*.bak.*
+_tmp*
+_portfolio-verify/
+qa-shots/
+
