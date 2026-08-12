@@ -201,8 +201,10 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
       if (err) return res.status(500).json({ error: "Session error" });
       req.session.admin = true;
       req.session.username = username;
-      auth.issueCsrf(req);
-      return res.json({ ok: true, username });
+      const csrfToken = auth.issueCsrf(req);
+      // Return the post-regenerate token so cross-origin admin UIs can update
+      // without relying on a stale pre-login value still held in memory.
+      return res.json({ ok: true, username, csrfToken });
     });
   });
 

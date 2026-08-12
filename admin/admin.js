@@ -135,18 +135,27 @@
   }
 
   async function api(path, options = {}) {
+    const method = String(options.method || "GET").toUpperCase();
+    const mutating = method !== "GET" && method !== "HEAD";
+    // Re-sync before mutates: login calls session.regenerate() and issues a new
+    // CSRF token; without this, Pages keeps the pre-login token and Save fails.
+    if (mutating) {
+      await refreshCsrf();
+    }
     const opts = {
       credentials: CROSS_ORIGIN_API ? "include" : "same-origin",
       headers: { Accept: "application/json", ...(options.headers || {}) },
+      method,
       ...options,
     };
+    opts.headers = { Accept: "application/json", ...(options.headers || {}) };
     if (opts.body && !(opts.body instanceof FormData)) {
       opts.headers["Content-Type"] = "application/json";
       opts.body = JSON.stringify(opts.body);
     } else if (opts.body && opts.body instanceof FormData) {
       delete opts.headers["Content-Type"];
     }
-    if (opts.method && opts.method !== "GET" && opts.method !== "HEAD") {
+    if (mutating) {
       opts.headers["X-CSRF-Token"] = csrfToken;
     }
     let res;
@@ -552,14 +561,16 @@
     const fd = new FormData(els.loginForm);
     const username = String(fd.get("username") || "").trim();
     try {
-      await refreshCsrf();
-      await api("/api/admin/login", {
+      const data = await api("/api/admin/login", {
         method: "POST",
         body: {
           username,
           password: String(fd.get("password") || ""),
         },
       });
+      // Login regenerates the session; prefer token from response, else re-fetch.
+      if (data && data.csrfToken) csrfToken = data.csrfToken;
+      else await refreshCsrf();
       els.loginForm.reset();
       if (IN_PAGE_AUTH_SHELL) {
         await enterDashboard(username || "admin");
