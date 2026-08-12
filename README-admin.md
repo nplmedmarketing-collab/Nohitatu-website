@@ -58,11 +58,11 @@ free-tier sleep. Create the service once:
 1. Open [Render Dashboard](https://dashboard.render.com/) → **New** → **Blueprint**.
 2. Connect GitHub repo `nplmedmarketing-collab/Nohitatu-website` (branch `main`).
 3. Render reads root `render.yaml` and proposes service **`nohitatu-website-admin`**.
-4. When prompted for secrets (or in **Environment** after create), set:
-   - `ADMIN_PASSWORD` — strong password (first boot hashes it into `data/admin-auth.json`)
-   - `SESSION_SECRET` — long random string (≥32 chars)
+4. When prompted for secrets (or **Environment** after create), set values that are **not** stored in git:
+   - `ADMIN_PASSWORD` — **required** (`sync: false` in `render.yaml`). Paste your chosen password in the Render Dashboard only; first boot hashes it into `data/admin-auth.json`. Do not put this value in the repo.
+   - `SESSION_SECRET` — Blueprint can auto-generate (`generateValue`); or paste a long random string (≥32 chars)
    - Confirm `ADMIN_CORS_ORIGINS=https://nplmedmarketing-collab.github.io`
-   - Confirm `NODE_ENV=production`, `ADMIN_USER=admin`
+   - Confirm `NODE_ENV=production`, `ADMIN_USER=admin` (username is already set in `render.yaml`)
 5. Apply / create. Wait until status is **Live**.
 6. Verify: `https://nohitatu-website-admin.onrender.com/api/health` → `{"ok":true,...}`
 7. Login from Pages admin; first free-tier hit after idle may take ~30–60s to wake.

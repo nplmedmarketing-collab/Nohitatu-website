@@ -13,6 +13,7 @@ services:
       # Render injects PORT; do not hardcode it
       - key: ADMIN_USER
         value: admin
+      # sync:false = set in Render Dashboard Environment (never commit plaintext)
       - key: ADMIN_PASSWORD
         sync: false
       - key: SESSION_SECRET
