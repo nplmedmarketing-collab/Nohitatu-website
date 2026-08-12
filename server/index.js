@@ -29,6 +29,22 @@ const SESSION_SECRET = process.env.SESSION_SECRET || "";
 const NODE_ENV = process.env.NODE_ENV || "development";
 const isProd = NODE_ENV === "production";
 
+function parseCorsOrigins() {
+  const fromEnv = String(process.env.ADMIN_CORS_ORIGINS || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (fromEnv.length) return fromEnv;
+  // Allow GitHub Pages project site to call this API when NODE_ENV=production
+  if (isProd) {
+    return ["https://nplmedmarketing-collab.github.io"];
+  }
+  return [];
+}
+
+const CORS_ORIGINS = parseCorsOrigins();
+const useCrossSiteCookies = CORS_ORIGINS.length > 0;
+
 function blockSensitive(req, res, next) {
   const p = req.path.toLowerCase();
   if (
@@ -134,7 +150,7 @@ async function main() {
 
   const adminCreds = await ensureAdminCredentials(bcrypt, process.env);
   const store = createStore();
-  const auth = createAuth({ bcrypt, admin: adminCreds });
+  const auth = createAuth({ bcrypt, admin: adminCreds, allowedOrigins: CORS_ORIGINS });
 
   const app = express();
   app.set("trust proxy", 1);
@@ -142,6 +158,22 @@ async function main() {
 
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+
+  // Credentialed CORS for static admin hosts (e.g. GitHub Pages → Render API).
+  app.use((req, res, next) => {
+    const origin = req.get("origin");
+    if (origin && CORS_ORIGINS.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      res.setHeader("Vary", "Origin");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, Accept");
+      res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS");
+    }
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(204);
+    }
+    return next();
+  });
 
   app.use(
     session({
@@ -151,8 +183,9 @@ async function main() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        sameSite: "lax",
-        secure: isProd,
+        // Cross-site Pages→API needs SameSite=None; Secure is required with None.
+        sameSite: useCrossSiteCookies ? "none" : "lax",
+        secure: isProd || useCrossSiteCookies,
         maxAge: 1000 * 60 * 60 * 12,
       },
     })
@@ -275,6 +308,9 @@ async function main() {
     console.log(`  APIs:       /api/projects  /api/careers`);
     console.log(`  Store:      ${store.mode}`);
     console.log(`  Admin user: ${adminCreds.username} (${adminCreds.source})`);
+    if (CORS_ORIGINS.length) {
+      console.log(`  CORS:       ${CORS_ORIGINS.join(", ")}`);
+    }
     console.log("═══════════════════════════════════════════════════════════");
     console.log("");
   });

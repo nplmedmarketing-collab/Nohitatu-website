@@ -54,6 +54,31 @@
 
   const LOGIN_PATH = "/adminlogin";
   const APP_PATH = "/admin";
+  /** Default Node/API host when the admin UI is served from GitHub Pages (static-only). */
+  const DEFAULT_PAGES_API = "https://nohitatu-website-admin.onrender.com";
+
+  function resolveApiBase() {
+    const meta = document.querySelector('meta[name="nh-admin-api"]');
+    const fromMeta = meta && meta.getAttribute("content") ? meta.getAttribute("content").trim() : "";
+    const fromWindow = typeof window.NH_ADMIN_API === "string" ? window.NH_ADMIN_API.trim() : "";
+    let base = (fromWindow || fromMeta || "").replace(/\/$/, "");
+    if (base === "." || /^same-?origin$/i.test(base)) base = "";
+    if (!base && /\.github\.io$/i.test(window.location.hostname || "")) {
+      base = DEFAULT_PAGES_API;
+    }
+    return base;
+  }
+
+  const API_BASE = resolveApiBase();
+  const CROSS_ORIGIN_API = Boolean(API_BASE);
+  /** GitHub Project Pages has /admin/ but no Express /adminlogin route. */
+  const STATIC_PAGES_SHELL = /\.github\.io$/i.test(window.location.hostname || "");
+  const IN_PAGE_AUTH_SHELL = CROSS_ORIGIN_API || STATIC_PAGES_SHELL;
+
+  function apiUrl(path) {
+    const p = path.startsWith("/") ? path : `/${path}`;
+    return API_BASE ? `${API_BASE}${p}` : p;
+  }
 
   function currentPath() {
     const p = window.location.pathname || "/";
@@ -61,18 +86,58 @@
   }
 
   function isLoginRoute() {
-    return currentPath() === LOGIN_PATH;
+    const p = currentPath();
+    return p === LOGIN_PATH || /\/adminlogin$/.test(p);
   }
 
   function goTo(path) {
+    if (IN_PAGE_AUTH_SHELL && (path === LOGIN_PATH || path === APP_PATH || /\/admin(login)?$/.test(path))) {
+      return;
+    }
     if (currentPath() === path) return;
     window.location.replace(path);
   }
 
+  function looksLikeHtml(text) {
+    if (!text || typeof text !== "string") return false;
+    const head = text.trim().slice(0, 220).toLowerCase();
+    return (
+      head.startsWith("<!doctype") ||
+      head.startsWith("<html") ||
+      head.includes("<head") ||
+      head.includes("<title")
+    );
+  }
+
+  function friendlyApiError(status, text, parsed) {
+    const parsedMsg = parsed && typeof parsed.error === "string" ? parsed.error.trim() : "";
+    if (parsedMsg && !looksLikeHtml(parsedMsg) && parsedMsg.length <= 280) {
+      return parsedMsg;
+    }
+    if (looksLikeHtml(text) || looksLikeHtml(parsedMsg)) {
+      if (API_BASE) {
+        return `Can't reach admin API (${API_BASE}). Deploy the Node server or check nh-admin-api.`;
+      }
+      return "Can't reach admin API. This host has no /api — run Express (cd server && npm start) or set meta nh-admin-api.";
+    }
+    if (!status) {
+      return API_BASE
+        ? `Can't reach admin API at ${API_BASE}. Is the server up?`
+        : "Can't reach admin API. Is the server running?";
+    }
+    if (status === 404) {
+      return "Admin API not found (404). Check the API base URL / deployment.";
+    }
+    if (status >= 500) {
+      return "Admin API error. Try again in a moment.";
+    }
+    return parsedMsg || `Request failed (${status})`;
+  }
+
   async function api(path, options = {}) {
     const opts = {
-      credentials: "same-origin",
-      headers: { ...(options.headers || {}) },
+      credentials: CROSS_ORIGIN_API ? "include" : "same-origin",
+      headers: { Accept: "application/json", ...(options.headers || {}) },
       ...options,
     };
     if (opts.body && !(opts.body instanceof FormData)) {
@@ -84,24 +149,41 @@
     if (opts.method && opts.method !== "GET" && opts.method !== "HEAD") {
       opts.headers["X-CSRF-Token"] = csrfToken;
     }
-    const res = await fetch(path, opts);
+    let res;
+    try {
+      res = await fetch(apiUrl(path), opts);
+    } catch {
+      const err = new Error(friendlyApiError(0, "", null));
+      err.status = 0;
+      throw err;
+    }
     const text = await res.text();
     let data = null;
+    let jsonOk = false;
     try {
       data = text ? JSON.parse(text) : null;
+      jsonOk = true;
     } catch {
-      data = { error: text || "Invalid response" };
+      data = null;
     }
     if (!res.ok) {
-      if (res.status === 401 && !isLoginRoute()) {
+      if (res.status === 401 && !isLoginRoute() && !IN_PAGE_AUTH_SHELL) {
         const err = new Error("Session expired. Redirecting to login…");
         err.status = 401;
         setTimeout(() => goTo(LOGIN_PATH), 1200);
         throw err;
       }
-      const err = new Error((data && data.error) || res.statusText || "Request failed");
+      if (res.status === 401 && IN_PAGE_AUTH_SHELL) {
+        setAuthed(null);
+      }
+      const err = new Error(friendlyApiError(res.status, text, jsonOk ? data : null));
       err.status = res.status;
       err.data = data;
+      throw err;
+    }
+    if (text && !jsonOk) {
+      const err = new Error(friendlyApiError(res.status || 200, text, null));
+      err.status = res.status;
       throw err;
     }
     return data;
@@ -120,9 +202,14 @@
       el.textContent = "";
       return;
     }
+    const safe = looksLikeHtml(msg)
+      ? friendlyApiError(0, msg, null)
+      : msg.length > 280
+        ? `${msg.slice(0, 280)}…`
+        : msg;
     el.hidden = false;
     el.style.display = "flex";
-    el.textContent = msg;
+    el.textContent = safe;
   }
 
   function fillVerticals() {
@@ -142,7 +229,10 @@
 
   async function fetchDemoRequests() {
     try {
-      const res = await fetch("/api/admin/demo-requests", { headers: { Accept: "application/json" } });
+      const res = await fetch(apiUrl("/api/admin/demo-requests"), {
+        credentials: CROSS_ORIGIN_API ? "include" : "same-origin",
+        headers: { Accept: "application/json" },
+      });
       if (!res.ok) return;
       const data = await res.json();
       const rows = data.requests || [];
@@ -414,27 +504,34 @@
     else await loadProjects();
   }
 
+  async function enterDashboard(username) {
+    setAuthed(username || "admin");
+    setTab("projects");
+    await loadProjects();
+    await loadCareers();
+  }
+
   async function bootstrap() {
     await refreshCsrf();
     fillVerticals();
     try {
       const me = await api("/api/admin/me");
       // Logged-in users bookmarking /adminlogin go straight to the dashboard.
-      if (isLoginRoute()) {
+      if (isLoginRoute() && !IN_PAGE_AUTH_SHELL) {
         goTo(APP_PATH);
         return;
       }
-      setAuthed(me.username || "admin");
-      setTab("projects");
-      await loadProjects();
-      await loadCareers();
-    } catch {
+      await enterDashboard(me.username || "admin");
+    } catch (err) {
       // Unauthenticated: login page only; /admin (and other shells) → /adminlogin.
-      if (!isLoginRoute()) {
+      if (!isLoginRoute() && !IN_PAGE_AUTH_SHELL) {
         goTo(LOGIN_PATH);
         return;
       }
       setAuthed(null);
+      if (err && err.status !== 401) {
+        showError(els.loginError, err.message || "Could not reach admin API.");
+      }
     }
   }
 
@@ -453,17 +550,22 @@
     e.preventDefault();
     showError(els.loginError, "");
     const fd = new FormData(els.loginForm);
+    const username = String(fd.get("username") || "").trim();
     try {
       await refreshCsrf();
       await api("/api/admin/login", {
         method: "POST",
         body: {
-          username: String(fd.get("username") || "").trim(),
+          username,
           password: String(fd.get("password") || ""),
         },
       });
       els.loginForm.reset();
-      goTo(APP_PATH);
+      if (IN_PAGE_AUTH_SHELL) {
+        await enterDashboard(username || "admin");
+      } else {
+        goTo(APP_PATH);
+      }
     } catch (err) {
       showError(els.loginError, err.message || "Login failed");
     }
@@ -475,6 +577,7 @@
     } catch {
       /* session may already be gone */
     }
+    setAuthed(null);
     goTo(LOGIN_PATH);
   });
 
@@ -614,6 +717,7 @@
   });
 
   bootstrap().catch((err) => {
+    setAuthed(null);
     showError(els.loginError, err.message || "Could not reach admin API. Is the server running?");
   });
 })();

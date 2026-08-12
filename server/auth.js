@@ -3,7 +3,19 @@
  */
 const crypto = require("crypto");
 
-function createAuth({ bcrypt, admin }) {
+function createAuth({ bcrypt, admin, allowedOrigins = [] }) {
+  const allowedOriginSet = new Set(
+    (allowedOrigins || [])
+      .map((o) => {
+        try {
+          return new URL(o).origin;
+        } catch {
+          return String(o || "").replace(/\/$/, "");
+        }
+      })
+      .filter(Boolean)
+  );
+
   function isAuthed(req) {
     return Boolean(req.session && req.session.admin === true);
   }
@@ -38,7 +50,7 @@ function createAuth({ bcrypt, admin }) {
     return next();
   }
 
-  /** Block cross-site state-changing requests (browser form posts from other origins). */
+  /** Block untrusted cross-site state-changing requests (CSRF still required). */
   function requireSameOrigin(req, res, next) {
     const method = req.method.toUpperCase();
     if (method === "GET" || method === "HEAD" || method === "OPTIONS") return next();
@@ -53,7 +65,8 @@ function createAuth({ bcrypt, admin }) {
       if (!value) return false;
       try {
         const u = new URL(value);
-        return u.host === host;
+        if (u.host === host) return true;
+        return allowedOriginSet.has(u.origin);
       } catch {
         return false;
       }

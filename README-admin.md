@@ -37,6 +37,18 @@ You should see a page titled **Nohitatu Admin Login** with username/password —
 
 Use the same origin (do not open HTML via `file://` if you need live data).
 
+## GitHub Pages admin
+
+GitHub Pages is static-only — `/api/admin/*` will not exist there. The live admin UI at
+`https://…github.io/…/admin/` talks to the Node API host instead:
+
+1. Deploy this repo’s Express app (see root `render.yaml`, service `nohitatu-website-admin`).
+2. On `*.github.io`, `admin/admin.js` defaults API base to `https://nohitatu-website-admin.onrender.com`.
+3. Override with `<meta name="nh-admin-api" content="https://your-api.example">` or `window.NH_ADMIN_API`.
+4. Server must allow the Pages origin via `ADMIN_CORS_ORIGINS` (set in `render.yaml`).
+
+Local Express (`cd server && npm start`) still uses same-origin `/api` with no override.
+
 ## If `/adminlogin` shows the homepage
 
 **Root cause is almost always the wrong process on port 5173**, not Express route order.
