@@ -716,6 +716,7 @@
             });
         })();
     </script>
+    <script src="js/api-base.js?v=20260812liveapi1"></script>
     <script>
         (() => {
             const catalog = window.NOHITATU_CAREER_DETAILS || {};
@@ -988,8 +989,12 @@
             async function resolveJob(jobId) {
                 if (!jobId) return null;
                 try {
-                    const res = await fetch("/api/careers/" + encodeURIComponent(jobId), {
-                        credentials: "same-origin",
+                    const path = "/api/careers/" + encodeURIComponent(jobId);
+                    const url =
+                        typeof window.NH_apiUrl === "function" ? window.NH_apiUrl(path) : path;
+                    const res = await fetch(url, {
+                        credentials: "omit",
+                        cache: "no-store",
                     });
                     if (res.ok) {
                         const data = await res.json();

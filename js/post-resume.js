@@ -1154,8 +1154,11 @@
   async function resolveJob(jobId) {
     if (!jobId) return null;
     try {
-      var res = await fetch("/api/careers/" + encodeURIComponent(jobId), {
-        credentials: "same-origin",
+      var path = "/api/careers/" + encodeURIComponent(jobId);
+      var url = typeof window.NH_apiUrl === "function" ? window.NH_apiUrl(path) : path;
+      var res = await fetch(url, {
+        credentials: "omit",
+        cache: "no-store",
       });
       if (res.ok) {
         var data = await res.json();

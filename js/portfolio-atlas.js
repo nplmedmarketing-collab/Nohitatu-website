@@ -92,7 +92,9 @@
 
   async function loadFromApi() {
     try {
-      const res = await fetch("/api/projects", { credentials: "same-origin" });
+      const url =
+        typeof window.NH_apiUrl === "function" ? window.NH_apiUrl("/api/projects") : "/api/projects";
+      const res = await fetch(url, { credentials: "omit", cache: "no-store" });
       if (!res.ok) return false;
       const data = await res.json();
       return renderProjects(data.projects || []);
@@ -474,7 +476,11 @@
         const notes = (document.getElementById("demo-user-notes").value || "").trim();
 
         try {
-          await fetch("/api/demo-request", {
+          const demoUrl =
+            typeof window.NH_apiUrl === "function"
+              ? window.NH_apiUrl("/api/demo-request")
+              : "/api/demo-request";
+          await fetch(demoUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ project_title: projectName, project_badge: projectBadge, name, email, phone, notes })

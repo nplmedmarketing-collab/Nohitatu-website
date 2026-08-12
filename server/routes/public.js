@@ -50,7 +50,7 @@ function createPublicRouter({ store }) {
       .trim();
     const status = statusParam === "all" || statusParam === "closed" ? statusParam : "open";
     const careers = store.listCareers({ status }).map(slimCareer);
-    res.set("Cache-Control", "public, max-age=30");
+    res.set("Cache-Control", "no-store");
     res.json({ careers, count: careers.length, status });
   });
 
@@ -66,7 +66,7 @@ function createPublicRouter({ store }) {
     if (!career || career.status !== "open") {
       return res.status(404).json({ error: "Not found" });
     }
-    res.set("Cache-Control", "public, max-age=30");
+    res.set("Cache-Control", "no-store");
     return res.json({
       career: {
         ...slimCareer(career),

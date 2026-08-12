@@ -1,4 +1,4 @@
-/* Open positions list: prefers GET /api/careers; keeps static HTML as offline fallback. */
+/* Open positions list: prefers GET /api/careers (Render on GitHub Pages); static HTML is fallback. */
 (() => {
   const grid = document.querySelector(".careers-jobs-grid");
   if (!grid) return;
@@ -65,7 +65,9 @@
 
   async function loadFromApi() {
     try {
-      const res = await fetch("/api/careers", { credentials: "same-origin" });
+      const url =
+        typeof window.NH_apiUrl === "function" ? window.NH_apiUrl("/api/careers") : "/api/careers";
+      const res = await fetch(url, { credentials: "omit", cache: "no-store" });
       if (!res.ok) return false;
       const data = await res.json();
       return render(data.careers || []);
