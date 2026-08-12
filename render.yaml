@@ -3,18 +3,20 @@ services:
     name: nohitatu-website-admin
     runtime: node
     plan: free
-    # Full repo root so Express can serve ../admin, data/, uploads/
+    # Repo root so Express can serve ../admin, data/, uploads/
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
+      # Render injects PORT; do not hardcode it
       - key: ADMIN_USER
         value: admin
       - key: ADMIN_PASSWORD
-        value: Admin@123
+        sync: false
       - key: SESSION_SECRET
-        value: nohitatu-secret-key-production-change-me-2026
+        generateValue: true
       # Allow GitHub Pages admin UI to call this API with cookies
       - key: ADMIN_CORS_ORIGINS
         value: https://nplmedmarketing-collab.github.io

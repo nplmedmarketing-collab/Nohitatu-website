@@ -42,12 +42,37 @@ Use the same origin (do not open HTML via `file://` if you need live data).
 GitHub Pages is static-only — `/api/admin/*` will not exist there. The live admin UI at
 `https://…github.io/…/admin/` talks to the Node API host instead:
 
-1. Deploy this repo’s Express app (see root `render.yaml`, service `nohitatu-website-admin`).
+1. Deploy this repo’s Express app on Render (see below). Service name must be `nohitatu-website-admin`.
 2. On `*.github.io`, `admin/admin.js` defaults API base to `https://nohitatu-website-admin.onrender.com`.
 3. Override with `<meta name="nh-admin-api" content="https://your-api.example">` or `window.NH_ADMIN_API`.
 4. Server must allow the Pages origin via `ADMIN_CORS_ORIGINS` (set in `render.yaml`).
 
 Local Express (`cd server && npm start`) still uses same-origin `/api` with no override.
+
+### Deploy admin API on Render (required)
+
+A probe of `https://nohitatu-website-admin.onrender.com` returning **404** with header
+`x-render-routing: no-server` means **no Web Service exists yet** — not a code bug and not
+free-tier sleep. Create the service once:
+
+1. Open [Render Dashboard](https://dashboard.render.com/) → **New** → **Blueprint**.
+2. Connect GitHub repo `nplmedmarketing-collab/Nohitatu-website` (branch `main`).
+3. Render reads root `render.yaml` and proposes service **`nohitatu-website-admin`**.
+4. When prompted for secrets (or in **Environment** after create), set:
+   - `ADMIN_PASSWORD` — strong password (first boot hashes it into `data/admin-auth.json`)
+   - `SESSION_SECRET` — long random string (≥32 chars)
+   - Confirm `ADMIN_CORS_ORIGINS=https://nplmedmarketing-collab.github.io`
+   - Confirm `NODE_ENV=production`, `ADMIN_USER=admin`
+5. Apply / create. Wait until status is **Live**.
+6. Verify: `https://nohitatu-website-admin.onrender.com/api/health` → `{"ok":true,...}`
+7. Login from Pages admin; first free-tier hit after idle may take ~30–60s to wake.
+
+**Manual alternative (no Blueprint):** New → Web Service → same repo → Root Directory empty →
+Build `cd server && npm install` → Start `cd server && npm start` → name exactly
+`nohitatu-website-admin` → free plan → same env vars → health check `/api/health`.
+
+If the public URL differs (custom name), update `DEFAULT_PAGES_API` in `admin/admin.js` or set
+`<meta name="nh-admin-api" …>` and redeploy Pages.
 
 ## If `/adminlogin` shows the homepage
 

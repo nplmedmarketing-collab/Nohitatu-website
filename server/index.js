@@ -159,6 +159,11 @@ async function main() {
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
+  // Liveness for Render / load balancers (no auth).
+  app.get(["/health", "/api/health"], (_req, res) => {
+    res.status(200).json({ ok: true, service: "nohitatu-website-admin" });
+  });
+
   // Credentialed CORS for static admin hosts (e.g. GitHub Pages → Render API).
   app.use((req, res, next) => {
     const origin = req.get("origin");
