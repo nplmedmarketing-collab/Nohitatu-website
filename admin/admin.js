@@ -75,6 +75,14 @@
   const STATIC_PAGES_SHELL = /\.github\.io$/i.test(window.location.hostname || "");
   const IN_PAGE_AUTH_SHELL = CROSS_ORIGIN_API || STATIC_PAGES_SHELL;
 
+  (function showCrossOriginLoginHint() {
+    const hint = document.getElementById("login-api-hint");
+    if (!hint || !CROSS_ORIGIN_API || !API_BASE) return;
+    const href = `${API_BASE}/adminlogin`;
+    hint.hidden = false;
+    hint.innerHTML = `If sign-in fails in this browser, use <a href="${href}">the API host login</a> (same credentials).`;
+  })();
+
   function apiUrl(path) {
     const p = path.startsWith("/") ? path : `/${path}`;
     return API_BASE ? `${API_BASE}${p}` : p;
@@ -111,6 +119,9 @@
 
   function friendlyApiError(status, text, parsed) {
     const parsedMsg = parsed && typeof parsed.error === "string" ? parsed.error.trim() : "";
+    if (status === 403 && /csrf/i.test(parsedMsg) && API_BASE) {
+      return "Sign-in blocked: this browser did not keep the API session cookie. Allow third-party cookies for this site, or open the API host login page.";
+    }
     if (parsedMsg && !looksLikeHtml(parsedMsg) && parsedMsg.length <= 280) {
       return parsedMsg;
     }

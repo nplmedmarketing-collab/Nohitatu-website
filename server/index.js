@@ -191,6 +191,9 @@ async function main() {
         // Cross-site Pages→API needs SameSite=None; Secure is required with None.
         sameSite: useCrossSiteCookies ? "none" : "lax",
         secure: isProd || useCrossSiteCookies,
+        // CHIPS: browsers that block unpartitioned third-party cookies still
+        // send this session when the admin UI is on GitHub Pages.
+        partitioned: useCrossSiteCookies,
         maxAge: 1000 * 60 * 60 * 12,
       },
     })

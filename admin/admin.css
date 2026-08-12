@@ -473,6 +473,19 @@ textarea {
   display: none !important;
 }
 
+.login-cross-origin-hint {
+  margin: 16px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+.login-cross-origin-hint a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .login-card-footer {
   margin-top: 24px;
   padding-top: 20px;
