@@ -472,59 +472,46 @@ html.pf-page header.atlas__head {
   padding: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  margin-bottom: clamp(20px, 3vw, 28px) !important;
+  margin-bottom: clamp(24px, 3.4vw, 36px) !important;
   height: auto !important;
   min-height: 0 !important;
   overflow: visible !important;
-  display: block !important;
-}
-
-html.pf-page .atlas__title-row {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) !important;
-  gap: 18px !important;
-  width: 100% !important;
+  gap: clamp(18px, 2.2vw, 26px) !important;
 }
 
-html.pf-page .atlas__title-row > div {
+html.pf-page .atlas__masthead > * {
   min-width: 0 !important;
   max-width: none !important;
-  width: 100% !important;
 }
 
-html.pf-page .atlas__title-row h2 {
+/* White ink on the display title; only the <em> clips a gradient, and it carries
+   its own transparent fill so this must not blank the rest of the line. */
+html.pf-page .atlas__display {
+  margin: 0 !important;
   color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
   max-width: none !important;
 }
 
 html.pf-page .atlas__lede {
   color: rgba(232, 238, 247, 0.72) !important;
-  max-width: 62ch !important;
-  font-size: 14.5px !important;
-  line-height: 1.65 !important;
+  max-width: 56ch !important;
+  font-size: clamp(14.5px, 1.05vw, 16.5px) !important;
+  line-height: 1.72 !important;
 }
 
 /* Vertical tabs: readable labels, never invisible / collapsed boxes */
-html.pf-page .atlas__controls {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  gap: 8px !important;
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 0 !important;
-}
-
 html.pf-page .atlas__filters {
   display: flex !important;
-  flex: 1 1 auto !important;
   flex-wrap: nowrap !important;
-  gap: 6px 8px !important;
-  justify-content: space-between !important;
+  gap: 7px !important;
+  justify-content: flex-start !important;
   min-width: 0 !important;
   max-width: 100% !important;
+  padding: 3px 0 5px !important;
   overflow-x: auto !important;
-  padding: 4px 0 !important;
+  overflow-y: hidden !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   -webkit-overflow-scrolling: touch !important;
@@ -536,107 +523,82 @@ html.pf-page .atlas__filters::-webkit-scrollbar {
   height: 0 !important;
 }
 
-html.pf-page .atlas__filters button,
-html.pf-page .atlas__filters [role="tab"] {
+/* Chips that read as chips even when inactive. The !important run only exists to
+   out-rank site `style.css`, which otherwise collapses these into blank boxes. */
+html.pf-page .atlas__filters button {
   appearance: none !important;
   -webkit-appearance: none !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  flex: 1 1 auto !important;
+  flex: 0 0 auto !important;
   width: auto !important;
   min-width: max-content !important;
   max-width: none !important;
   height: auto !important;
-  min-height: 36px !important;
+  min-height: 38px !important;
   margin: 0 !important;
-  padding: 7px 13px !important;
+  padding: 9px 12px !important;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  border-radius: 20px !important;
-  background: rgba(255, 255, 255, 0.04) !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
   background-image: none !important;
-  color: #e8eef7 !important;
-  -webkit-text-fill-color: #e8eef7 !important;
+  color: #dfe6f2 !important;
+  -webkit-text-fill-color: currentColor !important;
   font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.01em !important;
+  letter-spacing: 0.005em !important;
   line-height: 1.2 !important;
   text-transform: none !important;
   text-indent: 0 !important;
   white-space: nowrap !important;
-  opacity: 1 !important;
   visibility: visible !important;
   overflow: visible !important;
   box-shadow: none !important;
   cursor: pointer !important;
-  transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+html.pf-page .atlas__filters button > span {
+  display: inline-flex !important;
+  visibility: visible !important;
+  text-transform: none !important;
+  -webkit-text-fill-color: currentColor !important;
 }
 
 html.pf-page .atlas__filters button:hover {
   color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  border-color: rgba(114, 108, 244, 0.5) !important;
-  background: rgba(114, 108, 244, 0.14) !important;
-  transform: translateY(-1px) !important;
+  background: rgba(114, 108, 244, 0.16) !important;
+  border-color: rgba(114, 108, 244, 0.55) !important;
 }
 
 html.pf-page .atlas__filters button.is-active,
-html.pf-page .atlas__filters [role="tab"][aria-selected="true"] {
-  background: linear-gradient(135deg, #726cf4, #5f58dc) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
+html.pf-page .atlas__filters button[aria-pressed="true"] {
+  background: linear-gradient(135deg, #7d77f7, #5b53d8) !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
   color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  box-shadow: 0 4px 16px rgba(114, 108, 244, 0.4) !important;
+  box-shadow: 0 6px 18px rgba(114, 108, 244, 0.42) !important;
+}
+
+/* The trailing fade is the only hint that the row scrolls, since the scrollbar is
+   hidden — and it only appears while the chips actually overrun the row. */
+html.pf-page .atlas__filters.is-scrollable {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent);
+}
+
+html.pf-page .atlas__filters.is-scrollable:focus-within {
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 @media (max-width: 768px) {
-  html.pf-page .atlas__filters button,
-  html.pf-page .atlas__filters [role="tab"] {
-    flex: 0 0 auto !important;
-    padding: 7px 12px !important;
+  html.pf-page .atlas__filters button {
+    min-height: 40px !important;
   }
 }
 
-html.pf-page .atlas__tally {
-  color: rgba(232, 238, 247, 0.5) !important;
-  flex: 0 0 auto !important;
-}
-
-/* Stage sizing: no forced tall black hollow */
-html.pf-page .atlas__stage {
-  align-items: start !important;
-  margin-bottom: clamp(16px, 2.5vw, 24px) !important;
-  min-height: 0 !important;
-}
-
-html.pf-page .atlas__frame {
-  min-height: 0 !important;
-  max-height: 440px !important;
-  height: 100% !important;
-  width: 100% !important;
-  aspect-ratio: 16 / 10 !important;
-  background: transparent !important;
-  overflow: hidden !important;
-}
-
-html.pf-page .atlas__frame img {
-  object-fit: contain !important;
-  object-position: center center !important;
-  max-height: 440px !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-html.pf-page .atlas__empty {
-  padding: 28px 20px !important;
-  min-height: 0 !important;
-  margin-bottom: 20px !important;
-}
-
-html.pf-page .atlas__stage,
-html.pf-page .atlas__inner,
-html.pf-page .atlas__rail-wrap {
+html.pf-page .atlas__inner {
   background-color: transparent !important;
 }
 

@@ -1,7 +1,6 @@
-"""Simple keyword RAG over local knowledge chunks.
+"""RAG Engine with Keyword Scoring & Synonym Expansion for NohiAI.
 
-Designed to stay dependency-light. Can be swapped for ChromaDB / embeddings later
-without changing the chat endpoint contract.
+Lightweight, zero external dependencies required.
 """
 
 from __future__ import annotations
@@ -16,14 +15,40 @@ KNOWLEDGE_DIR = Path(__file__).resolve().parent / "knowledge"
 CHUNKS_PATH = KNOWLEDGE_DIR / "chunks.json"
 COMPANY_MD_PATH = KNOWLEDGE_DIR / "company.md"
 
+# Essential short tokens to preserve in query & chunk processing
+_SHORT_KEEP = frozenset({"hr", "ai", "rcm", "crm", "app", "ui", "ux", "us", "ny"})
 
-# Keep short tokens that matter for contact/career matching (default min length is 3)
-_SHORT_KEEP = frozenset({"hr"})
+SYNONYMS: dict[str, list[str]] = {
+    "job": ["careers", "vacancies", "hiring", "apply", "resume", "hr"],
+    "jobs": ["careers", "vacancies", "hiring", "apply", "resume", "hr"],
+    "career": ["careers", "job", "hiring", "apply", "resume", "hr"],
+    "work": ["careers", "job", "services", "portfolio"],
+    "price": ["cost", "estimate", "pricing", "quote", "sales", "consultation"],
+    "cost": ["price", "estimate", "pricing", "quote", "sales", "consultation"],
+    "quote": ["estimate", "price", "cost", "pricing", "sales", "consultation"],
+    "estimate": ["quote", "price", "cost", "pricing", "sales"],
+    "doctor": ["healthcare", "rcm", "medical", "billing"],
+    "hospital": ["healthcare", "rcm", "medical", "billing"],
+    "medical": ["healthcare", "rcm", "billing", "cms1500"],
+    "billing": ["healthcare", "rcm", "medical", "cms1500", "claims"],
+    "developer": ["developers", "hire", "engineering", "staffing"],
+    "developers": ["developer", "hire", "engineering", "staffing"],
+    "mobile": ["app", "flutter", "react native", "android", "ios"],
+    "phone": ["contact", "sales", "hr", "call"],
+    "call": ["phone", "contact", "sales", "hr"],
+    "email": ["contact", "sales", "hr"],
+}
 
 
 def _tokenize(text: str) -> set[str]:
     tokens = re.findall(r"[a-z0-9]+", text.lower())
-    return {t for t in tokens if len(t) > 2 or t in _SHORT_KEEP}
+    result = {t for t in tokens if len(t) > 2 or t in _SHORT_KEEP}
+    # Add synonym expansions
+    expanded = set(result)
+    for t in result:
+        if t in SYNONYMS:
+            expanded.update(SYNONYMS[t])
+    return expanded
 
 
 @lru_cache(maxsize=1)
@@ -55,34 +80,33 @@ def load_chunks() -> list[dict[str, Any]]:
     return []
 
 
-def retrieve(query: str, *, top_k: int = 4, max_chars: int = 2200) -> str:
-    """Return a ranked context string for the system prompt."""
+def retrieve(query: str, *, top_k: int = 4, max_chars: int = 2400) -> str:
+    """Return ranked knowledge context string for prompt integration."""
     chunks = load_chunks()
     if not chunks:
         return ""
 
     q_tokens = _tokenize(query)
     if not q_tokens:
-        # Prefer high-value overview chunks when the query is tiny
         selected = chunks[: min(top_k, len(chunks))]
     else:
         scored: list[tuple[float, dict[str, Any]]] = []
         for chunk in chunks:
-            bag = _tokenize(
-                " ".join(
-                    [
-                        str(chunk.get("title", "")),
-                        str(chunk.get("text", "")),
-                        " ".join(chunk.get("tags") or []),
-                    ]
-                )
-            )
-            overlap = q_tokens & bag
-            # Light boost for title/tag hits
-            tag_tokens = _tokenize(" ".join(chunk.get("tags") or []) + " " + str(chunk.get("title", "")))
-            score = float(len(overlap)) + 0.5 * float(len(q_tokens & tag_tokens))
+            title = str(chunk.get("title", ""))
+            text = str(chunk.get("text", ""))
+            tags = " ".join(chunk.get("tags") or [])
+            
+            chunk_tokens = _tokenize(f"{title} {text} {tags}")
+            tag_title_tokens = _tokenize(f"{title} {tags}")
+            
+            overlap = q_tokens & chunk_tokens
+            tag_overlap = q_tokens & tag_title_tokens
+            
+            # Boost score for title/tag match
+            score = float(len(overlap)) + 1.5 * float(len(tag_overlap))
             if score > 0:
                 scored.append((score, chunk))
+        
         scored.sort(key=lambda item: item[0], reverse=True)
         selected = [c for _, c in scored[:top_k]] or chunks[:2]
 

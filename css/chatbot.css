@@ -143,13 +143,13 @@
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--cb-violet), var(--cb-violet-deep)) !important;
+    background: linear-gradient(135deg, #726cf4, #00f2fe) !important;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(114, 108, 244, 0.28);
+    box-shadow: 0 4px 14px rgba(114, 108, 244, 0.35);
 }
 
 .chatbot-avatar-box svg {
@@ -183,6 +183,16 @@
     gap: 6px;
     margin-top: 3px;
     text-transform: uppercase;
+}
+
+.chatbot-header {
+    background: #ffffff !important;
+    padding: 12px 16px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    flex-shrink: 0 !important;
 }
 
 .status-dot {
@@ -477,3 +487,24 @@
         height: 52px;
     }
 }
+
+/* CTA Link formatting in bot messages */
+.message-content a.cb-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(114, 108, 244, 0.1);
+    color: #5f58dc !important;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none !important;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.message-content a.cb-cta:hover {
+    background: rgba(114, 108, 244, 0.2);
+    transform: translateY(-1px);
+}
+

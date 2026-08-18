@@ -176,7 +176,11 @@ function initNohiChatbot() {
   /** Escape bot text, preserve line breaks, link only known-safe patterns. */
   function formatBotHtml(raw) {
     let safe = escapeHtml(raw || '');
+    // Convert markdown bold **text** to <strong>text</strong>
+    safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\r\n|\r|\n/g, '<br>');
+    // Convert bullet breaks cleanly
+    safe = safe.replace(/•\s*/g, '• ');
     // Auto-link company emails
     safe = safe.replace(
       /\b([a-zA-Z0-9._%+-]+@nohitatu\.com)\b/g,
@@ -207,11 +211,11 @@ function initNohiChatbot() {
 
   function mainPathChips() {
     return [
-      { label: 'Custom AI & Software', query: 'Tell me about custom AI and software engineering' },
-      { label: 'Dedicated Developer Teams', query: 'How do dedicated developer teams work?' },
-      { label: 'Free Project Quote', query: 'Start a project' },
-      { label: 'Healthcare Tech & RCM', query: 'Tell me about healthcare tech and RCM solutions' },
-      { label: 'Join Our Team', query: 'Looking for a job' }
+      { label: '📦 Shipped Products', query: 'Tell me about shipped products and portfolio' },
+      { label: '🩺 Healthcare RCM', query: 'Tell me about healthcare tech and RCM solutions' },
+      { label: '🚀 Hire Developers', query: 'How do dedicated developer teams work?' },
+      { label: '📞 Contact Sales', query: 'Start a project or free quote' },
+      { label: '📄 Careers & Jobs', query: 'Looking for a job' }
     ];
   }
 
@@ -307,88 +311,119 @@ function initNohiChatbot() {
     }
   }
 
+  function resetToMainMenu() {
+    conversationHistory = [];
+    messagesContainer.innerHTML = `
+      <div class="chatbot-message bot-message">
+          <div class="message-content">
+              <p>Hi there, I'm Nohi AI. Need help designing, scaling, building your next software project or to join our team? Let's chat!</p>
+          </div>
+      </div>
+      <div class="quick-chips" role="group" aria-label="Popular Questions">
+          <span class="quick-chips-label">Popular Questions</span>
+          <button class="chip-btn" data-query="Tell me about shipped products and portfolio">📦 Shipped Products</button>
+          <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">🩺 Healthcare RCM</button>
+          <button class="chip-btn" data-query="How do dedicated developer teams work?">🚀 Hire Developers</button>
+          <button class="chip-btn" data-query="Start a project or free quote">📞 Contact Sales</button>
+          <button class="chip-btn" data-query="Looking for a job">📄 Careers &amp; Jobs</button>
+      </div>
+    `;
+    bindChipEvents(messagesContainer);
+    scrollToBottom();
+  }
+
   function chipsForReply(text) {
     const t = (text || '').toLowerCase();
+    let options = [];
     if (/\bcareer|job|hiring|apply|vacanc|resume\b/.test(t)) {
-      return [
+      options = [
         { label: 'Open Careers', query: 'Open Careers', nav: careersUrl(), openOnly: true, cta: true },
         { label: 'Contact HR', query: 'How do I contact about careers?' }
       ];
-    }
-    if (/\bportfolio|case stud|project we|our work\b/.test(t)) {
-      return [
+    } else if (/\bportfolio|case stud|project we|our work\b/.test(t)) {
+      options = [
         { label: 'Open portfolio', query: 'Open portfolio', nav: portfolioUrl(), openOnly: true, cta: true },
         { label: 'Start a project', query: 'Start a project' }
       ];
-    }
-    if (/\bcontact|sales@|email|phone|consultation|estimation\b/.test(t)) {
-      return [
+    } else if (/\bcontact|sales@|email|phone|consultation|estimation\b/.test(t)) {
+      options = [
         { label: 'Open Contact form', query: 'Open contact form', nav: contactUrl(), openOnly: true, cta: true },
         { label: 'Email sales', query: 'Email sales' }
       ];
+    } else {
+      options = [
+        { label: 'Careers', query: 'Looking for a job' },
+        { label: 'Portfolio', query: 'See our work' },
+        { label: 'Contact', query: 'Start a project' }
+      ];
     }
-    return [
-      { label: 'Careers', query: 'Looking for a job' },
-      { label: 'Portfolio', query: 'See our work' },
-      { label: 'Contact', query: 'Start a project' }
-    ];
+    options.push({ label: '↩ Back to Main Menu', query: 'SHOW_MAIN_MENU' });
+    return options;
   }
 
-  /** Offline / API-down guidance so the widget still helps visitors */
+  /** Client-side RAG fallback engine when Python API server is offline */
   function localFallbackReply(query) {
     const q = query.toLowerCase().trim();
-    // Explicit phone / "how to call" — labeled numbers
-    if (/\b(phone|telephone|phones)\b/.test(q) ||
-        /\b(contact|sales|hr)\s+numbers?\b/.test(q) ||
-        /\bphone\s*numbers?\b/.test(q) ||
-        /\bhow (can|do) i (call|reach|contact)\b/.test(q)) {
+
+    // 1. Shipped Products & Portfolio
+    if (/\b(shipped|product|products|portfolio|work|case stud)\b/.test(q)) {
       return (
-        "Contact Numbers:\n\n" +
-        "• Sales & Projects: +91 99413 33444 (sales@nohitatu.com)\n" +
-        "• HR & Recruitment: +91 73974 59131 (hrd@nohitatu.com)"
+        "Nohitatu has designed and shipped over 29 custom software products and enterprise client systems:\n\n" +
+        "• **Healthcare RCM & CMS 1500 Claim Billing**\n" +
+        "• **Sales CRM & Real-time Analytics**\n" +
+        "• **Dojoman Event & Tournament Management**\n" +
+        "• **HR Suite & Automated Payroll**\n" +
+        "• **FinTechesh Financial Automation**\n\n" +
+        "Explore full case studies and live demos at Portfolio.html!"
       );
     }
-    // HR & Career Queries — Clean professional text without emojis
-    if (/\b(job|career|hiring|apply|vacanc|resume|hr|recruit)\b/.test(q)) {
+
+    // 2. Healthcare Tech & RCM
+    if (/\b(health|rcm|billing|medical|cms)\b/.test(q)) {
       return (
-        "We'd love to have you on our team! You can check out all our current open roles and apply on our Careers.html page.\n\n" +
-        "If you have any questions, feel free to call our HR team at +91 73974 59131 or email hrd@nohitatu.com. We'd love to connect!"
+        "Healthcare software & Revenue Cycle Management (RCM) is one of Nohitatu's flagship specializations:\n\n" +
+        "• **Automated CMS-1500 & 837P electronic claim processing**\n" +
+        "• **Patient eligibility verification & charge entry**\n" +
+        "• **Denial management and HIPAA-compliant workflow dashboards**\n\n" +
+        "Contact our sales specialists at sales@nohitatu.com or +91 99413 33444 to discuss your healthcare IT needs."
       );
     }
-    if (/\b(portfolio|work|case stud)\b/.test(q)) {
+
+    // 3. Hire Developers & Dedicated Teams
+    if (/\b(developer|developers|team|teams|hire|engineers|staffing)\b/.test(q)) {
       return (
-        "We're proud of the digital products and custom software solutions we've built! You can explore our featured case studies and live projects on Portfolio.html.\n\n" +
-        "Request a tailored walkthrough:\n" +
-        "• Email: sales@nohitatu.com\n" +
-        "• Phone: +91 99413 33444"
+        "You can hire pre-vetted senior dedicated software developers, mobile app engineers, and UI/UX designers from Nohitatu.\n\n" +
+        "• **Flexible Engagement**: Dedicated Team, Time & Material, or Fixed Price models\n" +
+        "• **Rapid Onboarding**: Dedicated engineering teams onboard within 3 to 7 business days\n" +
+        "• **Direct Integration**: Integrated directly into your tools, timezone, and product roadmap\n\n" +
+        "Chat directly with our sales team at sales@nohitatu.com or +91 99413 33444 to get started!"
       );
     }
-    if (/\b(contact|sales|project|estimate|estimation|demo|talk|call|consult)\b/.test(q)) {
+
+    // 4. Careers & HR Jobs
+    if (/\b(job|jobs|career|careers|hiring|apply|vacanc|resume|hr|recruit)\b/.test(q)) {
       return (
-        "We'd love to help bring your ideas to life! Whether you need custom software development, an AI solution, or a dedicated developer team, we're ready to jump in.\n\n" +
-        "Reach our team directly:\n" +
-        "• Email: sales@nohitatu.com\n" +
-        "• Phone: +91 99413 33444\n" +
-        "• Form: Contact-us.html"
+        "Looking to join Nohitatu? We are always hiring talented software engineers, QA leads, and UI designers!\n\n" +
+        "• **View Open Roles**: Careers.html\n" +
+        "• **Submit Resume**: PostResume.html\n" +
+        "• **HR Contact Email**: hrd@nohitatu.com\n" +
+        "• **HR Phone**: +91 73974 59131\n\n" +
+        "For job inquiries, please contact our HR team directly."
       );
     }
-    if (/\b(health|rcm|billing|medical)\b/.test(q)) {
+
+    // 5. Contact Sales & Quotes
+    if (/\b(quote|sales|project|estimate|estimation|demo|talk|call|consult|contact|phone)\b/.test(q)) {
       return (
-        "Nohitatu brings deep expertise in healthcare RCM, medical billing, and custom health-tech software.\n\n" +
-        "Schedule a consultation:\n" +
-        "• Email: sales@nohitatu.com\n" +
-        "• Phone: +91 99413 33444"
+        "Ready to scale your software product or get a custom cost estimation?\n\n" +
+        "• **Sales Email**: sales@nohitatu.com\n" +
+        "• **Sales Phone**: +91 99413 33444\n" +
+        "• **Online Request Form**: Contact-us.html\n" +
+        "• **Explore Shipped Products**: Portfolio.html\n\n" +
+        "Our team typically responds within 24 business hours for project consultations."
       );
     }
-    if (/\b(global|developer|software|saas|mobile|erp|ai)\b/.test(q)) {
-      return (
-        "We build scalable custom software, web & mobile applications, AI solutions, and dedicated engineering teams to accelerate your business goals.\n\n" +
-        "Chat directly with our team:\n" +
-        "• Email: sales@nohitatu.com\n" +
-        "• Phone: +91 99413 33444\n" +
-        "• Contact: Contact-us.html"
-      );
-    }
+
     return (
       "I'm here to help with whatever you need! Whether you're building custom software, exploring healthcare solutions, or looking to join our team, we'd love to assist.\n\n" +
       "Direct Contacts:\n" +
@@ -446,6 +481,19 @@ function initNohiChatbot() {
   async function handleSendMessage(customText) {
     const text = (customText || (inputField && inputField.value) || '').trim();
     if (!text || isSending) return;
+
+    if (text === 'SHOW_MAIN_MENU' || text === 'RESET_MAIN_MENU') {
+      if (inputField) inputField.value = '';
+      messagesContainer.querySelectorAll('.quick-chips').forEach(el => el.remove());
+      addBotMessage('Here are the main topics you can explore:', mainPathChips(), 'Popular Questions');
+      return;
+    }
+
+    if (text === 'RESET_MAIN_MENU') {
+      if (inputField) inputField.value = '';
+      resetToMainMenu();
+      return;
+    }
 
     if (!customText && inputField) inputField.value = '';
 

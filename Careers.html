@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css?v=20260810particles11" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
-    <link rel="stylesheet" href="css/chatbot.css?v=20260807noflicker" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
     <script src="js/jquery.min.js"></script>
     <script src="js/custom.js?v=20260806nocursor1"></script>
     <style>
@@ -170,7 +170,7 @@
 
         body.careers-page .navbar-toggle.nav-menu { display: none; }
 
-        /* Hero — sticky full-viewport banner; Day panel curtains over it.
+        /* Hero — sticky full-viewport video banner; Day panel curtains over it.
            NEVER position:relative — kills sticky. height:auto keeps sticky valid. */
         body.careers-page .careers-hero.nh-curtain-banner,
         body.careers-page .careers-hero {
@@ -185,51 +185,52 @@
             height: auto;
             margin: 0;
             overflow: hidden;
-            padding: 128px 0 56px;
-            display: grid;
-            place-items: center;
-            background:
-                linear-gradient(rgba(18, 20, 36, 0.62), rgba(18, 20, 36, 0.68)),
-                url("images/blog/blog-parallax-team.jpg") center 42% / cover no-repeat;
+            padding: 0;
+            display: block;
+            background: #111;
             color: #fff;
             transform: none !important;
             filter: none !important;
         }
 
-        body.careers-page .careers-hero-grid {
-            position: relative;
-            z-index: 2;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+        .careers-hero-media {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        body.careers-page .hero-copy {
-            max-width: 860px;
-            margin: 0 auto;
+        .careers-hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: 50% 42%;
+            opacity: 0;
+            visibility: visible;
+            transition: opacity .45s ease;
+            will-change: opacity;
+            background: #111;
         }
 
-        body.careers-page h1 {
-            max-width: 860px;
-            margin: 0 auto;
-            color: #fff;
-            font-family: "Plus Jakarta Sans", sans-serif;
-            font-size: clamp(3.4rem, 6.2vw, 5.4rem);
-            font-weight: 700;
-            letter-spacing: -0.045em;
-            line-height: 1.08;
+        .careers-hero-video.is-active {
+            opacity: 1;
+            z-index: 1;
         }
 
-        body.careers-page .hero-intro {
-            max-width: 700px;
-            margin: 24px auto 0;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: clamp(1rem, 1.5vw, 1.18rem);
-            font-weight: 400;
-            line-height: 1.75;
+        .careers-hero h1.visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         /* Clip tall wave art so only peaks tip into the first viewport */
@@ -478,6 +479,66 @@
             border: 0;
         }
 
+        /* Culture photo marquee — clipped to this section, not the page */
+        .careers-life-marquee {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+            margin: 32px 0 0;
+            padding: 0;
+            overflow: hidden;
+            overflow-x: hidden;
+        }
+
+        .careers-life-marquee-row {
+            display: flex;
+            width: max-content;
+            gap: 12px;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .careers-life-marquee-row + .careers-life-marquee-row {
+            margin-top: 12px;
+        }
+
+        .careers-life-marquee-row--a {
+            animation: careersLifeMarquee 48s linear infinite;
+        }
+
+        .careers-life-marquee-row--b {
+            animation: careersLifeMarquee 56s linear infinite reverse;
+        }
+
+        .careers-life-marquee-seq {
+            display: flex;
+            gap: 12px;
+            flex: 0 0 auto;
+        }
+
+        .careers-life-marquee figure {
+            flex: 0 0 auto;
+            width: 240px;
+            height: 152px;
+            margin: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #ececec;
+        }
+
+        .careers-life-marquee img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 46%;
+        }
+
+        @keyframes careersLifeMarquee {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(calc(-50% - 6px), 0, 0); }
+        }
+
         /* Scroll gap while sticky quote dwells alone before jobs cover it.
          * Navy (not page-ground) so a failed/unpinned frame never flashes textured gray. */
         .careers-banner-dwell {
@@ -668,6 +729,165 @@
             color: var(--blue);
         }
 
+        .careers-jobs-total {
+            margin: 12px 0 0;
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .careers-departments {
+            margin: 0;
+        }
+
+        .careers-dept {
+            margin: 0 0 14px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.42);
+            overflow: hidden;
+            scroll-margin-top: 96px;
+        }
+
+        .careers-dept:last-child {
+            margin-bottom: 0;
+        }
+
+        .careers-dept-heading {
+            margin: 0;
+            font: inherit;
+        }
+
+        .careers-dept-toggle {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            margin: 0;
+            padding: 20px 22px;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .careers-dept-toggle:hover {
+            background: rgba(20, 36, 61, 0.05);
+        }
+
+        .careers-dept-toggle:focus-visible {
+            outline: 2px solid var(--blue);
+            outline-offset: -2px;
+        }
+
+        .careers-dept-icon {
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            background: rgba(114, 108, 244, 0.12);
+            color: var(--blue-dark);
+        }
+
+        .careers-dept-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .careers-dept-head-text {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .careers-dept-name {
+            display: block;
+            color: var(--navy);
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            line-height: 1.3;
+        }
+
+        .careers-dept-blurb {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .careers-dept-count {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(114, 108, 244, 0.12);
+            color: var(--blue-dark);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .careers-dept-chevron {
+            flex: 0 0 auto;
+            width: 18px;
+            height: 18px;
+            color: var(--muted);
+            transition: transform 0.3s ease;
+        }
+
+        .careers-dept.is-open .careers-dept-chevron {
+            transform: rotate(180deg);
+        }
+
+        .careers-dept-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.32s ease;
+        }
+
+        .careers-dept.is-open .careers-dept-panel {
+            grid-template-rows: 1fr;
+        }
+
+        .careers-dept-panel-inner {
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .careers-dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+            gap: 16px;
+            padding: 4px 22px 22px;
+        }
+
+        .careers-dept-grid .careers-job {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .careers-dept-panel { transition: none; }
+            .careers-dept-chevron { transition: none; }
+        }
+
+        @media (max-width: 560px) {
+            .careers-dept-toggle { padding: 16px; gap: 12px; }
+            .careers-dept-icon { width: 40px; height: 40px; }
+            .careers-dept-grid { padding: 4px 14px 16px; }
+            .careers-dept-blurb { display: none; }
+        }
+
         body.careers-page:not(.footer-reveal-ready) .site-footer {
             position: relative;
             z-index: 2;
@@ -716,11 +936,7 @@
             body.careers-page .careers-hero {
                 min-height: max(100svh, 520px);
                 height: auto;
-                padding: 120px 0 48px;
-            }
-
-            body.careers-page .careers-hero-grid {
-                min-height: 270px;
+                padding: 0;
             }
 
             .shell { width: min(100% - 30px, 1180px); }
@@ -734,6 +950,8 @@
             }
             .careers-life-inner { width: min(100% - 30px, 1180px); }
             .careers-life-inner h2 { margin-bottom: 20px; }
+            .careers-life-marquee { margin-top: 24px; }
+            .careers-life-marquee figure { width: 168px; height: 108px; border-radius: 10px; }
 
             body.careers-page .careers-quote.nh-curtain-banner,
             body.careers-page .careers-quote {
@@ -777,21 +995,12 @@
 
         @media (max-width: 560px) {
             body.careers-page .careers-hero.nh-curtain-banner {
-                padding: 110px 0 40px;
-                background-position: 57% center;
+                padding: 0;
+                background-position: 50% 42%;
             }
 
-            body.careers-page .careers-hero-grid {
-                min-height: 260px;
-            }
-
-            body.careers-page h1 {
-                font-size: clamp(2.8rem, 12vw, 3.8rem);
-            }
-
-            body.careers-page .hero-intro {
-                font-size: 15px;
-                line-height: 1.7;
+            .careers-hero-video {
+                object-position: 50% 38%;
             }
 
             .hero-wave {
@@ -930,11 +1139,27 @@
             -->
             <div class="nh-curtain-stack careers-full-stack" id="careers-quote-pin">
             <section class="careers-hero nh-curtain-banner">
-                <div class="shell careers-hero-grid">
-                    <div class="hero-copy">
-                        <h1>Join Nohitatu</h1>
-                        <p class="hero-intro">Build meaningful software with a team that values craft, ownership, and lasting partnership.</p>
-                    </div>
+                <h1 class="visually-hidden">Careers at Nohitatu</h1>
+                <div class="careers-hero-media" data-careers-hero-media aria-hidden="true">
+                    <video
+                        class="careers-hero-video is-active"
+                        data-hero-slot="0"
+                        src="images/careers-video/hero-team-01.mp4"
+                        autoplay
+                        muted
+                        playsinline
+                        webkit-playsinline
+                        preload="auto"
+                    ></video>
+                    <video
+                        class="careers-hero-video"
+                        data-hero-slot="1"
+                        src="images/careers-video/hero-team-02.mp4"
+                        muted
+                        playsinline
+                        webkit-playsinline
+                        preload="auto"
+                    ></video>
                 </div>
                 <div class="hero-wave" aria-hidden="true">
                     <span class="hero-wave__layer hero-wave__layer--back"></span>
@@ -961,6 +1186,40 @@
                         <canvas id="careers-life-canvas" class="careers-life-canvas" width="1280" height="720" aria-hidden="true"></canvas>
                     </figure>
                 </div>
+                <div class="careers-life-marquee" aria-label="Moments from life at Nohitatu">
+                    <div class="careers-life-marquee-row careers-life-marquee-row--a">
+                        <div class="careers-life-marquee-seq">
+                            <figure><img src="images/careers-collage/anniversary-16-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/lobby-onam-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/white-shirts-lobby-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/onam-sarees-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/day-in-nohitatu/desk-6.jpg" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                        </div>
+                        <div class="careers-life-marquee-seq" aria-hidden="true">
+                            <figure><img src="images/careers-collage/anniversary-16-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/lobby-onam-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/white-shirts-lobby-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/onam-sarees-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/day-in-nohitatu/desk-6.jpg" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                        </div>
+                    </div>
+                    <div class="careers-life-marquee-row careers-life-marquee-row--b">
+                        <div class="careers-life-marquee-seq">
+                            <figure><img src="images/careers-collage/halloween-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/traditional-men-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/teal-wall-festive-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/teal-office-team-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/day-in-nohitatu/desk-7.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                        </div>
+                        <div class="careers-life-marquee-seq" aria-hidden="true">
+                            <figure><img src="images/careers-collage/halloween-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/traditional-men-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/teal-wall-festive-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/careers-collage/teal-office-team-lg.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                            <figure><img src="images/day-in-nohitatu/desk-7.webp" alt="" width="240" height="152" loading="lazy" decoding="async" /></figure>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <blockquote class="careers-quote nh-curtain-banner" id="careers-quote-banner">
@@ -974,11 +1233,12 @@
                 <div class="shell">
                     <div class="careers-jobs-head">
                         <h2 id="careers-jobs-title">Open positions</h2>
-                        <p>Current openings at Nohitatu. Apply with your resume and the job code that matches your interest.</p>
+                        <p>Browse openings by department. Select a department to see its current roles, then apply with your resume and the job code that matches your interest.</p>
+                        <p class="careers-jobs-total" data-careers-total>6 open roles across 4 departments</p>
                         <a class="careers-jobs-linkedin" href="https://www.linkedin.com/company/nohitatu" target="_blank" rel="noopener noreferrer">Follow us on LinkedIn</a>
                     </div>
 
-                    <div class="careers-jobs-grid" id="careers-jobs-grid" data-careers-grid>
+                    <div class="careers-jobs-grid" id="careers-jobs-grid" data-careers-grid style="display:none" hidden>
                         <article class="careers-job">
                             <h3 class="careers-job-title">Business Analyst Internship</h3>
                             <dl class="careers-job-meta">
@@ -1096,6 +1356,140 @@
                             </dl>
                             <a class="careers-job-apply" href="Careerdetails.html?id=500">Apply</a>
                         </article>
+                    </div>
+
+                    <div class="careers-departments" id="careers-departments" data-careers-departments>
+                        <section class="careers-dept" data-department="engineering" id="department-engineering">
+                            <h3 class="careers-dept-heading">
+                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-engineering" id="dept-toggle-engineering">
+                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+                                    <span class="careers-dept-head-text">
+                                        <span class="careers-dept-name">Engineering &amp; Development</span>
+                                        <span class="careers-dept-blurb">Build and ship the products our clients rely on.</span>
+                                    </span>
+                                    <span class="careers-dept-count">2 open roles</span>
+                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </h3>
+                            <div class="careers-dept-panel" id="dept-panel-engineering" role="region" aria-labelledby="dept-toggle-engineering">
+                                <div class="careers-dept-panel-inner" inert>
+                                    <div class="careers-dept-grid">
+                                        <article class="careers-job" data-department="engineering">
+                                            <h4 class="careers-job-title">Angular Developer</h4>
+                                            <dl class="careers-job-meta">
+                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">554</span></dd></div>
+                                                <div><dt>Experience</dt><dd>1-5 Years</dd></div>
+                                                <div><dt>Location</dt><dd>Chennai</dd></div>
+                                                <div><dt>Shift Timings</dt><dd>08.30AM to 06:30PM</dd></div>
+                                            </dl>
+                                            <a class="careers-job-apply" href="Careerdetails.html?id=554">Apply</a>
+                                        </article>
+                                        <article class="careers-job" data-department="engineering">
+                                            <h4 class="careers-job-title">Full Stack Developer (AI-Enabled)</h4>
+                                            <dl class="careers-job-meta">
+                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">501</span></dd></div>
+                                                <div><dt>Experience</dt><dd>2+ Years</dd></div>
+                                                <div><dt>Location</dt><dd>Chennai</dd></div>
+                                            </dl>
+                                            <a class="careers-job-apply" href="Careerdetails.html?id=501">Apply</a>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="careers-dept" data-department="business-analysis" id="department-business-analysis">
+                            <h3 class="careers-dept-heading">
+                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-business-analysis" id="dept-toggle-business-analysis">
+                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+                                    <span class="careers-dept-head-text">
+                                        <span class="careers-dept-name">Business Analysis</span>
+                                        <span class="careers-dept-blurb">Turn business needs into clear, buildable requirements.</span>
+                                    </span>
+                                    <span class="careers-dept-count">2 open roles</span>
+                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </h3>
+                            <div class="careers-dept-panel" id="dept-panel-business-analysis" role="region" aria-labelledby="dept-toggle-business-analysis">
+                                <div class="careers-dept-panel-inner" inert>
+                                    <div class="careers-dept-grid">
+                                        <article class="careers-job" data-department="business-analysis">
+                                            <h4 class="careers-job-title">Business Analyst Internship</h4>
+                                            <dl class="careers-job-meta">
+                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">569</span></dd></div>
+                                                <div><dt>Experience</dt><dd>Fresher</dd></div>
+                                                <div><dt>Location</dt><dd>Chennai</dd></div>
+                                            </dl>
+                                            <a class="careers-job-apply" href="Careerdetails.html?id=569">Apply</a>
+                                        </article>
+                                        <article class="careers-job" data-department="business-analysis">
+                                            <h4 class="careers-job-title">Business Analyst</h4>
+                                            <dl class="careers-job-meta">
+                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">556</span></dd></div>
+                                                <div><dt>Experience</dt><dd>1-2 Years</dd></div>
+                                                <div><dt>Location</dt><dd>Chennai</dd></div>
+                                            </dl>
+                                            <a class="careers-job-apply" href="Careerdetails.html?id=556">Apply</a>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="careers-dept" data-department="sales" id="department-sales">
+                            <h3 class="careers-dept-heading">
+                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-sales" id="dept-toggle-sales">
+                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></span>
+                                    <span class="careers-dept-head-text">
+                                        <span class="careers-dept-name">Sales &amp; Business Development</span>
+                                        <span class="careers-dept-blurb">Grow partnerships and open new markets.</span>
+                                    </span>
+                                    <span class="careers-dept-count">1 open role</span>
+                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </h3>
+                            <div class="careers-dept-panel" id="dept-panel-sales" role="region" aria-labelledby="dept-toggle-sales">
+                                <div class="careers-dept-panel-inner" inert>
+                                    <div class="careers-dept-grid">
+                                        <article class="careers-job" data-department="sales">
+                                            <h4 class="careers-job-title">Business Development Manager</h4>
+                                            <dl class="careers-job-meta">
+                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">500</span></dd></div>
+                                                <div><dt>Experience</dt><dd>6 and Above</dd></div>
+                                                <div><dt>Location</dt><dd>Chennai</dd></div>
+                                            </dl>
+                                            <a class="careers-job-apply" href="Careerdetails.html?id=500">Apply</a>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="careers-dept" data-department="hr" id="department-hr">
+                            <h3 class="careers-dept-heading">
+                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-hr" id="dept-toggle-hr">
+                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                                    <span class="careers-dept-head-text">
+                                        <span class="careers-dept-name">Human Resources</span>
+                                        <span class="careers-dept-blurb">Find, grow, and support our people.</span>
+                                    </span>
+                                    <span class="careers-dept-count">1 open role</span>
+                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                            </h3>
+                            <div class="careers-dept-panel" id="dept-panel-hr" role="region" aria-labelledby="dept-toggle-hr">
+                                <div class="careers-dept-panel-inner" inert>
+                                    <div class="careers-dept-grid">
+                                        <article class="careers-job" data-department="hr">
+                                            <h4 class="careers-job-title">Hiring Freshers – HR Internship</h4>
+                                            <dl class="careers-job-meta">
+                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">512</span></dd></div>
+                                                <div><dt>Experience</dt><dd>Fresher</dd></div>
+                                                <div><dt>Location</dt><dd>Chennai</dd></div>
+                                            </dl>
+                                            <a class="careers-job-apply" href="Careerdetails.html?id=512">Apply</a>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
 
                     <p class="careers-jobs-foot">Questions about a role? Write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a> or <a href="Contact-us.html">contact us</a>. Follow openings and company updates on <a href="https://www.linkedin.com/company/nohitatu" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
@@ -1233,15 +1627,13 @@
     </script>
 
     <script>
-        /* Hero video clip dynamic overlay metadata switcher */
+        /* Careers hero: 01 → 02 → 03 → 01. Two stacked players so the next
+           clip is already buffered. Pause only when the tab is hidden. */
         (() => {
             const media = document.querySelector("[data-careers-hero-media]");
-            const heroVideo = document.querySelector("[data-hero-video]");
-            const preloadVideo = document.querySelector("[data-hero-preload]");
-            const badgeEl = document.querySelector("[data-hero-badge]");
-            const titleEl = document.querySelector("[data-hero-title]");
-            const subtitleEl = document.querySelector("[data-hero-subtitle]");
-            if (!media || !heroVideo || !preloadVideo) return;
+            if (!media) return;
+            const slots = Array.from(media.querySelectorAll("[data-hero-slot]"));
+            if (slots.length < 2) return;
 
             const sources = [
                 "images/careers-video/hero-team-01.mp4",
@@ -1249,109 +1641,96 @@
                 "images/careers-video/hero-team-03.mp4"
             ];
 
-            const videoMeta = [
-                {
-                    badge: "Recognized & Awarded",
-                    title: "We have been awarded for software & AI engineering excellence",
-                    subtitle: "Join a dynamic team building next-generation digital products and cloud platforms."
-                },
-                {
-                    badge: "Life at Nohitatu",
-                    title: "Collaborative engineering culture driving global digital transformation",
-                    subtitle: "Work alongside passionate developers, UI/UX designers, and AI specialists."
-                },
-                {
-                    badge: "Innovation & Growth (Vid 3)",
-                    title: "Empowering top talent to solve complex enterprise software challenges",
-                    subtitle: "Accelerate your career with continuous learning, mentorship, and high-impact projects."
-                }
-            ];
-
             let activeIndex = 0;
-            let pendingSwap = false;
-            let lastNearEndIndex = -1;
+            let front = 0;
+            let advancing = false;
 
-            const safePlay = (video) => {
-                if (!video) return Promise.resolve();
+            const fileOf = (index) => sources[index % sources.length];
+
+            const prep = (video) => {
                 video.muted = true;
                 video.defaultMuted = true;
-                const playPromise = video.play();
-                if (playPromise && typeof playPromise.catch === "function") {
-                    return playPromise.catch(() => {});
-                }
-                return Promise.resolve();
-            };
-
-            const primePreload = (index) => {
-                const src = sources[index];
-                if (!src || preloadVideo.currentSrc.endsWith(src)) return;
-                preloadVideo.src = src;
-                preloadVideo.load();
-            };
-
-            const showVideo = async (nextIndex) => {
-                if (nextIndex === activeIndex || pendingSwap) return;
-                pendingSwap = true;
-                const nextSrc = sources[nextIndex];
-                heroVideo.classList.add("is-fading");
-
-                const commitSwap = async () => {
-                    heroVideo.pause();
-                    heroVideo.src = nextSrc;
-                    heroVideo.currentTime = 0;
-                    heroVideo.load();
-                    await safePlay(heroVideo);
-
-                    if (videoMeta[nextIndex]) {
-                        if (badgeEl) badgeEl.textContent = videoMeta[nextIndex].badge;
-                        if (titleEl) titleEl.textContent = videoMeta[nextIndex].title;
-                        if (subtitleEl) subtitleEl.textContent = videoMeta[nextIndex].subtitle;
-                    }
-
-                    heroVideo.classList.remove("is-fading");
-                    activeIndex = nextIndex;
-                    lastNearEndIndex = -1;
-                    pendingSwap = false;
-                    primePreload((activeIndex + 1) % sources.length);
-                };
-
-                if (preloadVideo.readyState >= 2) {
-                    await commitSwap();
-                    return;
-                }
-
-                const onReady = async () => {
-                    preloadVideo.removeEventListener("loadeddata", onReady);
-                    await commitSwap();
-                };
-                preloadVideo.addEventListener("loadeddata", onReady, { once: true });
-                primePreload(nextIndex);
-            };
-
-            const maybeAdvance = () => {
-                if (pendingSwap || !Number.isFinite(heroVideo.duration) || heroVideo.duration <= 0) return;
-                const remaining = heroVideo.duration - heroVideo.currentTime;
-                if (remaining <= 0.35) {
-                    if (lastNearEndIndex === activeIndex) return;
-                    lastNearEndIndex = activeIndex;
-                    showVideo((activeIndex + 1) % sources.length);
-                    return;
-                }
-                lastNearEndIndex = -1;
-            };
-
-            [heroVideo, preloadVideo].forEach((video) => {
+                video.volume = 0;
                 video.loop = false;
                 video.controls = false;
+                video.playsInline = true;
+                video.setAttribute("muted", "");
+                video.setAttribute("playsinline", "");
+                video.setAttribute("webkit-playsinline", "");
                 video.setAttribute("aria-hidden", "true");
                 video.setAttribute("tabindex", "-1");
+                video.removeAttribute("controls");
+            };
+
+            const playSafe = (video) => {
+                prep(video);
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === "function") {
+                    playPromise.catch(() => {});
+                }
+            };
+
+            const loadSrc = (video, src) => {
+                const current = (video.getAttribute("src") || "").replace(/^\.\//, "");
+                if (current === src && video.readyState >= 2) return;
+                video.src = src;
+                video.load();
+            };
+
+            const incomingSlot = () => slots[(front + 1) % 2];
+
+            const advance = () => {
+                if (advancing) return;
+                advancing = true;
+                const next = (activeIndex + 1) % sources.length;
+                const incoming = incomingSlot();
+                loadSrc(incoming, fileOf(next));
+
+                let done = false;
+                const go = () => {
+                    if (done) return;
+                    done = true;
+                    incoming.removeEventListener("canplay", go);
+                    playSafe(incoming);
+                    incoming.classList.add("is-active");
+                    slots[front].classList.remove("is-active");
+                    slots[front].pause();
+                    front = (front + 1) % 2;
+                    activeIndex = next;
+                    media.dataset.heroClip = String(activeIndex + 1);
+                    advancing = false;
+                    loadSrc(incomingSlot(), fileOf(activeIndex + 1));
+                };
+
+                incoming.addEventListener("canplay", go, { once: true });
+                if (incoming.readyState >= 3) go();
+                window.setTimeout(go, 600);
+            };
+
+            slots.forEach(prep);
+            slots[0].classList.add("is-active");
+            loadSrc(slots[0], fileOf(0));
+            loadSrc(slots[1], fileOf(1));
+            media.dataset.heroClip = "1";
+            playSafe(slots[0]);
+
+            slots.forEach((video) => {
+                video.addEventListener("ended", () => {
+                    if (video.classList.contains("is-active")) advance();
+                });
             });
-            heroVideo.addEventListener("loadeddata", () => media.classList.add("is-ready"));
-            heroVideo.addEventListener("timeupdate", maybeAdvance);
-            heroVideo.addEventListener("ended", () => showVideo((activeIndex + 1) % sources.length));
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    slots[front].pause();
+                    return;
+                }
+                playSafe(slots[front]);
+            });
         })();
     </script>
 
+    <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
     <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
     <div id="chatbot-container" class="chatbot-container">
         <div id="chatbot-window" class="chatbot-window hidden">
@@ -1359,10 +1738,11 @@
                 <div class="chatbot-header-content">
                     <div class="chatbot-avatar-box">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            <circle cx="9" cy="10" r="1" fill="#726cf4"></circle>
-                            <circle cx="15" cy="10" r="1" fill="#726cf4"></circle>
-                            <path d="M9.5 13.5c1 .8 2 1 3 0" stroke="#726cf4"></path>
+                            <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                            <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                            <circle cx="9" cy="14" r="1.2" fill="#726cf4"></circle>
+                            <circle cx="15" cy="14" r="1.2" fill="#726cf4"></circle>
+                            <path d="M10 17.5h4" stroke="#726cf4"></path>
                         </svg>
                     </div>
                     <div class="chatbot-header-text">
@@ -1380,11 +1760,11 @@
                 </div>
                 <div class="quick-chips" role="group" aria-label="Choose one">
                     <span class="quick-chips-label">Popular Questions</span>
-                    <button class="chip-btn" data-query="Tell me about custom AI and software engineering">Custom AI & Software</button>
-                    <button class="chip-btn" data-query="How do dedicated developer teams work?">Dedicated Developer Teams</button>
-                    <button class="chip-btn" data-query="Start a project">Free Project Quote</button>
-                    <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">Healthcare Tech & RCM</button>
-                    <button class="chip-btn" data-query="Looking for a job">Join Our Team</button>
+                    <button class="chip-btn" data-query="Tell me about shipped products and portfolio">📦 Shipped Products</button>
+                    <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">🏥 Healthcare RCM</button>
+                    <button class="chip-btn" data-query="How do dedicated developer teams work?">🚀 Hire Developers</button>
+                    <button class="chip-btn" data-query="Start a project or free quote">📞 Contact Sales</button>
+                    <button class="chip-btn" data-query="Looking for a job">📄 Careers &amp; Jobs</button>
                 </div>
             </div>
 
@@ -1398,11 +1778,44 @@
             </div>
         </div>
 
-        <!-- Terracotta Coral Toggle Button -->
         <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
             <div id="toggle-icon-chat" class="toggle-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                    <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                    <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+                    <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+                    <path d="M10 17.5h4"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+            </div>
+
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask NohiAI about custom AI, project quotes, or careers..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                    <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                    <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+                    <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+                    <path d="M10 17.5h4"></path>
                 </svg>
             </div>
             <div id="toggle-icon-close" class="toggle-icon hidden">
@@ -1415,7 +1828,7 @@
     </div>
 
     <script src="js/api-base.js?v=20260812liveapi1"></script>
-    <script src="js/careers-list.js?v=20260812liveapi1"></script>
-    <script src="js/chatbot.js?v=20260807noflicker"></script>
+    <script src="js/careers-list.js?v=20260817depts1"></script>
+    <script src="js/chatbot.js?v=20260817backbtn"></script>
 </body>
 </html>

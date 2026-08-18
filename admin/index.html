@@ -9,7 +9,24 @@
   <meta name="nh-admin" content="login-portal" />
   <!-- Optional API host override for static hosts (GitHub Pages). Empty = same-origin; on github.io defaults to Render. -->
   <!-- <meta name="nh-admin-api" content="https://nohitatu-website-admin.onrender.com" /> -->
-  
+  <script>
+    (function () {
+      var p = (location.pathname || "/").replace(/\/+$/, "") || "/";
+      var base;
+      if (/\/adminlogin$/i.test(p)) {
+        base = p.slice(0, -"/adminlogin".length) + "/admin/";
+      } else if (/\/admin$/i.test(p)) {
+        base = p + "/";
+      } else {
+        var idx = p.indexOf("/admin/");
+        base = idx >= 0 ? p.slice(0, idx + 7) : "./";
+      }
+      var el = document.createElement("base");
+      el.href = base;
+      document.head.appendChild(el);
+    })();
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

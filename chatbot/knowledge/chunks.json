@@ -1,68 +1,50 @@
 [
   {
-    "id": "about",
-    "title": "About Nohitatu",
-    "tags": ["about", "company", "nohitatu", "who"],
-    "text": "Nohitatu Technologies Private Limited is a software development and SaaS partner specializing in global software delivery, healthcare Revenue Cycle Management (RCM), medical billing, and custom digital products for providers, payers, health-tech, and product teams."
+    "id": "chunk-overview",
+    "title": "Nohitatu Technologies Overview",
+    "tags": ["about", "overview", "company", "nohitatu", "services", "who"],
+    "text": "Nohitatu Technologies Private Limited is a global software development agency and SaaS partner specializing in custom enterprise software, healthcare RCM, medical billing, cloud products, and mobile app development. We help global clients scale engineering teams, modernize legacy platforms, and build tailored digital products."
   },
   {
-    "id": "custom-software",
-    "title": "Custom & global software development",
-    "tags": ["custom", "software", "global", "saas", "development", "outsourcing", "cloud"],
-    "text": "Nohitatu builds custom software, cloud-native SaaS, web apps, and provides application development, maintenance, and support. Delivery uses a cost-effective global/global model with dedicated engineering teams that plug into client roadmaps."
+    "id": "chunk-services-custom",
+    "title": "Custom Software Development & Cloud SaaS",
+    "tags": ["custom", "software", "development", "saas", "cloud", "engineering", "legacy", "modernization", "web", "mobile"],
+    "text": "Nohitatu delivers custom full-stack software development, cloud-native SaaS engineering, legacy system modernization, and ongoing software maintenance. We build scalable applications tailored to business roadmaps using React, Next.js, Python, Node.js, Flutter, and AWS/Azure cloud infrastructure."
   },
   {
-    "id": "healthcare-rcm",
-    "title": "Healthcare software, medical billing, RCM",
-    "tags": ["healthcare", "medical", "billing", "rcm", "claims", "denials", "revenue", "payer", "provider"],
-    "text": "Nohitatu specializes in healthcare RCM and medical billing: claims, denials, billing workflows, and automation for operational efficiency. Services suit providers, payers, and health-tech companies."
+    "id": "chunk-services-rcm",
+    "title": "Healthcare Software, Medical Billing & RCM",
+    "tags": ["healthcare", "rcm", "medical", "billing", "claims", "cms1500", "837p", "hipaa", "denials", "hospital", "doctor"],
+    "text": "Nohitatu provides specialized Healthcare Revenue Cycle Management (RCM) and medical billing software. Capabilities include automated 837P / CMS-1500 claim processing, eligibility verification, charge entry, denial management, and HIPAA-compliant healthcare analytics dashboards for health-tech platforms and providers."
   },
   {
-    "id": "web-mobile-erp-ai",
-    "title": "Web, mobile, ERP, and AI",
-    "tags": ["web", "mobile", "app", "erp", "ai", "digital", "transformation", "product"],
-    "text": "Services include web and mobile app development, ERP/enterprise workflows, AI-driven custom software, digital transformation, product modernization, and legacy replacement."
+    "id": "chunk-services-hiring",
+    "title": "Hire Dedicated Developers & Engineering Teams",
+    "tags": ["hire", "developers", "dedicated", "team", "staffing", "augmentation", "engineers", "contract", "outsource"],
+    "text": "You can hire pre-vetted senior dedicated software developers, mobile app engineers, and UI/UX designers from Nohitatu. We offer flexible engagement models (Dedicated Team, Time & Material, Fixed Price) with rapid onboarding in 3 to 7 business days, integrating directly with your tools and product roadmap."
   },
   {
-    "id": "global-hiring",
-    "title": "Hiring dedicated developers",
-    "tags": ["hire", "hiring", "global", "dedicated", "team", "staff", "augmentation", "developers"],
-    "text": "Nohitatu helps clients engage dedicated dedicated developer teams that integrate with existing processes and roadmaps—suitable for scaling product, platform, and enterprise initiatives."
+    "id": "chunk-products-catalog",
+    "title": "Nohitatu Products & Portfolio",
+    "tags": ["products", "portfolio", "projects", "cms1500", "crm", "dojoman", "hr", "payroll", "fintechesh", "task", "workplace", "taxation"],
+    "text": "Nohitatu has built 29+ products including: CMS 1500 Medical Billing, Sales CRM, Dojoman Event Management software, Healthcare CRM, HR & Payroll Suite, Task Management App, FinTechesh Financial Suite, WorkPlace Safety Mobile App, Taxation App, and Manamakkal Matrimonial Platform. Explore our full portfolio at Portfolio.html."
   },
   {
-    "id": "careers",
-    "title": "Careers and job applications",
-    "tags": ["career", "careers", "job", "jobs", "hiring", "apply", "application", "vacancy", "resume"],
-    "text": "We'd love to have you on our team! Candidates can check out all open roles and apply on Careers.html, Careerdetails.html, and PostResume.html. HR Phone +91 73974 59131 (tel:+917397459131), Email hrd@nohitatu.com. Do not include sales phone or sales email for job/career inquiries."
+    "id": "chunk-contact-sales",
+    "title": "Sales, Project Consultation & Pricing Quotes",
+    "tags": ["contact", "sales", "price", "pricing", "cost", "quote", "estimate", "phone", "email", "consultation", "demo"],
+    "text": "For project consultations, free cost estimates, product demos, or sales inquiries: Contact Sales via Phone +91 99413 33444, Email sales@nohitatu.com, Skype sales.nohitatu, or submit a request on our contact page at Contact-us.html."
   },
   {
-    "id": "portfolio",
-    "title": "Portfolio and case studies",
-    "tags": ["portfolio", "work", "project", "projects", "case", "study", "examples"],
-    "text": "Completed work and case studies are showcased on Portfolio.html (SaaS, healthcare/RCM-related delivery, product engineering, specialized automations)."
+    "id": "chunk-careers-hr",
+    "title": "Careers, Job Applications & HR Contact",
+    "tags": ["careers", "jobs", "hiring", "apply", "resume", "hr", "work", "opportunities", "vacancies"],
+    "text": "Looking to join Nohitatu? View open positions and apply at Careers.html or submit your CV at PostResume.html. Contact HR directly via HR Phone +91 73974 59131 or HR Email hrd@nohitatu.com. (Note: Job seekers should strictly use HR contacts)."
   },
   {
-    "id": "contact",
-    "title": "Contact and sales",
-    "tags": ["contact", "sales", "email", "phone", "telephone", "number", "mobile", "call", "office", "estimation", "demo", "consult"],
-    "text": "Public contact FAQ. Emails: sales@nohitatu.com (sales/business), hrd@nohitatu.com (HR). Sales phone +91 99413 33444 (tel:+919941333344) for sales, projects, consultations, demos, free estimation. HR phone +91 73974 59131 (tel:+917397459131) for careers, jobs, resume, and recruitment. When someone asks for phone or contact without specifying Sales or HR, give both labeled numbers. Skype sales.nohitatu. Form on Contact-us.html. Offices in Chennai (India), Singapore, and Bay Shore NY."
-  },
-  {
-    "id": "phone-numbers",
-    "title": "Phone numbers FAQ",
-    "tags": ["phone", "phones", "telephone", "number", "numbers", "mobile", "call", "contact", "sales", "hr"],
-    "text": "Official Nohitatu phone numbers: Sales +91 99413 33444 (tel:+919941333344) — business, project, and consultation calls. HR +91 73974 59131 (tel:+917397459131) — careers, jobs, resume, recruitment. Answer 'What is your phone number?' or 'How can I call you?' with both Sales and HR, clearly labeled. Do not use any other phone numbers."
-  },
-  {
-    "id": "hr-contact",
-    "title": "HR and careers contact",
-    "tags": ["hr", "career", "careers", "job", "jobs", "resume", "recruitment", "hiring", "apply", "phone", "contact"],
-    "text": "For HR, careers, job applications, and resume questions: Respond warmly and conversationally ('We'd love to have you on our team!'). HR Phone +91 73974 59131 (tel:+917397459131), Email hrd@nohitatu.com, Portal Careers.html. Do not provide sales phone or sales email to job seekers."
-  },
-  {
-    "id": "offices",
-    "title": "Office locations",
-    "tags": ["office", "address", "chennai", "india", "singapore", "new york", "location"],
-    "text": "India: City Centre, 186/43 Purasawalkam High Road, Chennai 600010. Singapore: 71 Bukit Batok Crescent, #05-07 Prestige Centre, 658071. New York: 1805 5th Ave F, Bay Shore, NY 11706."
+    "id": "chunk-offices",
+    "title": "Global Offices & Locations",
+    "tags": ["offices", "location", "address", "chennai", "india", "singapore", "new york", "bay shore", "usa"],
+    "text": "Nohitatu Offices: 1) Chennai, India (Headquarters): #402-405, City Centre, Purasawalkam High Rd, Chennai - 600010. 2) Singapore: 71 Bukit Batok Crescent, #05-07 Prestige Centre, Singapore 658071. 3) USA: 1805 5th Ave F, Bay Shore, NY 11706."
   }
 ]

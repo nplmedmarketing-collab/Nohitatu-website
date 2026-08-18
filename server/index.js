@@ -225,6 +225,12 @@ async function main() {
 
   const adminDir = path.join(WORKSPACE, "admin");
 
+  // Relative asset URLs (admin.css) resolve to /admin.css without a trailing slash on /admin or /adminlogin.
+  app.get(["/admin.css", "/admin.js"], (req, res) => {
+    const name = req.path.slice(1);
+    res.sendFile(path.join(adminDir, name));
+  });
+
   // 1) Exact SPA shells FIRST (never let site-root static or index.html win).
   app.get(["/adminlogin", "/adminlogin/", "/admin", "/admin/"], sendAdminShell);
 

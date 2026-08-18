@@ -166,19 +166,69 @@ def _check_rate_limit(key: str) -> None:
     bucket.append(now)
 
 
-def _get_openai_client() -> OpenAI:
-    if not OPENAI_API_KEY:
-        raise HTTPException(
-            status_code=503,
-            detail="Chat service is not configured. Please try again later.",
+def _generate_local_reply(query: str, knowledge: str) -> str:
+    q_lower = query.lower()
+
+    # Job / Career intent
+    if any(k in q_lower for k in ["job", "career", "hiring", "apply", "resume", "vacancy", "vacancies", "hr"]):
+        return (
+            "Looking to join Nohitatu? We are always hiring talented software engineers, QA leads, and UI designers!\n\n"
+            "• View Open Roles: Careers.html\n"
+            "• Submit Resume: PostResume.html\n"
+            "• HR Contact Email: hrd@nohitatu.com\n"
+            "• HR Phone: +91 73974 59131\n\n"
+            "For job inquiries, please contact our HR team directly."
         )
-    return OpenAI(api_key=OPENAI_API_KEY)
 
+    # Sales / Project / Pricing intent
+    if any(k in q_lower for k in ["sales", "price", "pricing", "cost", "quote", "estimate", "contact", "consultation", "demo"]):
+        return (
+            "Ready to scale your software product or get a custom cost estimation?\n\n"
+            "• Sales Email: sales@nohitatu.com\n"
+            "• Sales Phone: +91 99413 33444\n"
+            "• Online Request Form: Contact-us.html\n"
+            "• Explore Shipped Products: Portfolio.html\n\n"
+            "Our team typically responds within 24 business hours for project consultations."
+        )
 
-def _public_error(exc: Exception) -> str:
-    if APP_ENV in {"development", "dev", "local"}:
-        return f"Chat service error: {type(exc).__name__}"
-    return "Something went wrong. Please try again or email sales@nohitatu.com."
+    # Products / Portfolio intent
+    if any(k in q_lower for k in ["product", "products", "portfolio", "project", "projects", "work", "case study", "cms", "dojoman", "fintechesh", "crm"]):
+        return (
+            "Nohitatu has designed and shipped over 29 custom software products and enterprise client systems:\n\n"
+            "• Healthcare RCM & CMS 1500 Claim Billing\n"
+            "• Sales CRM & Real-time Analytics\n"
+            "• Dojoman Event & Tournament Management\n"
+            "• HR Suite & Automated Payroll\n"
+            "• FinTechesh Financial Automation\n\n"
+            "Explore full case studies and live demos at Portfolio.html!"
+        )
+
+    # Healthcare / RCM intent
+    if any(k in q_lower for k in ["health", "healthcare", "rcm", "billing", "medical", "claims", "cms1500", "doctor", "hospital"]):
+        return (
+            "Healthcare software & Revenue Cycle Management (RCM) is one of Nohitatu's flagship specializations:\n\n"
+            "• Automated CMS-1500 & 837P electronic claim processing\n"
+            "• Patient eligibility verification & charge entry\n"
+            "• Denial management and HIPAA-compliant workflow dashboards\n\n"
+            "Contact our sales specialists at sales@nohitatu.com or +91 99413 33444 to discuss your healthcare IT needs."
+        )
+
+    # General knowledge synthesis
+    if knowledge:
+        clean_text = re.sub(r"###\s*", "• ", knowledge)
+        clean_text = re.sub(r"\n{3,}", "\n\n", clean_text)
+        return (
+            f"Here is what I found regarding your request:\n\n{clean_text[:800]}\n\n"
+            "Need further details? Contact Sales (+91 99413 33444) or HR (+91 73974 59131)."
+        )
+
+    return (
+        "Welcome to Nohitatu Technologies! We specialize in Global Software Engineering, "
+        "Healthcare RCM & Medical Billing, and Cloud Product Delivery.\n\n"
+        "• Explore Products & Work: Portfolio.html\n"
+        "• Contact Sales: sales@nohitatu.com | +91 99413 33444\n"
+        "• Apply for Jobs: Careers.html | +91 73974 59131"
+    )
 
 
 @app.get("/health")
@@ -188,7 +238,8 @@ def health() -> dict[str, Any]:
         "status": "ok",
         "service": "nohiai",
         "model_configured": bool(OPENAI_API_KEY),
-        "model": OPENAI_MODEL if OPENAI_API_KEY else None,
+        "model": OPENAI_MODEL if OPENAI_API_KEY else "local-rag-fallback",
+        "fallback_enabled": not bool(OPENAI_API_KEY),
     }
 
 
@@ -197,6 +248,13 @@ def chat(payload: ChatRequest, request: Request) -> ChatResponse:
     _check_rate_limit(_client_key(request))
 
     knowledge = retrieve(payload.message)
+
+    # Use Local RAG Fallback if OPENAI_API_KEY is not configured
+    if not OPENAI_API_KEY:
+        reply = _generate_local_reply(payload.message, knowledge)
+        sources = 0 if not knowledge else knowledge.count("###")
+        return ChatResponse(reply=reply, sources_used=sources)
+
     system_content = SYSTEM_PROMPT.format(
         knowledge=knowledge or "(No specific knowledge chunks matched; use general Nohitatu guidance.)"
     )
@@ -206,8 +264,8 @@ def chat(payload: ChatRequest, request: Request) -> ChatResponse:
         messages.append({"role": item.role, "content": item.content})
     messages.append({"role": "user", "content": payload.message})
 
-    client = _get_openai_client()
     try:
+        client = OpenAI(api_key=OPENAI_API_KEY)
         completion = client.chat.completions.create(
             model=OPENAI_MODEL,
             temperature=0.3,
@@ -220,16 +278,16 @@ def chat(payload: ChatRequest, request: Request) -> ChatResponse:
                 "I am here to help with Nohitatu services, careers, and contact options. "
                 "Could you rephrase your question?"
             )
-        # Strip accidental HTML-ish tags for safer clients
         reply = reply.replace("<script", "&lt;script").replace("</script", "&lt;/script")
         sources = 0 if not knowledge else knowledge.count("###")
         return ChatResponse(reply=reply, sources_used=sources)
     except HTTPException:
         raise
-    except Exception as exc:  # noqa: BLE001 — map all provider errors to safe response
-        # Log server-side only
+    except Exception as exc:
         print(f"[nohiai] chat error: {type(exc).__name__}: {exc}")
-        raise HTTPException(status_code=502, detail=_public_error(exc)) from None
+        # Fallback to local reply if OpenAI API call fails
+        reply = _generate_local_reply(payload.message, knowledge)
+        return ChatResponse(reply=reply, sources_used=1)
 
 
 @app.exception_handler(HTTPException)

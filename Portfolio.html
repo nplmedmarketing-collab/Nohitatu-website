@@ -13,13 +13,13 @@
     <meta property="og:image" content="https://nohitatu.com/images/portfolio/Manamakkal.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Portfolio & Case Studies | Nohitatu Technology" />
-    <meta name="twitter:description" content="Explore 29+ products shipped across Healthcare, Retail, Fintech, and CRM." />
+    <meta name="twitter:description" content="Explore 24+ products shipped across Healthcare, Retail, Fintech, and CRM." />
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "PortfolioPage",
       "name": "Nohitatu Technology Portfolio",
-      "description": "29+ products shipped across Healthcare, Retail, Fintech, CRM, and Sports Management.",
+      "description": "24+ products shipped across Healthcare, Retail, Fintech, CRM, and Sports Management.",
       "url": "https://nohitatu.com/Portfolio.html",
       "publisher": {
         "@type": "Organization",
@@ -38,9 +38,9 @@
     <link rel="stylesheet" href="css/style.css?v=20260810particles11" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
-    <link rel="stylesheet" href="css/chatbot.css?v=20260807noflicker" />
-    <link rel="stylesheet" href="css/portfolio-atlas.css?v=20260810tight1" />
-    <link rel="stylesheet" href="css/portfolio-page.css?v=20260810tight1" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
+    <link rel="stylesheet" href="css/portfolio-atlas.css?v=20260817grid1" />
+    <link rel="stylesheet" href="css/portfolio-page.css?v=20260817grid1" />
     <script src="js/jquery.min.js"></script>
     <!-- custom.js initialises owl sliders at document-ready; without the plugin
          its first call throws and the rest of the shared header script never
@@ -556,7 +556,7 @@
                 <div class="pf-shell pf-hero__copy">
                     <p class="pf-hero__kicker">Nohitatu Portfolio &middot; Web &middot; Mobile &middot; Desktop</p>
                     <h1>Products that turn complexity into <em>clarity.</em></h1>
-                    <p class="pf-hero__note"><span data-atlas-total-count>29</span> products across healthcare, CRM, fintech, sport, and operations &mdash; open the atlas to filter by industry vertical and study each shipment on the stage.</p>
+                    <p class="pf-hero__note"><span data-atlas-total-count>24</span> products across healthcare, CRM, fintech, sport, and operations &mdash; open the atlas to filter by industry vertical and open any shipment for a closer look.</p>
                     <a class="pf-hero__cta" href="#atlas">Browse completed projects</a>
                 </div>
             </section>
@@ -575,408 +575,500 @@
             <section class="atlas pf-atlas nh-curtain-panel" id="atlas" aria-labelledby="atlas-heading">
                 <div class="atlas__inner">
                     <!-- div not <header>: site style.css pins every header fixed + white-header -->
-                    <div class="atlas__head">
+                    <div class="atlas__head" id="atlas-catalog-head">
                         <p class="atlas__kicker">
                             <span>Shipment atlas</span>
                             <span class="atlas__kicker-rule" aria-hidden="true"></span>
-                            <span data-atlas-total-kicker>29 products shipped</span>
+                            <span data-atlas-total-kicker>15 products available</span>
                             <span class="atlas__kicker-rule" aria-hidden="true"></span>
                             <span>By industry vertical</span>
                         </p>
-                        <div class="atlas__title-row">
-                            <div>
-                                <h2 id="atlas-heading">Completed projects <span class="atlas__tally" data-atlas-tally aria-live="polite">7 / 7</span></h2>
-                                <p class="atlas__lede"><span data-atlas-total-count>29</span> products we have built and shipped. Filter by vertical.</p>
+
+                        <div class="atlas__masthead">
+                            <h2 id="atlas-heading" class="atlas__display">Shipped <em data-atlas-segment-label>products</em></h2>
+                            <p class="atlas__lede">Every tile below is live software we built and maintain. Browse the <span data-atlas-segment-copy>software products</span>, filter by industry vertical, and open any tile for the full brief.</p>
+                        </div>
+
+                        <div class="atlas__main-tabs" role="tablist" aria-label="Portfolio Categories">
+                            <button type="button" class="atlas-tab-btn is-active" data-segment="product" role="tab" aria-selected="true">
+                                <span class="atlas-tab-btn__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 20.5 7.5v9L12 21 3.5 16.5v-9L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3.5 7.5 12 12m0 0 8.5-4.5M12 12v9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                                </span>
+                                <span class="atlas-tab-btn__text">
+                                    <span class="atlas-tab-btn__label">Products</span>
+                                    <span class="atlas-tab-btn__hint">Ready-to-ship software</span>
+                                </span>
+                                <span class="atlas-tab-btn__count" data-segment-count="product" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="atlas-tab-btn" data-segment="project" role="tab" aria-selected="false">
+                                <span class="atlas-tab-btn__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.2" y="7.2" width="17.6" height="12.6" rx="2.2" stroke="currentColor" stroke-width="1.6"/><path d="M9 7V5.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3.4 12.4h17.2" stroke="currentColor" stroke-width="1.6"/></svg>
+                                </span>
+                                <span class="atlas-tab-btn__text">
+                                    <span class="atlas-tab-btn__label">Projects</span>
+                                    <span class="atlas-tab-btn__hint">Custom client builds</span>
+                                </span>
+                                <span class="atlas-tab-btn__count" data-segment-count="project" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="atlas__controls">
+                        <div class="atlas__controls-row">
+                            <div class="atlas__search">
+                                <span class="search-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.6" cy="8.6" r="5.4" stroke="currentColor" stroke-width="1.7"/><path d="M12.8 12.8 17 17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                                </span>
+                                <input type="search" id="atlas-search" placeholder="Search by tech, name, or keyword" aria-label="Search projects">
+                                <button type="button" class="atlas__search-clear" data-atlas-search-clear aria-label="Clear search" hidden>&times;</button>
                             </div>
-                            <div class="atlas__controls">
-                                <div class="atlas__search">
-                                    <span class="search-icon" aria-hidden="true">🔍</span>
-                                    <input type="search" id="atlas-search" placeholder="Search by tech, name, or keyword..." aria-label="Search projects">
-                                </div>
-                                <div class="atlas__filters" role="tablist" aria-label="Filter projects by industry vertical">
-                                    <button type="button" class="is-active" data-filter="health-care" role="tab" aria-selected="true">Health care</button>
-                                    <button type="button" data-filter="retail" role="tab" aria-selected="false">Retail</button>
-                                    <button type="button" data-filter="supply-chain" role="tab" aria-selected="false">Supply chain</button>
-                                    <button type="button" data-filter="sports-management" role="tab" aria-selected="false">Sports management</button>
-                                    <button type="button" data-filter="facility-management" role="tab" aria-selected="false">Facility management</button>
-                                    <button type="button" data-filter="human-resource-management" role="tab" aria-selected="false">Human Resource Management</button>
-                                    <button type="button" data-filter="project-management" role="tab" aria-selected="false">Project Management</button>
-                                </div>
+                            <p class="atlas__tally" data-atlas-tally aria-live="polite">0</p>
+                        </div>
+
+                        <div class="atlas__filter-block">
+                            <p class="atlas__filter-label" id="atlas-filter-label">Industry vertical</p>
+                            <div class="atlas__filters" role="toolbar" aria-labelledby="atlas-filter-label">
+                                <button type="button" class="is-active" data-filter="health-care" data-label="Health care" aria-pressed="true">
+                                    <span class="filter-name">Health care</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
+                                <button type="button" data-filter="retail" data-label="Retail" aria-pressed="false">
+                                    <span class="filter-name">Retail</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
+                                <button type="button" data-filter="supply-chain" data-label="Supply chain" aria-pressed="false">
+                                    <span class="filter-name">Supply chain</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
+                                <button type="button" data-filter="sports-management" data-label="Sports management" aria-pressed="false">
+                                    <span class="filter-name">Sports management</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
+                                <button type="button" data-filter="facility-management" data-label="Facility management" aria-pressed="false">
+                                    <span class="filter-name">Facility management</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
+                                <button type="button" data-filter="human-resource-management" data-label="Human Resource Management" title="Human Resource Management" aria-pressed="false">
+                                    <span class="filter-name">HR Management</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
+                                <button type="button" data-filter="project-management" data-label="Project Management" aria-pressed="false">
+                                    <span class="filter-name">Project Management</span><span class="filter-count" aria-hidden="true"></span><span class="filter-x" aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     <div class="atlas__empty" data-atlas-empty hidden>
-                        <p class="atlas__empty-kicker">No shipments in this vertical yet</p>
-                        <p class="atlas__empty-copy">Projects for this industry are on the roadmap. Browse another vertical, or <a href="Contact-us.html">tell us what you're building</a>.</p>
+                        <span class="atlas__empty-glyph" aria-hidden="true">&#9671;</span>
+                        <p class="atlas__empty-kicker" data-atlas-empty-title>Nothing shipped here yet</p>
+                        <p class="atlas__empty-copy" data-atlas-empty-copy>Work for this vertical is on the roadmap. Browse another vertical, or <a href="Contact-us.html">tell us what you're building</a>.</p>
+                        <button type="button" class="atlas__empty-reset" data-atlas-empty-reset hidden>Reset filters</button>
                     </div>
-                    <div class="atlas__stage" data-atlas-stage>
-                        <div class="atlas__viewer" aria-hidden="false">
-                            <div class="atlas__viewer-chrome" aria-hidden="true">
-                                <i></i><i></i><i></i>
-                                <span data-atlas-chrome>Ecommerce App</span>
-                            </div>
-                            <div class="atlas__frame" data-atlas-frame>
-                                <img data-atlas-img src="images/portfolio/Ecommerce-app.png" alt="Ecommerce App product screenshot" width="1600" height="1000" decoding="async" fetchpriority="high">
-                            </div>
-                        </div>
 
-                        <div class="atlas__spec" data-atlas-spec>
-                            <p class="atlas__meta">
-                                <b data-atlas-id>F04</b>
-                                <span class="atlas__meta-dot" aria-hidden="true"></span>
-                                <span data-atlas-code>Web</span>
-                            </p>
-                            <h3 data-atlas-title>Ecommerce App</h3>
-                            <p class="atlas__client" data-atlas-client>Client &mdash; India</p>
-                            <div class="atlas__tags" data-atlas-tags>
-                                <span class="tech-tag">Next.js</span>
-                                <span class="tech-tag">Stripe</span>
-                                <span class="tech-tag">PostgreSQL</span>
+                    <div class="pf-grid" data-atlas-grid aria-live="polite">
+                        <article class="pf-card" data-category="product" data-platform="web desktop" data-vertical="health-care" data-id="F01" data-code="WEB·DSK" data-long="Web · Desktop" data-title="CMS 1500" data-client="USA" data-cta="Contact-us.html" data-desc="The 837P (Professional) is the standard format used by health care professionals and suppliers to transmit health care claims electronically. The Form CMS-1500 is the standard paper claim form to bill Medicare Fee-For-Service (FFS) Contractors when a paper claim is allowed." data-src="images/portfolio/CMS.png" data-alt="CMS 1500 product screenshot" data-featured="product">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/1-cms-1500.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F01 &middot; WEB·DSK</span>
                             </div>
-                            <p class="atlas__desc" data-atlas-desc>An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the order's status. Free shipping &amp; cash on delivery.</p>
-                            <div class="atlas__actions">
-                                <a class="atlas__cta" data-atlas-cta href="Contact-us.html" aria-label="Request a demo of Ecommerce App">
-                                    Request a demo <span aria-hidden="true">&#8594;</span>
-                                </a>
-                                <div class="atlas__nav" aria-label="Browse projects">
-                                    <button type="button" data-atlas-prev aria-label="Previous project">&#8592;</button>
-                                    <span class="atlas__pos"><b data-atlas-pos>01</b>/<span data-atlas-of>07</span></span>
-                                    <button type="button" data-atlas-next aria-label="Next project">&#8594;</button>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Health care</p>
+                                <h3 class="pf-card__title">CMS 1500</h3>
+                                <p class="pf-card__client">Client &mdash; USA</p>
+                                <p class="pf-card__desc">The 837P (Professional) is the standard format used by health care professionals and suppliers to transmit health care claims electronically. The Form CMS-1500 is the standard paper claim form to bill Medicare Fee-For-Service (FFS) Contractors when a paper claim is allowed.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">HIPAA API</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="atlas__rail-wrap">
-                        <p class="atlas__rail-label">
-                            <span>Project Gallery</span>
-                            <span aria-hidden="true"></span>
-                        </p>
-                        <div class="atlas__rail">
-                            <div class="atlas__track" data-atlas-track role="listbox" aria-label="Project gallery &mdash; use arrow keys to move">
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web desktop" data-vertical="health-care" data-id="F01" data-code="WEB·DSK" data-long="Web · Desktop"
-                                    data-title="CMS 1500" data-client="USA" data-cta="Contact-us.html"
-                                    data-desc="The 837P (Professional) is the standard format used by health care professionals and suppliers to transmit health care claims electronically. The Form CMS-1500 is the standard paper claim form to bill Medicare Fee-For-Service (FFS) Contractors when a paper claim is allowed." data-src="images/portfolio/CMS.png" data-alt="CMS 1500 product screenshot"
-                                    aria-label="CMS 1500 — Web · Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/1-cms-1500.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F01</span>
-                                </span>
-                                <span class="atlas-item__caption">CMS 1500</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web desktop" data-vertical="sports-management" data-id="F02" data-code="WEB·DSK" data-long="Web · Desktop"
-                                    data-title="Medallion Karate" data-client="Medallion karate" data-cta="Contact-us.html"
-                                    data-desc="Web gives information about the karate updates. Integrated with mail server, mobile responsive, one-page website with gallery view." data-src="images/portfolio/Medallion-Karate.png" data-alt="Medallion Karate website"
-                                    aria-label="Medallion Karate — Web · Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/2-medallion-karate.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F02</span>
-                                </span>
-                                <span class="atlas-item__caption">Medallion Karate</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="project-management" data-id="F03" data-code="WEB" data-long="Web"
-                                    data-title="Sales CRM" data-client="In-house product" data-cta="Contact-us.html"
-                                    data-desc="CRM cloud apps provide real-time visibility into their team's activities so they can forecast sales with confidence. For sales reps, CRM cloud apps make it easy to manage customer information so reps spend less time handling data and more time with customers." data-src="images/portfolio/Sales-CRM.png" data-alt="Sales CRM dashboard"
-                                    aria-label="Sales CRM — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/3-sales-crm.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F03</span>
-                                </span>
-                                <span class="atlas-item__caption">Sales CRM</span>
-                            </button>
-                            <button type="button" class="atlas-item is-active" role="option" tabindex="0" aria-selected="true"
-                                    data-platform="web" data-vertical="retail" data-id="F04" data-code="WEB" data-long="Web"
-                                    data-title="Ecommerce App" data-client="India" data-cta="Contact-us.html"
-                                    data-desc="An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the order's status. Free shipping &amp; cash on delivery." data-src="images/portfolio/Ecommerce-app.png" data-alt="Ecommerce App"
-                                    aria-label="Ecommerce App — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/4-ecommerce-app.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F04</span>
-                                </span>
-                                <span class="atlas-item__caption">Ecommerce App</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="retail" data-id="F05" data-code="WEB" data-long="Web"
-                                    data-title="Manamakkal" data-client="India" data-cta="Contact-us.html"
-                                    data-desc="Aim is to provide a unique matrimonial service to the Tamil community no matter where you are based, to help you find the perfect match. There used to be time when people thought its odd to search for life partner on the net, but now more and more people are joining online matrimonial websites to find their match." data-src="images/portfolio/Manamakkal.png" data-alt="Manamakkal matrimonial platform"
-                                    aria-label="Manamakkal — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/5-manamakkal.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F05</span>
-                                </span>
-                                <span class="atlas-item__caption">Manamakkal</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="sports-management" data-id="F06" data-code="WEB" data-long="Web"
-                                    data-title="Dojoman Event Management software" data-client="In-house project" data-cta="Contact-us.html"
-                                    data-desc="Exclusive software solution for karate activities, it helps tournament organizer to easily generate fixtures and reports in a minute. Attaining features such as Online registration, Live scoring, Live streaming videos, Online fee payment and more." data-src="images/portfolio/Dojoman-event-management-software.png" data-alt="Dojoman Event Management software"
-                                    aria-label="Dojoman Event Management software — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/6-dojoman-event-management-software.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F06</span>
-                                </span>
-                                <span class="atlas-item__caption">Dojoman Event Management software</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="health-care" data-id="F07" data-code="WEB" data-long="Web"
-                                    data-title="Healthcare billing software" data-client="USA" data-cta="Contact-us.html"
-                                    data-desc="The software is a great product for Doctor as well, though our client mainly uses it for patient and charge entry. Checking eligibility is easy and quick and the services are great." data-src="images/portfolio/Healthcare-billing-software.png" data-alt="Healthcare billing software"
-                                    aria-label="Healthcare billing software — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/7-healthcare-billing-software.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F07</span>
-                                </span>
-                                <span class="atlas-item__caption">Healthcare billing software</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="project-management" data-id="F08" data-code="WEB" data-long="Web"
-                                    data-title="Task Management" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Help improve business processes by analyzing exactly where time is being spent." data-src="images/portfolio/web/task-management/task-management.png" data-alt="Task Management dashboard"
-                                    aria-label="Task Management — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/8-task-management.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F08</span>
-                                </span>
-                                <span class="atlas-item__caption">Task Management</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="health-care" data-id="F09" data-code="WEB" data-long="Web"
-                                    data-title="Healthcare CRM" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Provides the best analytics with real-time view combined with customizable smart reporting and dashboards. Healthcare CRM helps systematize interaction with patients and referring providers, personalize medical services promotion, improve care quality and patient satisfaction." data-src="images/portfolio/web/medical-crm/medical-crm.png" data-alt="Healthcare CRM analytics"
-                                    aria-label="Healthcare CRM — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/9-healthcare-crm.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F09</span>
-                                </span>
-                                <span class="atlas-item__caption">Healthcare CRM</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web desktop" data-vertical="human-resource-management" data-id="F10" data-code="WEB·DSK" data-long="Web · Desktop"
-                                    data-title="HR and Payroll" data-client="" data-cta="Contact-us.html"
-                                    data-desc="The Human Resource department performs various activities such as payroll processing, maintaining salary details of every employee in the organization, keeping track of deductions, time and attendance, loans, allowances, and bonuses." data-src="images/portfolio/web/hr-payroll/hr-and-payroll-app.png" data-alt="HR and Payroll application"
-                                    aria-label="HR and Payroll — Web · Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/10-hr-and-payroll.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F10</span>
-                                </span>
-                                <span class="atlas-item__caption">HR and Payroll</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="retail" data-id="F11" data-code="WEB" data-long="Web"
-                                    data-title="Website Design &amp; development" data-client="" data-cta="Contact-us.html"
-                                    data-desc="An effective website design should fulfill its intended function by conveying its particular message whilst simultaneously engaging the visitor. A good web design helps you keep your leads on your page. Website development is a way to make people aware of the services and/or products you are offering." data-src="images/portfolio/web/web-development/Website-development-2.png" data-alt="Website design and development"
-                                    aria-label="Website Design &amp; development — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/11-website-design-development.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F11</span>
-                                </span>
-                                <span class="atlas-item__caption">Website Design &amp; development</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="sports-management" data-id="F12" data-code="WEB" data-long="Web"
-                                    data-title="Sport event" data-client="" data-cta="Contact-us.html"
-                                    data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps — anytime, anywhere. Online Sports Registration, Online Payment Processing, Financial Management can also be done using this software." data-src="images/portfolio/web/sport-event-software/event-management-software-dojoman.png" data-alt="Sport event software"
-                                    aria-label="Sport event — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/12-sport-event.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F12</span>
-                                </span>
-                                <span class="atlas-item__caption">Sport event</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web" data-vertical="facility-management" data-id="F13" data-code="WEB" data-long="Web"
-                                    data-title="Real Estate" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management." data-src="images/portfolio/web/real-estatesales-crm/real-estatesales-crm.png" data-alt="Real Estate CRM"
-                                    aria-label="Real Estate — Web">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/13-real-estate.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F13</span>
-                                </span>
-                                <span class="atlas-item__caption">Real Estate</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web desktop" data-vertical="human-resource-management" data-id="F14" data-code="WEB·DSK" data-long="Web · Desktop"
-                                    data-title="Performance Management System" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Performance Management Systems help Employees and Managers to set goals and track progress with shared tracking tools. Essentially, performance management is what organizations do to become more successful and stay ahead of their competitors." data-src="images/portfolio/web/performance-management-system/performance-management-system.png" data-alt="Performance Management System"
-                                    aria-label="Performance Management System — Web · Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/14-performance-management-system.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F14</span>
-                                </span>
-                                <span class="atlas-item__caption">Performance Management System</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="web desktop" data-vertical="retail" data-id="F15" data-code="WEB·DSK" data-long="Web · Desktop"
-                                    data-title="Restaurant Management" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables." data-src="images/portfolio/web/restaurant-management/Restaurant-management.png" data-alt="Restaurant Management"
-                                    aria-label="Restaurant Management — Web · Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/15-restaurant-management.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F15</span>
-                                </span>
-                                <span class="atlas-item__caption">Restaurant Management</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="facility-management" data-id="F16" data-code="MOB" data-long="Mobile"
-                                    data-title="WorkPlace Safety App" data-client="Singapore" data-cta="Contact-us.html"
-                                    data-desc="Application to maintain your facility, the features will be, Inspection, Incident, Regular Audit, Event manager, Assets, Work order reports, My profile, Push notification for emergency exist, QR code scanning for attendance, Report sharing, Calendar." data-src="images/portfolio/WorkPlace-Safety-App.png" data-alt="WorkPlace Safety App"
-                                    aria-label="WorkPlace Safety App — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/16-workplace-safety-app.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F16</span>
-                                </span>
-                                <span class="atlas-item__caption">WorkPlace Safety App</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="project-management" data-id="F17" data-code="MOB" data-long="Mobile"
-                                    data-title="Taxation App" data-client="USA" data-cta="Contact-us.html"
-                                    data-desc="Customer installs app and follows instructions to submit documents needed to process his/her tax return. Customer E-signs documents via app and submits signed documents to office. Tax return will get collected in customer inbox. Customer pay the fee through app." data-src="images/portfolio/Taxation-app.png" data-alt="Taxation App"
-                                    aria-label="Taxation App — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/17-taxation-app.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F17</span>
-                                </span>
-                                <span class="atlas-item__caption">Taxation App</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="project-management" data-id="F18" data-code="MOB" data-long="Mobile"
-                                    data-title="Mytasky App" data-client="Singapore" data-cta="Contact-us.html"
-                                    data-desc="Mytasky app to monitor your task without delay. Gives everything you need to create team projects, assign and schedule tasks, and track progress so that nothing falls through the cracks. It's extremely easy to use you'll be up and running in minutes." data-src="images/portfolio/Mytasky.png" data-alt="Mytasky App"
-                                    aria-label="Mytasky App — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/18-mytasky-app.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F18</span>
-                                </span>
-                                <span class="atlas-item__caption">Mytasky App</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="facility-management" data-id="F19" data-code="MOB" data-long="Mobile"
-                                    data-title="Visitors management app" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Smart Visit is a smart visitor management system with secure check-in application to offer your guests a splendid welcome. Enhance your front desk operations with use of Smart Visit to make it more secure and efficient." data-src="images/portfolio/Visitors-management-app.png" data-alt="Visitors management app"
-                                    aria-label="Visitors management app — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/19-visitors-management-app.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F19</span>
-                                </span>
-                                <span class="atlas-item__caption">Visitors management app</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="health-care" data-id="F20" data-code="MOB" data-long="Mobile"
-                                    data-title="Doctor Appointment" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Make it easier for customers to provide feedback with forms optimized for mobile. Set up appointments for your patients in the most effective way with the help of the Appointment Scheduling App. The doctors will be able to access, reception and appointments, everything in one calendar." data-src="images/portfolio/mobile/doctor-appointment-app/Doctor-appointment-app.png" data-alt="Doctor Appointment app"
-                                    aria-label="Doctor Appointment — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/20-doctor-appointment.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F20</span>
-                                </span>
-                                <span class="atlas-item__caption">Doctor Appointment</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="facility-management" data-id="F21" data-code="MOB" data-long="Mobile"
-                                    data-title="Real Estate / CRM" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management." data-src="images/portfolio/mobile/real-estate-sales-crm-app/real-estate-sales-crm-app.png" data-alt="Real Estate CRM mobile app"
-                                    aria-label="Real Estate / CRM — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/21-real-estate-crm.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F21</span>
-                                </span>
-                                <span class="atlas-item__caption">Real Estate / CRM</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="sports-management" data-id="F22" data-code="MOB" data-long="Mobile"
-                                    data-title="Sport Event" data-client="" data-cta="Contact-us.html"
-                                    data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps — anytime, anywhere." data-src="images/portfolio/mobile/sport-event/sport-event.png" data-alt="Sport Event mobile app"
-                                    aria-label="Sport Event — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/22-sport-event.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F22</span>
-                                </span>
-                                <span class="atlas-item__caption">Sport Event</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="sports-management" data-id="F23" data-code="MOB" data-long="Mobile"
-                                    data-title="Smart Fitness" data-client="" data-cta="Contact-us.html"
-                                    data-desc="With the Fitness App, you can start tracking your workouts and meals, measuring results, and achieving your fitness goals, all with the help of your personal trainer. The purpose of a fitness app is to provide the user with instructions and examples of one or more types of exercise, physical activity, nutritional programs, or some other fitness topic." data-src="images/portfolio/mobile/fitness-app/fitness-app.png" data-alt="Smart Fitness app"
-                                    aria-label="Smart Fitness — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/23-smart-fitness.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F23</span>
-                                </span>
-                                <span class="atlas-item__caption">Smart Fitness</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="retail" data-id="F24" data-code="MOB" data-long="Mobile"
-                                    data-title="Restaurant management" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables. Make it easier for customers to provide feedback with forms optimized for mobile." data-src="images/portfolio/mobile/restaurant-management/restaurant-management.png" data-alt="Restaurant management mobile app"
-                                    aria-label="Restaurant management — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/24-restaurant-management.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F24</span>
-                                </span>
-                                <span class="atlas-item__caption">Restaurant management</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="retail" data-id="F25" data-code="MOB" data-long="Mobile"
-                                    data-title="Ticket Booking" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Online Movie Ticket Booking System is a website to provide the customer's facility to book tickets for a movie online and to gather information about the movies and theaters. Customers need to register at the site to book tickets to the movie. After selecting the show, the user is presented with a seating layout so that he can select seats of his choice." data-src="images/portfolio/mobile/ticket-booking-app/ticket-booking-app.png" data-alt="Ticket Booking app"
-                                    aria-label="Ticket Booking — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/25-ticket-booking.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F25</span>
-                                </span>
-                                <span class="atlas-item__caption">Ticket Booking</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="retail" data-id="F26" data-code="MOB" data-long="Mobile"
-                                    data-title="Food delivery" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Online ordering management software can be used by independent and small restaurants, restaurant chains, coffee shops, quick-service restaurants, and fast-casual restaurants alike — in short, every kind of food business that offers delivery as a service." data-src="images/portfolio/Food-delivery-app.png" data-alt="Food delivery app"
-                                    aria-label="Food delivery — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/26-food-delivery.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F26</span>
-                                </span>
-                                <span class="atlas-item__caption">Food delivery</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile" data-vertical="project-management" data-id="F27" data-code="MOB" data-long="Mobile"
-                                    data-title="Task Management" data-client="" data-cta="Contact-us.html"
-                                    data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Task management software empowers teams to work more productively and efficiently." data-src="images/portfolio/mobile/task-management-app/task-management-app.png" data-alt="Task Management mobile app"
-                                    aria-label="Task Management — Mobile">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/27-task-management.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F27</span>
-                                </span>
-                                <span class="atlas-item__caption">Task Management</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="mobile desktop" data-vertical="project-management" data-id="F28" data-code="MOB·DSK" data-long="Mobile · Desktop"
-                                    data-title="FinTechesh" data-client="" data-cta="Contact-us.html"
-                                    data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience." data-src="images/portfolio/financials.png" data-alt="FinTechesh mobile"
-                                    aria-label="FinTechesh — Mobile · Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/28-fintechesh.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F28</span>
-                                </span>
-                                <span class="atlas-item__caption">FinTechesh</span>
-                            </button>
-                            <button type="button" class="atlas-item" role="option" tabindex="-1" aria-selected="false"
-                                    data-platform="desktop" data-vertical="project-management" data-id="F29" data-code="DSK" data-long="Desktop"
-                                    data-title="FinTechesh" data-client="" data-cta="Contact-us.html"
-                                    data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience." data-src="images/portfolio/financials2.png" data-alt="FinTechesh desktop"
-                                    aria-label="FinTechesh — Desktop">
-                                <span class="atlas-item__gate">
-                                    <img src="images/portfolio/reel/29-fintechesh.webp" alt="" width="320" height="200" loading="lazy" decoding="async">
-                                    <span class="atlas-item__id">F29</span>
-                                </span>
-                                <span class="atlas-item__caption">FinTechesh</span>
-                            </button>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view CMS 1500 &mdash; Web · Desktop"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="web desktop" data-vertical="sports-management" data-id="F02" data-code="WEB·DSK" data-long="Web · Desktop" data-title="Medallion Karate" data-client="Medallion karate" data-cta="Contact-us.html" data-desc="Web gives information about the karate updates. Integrated with mail server, mobile responsive, one-page website with gallery view." data-src="images/portfolio/Medallion-Karate.png" data-alt="Medallion Karate website">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/2-medallion-karate.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F02 &middot; WEB·DSK</span>
                             </div>
-                        </div>
-                        <div class="atlas__progress" aria-hidden="true"><span data-atlas-progress></span></div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Sports management</p>
+                                <h3 class="pf-card__title">Medallion Karate</h3>
+                                <p class="pf-card__client">Client &mdash; Medallion karate</p>
+                                <p class="pf-card__desc">Web gives information about the karate updates. Integrated with mail server, mobile responsive, one-page website with gallery view.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Flutter</span><span class="tech-tag">Firebase</span><span class="tech-tag">Analytics</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Medallion Karate &mdash; Web · Desktop"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web" data-vertical="project-management" data-id="F03" data-code="WEB" data-long="Web" data-title="Sales CRM" data-client="In-house product" data-cta="Contact-us.html" data-desc="CRM cloud apps provide real-time visibility into their team's activities so they can forecast sales with confidence. For sales reps, CRM cloud apps make it easy to manage customer information so reps spend less time handling data and more time with customers." data-src="images/portfolio/Sales-CRM.png" data-alt="Sales CRM dashboard">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/3-sales-crm.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F03 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Project Management</p>
+                                <h3 class="pf-card__title">Sales CRM</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">CRM cloud apps provide real-time visibility into their team's activities so they can forecast sales with confidence. For sales reps, CRM cloud apps make it easy to manage customer information so reps spend less time handling data and more time with customers.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">TypeScript</span><span class="tech-tag">React</span><span class="tech-tag">WebSockets</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Sales CRM &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="web" data-vertical="retail" data-id="F04" data-code="WEB" data-long="Web" data-title="Ecommerce App" data-client="India" data-cta="Contact-us.html" data-desc="An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the order's status. Free shipping &amp; cash on delivery." data-src="images/portfolio/Ecommerce-app.png" data-alt="Ecommerce App">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/4-ecommerce-app.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F04 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Retail</p>
+                                <h3 class="pf-card__title">Ecommerce App</h3>
+                                <p class="pf-card__client">Client &mdash; India</p>
+                                <p class="pf-card__desc">An online shopping cart with varieties of mobiles, cameras, laptops, clothes, books, shoes etc. It has a delivery option which allows you to track the order's status. Free shipping &amp; cash on delivery.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Ecommerce App &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="web" data-vertical="retail" data-id="F05" data-code="WEB" data-long="Web" data-title="Manamakkal" data-client="India" data-cta="Contact-us.html" data-desc="Aim is to provide a unique matrimonial service to the Tamil community no matter where you are based, to help you find the perfect match. There used to be time when people thought its odd to search for life partner on the net, but now more and more people are joining online matrimonial websites to find their match." data-src="images/portfolio/Manamakkal.png" data-alt="Manamakkal matrimonial platform">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/5-manamakkal.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F05 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Retail</p>
+                                <h3 class="pf-card__title">Manamakkal</h3>
+                                <p class="pf-card__client">Client &mdash; India</p>
+                                <p class="pf-card__desc">Aim is to provide a unique matrimonial service to the Tamil community no matter where you are based, to help you find the perfect match. There used to be time when people thought its odd to search for life partner on the net, but now more and more people are joining online matrimonial websites to find their match.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Manamakkal &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web" data-vertical="sports-management" data-id="F06" data-code="WEB" data-long="Web" data-title="Dojoman Event Management software" data-client="In-house project" data-cta="Contact-us.html" data-desc="Exclusive software solution for karate activities, it helps tournament organizer to easily generate fixtures and reports in a minute. Attaining features such as Online registration, Live scoring, Live streaming videos, Online fee payment and more." data-src="images/portfolio/Dojoman-event-management-software.png" data-alt="Dojoman Event Management software">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/6-dojoman-event-management-software.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F06 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Sports management</p>
+                                <h3 class="pf-card__title">Dojoman Event Management software</h3>
+                                <p class="pf-card__client">In-house project</p>
+                                <p class="pf-card__desc">Exclusive software solution for karate activities, it helps tournament organizer to easily generate fixtures and reports in a minute. Attaining features such as Online registration, Live scoring, Live streaming videos, Online fee payment and more.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Flutter</span><span class="tech-tag">Firebase</span><span class="tech-tag">Analytics</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Dojoman Event Management software &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web" data-vertical="health-care" data-id="F07" data-code="WEB" data-long="Web" data-title="Healthcare billing software" data-client="USA" data-cta="Contact-us.html" data-desc="The software is a great product for Doctor as well, though our client mainly uses it for patient and charge entry. Checking eligibility is easy and quick and the services are great." data-src="images/portfolio/Healthcare-billing-software.png" data-alt="Healthcare billing software">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/7-healthcare-billing-software.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F07 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Health care</p>
+                                <h3 class="pf-card__title">Healthcare billing software</h3>
+                                <p class="pf-card__client">Client &mdash; USA</p>
+                                <p class="pf-card__desc">The software is a great product for Doctor as well, though our client mainly uses it for patient and charge entry. Checking eligibility is easy and quick and the services are great.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">HIPAA API</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Healthcare billing software &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web mobile" data-vertical="project-management" data-id="F08" data-code="WEB·MOB" data-long="Web · Mobile" data-title="Task Management" data-client="" data-cta="Contact-us.html" data-desc="Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Help improve business processes by analyzing exactly where time is being spent." data-src="images/portfolio/web/task-management/task-management.png" data-alt="Task Management dashboard">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/8-task-management.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F08 &middot; WEB·MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Project Management</p>
+                                <h3 class="pf-card__title">Task Management</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Easy to collaborate with your team, no matter where you are. Dramatically reduce wasted time and increase the productive time. Help companies manage their remote workers as if they were in the same office. Help improve business processes by analyzing exactly where time is being spent.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">TypeScript</span><span class="tech-tag">React</span><span class="tech-tag">WebSockets</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Task Management &mdash; Web &middot; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web" data-vertical="health-care" data-id="F09" data-code="WEB" data-long="Web" data-title="Healthcare CRM" data-client="" data-cta="Contact-us.html" data-desc="Provides the best analytics with real-time view combined with customizable smart reporting and dashboards. Healthcare CRM helps systematize interaction with patients and referring providers, personalize medical services promotion, improve care quality and patient satisfaction." data-src="images/portfolio/healthcaresw.png" data-alt="Healthcare CRM analytics">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/healthcaresw.png" alt="Healthcare CRM analytics" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F09 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Health care</p>
+                                <h3 class="pf-card__title">Healthcare CRM</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Provides the best analytics with real-time view combined with customizable smart reporting and dashboards. Healthcare CRM helps systematize interaction with patients and referring providers, personalize medical services promotion, improve care quality and patient satisfaction.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">HIPAA API</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Healthcare CRM &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web desktop" data-vertical="human-resource-management" data-id="F10" data-code="WEB·DSK" data-long="Web · Desktop" data-title="HR and Payroll" data-client="" data-cta="Contact-us.html" data-desc="The Human Resource department performs various activities such as payroll processing, maintaining salary details of every employee in the organization, keeping track of deductions, time and attendance, loans, allowances, and bonuses." data-src="images/portfolio/web/hr-payroll/hr-and-payroll-app.png" data-alt="HR and Payroll application">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/10-hr-and-payroll.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F10 &middot; WEB·DSK</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Human Resource Management</p>
+                                <h3 class="pf-card__title">HR and Payroll</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">The Human Resource department performs various activities such as payroll processing, maintaining salary details of every employee in the organization, keeping track of deductions, time and attendance, loans, allowances, and bonuses.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Vue.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">Enterprise</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view HR and Payroll &mdash; Web · Desktop"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="web" data-vertical="retail" data-id="F11" data-code="WEB" data-long="Web" data-title="Website Design &amp; development" data-client="" data-cta="Contact-us.html" data-desc="An effective website design should fulfill its intended function by conveying its particular message whilst simultaneously engaging the visitor. A good web design helps you keep your leads on your page. Website development is a way to make people aware of the services and/or products you are offering." data-src="images/portfolio/web/web-development/Website-development-2.png" data-alt="Website design and development">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/11-website-design-development.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F11 &middot; WEB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Retail</p>
+                                <h3 class="pf-card__title">Website Design &amp; development</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">An effective website design should fulfill its intended function by conveying its particular message whilst simultaneously engaging the visitor. A good web design helps you keep your leads on your page. Website development is a way to make people aware of the services and/or products you are offering.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Website Design &amp; development &mdash; Web"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web mobile" data-vertical="sports-management" data-id="F12" data-code="WEB·MOB" data-long="Web · Mobile" data-title="Sport event" data-client="" data-cta="Contact-us.html" data-desc="It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps — anytime, anywhere. Online Sports Registration, Online Payment Processing, Financial Management can also be done using this software." data-src="images/portfolio/web/sport-event-software/event-management-software-dojoman.png" data-alt="Sport event software">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/12-sport-event.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F12 &middot; WEB·MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Sports management</p>
+                                <h3 class="pf-card__title">Sport event</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">It is used to improve the problems existing in the management, realize the regular, and handle the affairs of sports efficiently. Give access to the schedule to your coaches or players, and they can get updated information through mobile event apps — anytime, anywhere. Online Sports Registration, Online Payment Processing, Financial Management can also be done using this software.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Flutter</span><span class="tech-tag">Firebase</span><span class="tech-tag">Analytics</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Sport event &mdash; Web &middot; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web mobile" data-vertical="facility-management" data-id="F13" data-code="WEB·MOB" data-long="Web · Mobile" data-title="Real Estate" data-client="" data-cta="Contact-us.html" data-desc="Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management." data-src="images/portfolio/web/real-estatesales-crm/real-estatesales-crm.png" data-alt="Real Estate CRM">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/13-real-estate.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F13 &middot; WEB·MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Facility management</p>
+                                <h3 class="pf-card__title">Real Estate</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Real estate CRM software is a system that helps manage relationships between buyers, sellers, agents, brokers, developers, and financial institutions and caters to the multiple requirements of real estate agents and real estate firms. From managing incoming requests to preparing price quotes, from selling commercial real-estate to property management.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Express</span><span class="tech-tag">Dashboard</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Real Estate &mdash; Web &middot; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web desktop" data-vertical="human-resource-management" data-id="F14" data-code="WEB·DSK" data-long="Web · Desktop" data-title="Performance Management System" data-client="" data-cta="Contact-us.html" data-desc="Performance Management Systems help Employees and Managers to set goals and track progress with shared tracking tools. Essentially, performance management is what organizations do to become more successful and stay ahead of their competitors." data-src="images/portfolio/web/performance-management-system/performance-management-system.png" data-alt="Performance Management System">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/14-performance-management-system.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F14 &middot; WEB·DSK</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Human Resource Management</p>
+                                <h3 class="pf-card__title">Performance Management System</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Performance Management Systems help Employees and Managers to set goals and track progress with shared tracking tools. Essentially, performance management is what organizations do to become more successful and stay ahead of their competitors.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Vue.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">Enterprise</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Performance Management System &mdash; Web · Desktop"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="web desktop mobile" data-vertical="retail" data-id="F15" data-code="WEB·DSK·MOB" data-long="Web · Desktop · Mobile" data-title="Restaurant Management" data-client="" data-cta="Contact-us.html" data-desc="Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables." data-src="images/portfolio/web/restaurant-management/Restaurant-management.png" data-alt="Restaurant Management">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/15-restaurant-management.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F15 &middot; WEB·DSK·MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Retail</p>
+                                <h3 class="pf-card__title">Restaurant Management</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Manage your restaurant from anywhere. Your staff can track and update the status of each order as opened, served, billed, or closed with the click of a button. Use the interactive table selection module of the app to easily allocate tables.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Restaurant Management &mdash; Web &middot; Desktop &middot; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="mobile" data-vertical="facility-management" data-id="F16" data-code="MOB" data-long="Mobile" data-title="WorkPlace Safety App" data-client="Singapore" data-cta="Contact-us.html" data-desc="Application to maintain your facility, the features will be, Inspection, Incident, Regular Audit, Event manager, Assets, Work order reports, My profile, Push notification for emergency exist, QR code scanning for attendance, Report sharing, Calendar." data-src="images/portfolio/WorkPlace-Safety-App.png" data-alt="WorkPlace Safety App">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/16-workplace-safety-app.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F16 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Facility management</p>
+                                <h3 class="pf-card__title">WorkPlace Safety App</h3>
+                                <p class="pf-card__client">Client &mdash; Singapore</p>
+                                <p class="pf-card__desc">Application to maintain your facility, the features will be, Inspection, Incident, Regular Audit, Event manager, Assets, Work order reports, My profile, Push notification for emergency exist, QR code scanning for attendance, Report sharing, Calendar.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Express</span><span class="tech-tag">Dashboard</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view WorkPlace Safety App &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="mobile" data-vertical="project-management" data-id="F17" data-code="MOB" data-long="Mobile" data-title="Taxation App" data-client="USA" data-cta="Contact-us.html" data-desc="Customer installs app and follows instructions to submit documents needed to process his/her tax return. Customer E-signs documents via app and submits signed documents to office. Tax return will get collected in customer inbox. Customer pay the fee through app." data-src="images/portfolio/Taxation-app.png" data-alt="Taxation App" data-featured="project">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/17-taxation-app.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F17 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Project Management</p>
+                                <h3 class="pf-card__title">Taxation App</h3>
+                                <p class="pf-card__client">Client &mdash; USA</p>
+                                <p class="pf-card__desc">Customer installs app and follows instructions to submit documents needed to process his/her tax return. Customer E-signs documents via app and submits signed documents to office. Tax return will get collected in customer inbox. Customer pay the fee through app.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">TypeScript</span><span class="tech-tag">React</span><span class="tech-tag">WebSockets</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Taxation App &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="mobile" data-vertical="project-management" data-id="F18" data-code="MOB" data-long="Mobile" data-title="Mytasky App" data-client="Singapore" data-cta="Contact-us.html" data-desc="Mytasky app to monitor your task without delay. Gives everything you need to create team projects, assign and schedule tasks, and track progress so that nothing falls through the cracks. It's extremely easy to use you'll be up and running in minutes." data-src="images/portfolio/Mytasky.png" data-alt="Mytasky App">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/18-mytasky-app.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F18 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Project Management</p>
+                                <h3 class="pf-card__title">Mytasky App</h3>
+                                <p class="pf-card__client">Client &mdash; Singapore</p>
+                                <p class="pf-card__desc">Mytasky app to monitor your task without delay. Gives everything you need to create team projects, assign and schedule tasks, and track progress so that nothing falls through the cracks. It's extremely easy to use you'll be up and running in minutes.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">TypeScript</span><span class="tech-tag">React</span><span class="tech-tag">WebSockets</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Mytasky App &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="mobile" data-vertical="facility-management" data-id="F19" data-code="MOB" data-long="Mobile" data-title="Visitors management app" data-client="" data-cta="Contact-us.html" data-desc="Smart Visit is a smart visitor management system with secure check-in application to offer your guests a splendid welcome. Enhance your front desk operations with use of Smart Visit to make it more secure and efficient." data-src="images/portfolio/Visitors-management-app.png" data-alt="Visitors management app">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/19-visitors-management-app.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F19 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Facility management</p>
+                                <h3 class="pf-card__title">Visitors management app</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Smart Visit is a smart visitor management system with secure check-in application to offer your guests a splendid welcome. Enhance your front desk operations with use of Smart Visit to make it more secure and efficient.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Express</span><span class="tech-tag">Dashboard</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Visitors management app &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="mobile" data-vertical="health-care" data-id="F20" data-code="MOB" data-long="Mobile" data-title="Doctor Appointment" data-client="" data-cta="Contact-us.html" data-desc="Make it easier for customers to provide feedback with forms optimized for mobile. Set up appointments for your patients in the most effective way with the help of the Appointment Scheduling App. The doctors will be able to access, reception and appointments, everything in one calendar." data-src="images/portfolio/mobile/doctor-appointment-app/Doctor-appointment-app.png" data-alt="Doctor Appointment app">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/20-doctor-appointment.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F20 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Health care</p>
+                                <h3 class="pf-card__title">Doctor Appointment</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Make it easier for customers to provide feedback with forms optimized for mobile. Set up appointments for your patients in the most effective way with the help of the Appointment Scheduling App. The doctors will be able to access, reception and appointments, everything in one calendar.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">HIPAA API</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Doctor Appointment &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="mobile" data-vertical="sports-management" data-id="F23" data-code="MOB" data-long="Mobile" data-title="Smart Fitness" data-client="" data-cta="Contact-us.html" data-desc="With the Fitness App, you can start tracking your workouts and meals, measuring results, and achieving your fitness goals, all with the help of your personal trainer. The purpose of a fitness app is to provide the user with instructions and examples of one or more types of exercise, physical activity, nutritional programs, or some other fitness topic." data-src="images/portfolio/mobile/fitness-app/fitness-app.png" data-alt="Smart Fitness app">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/23-smart-fitness.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F23 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Sports management</p>
+                                <h3 class="pf-card__title">Smart Fitness</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">With the Fitness App, you can start tracking your workouts and meals, measuring results, and achieving your fitness goals, all with the help of your personal trainer. The purpose of a fitness app is to provide the user with instructions and examples of one or more types of exercise, physical activity, nutritional programs, or some other fitness topic.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Flutter</span><span class="tech-tag">Firebase</span><span class="tech-tag">Analytics</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Smart Fitness &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="mobile" data-vertical="retail" data-id="F25" data-code="MOB" data-long="Mobile" data-title="Ticket Booking" data-client="" data-cta="Contact-us.html" data-desc="Online Movie Ticket Booking System is a website to provide the customer's facility to book tickets for a movie online and to gather information about the movies and theaters. Customers need to register at the site to book tickets to the movie. After selecting the show, the user is presented with a seating layout so that he can select seats of his choice." data-src="images/portfolio/mobile/ticket-booking-app/ticket-booking-app.png" data-alt="Ticket Booking app">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/25-ticket-booking.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F25 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Retail</p>
+                                <h3 class="pf-card__title">Ticket Booking</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Online Movie Ticket Booking System is a website to provide the customer's facility to book tickets for a movie online and to gather information about the movies and theaters. Customers need to register at the site to book tickets to the movie. After selecting the show, the user is presented with a seating layout so that he can select seats of his choice.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Ticket Booking &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="project" data-platform="mobile" data-vertical="retail" data-id="F26" data-code="MOB" data-long="Mobile" data-title="Food delivery" data-client="" data-cta="Contact-us.html" data-desc="Online ordering management software can be used by independent and small restaurants, restaurant chains, coffee shops, quick-service restaurants, and fast-casual restaurants alike — in short, every kind of food business that offers delivery as a service." data-src="images/portfolio/Food-delivery-app.png" data-alt="Food delivery app">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/26-food-delivery.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F26 &middot; MOB</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Retail</p>
+                                <h3 class="pf-card__title">Food delivery</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">Online ordering management software can be used by independent and small restaurants, restaurant chains, coffee shops, quick-service restaurants, and fast-casual restaurants alike — in short, every kind of food business that offers delivery as a service.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view Food delivery &mdash; Mobile"></button>
+                        </article>
+                        <article class="pf-card" data-category="product" data-platform="mobile desktop" data-vertical="project-management" data-id="F28" data-code="MOB·DSK" data-long="Mobile · Desktop" data-title="FinTechesh" data-client="" data-cta="Contact-us.html" data-desc="It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience." data-src="images/portfolio/financials.png" data-alt="FinTechesh mobile">
+                            <div class="pf-card__media">
+                                <img src="images/portfolio/reel/28-fintechesh.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
+                                <span class="pf-card__code">F28 &middot; MOB·DSK</span>
+                            </div>
+                            <div class="pf-card__body">
+                                <p class="pf-card__vertical">Project Management</p>
+                                <h3 class="pf-card__title">FinTechesh</h3>
+                                <p class="pf-card__client">In-house product</p>
+                                <p class="pf-card__desc">It helps to consolidate, streamline and automate your financial processes. Real-Time data tracking and instantly generate key financial reports with accuracy. It saves time and provides a stress-free invoicing experience.</p>
+                                <div class="pf-card__foot">
+                                    <div class="pf-card__tags"><span class="tech-tag">TypeScript</span><span class="tech-tag">React</span><span class="tech-tag">WebSockets</span></div>
+                                    <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
+                                </div>
+                            </div>
+                            <button type="button" class="pf-card__hit" aria-label="Quick view FinTechesh &mdash; Mobile · Desktop"></button>
+                        </article>
                     </div>
                 </div>
             </section>
@@ -1096,16 +1188,18 @@
     </script>
 
     <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
+    <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
     <div id="chatbot-container" class="chatbot-container">
         <div id="chatbot-window" class="chatbot-window hidden">
             <div class="chatbot-header">
                 <div class="chatbot-header-content">
                     <div class="chatbot-avatar-box">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            <circle cx="9" cy="10" r="1" fill="#726cf4"></circle>
-                            <circle cx="15" cy="10" r="1" fill="#726cf4"></circle>
-                            <path d="M9.5 13.5c1 .8 2 1 3 0" stroke="#726cf4"></path>
+                            <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                            <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                            <circle cx="9" cy="14" r="1.2" fill="#726cf4"></circle>
+                            <circle cx="15" cy="14" r="1.2" fill="#726cf4"></circle>
+                            <path d="M10 17.5h4" stroke="#726cf4"></path>
                         </svg>
                     </div>
                     <div class="chatbot-header-text">
@@ -1123,12 +1217,42 @@
                 </div>
                 <div class="quick-chips" role="group" aria-label="Choose one">
                     <span class="quick-chips-label">Popular Questions</span>
-                    <button class="chip-btn" data-query="Tell me about custom AI and software engineering">Custom AI & Software</button>
-                    <button class="chip-btn" data-query="How do dedicated developer teams work?">Dedicated Developer Teams</button>
-                    <button class="chip-btn" data-query="Start a project">Free Project Quote</button>
-                    <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">Healthcare Tech & RCM</button>
-                    <button class="chip-btn" data-query="Looking for a job">Join Our Team</button>
+                    <button class="chip-btn" data-query="Tell me about shipped products and portfolio">📦 Shipped Products</button>
+                    <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">🏥 Healthcare RCM</button>
+                    <button class="chip-btn" data-query="How do dedicated developer teams work?">🚀 Hire Developers</button>
+                    <button class="chip-btn" data-query="Start a project or free quote">📞 Contact Sales</button>
+                    <button class="chip-btn" data-query="Looking for a job">📄 Careers &amp; Jobs</button>
                 </div>
+            </div>
+
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask NohiAI about custom AI, project quotes, or careers..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                    <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                    <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+                    <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+                    <path d="M10 17.5h4"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
             </div>
 
             <div class="chatbot-input-area">
@@ -1144,8 +1268,12 @@
         <!-- Terracotta Coral Toggle Button -->
         <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
             <div id="toggle-icon-chat" class="toggle-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                    <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                    <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+                    <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+                    <path d="M10 17.5h4"></path>
                 </svg>
             </div>
             <div id="toggle-icon-close" class="toggle-icon hidden">
@@ -1203,8 +1331,35 @@
         </form>
     </aside>
 
+    <!-- Quick-View Detail Modal -->
+    <div class="atlas-modal-backdrop" id="project-modal" aria-hidden="true">
+        <div class="atlas-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button type="button" class="atlas-modal__close" id="modal-close" aria-label="Close modal">&times;</button>
+            <div class="atlas-modal__media">
+                <img id="modal-img" alt="" />
+            </div>
+            <div class="atlas-modal__content">
+                <div class="atlas-modal__header">
+                    <div class="atlas-modal__meta">
+                        <span class="pf-card__badge pf-card__badge--product" id="modal-badge">Product</span>
+                        <span class="pf-card__code" id="modal-code">F01 · Web</span>
+                    </div>
+                    <h3 class="atlas-modal__title" id="modal-title">Project Title</h3>
+                    <p class="atlas-modal__client" id="modal-client">In-house product</p>
+                </div>
+                <p class="atlas-modal__desc" id="modal-desc">Project description goes here...</p>
+                <div class="atlas-modal__footer">
+                    <div class="pf-card__tags" id="modal-tags"></div>
+                    <a class="pf-btn" id="modal-cta" href="Contact-us.html">
+                        Request a demo <span aria-hidden="true">&#8594;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/api-base.js?v=20260812liveapi1"></script>
-    <script src="js/portfolio-atlas.js?v=20260812liveapi1"></script>
-    <script src="js/chatbot.js?v=20260807noflicker"></script>
+    <script src="js/portfolio-atlas.js?v=20260817grid1"></script>
+    <script src="js/chatbot.js?v=20260817backbtn"></script>
 </body>
 </html>
