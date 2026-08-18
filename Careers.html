@@ -229,6 +229,81 @@
             opacity: 0 !important;
             pointer-events: none !important;
             overflow: hidden !important;
+        .careers-hero-content {
+            position: absolute;
+            z-index: 3;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px 24px;
+            background: radial-gradient(circle at center, rgba(13, 18, 28, 0.4) 0%, rgba(7, 11, 18, 0.7) 100%);
+            pointer-events: none;
+        }
+
+        .careers-hero-content * {
+            pointer-events: auto;
+        }
+
+        .careers-hero-content .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: rgba(114, 108, 244, 0.18);
+            border: 1px solid rgba(114, 108, 244, 0.35);
+            color: #b8b5ff;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .careers-hero-content .hero-title {
+            color: #ffffff;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(20px, 3vw, 34px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+            max-width: 760px;
+            margin: 0 0 12px;
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+        }
+
+        .careers-hero-content .hero-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(12px, 1.3vw, 15px);
+            font-weight: 500;
+            max-width: 580px;
+            margin: 0 0 22px;
+        }
+
+        .careers-hero-content .hero-btn.primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #726cf4, #5f58dc);
+            color: #ffffff;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(114, 108, 244, 0.4);
+            transition: all 200ms ease;
+        }
+
+        .careers-hero-content .hero-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(114, 108, 244, 0.6);
         }
 
         /* Clip tall wave art so only peaks tip into the first viewport */
@@ -1131,6 +1206,14 @@
                         preload="auto"
                     ></video>
                 </div>
+                <div class="careers-hero-content">
+                    <span class="hero-badge">Recognized &amp; Awarded</span>
+                    <h1 class="hero-title">We have been awarded for software &amp; AI engineering excellence</h1>
+                    <p class="hero-subtitle">Join a dynamic team building next-generation digital products and cloud platforms.</p>
+                    <div class="hero-actions">
+                        <a href="#open-positions" class="hero-btn primary">Explore Openings &rarr;</a>
+                    </div>
+                </div>
                 <div class="hero-wave" aria-hidden="true">
                     <span class="hero-wave__layer hero-wave__layer--back"></span>
                     <span class="hero-wave__layer hero-wave__layer--front"></span>
@@ -1487,7 +1570,8 @@
 
             const sources = [
                 "images/careers-video/hero-team-01.mp4",
-                "images/careers-video/hero-team-02.mp4"
+                "images/careers-video/hero-team-02.mp4",
+                "images/careers-video/hero-team-03.mp4"
             ];
             let activeIndex = 0;
             let pendingSwap = false;
