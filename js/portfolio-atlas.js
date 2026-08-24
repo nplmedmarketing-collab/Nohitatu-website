@@ -82,14 +82,46 @@
 
   /* ---------------------------------------------------------------- data */
 
+  // GitHub Pages loads the admin API, which historically omitted `category`.
+  // Capture product/project (+ featured) from the static markup before replace
+  // so the Projects tab stays accurate even when the API payload is incomplete.
+  function staticCardHints() {
+    const hints = new Map();
+    root.querySelectorAll(".pf-card").forEach((el) => {
+      const id = (el.dataset.id || "").trim();
+      const title = (el.dataset.title || "").trim().toLowerCase();
+      const hint = {
+        category: (el.dataset.category || "").trim().toLowerCase(),
+        featured: (el.dataset.featured || "").trim().toLowerCase(),
+      };
+      if (id) hints.set(`id:${id}`, hint);
+      if (title) hints.set(`title:${title}`, hint);
+    });
+    return hints;
+  }
+
+  function mergeApiWithStatic(projects, hints) {
+    return projects.map((p) => {
+      const byId = p.frame_id ? hints.get(`id:${String(p.frame_id).trim()}`) : null;
+      const byTitle = p.title ? hints.get(`title:${String(p.title).trim().toLowerCase()}`) : null;
+      const hint = byId || byTitle || {};
+      const rawCat = String(p.category || hint.category || "product").trim().toLowerCase();
+      const category = rawCat === "project" ? "project" : "product";
+      const featured = String(p.featured || hint.featured || "").trim().toLowerCase();
+      return featured ? { ...p, category, featured } : { ...p, category };
+    });
+  }
+
   function cardMarkup(p) {
-    const category = (p.category || "product").toLowerCase();
+    const category = (p.category || "product").toLowerCase() === "project" ? "project" : "product";
     const vertical = p.vertical || "retail";
     const id = p.frame_id || "";
     const code = p.code || "";
     const long = p.platform_long || "";
     const title = p.title || "";
     const image = p.image || "";
+    const featured = String(p.featured || "").trim().toLowerCase();
+    const featuredAttr = featured ? ` data-featured="${escapeAttr(featured)}"` : "";
     const tags = tagsFor(vertical)
       .map((t) => `<span class="tech-tag">${escapeText(t)}</span>`)
       .join("");
@@ -97,7 +129,7 @@
     return `<article class="pf-card" data-category="${escapeAttr(category)}" data-platform="${escapeAttr(p.platform || "web")}"
         data-vertical="${escapeAttr(vertical)}" data-id="${escapeAttr(id)}" data-code="${escapeAttr(code)}" data-long="${escapeAttr(long)}"
         data-title="${escapeAttr(title)}" data-client="${escapeAttr(p.client || "")}" data-cta="${escapeAttr(p.cta || "Contact-us.html")}"
-        data-desc="${escapeAttr(p.description || "")}" data-src="${escapeAttr(image)}" data-alt="${escapeAttr(p.alt || title)}">
+        data-desc="${escapeAttr(p.description || "")}" data-src="${escapeAttr(image)}" data-alt="${escapeAttr(p.alt || title)}"${featuredAttr}>
         <div class="pf-card__media">
           <img src="${escapeAttr(p.thumb || image)}" alt="" width="600" height="375" loading="lazy" decoding="async">
           <span class="pf-card__code">${escapeText(id)} · ${escapeText(code)}</span>
@@ -116,9 +148,52 @@
       </article>`;
   }
 
+  // Legacy API rows split one product across platforms (e.g. F12+F22 Sport Event,
+  // F28+F29 FinTechesh). Collapse to a single catalogue card before stamping.
+  const DROP_FRAME_IDS = new Set(["F22", "F29"]);
+  const PREFERRED_FRAME = {
+    sportevent: "F12",
+    fintechesh: "F28",
+  };
+
+  function normalizeTitleKey(title) {
+    return String(title || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "");
+  }
+
+  function dedupeProjects(projects) {
+    const byKey = new Map();
+    for (const p of projects) {
+      const id = String(p.frame_id || "").toUpperCase();
+      if (DROP_FRAME_IDS.has(id)) continue;
+      const key = normalizeTitleKey(p.title);
+      if (!key) continue;
+      const prev = byKey.get(key);
+      if (!prev) {
+        byKey.set(key, p);
+        continue;
+      }
+      const prefer = PREFERRED_FRAME[key];
+      const prevId = String(prev.frame_id || "").toUpperCase();
+      const nextId = id;
+      if (prefer && nextId === prefer && prevId !== prefer) {
+        byKey.set(key, p);
+        continue;
+      }
+      if (prefer && prevId === prefer) continue;
+      const prevLen = String(prev.description || "").length;
+      const nextLen = String(p.description || "").length;
+      if (nextLen > prevLen) byKey.set(key, p);
+    }
+    const kept = new Set([...byKey.values()]);
+    return projects.filter((p) => kept.has(p));
+  }
+
   function renderProjects(projects) {
     if (!grid || !Array.isArray(projects) || !projects.length) return false;
-    grid.innerHTML = projects.map(cardMarkup).join("");
+    const list = dedupeProjects(projects);
+    grid.innerHTML = list.map(cardMarkup).join("");
     cards = [...grid.querySelectorAll(".pf-card")];
     return cards.length > 0;
   }
@@ -130,7 +205,8 @@
       const res = await fetch(url, { credentials: "omit", cache: "no-store" });
       if (!res.ok) return false;
       const data = await res.json();
-      return renderProjects(data.projects || []);
+      const hints = staticCardHints();
+      return renderProjects(mergeApiWithStatic(data.projects || [], hints));
     } catch {
       return false;
     }

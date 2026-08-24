@@ -80,6 +80,7 @@ function bodyToProject(body, files) {
     title: String(body.title || "").trim(),
     description: String(body.description || "").trim(),
     client: String(body.client || "").trim(),
+    category: String(body.category || "").trim().toLowerCase() === "project" ? "project" : "product",
     vertical: String(body.vertical || "retail").trim(),
     platform: meta.platform,
     code: body.code ? String(body.code).trim() : meta.code,
@@ -267,6 +268,13 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
       if (!input.thumb) input.thumb = current.thumb;
       if (!input.frame_id) input.frame_id = current.frame_id;
       if (input.order === undefined || Number.isNaN(input.order)) input.order = current.order;
+      if (
+        req.body.category === undefined ||
+        req.body.category === null ||
+        String(req.body.category).trim() === ""
+      ) {
+        input.category = current.category;
+      }
       const errMsg = validateProject(input);
       if (errMsg) return res.status(400).json({ error: errMsg });
       const project = store.update(req.params.id, input);

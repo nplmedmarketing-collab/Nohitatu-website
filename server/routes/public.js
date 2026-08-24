@@ -30,6 +30,7 @@ function createPublicRouter({ store }) {
       title: p.title,
       description: p.description,
       client: p.client,
+      category: p.category === "project" ? "project" : "product",
       vertical: p.vertical,
       platform: p.platform,
       code: p.code,

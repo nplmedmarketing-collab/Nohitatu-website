@@ -162,6 +162,10 @@ function toPublicCareerDetail(job) {
   };
 }
 
+function normalizeCategory(value) {
+  return String(value || "").trim().toLowerCase() === "project" ? "project" : "product";
+}
+
 function normalizeProject(p, fallbackOrder) {
   const meta = platformMeta(p.platform || p.platform_long || "web");
   const order = Number.isFinite(Number(p.order)) ? Number(p.order) : fallbackOrder || 0;
@@ -172,6 +176,7 @@ function normalizeProject(p, fallbackOrder) {
     title: decodeHtml(p.title || "").trim(),
     description: decodeHtml(p.description || p.desc || "").trim(),
     client: decodeHtml(p.client || "").trim(),
+    category: normalizeCategory(p.category),
     vertical: String(p.vertical || "retail").trim(),
     platform: meta.platform,
     code: String(p.code || meta.code).trim() || meta.code,
@@ -205,6 +210,19 @@ class JsonStore {
       const seed = loadCareersSeed();
       this._writeCareers(seed.map((c, i) => ({ ...c, id: i + 1 })));
     }
+    this._dedupePlatformSplits();
+  }
+
+  _dedupePlatformSplits() {
+    let rows = this._read();
+    rows = rows.filter((p) => !["F22", "F29"].includes(String(p.frame_id || "").toUpperCase()));
+    const seedByFrame = new Map(loadSeed().map((p) => [p.frame_id, p]));
+    rows = rows.map((p) => {
+      const seed = seedByFrame.get(p.frame_id);
+      if (!seed || (p.frame_id !== "F12" && p.frame_id !== "F28")) return p;
+      return normalizeProject({ ...p, ...seed, id: p.id }, p.order);
+    });
+    this._write(rows);
   }
 
   _read() {
@@ -371,6 +389,7 @@ class SqliteStore {
         title TEXT NOT NULL,
         description TEXT NOT NULL DEFAULT '',
         client TEXT NOT NULL DEFAULT '',
+        category TEXT NOT NULL DEFAULT 'product',
         vertical TEXT NOT NULL DEFAULT 'retail',
         platform TEXT NOT NULL DEFAULT 'web',
         code TEXT NOT NULL DEFAULT 'WEB',
@@ -419,15 +438,35 @@ class SqliteStore {
       );
       CREATE INDEX IF NOT EXISTS idx_demo_requests_created ON demo_requests(created_at);
     `);
+
+    const projectCols = this.db
+      .prepare("PRAGMA table_info(projects)")
+      .all()
+      .map((c) => c.name);
+    if (!projectCols.includes("category")) {
+      this.db.exec(
+        `ALTER TABLE projects ADD COLUMN category TEXT NOT NULL DEFAULT 'product'`
+      );
+      const seedByFrame = new Map(loadSeed().map((p) => [p.frame_id, p.category]));
+      const rows = this.db.prepare("SELECT id, frame_id FROM projects").all();
+      const setCat = this.db.prepare("UPDATE projects SET category = ? WHERE id = ?");
+      const tx = this.db.transaction((list) => {
+        for (const row of list) {
+          setCat.run(normalizeCategory(seedByFrame.get(row.frame_id)), row.id);
+        }
+      });
+      tx(rows);
+    }
+
     const count = this.db.prepare("SELECT COUNT(*) AS c FROM projects").get().c;
     if (count === 0) {
       const seed = loadSeed();
       const insert = this.db.prepare(`
         INSERT INTO projects (
-          sort_order, frame_id, title, description, client, vertical,
+          sort_order, frame_id, title, description, client, category, vertical,
           platform, code, platform_long, image, thumb, alt, cta
         ) VALUES (
-          @order, @frame_id, @title, @description, @client, @vertical,
+          @order, @frame_id, @title, @description, @client, @category, @vertical,
           @platform, @code, @platform_long, @image, @thumb, @alt, @cta
         )
       `);
@@ -436,6 +475,10 @@ class SqliteStore {
       });
       tx(seed);
     }
+
+    // Drop legacy platform-split duplicates (Sport Event F22, FinTechesh F29)
+    // and refresh keepers from seed when present.
+    this._dedupePlatformSplits();
 
     const careerCount = this.db.prepare("SELECT COUNT(*) AS c FROM careers").get().c;
     if (careerCount === 0) {
@@ -458,6 +501,37 @@ class SqliteStore {
     }
   }
 
+  _dedupePlatformSplits() {
+    const removed = this.db
+      .prepare("DELETE FROM projects WHERE frame_id IN ('F22', 'F29')")
+      .run().changes;
+    const seedByFrame = new Map(loadSeed().map((p) => [p.frame_id, p]));
+    const upd = this.db.prepare(`UPDATE projects SET
+      title = @title,
+      description = @description,
+      client = @client,
+      category = @category,
+      vertical = @vertical,
+      platform = @platform,
+      code = @code,
+      platform_long = @platform_long,
+      image = @image,
+      thumb = @thumb,
+      alt = @alt,
+      cta = @cta
+     WHERE frame_id = @frame_id`);
+    for (const frameId of ["F12", "F28"]) {
+      const seed = seedByFrame.get(frameId);
+      if (!seed) continue;
+      const row = this.db.prepare("SELECT id FROM projects WHERE frame_id = ?").get(frameId);
+      if (!row) continue;
+      upd.run({ ...seed, frame_id: frameId });
+    }
+    if (removed) {
+      console.log(`[portfolio] removed ${removed} platform-split duplicate project(s)`);
+    }
+  }
+
   _rowToProject(row) {
     if (!row) return null;
     return {
@@ -467,6 +541,7 @@ class SqliteStore {
       title: row.title,
       description: row.description,
       client: row.client,
+      category: normalizeCategory(row.category),
       vertical: row.vertical,
       platform: row.platform,
       code: row.code,
@@ -528,10 +603,10 @@ class SqliteStore {
     const info = this.db
       .prepare(
         `INSERT INTO projects (
-          sort_order, frame_id, title, description, client, vertical,
+          sort_order, frame_id, title, description, client, category, vertical,
           platform, code, platform_long, image, thumb, alt, cta
         ) VALUES (
-          @order, @frame_id, @title, @description, @client, @vertical,
+          @order, @frame_id, @title, @description, @client, @category, @vertical,
           @platform, @code, @platform_long, @image, @thumb, @alt, @cta
         )`
       )
@@ -551,6 +626,7 @@ class SqliteStore {
           title = @title,
           description = @description,
           client = @client,
+          category = @category,
           vertical = @vertical,
           platform = @platform,
           code = @code,

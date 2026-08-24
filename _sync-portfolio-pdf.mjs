@@ -584,10 +584,10 @@ function buildFintecheshCard(desc) {
   const attrDesc = escapeHtmlAttr(desc);
   const textDesc = escapeHtmlText(desc);
   return `
-                        <article class="pf-card" data-category="product" data-platform="web desktop" data-vertical="finance" data-id="F27" data-code="WEB·DSK" data-long="Web · Desktop" data-title="FINTECHESH" data-client="In-house product" data-cta="Contact-us.html" data-desc="${attrDesc}" data-src="images/portfolio/financials2.png" data-alt="FINTECHESH financial automation platform">
+                        <article class="pf-card" data-category="product" data-platform="web desktop" data-vertical="finance" data-id="F28" data-code="WEB·DSK" data-long="Web · Desktop" data-title="FINTECHESH" data-client="In-house product" data-cta="Contact-us.html" data-desc="${attrDesc}" data-src="images/portfolio/financials2.png" data-alt="FINTECHESH financial automation platform">
                             <div class="pf-card__media">
                                 <img src="images/portfolio/reel/29-fintechesh.webp" alt="" width="600" height="375" loading="lazy" decoding="async">
-                                <span class="pf-card__code">F27 &middot; WEB·DSK</span>
+                                <span class="pf-card__code">F28 &middot; WEB·DSK</span>
                             </div>
                             <div class="pf-card__body">
                                 <p class="pf-card__vertical">Finance</p>
@@ -637,17 +637,21 @@ async function main() {
     html = updateCardHtml(html, match, descs[key], item.category);
   }
 
-  // Smart Fitness was project — set product; Food delivery product; Ticket product
-  if (!/data-title="FINTECHESH"/.test(html)) {
-    // Insert before closing of pf-grid / after last article
+  // Prefer updating an existing FinTechesh/FINTECHESH card; never add a second one.
+  if (/data-title="FINTECHESH"/i.test(html)) {
+    html = updateCardHtml(html, "FINTECHESH", descs.FINTECHESH, "product");
+  } else if (/data-title="FinTechesh"/i.test(html)) {
+    // Normalize legacy casing, then refresh Option 1 copy.
+    html = html.replace(/data-title="FinTechesh"/g, 'data-title="FINTECHESH"');
+    html = html.replace(/>FinTechesh</g, ">FINTECHESH<");
+    html = updateCardHtml(html, "FINTECHESH", descs.FINTECHESH, "product");
+  } else {
     const idx = html.lastIndexOf("</article>");
     if (idx !== -1) {
       const end = idx + "</article>".length;
       html = html.slice(0, end) + buildFintecheshCard(descs.FINTECHESH) + html.slice(end);
       console.log("Added FINTECHESH card");
     }
-  } else {
-    html = updateCardHtml(html, "FINTECHESH", descs.FINTECHESH, "product");
   }
 
   // Cache-bust style if present
