@@ -1256,13 +1256,14 @@ body.landing-page header.logo-navbar:not(.white-header) #navigation > li.nav-ite
   visibility: hidden !important;
 }
 
+/* Default NohiAI size: larger right-side figure (~0.9 desktop scale) */
 @keyframes robotFadeInPosition {
   0% {
-    transform: translate(350px, 35px) scale(0.96) translateZ(0);
+    transform: translate(260px, 48px) scale(0.82) translateZ(0);
     opacity: 0;
   }
   100% {
-    transform: translate(350px, 35px) scale(1) translateZ(0);
+    transform: translate(260px, 48px) scale(0.9) translateZ(0);
     opacity: 1;
   }
 }
@@ -1375,10 +1376,11 @@ body.landing-page header.logo-navbar:not(.white-header) #navigation > li.nav-ite
   .top-banner--spline .hero-spline-frame,
   .top-banner--spline .hero-spline-bg iframe {
     width: 100% !important;
-    height: calc(100% + 60px) !important;
+    height: calc(100% + 130px) !important;
     left: 0 !important;
-    top: 0 !important;
-    transform: translate(350px, 35px) translateZ(0) !important;
+    top: -16px !important;
+    transform: translate(260px, 48px) scale(0.9) translateZ(0) !important;
+    transform-origin: 72% 48% !important;
     opacity: 1 !important;
     image-rendering: auto !important;
     filter: none !important;
@@ -1388,13 +1390,28 @@ body.landing-page header.logo-navbar:not(.white-header) #navigation > li.nav-ite
   }
 }
 
+/* Mid desktops: right-side, same scale; keep robot clear of headline */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .top-banner--spline .hero-spline-frame,
+  .top-banner--spline .hero-spline-bg iframe {
+    transform: translate(180px, 56px) scale(0.82) translateZ(0) !important;
+    transform-origin: 70% 50% !important;
+    animation: none !important;
+  }
+
+  .hero-robot-interactive-wrapper {
+    top: 22%;
+    right: 10%;
+  }
+}
+
 /* ==========================================================================
    Clean 3D Robot Speech Bubble — Dark Violet Theme
    ========================================================================== */
 .hero-robot-interactive-wrapper {
   position: absolute;
-  top: 17%;
-  right: 11%;
+  top: 20%;
+  right: 12%;
   z-index: 15 !important;
   cursor: pointer;
   pointer-events: auto !important;
@@ -1842,7 +1859,9 @@ body.landing-page header.logo-navbar:not(.white-header) #navigation > li.nav-ite
   .hero-spline-bg iframe {
     width: 100% !important;
     height: 100% !important;
-    transform: none !important;
+    /* Keep robot readable without overflowing the mobile hero */
+    transform: translate(0, 28px) scale(0.92) translateZ(0) !important;
+    transform-origin: center 55% !important;
   }
 }
 
