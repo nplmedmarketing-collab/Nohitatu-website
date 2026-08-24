@@ -592,90 +592,48 @@
   outline-offset: 2px;
 }
 
-/* ----- bento mosaic -----
-   Twelve columns over a fixed row unit. Tile sizes are stamped by JS on visible
-   order in blocks that tile their region exactly, so filtering can never leave
-   a hole: every block is a complete 12-column rectangle. */
-.pf-grid {
-  --pf-row: 128px;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: minmax(var(--pf-row), auto);
-  grid-auto-flow: row dense;
-  gap: clamp(14px, 1.5vw, 20px);
+/* ----- catalogue list -----
+   One shipment per row. Kept `.pf-grid` / `.pf-card` class names so filter +
+   modal JS keep working without a rewrite. */
+.pf-grid,
+.pf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .pf-card {
   /* The hover lift travels through a custom property so the entrance-reveal rule
      below (higher specificity) can own `transform` without cancelling hover. */
   --pf-lift: none;
+  --pf-thumb: clamp(168px, 22vw, 248px);
   position: relative;
   display: flex;
-  flex-direction: column;
-  grid-column: span 3;
-  grid-row: span 2;
-  border-radius: 20px;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  min-height: 148px;
+  border-radius: 16px;
   border: 1px solid var(--atlas-line);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.014) 46%),
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.012) 42%),
     var(--atlas-panel);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   overflow: hidden;
   transform: var(--pf-lift);
-  transition: transform 460ms var(--atlas-ease), border-color 320ms ease,
-    box-shadow 460ms var(--atlas-ease);
+  transition: transform 420ms var(--atlas-ease), border-color 300ms ease,
+    box-shadow 420ms var(--atlas-ease), background 300ms ease;
 }
 
-/* Tile sizes. `hero` is reserved for the curated item in each segment. */
-.pf-card--hero {
-  grid-column: span 6;
-  grid-row: span 4;
-}
-
-.pf-card--tall {
-  grid-column: span 3;
-  grid-row: span 4;
-}
-
-.pf-card--wide {
-  grid-column: span 6;
-  grid-row: span 2;
-}
-
-.pf-card--third {
-  grid-column: span 4;
-  grid-row: span 2;
-}
-
-.pf-card--band {
-  grid-column: span 12;
-  grid-row: span 2;
-}
-
-/* Only ever used for a lone result, so it answers to nothing but its own copy. */
-.pf-card--solo {
-  grid-column: span 12;
-  grid-row: span 3;
-}
-
-/* Short, wide tiles read better with the image beside the copy. */
+/* Legacy bento size classes are inert in list mode (JS may still stamp them). */
+.pf-card--hero,
+.pf-card--tall,
 .pf-card--wide,
 .pf-card--third,
 .pf-card--band,
 .pf-card--solo {
+  grid-column: auto;
+  grid-row: auto;
   flex-direction: row;
-}
-
-.pf-card--wide .pf-card__media,
-.pf-card--third .pf-card__media {
-  flex: 0 0 42%;
-}
-
-.pf-card--band .pf-card__media {
-  flex: 0 0 32%;
-}
-
-.pf-card--solo .pf-card__media {
-  flex: 0 0 52%;
 }
 
 .pf-card.is-out {
@@ -684,8 +642,10 @@
 
 .pf-card__media {
   position: relative;
-  flex: 1 1 auto;
-  min-height: 70px;
+  flex: 0 0 var(--pf-thumb);
+  width: var(--pf-thumb);
+  align-self: stretch;
+  min-height: 148px;
   background: var(--atlas-deep);
   overflow: hidden;
 }
@@ -695,9 +655,10 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(7, 11, 18, 0) 52%, rgba(7, 11, 18, 0.66) 100%);
-  opacity: 0.75;
-  transition: opacity 460ms ease;
+  background: linear-gradient(90deg, rgba(7, 11, 18, 0) 55%, rgba(7, 11, 18, 0.35) 100%),
+    linear-gradient(180deg, rgba(7, 11, 18, 0) 48%, rgba(7, 11, 18, 0.5) 100%);
+  opacity: 0.7;
+  transition: opacity 420ms ease;
 }
 
 .pf-card__media img {
@@ -708,13 +669,13 @@
   object-position: top center;
   transform: scale(1.01);
   filter: saturate(0.92) brightness(0.92);
-  transition: transform 820ms var(--atlas-ease), filter 460ms ease;
+  transition: transform 820ms var(--atlas-ease), filter 420ms ease;
 }
 
 .pf-card__code {
   position: absolute;
   top: 11px;
-  right: 11px;
+  left: 11px;
   z-index: 2;
   padding: 5px 9px;
   border-radius: 8px;
@@ -732,24 +693,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  flex: 0 0 auto;
-  padding: 14px 16px 15px;
-  min-width: 0;
-}
-
-.pf-card--wide .pf-card__body,
-.pf-card--third .pf-card__body,
-.pf-card--band .pf-card__body,
-.pf-card--solo .pf-card__body {
-  flex: 1 1 auto;
   justify-content: center;
-}
-
-.pf-card--band .pf-card__body,
-.pf-card--solo .pf-card__body {
-  gap: 7px;
-  padding: 22px clamp(20px, 2.2vw, 30px);
+  gap: 6px;
+  flex: 1 1 auto;
+  padding: 18px clamp(16px, 2vw, 26px) 18px clamp(18px, 2.2vw, 28px);
+  min-width: 0;
 }
 
 .pf-card__vertical {
@@ -766,26 +714,15 @@
 
 .pf-card__title {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: clamp(1.08rem, 1.5vw, 1.28rem);
   font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.26;
+  letter-spacing: -0.028em;
+  line-height: 1.22;
   color: #fff;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.pf-card--hero .pf-card__title,
-.pf-card--solo .pf-card__title {
-  font-size: clamp(1.35rem, 1.9vw, 1.75rem);
-  letter-spacing: -0.035em;
-}
-
-.pf-card--tall .pf-card__title,
-.pf-card--band .pf-card__title {
-  font-size: 1.16rem;
 }
 
 .pf-card__client {
@@ -800,83 +737,37 @@
   text-overflow: ellipsis;
 }
 
-/* Standard tiles keep the brief in reserve and hand it over on hover — the tile
-   height is fixed, so the image gives up the space instead of the layout moving. */
+/* List rows always show a short brief — no hover-gated reveal. */
 .pf-card__desc {
-  margin: 0;
-  max-height: 0;
-  opacity: 0;
-  font-size: 12.5px;
+  margin: 2px 0 0;
+  max-height: 4.8em;
+  opacity: 1;
+  font-size: 13px;
   line-height: 1.55;
   color: var(--atlas-muted);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: max-height 520ms var(--atlas-ease), opacity 400ms ease;
-}
-
-.pf-card:hover .pf-card__desc,
-.pf-card:focus-within .pf-card__desc {
-  max-height: 4em;
-  opacity: 1;
-}
-
-/* Bigger tiles earn more standing metadata. */
-.pf-card--hero .pf-card__desc,
-.pf-card--tall .pf-card__desc,
-.pf-card--band .pf-card__desc,
-.pf-card--solo .pf-card__desc {
-  max-height: 6.4em;
-  opacity: 1;
-  margin-top: 3px;
-  -webkit-line-clamp: 4;
-}
-
-/* The short, wide tiles read across, so the brief fits beside the image. */
-.pf-card--wide .pf-card__desc,
-.pf-card--third .pf-card__desc {
-  max-height: 4.8em;
-  opacity: 1;
-  margin-top: 3px;
-  -webkit-line-clamp: 3;
-}
-
-.pf-card--hero .pf-card__desc,
-.pf-card--solo .pf-card__desc {
-  font-size: 13.5px;
-  line-height: 1.62;
 }
 
 .pf-card__foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 8px;
-  padding-top: 11px;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* One tidy row of chips on the small tiles; the overflow row is part of what
-   hover hands over. Bigger tiles have the room to show the lot up front. */
 .pf-card__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   min-width: 0;
-  max-height: 21px;
+  max-height: 48px;
   overflow: hidden;
-  transition: max-height 460ms var(--atlas-ease);
-}
-
-.pf-card:hover .pf-card__tags,
-.pf-card:focus-within .pf-card__tags,
-.pf-card--hero .pf-card__tags,
-.pf-card--tall .pf-card__tags,
-.pf-card--band .pf-card__tags,
-.pf-card--solo .pf-card__tags {
-  max-height: 54px;
 }
 
 .tech-tag {
@@ -904,24 +795,17 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #bcb8ff;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 400ms ease, transform 400ms var(--atlas-ease), color 260ms ease;
-}
-
-.pf-card--hero .pf-card__cta,
-.pf-card--solo .pf-card__cta,
-.pf-card--band .pf-card__cta {
-  opacity: 0.8;
+  opacity: 0.72;
   transform: none;
+  transition: opacity 320ms ease, transform 360ms var(--atlas-ease), color 240ms ease;
 }
 
 .pf-card__arrow {
   display: inline-block;
-  transition: transform 400ms var(--atlas-ease);
+  transition: transform 360ms var(--atlas-ease);
 }
 
-/* One focusable control per card, stretched over the whole panel. */
+/* One focusable control per row, stretched over the whole panel. */
 .pf-card__hit {
   position: absolute;
   inset: 0;
@@ -941,27 +825,27 @@
 
 .pf-card:hover,
 .pf-card:focus-within {
-  --pf-lift: translateY(-5px);
-  border-color: rgba(114, 108, 244, 0.52);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(114, 108, 244, 0.18),
-    0 0 38px rgba(114, 108, 244, 0.2);
+  --pf-lift: translateY(-3px);
+  border-color: rgba(114, 108, 244, 0.48);
+  background: linear-gradient(105deg, rgba(114, 108, 244, 0.1) 0%, rgba(255, 255, 255, 0.03) 48%),
+    var(--atlas-panel);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(114, 108, 244, 0.14);
 }
 
 .pf-card:hover .pf-card__media img,
 .pf-card:focus-within .pf-card__media img {
-  transform: scale(1.07);
+  transform: scale(1.05);
   filter: saturate(1.04) brightness(1.02);
 }
 
 .pf-card:hover .pf-card__media::after,
 .pf-card:focus-within .pf-card__media::after {
-  opacity: 0.45;
+  opacity: 0.4;
 }
 
 .pf-card:hover .pf-card__cta,
 .pf-card:focus-within .pf-card__cta {
   opacity: 1;
-  transform: none;
   color: #fff;
 }
 
@@ -970,9 +854,7 @@
   transform: translateX(4px);
 }
 
-/* Staggered entrance, armed by JS so no-JS visitors still see every tile. It runs
-   as an animation with `backwards` fill: the tile holds the from-state through its
-   stagger delay, then hands `transform` back to the hover lift once it settles. */
+/* Staggered entrance, armed by JS so no-JS visitors still see every row. */
 .pf-grid--anim .pf-card:not(.is-in) {
   opacity: 0;
 }
@@ -1539,40 +1421,10 @@ body.pf-scroll-lock {
   outline-offset: 3px;
 }
 
-/* ----- responsive -----
-   Every breakpoint re-maps the bento spans so each stamped block still tiles a
-   whole row-band: no ragged holes when the column count drops. */
+/* ----- responsive ----- */
 @media (max-width: 1100px) {
-  .pf-grid {
-    --pf-row: 116px;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
   .pf-card {
-    grid-column: span 3;
-  }
-
-  .pf-card--hero,
-  .pf-card--wide,
-  .pf-card--band,
-  .pf-card--solo {
-    grid-column: span 6;
-  }
-
-  .pf-card--tall {
-    grid-column: span 3;
-  }
-
-  .pf-card--third {
-    grid-column: span 2;
-  }
-
-  .pf-card--third .pf-card__media {
-    flex: 0 0 40%;
-  }
-
-  .pf-card--solo .pf-card__media {
-    flex: 0 0 46%;
+    --pf-thumb: clamp(150px, 24vw, 220px);
   }
 }
 
@@ -1590,30 +1442,21 @@ body.pf-scroll-lock {
 }
 
 @media (max-width: 900px) {
-  .pf-grid {
-    --pf-row: 108px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .pf-card {
-    grid-column: span 2;
+    --pf-thumb: 148px;
+    min-height: 0;
   }
 
-  .pf-card--hero,
-  .pf-card--wide,
-  .pf-card--band,
-  .pf-card--solo,
-  .pf-card--third {
-    grid-column: span 4;
+  .pf-card__media {
+    min-height: 132px;
   }
 
-  .pf-card--tall {
-    grid-column: span 2;
+  .pf-card__body {
+    padding: 16px 16px 16px 18px;
   }
 
-  .pf-card--third .pf-card__media,
-  .pf-card--band .pf-card__media {
-    flex: 0 0 36%;
+  .pf-card__desc {
+    -webkit-line-clamp: 2;
   }
 
   .atlas__controls-row {
@@ -1667,11 +1510,10 @@ body.pf-scroll-lock {
     font-size: 11.5px;
   }
 
-  /* One column: spans collapse and the media takes a fixed ratio again. */
-  .pf-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-auto-rows: auto;
-    gap: 18px;
+  /* Compact stacked rows: image on top, copy below. */
+  .pf-grid,
+  .pf-list {
+    gap: 14px;
   }
 
   .pf-card,
@@ -1681,23 +1523,25 @@ body.pf-scroll-lock {
   .pf-card--third,
   .pf-card--band,
   .pf-card--solo {
-    grid-column: 1 / -1;
-    grid-row: auto;
     flex-direction: column;
+    --pf-thumb: auto;
+    min-height: 0;
   }
 
-  .pf-card__media,
-  .pf-card--wide .pf-card__media,
-  .pf-card--third .pf-card__media,
-  .pf-card--band .pf-card__media,
-  .pf-card--solo .pf-card__media {
+  .pf-card__media {
     flex: 0 0 auto;
-    aspect-ratio: 16 / 10;
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
   }
 
-  .pf-card--hero .pf-card__media,
-  .pf-card--solo .pf-card__media {
-    aspect-ratio: 4 / 3;
+  .pf-card__media::after {
+    background: linear-gradient(180deg, rgba(7, 11, 18, 0) 48%, rgba(7, 11, 18, 0.55) 100%);
+  }
+
+  .pf-card__code {
+    left: auto;
+    right: 11px;
   }
 
   .pf-card__body {
@@ -1705,9 +1549,12 @@ body.pf-scroll-lock {
     padding: 15px 16px 16px;
   }
 
-  .pf-card--hero .pf-card__title,
-  .pf-card--solo .pf-card__title {
-    font-size: 1.3rem;
+  .pf-card__title {
+    font-size: 1.18rem;
+  }
+
+  .pf-card__foot {
+    flex-wrap: wrap;
   }
 
   .atlas-modal__footer .pf-btn {
@@ -1716,7 +1563,7 @@ body.pf-scroll-lock {
   }
 }
 
-/* No hover to lean on: the brief and the quick-view cue stay put. */
+/* Touch / narrow: keep brief + CTA visible without hover. */
 @media (hover: none), (max-width: 767px) {
   .pf-card__desc {
     max-height: 5.2em;
@@ -1725,7 +1572,7 @@ body.pf-scroll-lock {
   }
 
   .pf-card__cta {
-    opacity: 0.85;
+    opacity: 0.9;
     transform: none;
   }
 }

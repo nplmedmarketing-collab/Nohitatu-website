@@ -8,6 +8,7 @@ Run (from this folder):
 from __future__ import annotations
 
 import os
+import re
 import time
 from collections import defaultdict, deque
 from typing import Any, Literal
@@ -169,8 +170,10 @@ def _check_rate_limit(key: str) -> None:
 def _generate_local_reply(query: str, knowledge: str) -> str:
     q_lower = query.lower()
 
-    # Job / Career intent
-    if any(k in q_lower for k in ["job", "career", "hiring", "apply", "resume", "vacancy", "vacancies", "hr"]):
+    # Explicit topic tokens from the website widget (data-topic → query phrasing)
+    if re.search(r"\b(job|jobs|career|careers|hiring|apply|resume|vacancy|vacancies)\b", q_lower) or (
+        "hrd@" in q_lower or re.search(r"\bhr\b", q_lower)
+    ):
         return (
             "Looking to join Nohitatu? We are always hiring talented software engineers, QA leads, and UI designers!\n\n"
             "• View Open Roles: Careers.html\n"
@@ -180,19 +183,34 @@ def _generate_local_reply(query: str, knowledge: str) -> str:
             "For job inquiries, please contact our HR team directly."
         )
 
-    # Sales / Project / Pricing intent
-    if any(k in q_lower for k in ["sales", "price", "pricing", "cost", "quote", "estimate", "contact", "consultation", "demo"]):
+    if re.search(
+        r"\b(health|healthcare|rcm|medical billing|cms[-\s]?1500|837p|hipaa|claims|hospital|doctor)\b",
+        q_lower,
+    ):
         return (
-            "Ready to scale your software product or get a custom cost estimation?\n\n"
-            "• Sales Email: sales@nohitatu.com\n"
-            "• Sales Phone: +91 99413 33444\n"
-            "• Online Request Form: Contact-us.html\n"
-            "• Explore Shipped Products: Portfolio.html\n\n"
-            "Our team typically responds within 24 business hours for project consultations."
+            "Healthcare software & Revenue Cycle Management (RCM) is one of Nohitatu's flagship specializations:\n\n"
+            "• Automated CMS-1500 & 837P electronic claim processing\n"
+            "• Patient eligibility verification & charge entry\n"
+            "• Denial management and HIPAA-compliant workflow dashboards\n\n"
+            "Contact our sales specialists at sales@nohitatu.com or +91 99413 33444 to discuss your healthcare IT needs."
         )
 
-    # Products / Portfolio intent
-    if any(k in q_lower for k in ["product", "products", "portfolio", "project", "projects", "work", "case study", "cms", "dojoman", "fintechesh", "crm"]):
+    if re.search(
+        r"\b(hire|dedicated|staffing|augmentation|outsource|developer|developers|engineers)\b",
+        q_lower,
+    ):
+        return (
+            "You can hire pre-vetted senior dedicated software developers, mobile app engineers, and UI/UX designers from Nohitatu.\n\n"
+            "• Flexible Engagement: Dedicated Team, Time & Material, or Fixed Price models\n"
+            "• Rapid Onboarding: Dedicated engineering teams onboard within 3 to 7 business days\n"
+            "• Direct Integration: Integrated directly into your tools, timezone, and product roadmap\n\n"
+            "Chat directly with our sales team at sales@nohitatu.com or +91 99413 33444 to get started!"
+        )
+
+    if re.search(
+        r"\b(shipped|portfolio|case stud|dojoman|fintechesh|products?)\b",
+        q_lower,
+    ) and not re.search(r"\b(quote|sales|estimate|contact)\b", q_lower):
         return (
             "Nohitatu has designed and shipped over 29 custom software products and enterprise client systems:\n\n"
             "• Healthcare RCM & CMS 1500 Claim Billing\n"
@@ -203,14 +221,17 @@ def _generate_local_reply(query: str, knowledge: str) -> str:
             "Explore full case studies and live demos at Portfolio.html!"
         )
 
-    # Healthcare / RCM intent
-    if any(k in q_lower for k in ["health", "healthcare", "rcm", "billing", "medical", "claims", "cms1500", "doctor", "hospital"]):
+    if re.search(
+        r"\b(sales|price|pricing|cost|quote|estimate|consultation|demo|contact)\b",
+        q_lower,
+    ) or "start a project" in q_lower:
         return (
-            "Healthcare software & Revenue Cycle Management (RCM) is one of Nohitatu's flagship specializations:\n\n"
-            "• Automated CMS-1500 & 837P electronic claim processing\n"
-            "• Patient eligibility verification & charge entry\n"
-            "• Denial management and HIPAA-compliant workflow dashboards\n\n"
-            "Contact our sales specialists at sales@nohitatu.com or +91 99413 33444 to discuss your healthcare IT needs."
+            "Ready to scale your software product or get a custom cost estimation?\n\n"
+            "• Sales Email: sales@nohitatu.com\n"
+            "• Sales Phone: +91 99413 33444\n"
+            "• Online Request Form: Contact-us.html\n"
+            "• Explore Shipped Products: Portfolio.html\n\n"
+            "Our team typically responds within 24 business hours for project consultations."
         )
 
     # General knowledge synthesis

@@ -1,0 +1,21 @@
+{
+  "name": "Nohitatu – Global Software & Medical Billing RCM",
+  "short_name": "Nohitatu",
+  "description": "Leading software development and SaaS partner specialized in Revenue Cycle Management (RCM), medical billing, and healthcare software.",
+  "icons": [
+    {
+      "src": "images/favicon/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1a2d",
+  "theme_color": "#0b1a2d"
+}

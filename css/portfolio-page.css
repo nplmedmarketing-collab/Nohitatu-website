@@ -612,7 +612,11 @@ html.pf-page body.portfolio-page header.logo-navbar {
 html.pf-page body.portfolio-page header.logo-navbar .logo-on-dark { display: block !important; }
 html.pf-page body.portfolio-page header.logo-navbar .logo-on-light { display: none !important; }
 html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item > a { color: #fff !important; }
-html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a { color: #b8b5ff !important; }
+html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a {
+  background: none !important;
+  color: #726cf4 !important;
+  -webkit-text-fill-color: #726cf4 !important;
+}
 
 html.pf-page body.portfolio-page header.logo-navbar.white-header {
   background: rgba(255, 255, 255, 0.97) !important;
@@ -622,7 +626,11 @@ html.pf-page body.portfolio-page header.logo-navbar.white-header {
 html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-dark { display: none !important; }
 html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-light { display: block !important; }
 html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item > a { color: #343147 !important; }
-html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a { color: #726cf4 !important; }
+html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
+  background: none !important;
+  color: #726cf4 !important;
+  -webkit-text-fill-color: #726cf4 !important;
+}
 html.pf-page body.portfolio-page .navbar-toggle.nav-menu { display: none !important; }
 
 /* Responsive */

@@ -22,7 +22,7 @@ SYNONYMS: dict[str, list[str]] = {
     "job": ["careers", "vacancies", "hiring", "apply", "resume", "hr"],
     "jobs": ["careers", "vacancies", "hiring", "apply", "resume", "hr"],
     "career": ["careers", "job", "hiring", "apply", "resume", "hr"],
-    "work": ["careers", "job", "services", "portfolio"],
+    "workplace": ["careers", "job", "office"],
     "price": ["cost", "estimate", "pricing", "quote", "sales", "consultation"],
     "cost": ["price", "estimate", "pricing", "quote", "sales", "consultation"],
     "quote": ["estimate", "price", "cost", "pricing", "sales", "consultation"],

@@ -1,5 +1,5 @@
-/* Portfolio atlas: filterable grid of shipped products and client projects.
-   Prefers live data from GET /api/projects; falls back to the static grid. */
+/* Portfolio atlas: filterable list of shipped products and client projects.
+   Prefers live data from GET /api/projects; falls back to the static list. */
 (() => {
   const root = document.getElementById("atlas");
   if (!root) return;
@@ -328,52 +328,19 @@
     return hit ? hit.dataset.filter.trim() : "";
   }
 
-  /* --------------------------------------------------------- bento mosaic */
+  /* --------------------------------------------------------- list layout */
 
-  // Each block is a set of tiles whose spans tile a whole 12-column band exactly,
-  // so no arrangement of them can leave a hole. Blocks alternate to keep the
-  // mosaic from repeating, and the tail (1-3 leftovers) fills its own full row.
-  const BENTO_BLOCKS = [
-    ["hero", "std", "std", "std", "std"],
-    ["tall", "hero", "std", "std"],
-  ];
-  const BENTO_TAIL = { 1: ["band"], 2: ["wide", "wide"], 3: ["third", "third", "third"] };
+  // List mode no longer uses bento tile sizes. Clear any leftover size classes
+  // so API re-renders and older cached stamps stay visually uniform.
   const BENTO_SIZES = ["hero", "tall", "wide", "third", "band", "solo"];
 
-  function bentoPlan(count) {
-    if (count === 1) return ["solo"];
-
-    const plan = [];
-    let left = count;
-    let block = 0;
-
-    while (left > 0) {
-      if (left <= 3) {
-        plan.push(...BENTO_TAIL[left]);
-        break;
-      }
-      const next = left === 4 ? BENTO_BLOCKS[1] : BENTO_BLOCKS[block % BENTO_BLOCKS.length];
-      plan.push(...next);
-      left -= next.length;
-      block += 1;
-    }
-
-    return plan;
-  }
-
-  // Stamped on visible order rather than DOM order, so the composition stays
-  // deliberate however hard the filters cut the list down.
   function stampBento(list) {
-    const plan = bentoPlan(list.length);
-    list.forEach((el, i) => {
-      const size = plan[i] || "std";
-      BENTO_SIZES.forEach((name) => el.classList.toggle(`pf-card--${name}`, name === size));
+    list.forEach((el) => {
+      BENTO_SIZES.forEach((name) => el.classList.remove(`pf-card--${name}`));
     });
   }
 
-  // The curated pick for this segment takes the first slot — which the plan always
-  // gives the biggest tile. Moving the node (rather than CSS order) keeps reading
-  // order, tab order and visual order in step.
+  // Featured item for the active segment stays first in the list.
   function promoteFeatured() {
     if (!grid) return;
     const pick = cards.find(
@@ -731,7 +698,7 @@
         total: cards.length,
         sizes: shown.map((el) => ({
           id: el.dataset.id,
-          size: BENTO_SIZES.find((n) => el.classList.contains(`pf-card--${n}`)) || "std",
+          size: "row",
         })),
         source: root.dataset.atlasSource || "static",
       }),

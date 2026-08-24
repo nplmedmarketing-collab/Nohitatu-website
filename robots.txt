@@ -1,0 +1,6 @@
+# Allow all search crawlers
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://www.nohitatu.com/sitemap.xml
