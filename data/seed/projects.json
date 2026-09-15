@@ -144,22 +144,6 @@
     "cta": "Contact-us.html"
   },
   {
-    "order": 10,
-    "frame_id": "F10",
-    "title": "HR and Payroll",
-    "description": "HR and Payroll is a comprehensive human resource management platform designed to handle key HR functions such as payroll processing, salary management, and tracking of deductions, time, attendance, loans, allowances, and bonuses. With integrated project, task, and team management tools, the platform also enables organizations to monitor employee leaves, schedules, and holidays. By automating routine HR processes, the software allows employees and HR teams to focus on more strategic, value-driven work.",
-    "client": "",
-    "category": "product",
-    "vertical": "human-resource-management",
-    "platform": "web desktop",
-    "code": "WEB·DSK",
-    "platform_long": "Web · Desktop",
-    "image": "images/portfolio/web/hr-payroll/hr-and-payroll-app.png",
-    "thumb": "images/portfolio/reel/10-hr-and-payroll.webp",
-    "alt": "HR and Payroll application",
-    "cta": "Contact-us.html"
-  },
-  {
     "order": 11,
     "frame_id": "F11",
     "title": "Website Design & development",
@@ -381,6 +365,22 @@
     "image": "images/portfolio/financials2.png",
     "thumb": "images/portfolio/reel/29-fintechesh.webp",
     "alt": "FINTECHESH financial automation platform",
+    "cta": "Contact-us.html"
+  },
+  {
+    "order": 30,
+    "frame_id": "F30",
+    "title": "HRPops — HR & Payroll Platform",
+    "description": "HRPops is an all-in-one HRMS & Payroll platform designed to streamline workforce operations, boost productivity, and empower organizations to grow with confidence. Featuring real-time attendance tracking, smart presence analytics, automated payroll processing, shift scheduling, simplified leave management policies, and secure role-based access control — everything HR in one intelligent platform.",
+    "client": "In-house product",
+    "category": "product",
+    "vertical": "human-resource-management",
+    "platform": "web",
+    "code": "WEB",
+    "platform_long": "Web",
+    "image": "images/portfolio/hrpops.png",
+    "thumb": "images/portfolio/hrpops.png",
+    "alt": "HRPops HRMS Dashboard",
     "cta": "Contact-us.html"
   }
 ]

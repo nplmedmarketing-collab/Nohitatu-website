@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Careers | Nohitatu</title>
     <meta name="description" content="Join Nohitatu — open roles, life at our team, and opportunities in software development." />
+    <!-- HRPops CandidatePortal: set company id to your HRPops tenant (required for live listings). -->
+    <meta name="nh-hrpops-company-id" content="183" />
+    <meta name="nh-hrpops-api" content="https://api.hrpops.com/api" />
+    <meta name="nh-hrpops-portal" content="https://hrpops.com" />
+    <meta name="nh-hrpops-company-name" content="Nohitatu" />
     <link rel="shortcut icon" href="images/favicon/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -683,6 +688,16 @@
             color: #e11d48;
             font-weight: 800;
             letter-spacing: 0.02em;
+        }
+
+        .careers-job-title-link {
+            color: inherit !important;
+            text-decoration: none !important;
+            transition: color 0.2s ease;
+        }
+
+        .careers-job-title-link:hover {
+            color: var(--blue-dark) !important;
         }
 
         .careers-job-apply {
@@ -1700,7 +1715,8 @@
     </div>
 
     <script src="js/api-base.js?v=20260812liveapi1"></script>
-    <script src="js/careers-list.js?v=20260817depts1"></script>
+    <script src="js/hrpops-careers.js?v=20260915hrpops2"></script>
+    <script src="js/careers-list.js?v=20260915hrpops2"></script>
     <script src="js/chatbot.js?v=20260817backbtn"></script>
 </body>
 </html>

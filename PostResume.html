@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Job application | Nohitatu</title>
     <meta name="description" content="Apply for an open role at Nohitatu — complete your profile and submit your resume." />
+    <meta name="nh-hrpops-company-id" content="183" />
+    <meta name="nh-hrpops-api" content="https://api.hrpops.com/api" />
+    <meta name="nh-hrpops-portal" content="https://hrpops.com" />
     <link rel="shortcut icon" href="images/favicon/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1061,6 +1064,21 @@
         })();
     </script>
     <script src="js/api-base.js?v=20260812liveapi1"></script>
+    <script src="js/hrpops-careers.js?v=20260915hrpops2"></script>
+    <script>
+        /* HRPops jobs apply on the CandidatePortal — redirect when companyId is present. */
+        (() => {
+            const params = new URLSearchParams(window.location.search);
+            const jobId = (params.get("id") || "").trim();
+            const companyId = (params.get("companyId") || "").trim();
+            const hrpops = window.NH_HRPOPS_CAREERS;
+            if (!jobId || !hrpops) return;
+            const cfg = typeof hrpops.config === "function" ? hrpops.config() : {};
+            const cid = companyId || (cfg && cfg.companyId) || "";
+            if (!cid || typeof hrpops.portalApplyUrl !== "function") return;
+            window.location.replace(hrpops.portalApplyUrl(cid, jobId));
+        })();
+    </script>
     <script src="js/post-resume.js?v=20260812liveapi1"></script>
 
     <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->

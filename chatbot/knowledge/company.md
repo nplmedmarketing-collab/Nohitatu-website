@@ -58,7 +58,8 @@ Nohitatu has built and shipped over 29 successful enterprise products and client
 2. **Sales CRM Platform**: Real-time sales forecasting, rep activity tracking, lead pipeline management, and automated deal analytics.
 3. **Dojoman Event Management**: Specialized software solution for martial arts tournaments, live scoring, fixtures generation, online registration, and fee collection.
 4. **Healthcare CRM & Analytics**: Patient interaction system, medical service promotion, customizable real-time clinical dashboards, and provider tracking.
-5. **HR & Payroll Suite**: Comprehensive payroll processing, salary breakdown, tax deductions, attendance tracking, and employee self-service portal.
+5. **HRPops — HRMS & Payroll Platform**: Flagship all-in-one HRMS and Payroll platform featuring real-time presence tracking, attendance dashboards, shift scheduling, automated payroll processing, simplified leave management, and secure role-based privacy. ("Smarter People. Stronger Performance.")
+6. **HR & Payroll Suite**: Comprehensive payroll processing, salary breakdown, tax deductions, attendance tracking, and employee self-service portal.
 6. **Task Management System**: Remote team collaboration, productivity tracking, workflow bottleneck analytics, and automated task scheduling.
 7. **FinTechesh Financial Suite**: Financial process automation, real-time expense tracking, stress-free invoicing, and instant balance sheet generation.
 8. **Workplace Safety Mobile App**: Facility management, safety audit checklists, incident reporting, asset tracking, QR attendance, and emergency push alerts.

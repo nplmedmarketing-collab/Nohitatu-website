@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Role details | Nohitatu</title>
     <meta name="description" content="Open role details and how to apply at Nohitatu." />
+    <meta name="nh-hrpops-company-id" content="183" />
+    <meta name="nh-hrpops-api" content="https://api.hrpops.com/api" />
+    <meta name="nh-hrpops-portal" content="https://hrpops.com" />
+    <meta name="nh-hrpops-company-name" content="Nohitatu" />
     <link rel="shortcut icon" href="images/favicon/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -711,13 +715,26 @@
         })();
     </script>
     <script src="js/api-base.js?v=20260812liveapi1"></script>
+    <script src="js/hrpops-careers.js?v=20260915hrpops2"></script>
     <script>
         (() => {
             const catalog = window.NOHITATU_CAREER_DETAILS || {};
 
+            /** Prefer ?query; fall back to hash if a clean-URL redirect stripped search. */
+            function pageParams() {
+                const search = window.location.search || "";
+                if (search && search !== "?") {
+                    return new URLSearchParams(search);
+                }
+                const hash = (window.location.hash || "").replace(/^#/, "");
+                if (hash && (hash.includes("=") || hash.startsWith("?"))) {
+                    return new URLSearchParams(hash.replace(/^\?/, ""));
+                }
+                return new URLSearchParams();
+            }
+
             function getId() {
-                const params = new URLSearchParams(window.location.search);
-                return (params.get("id") || "").trim();
+                return (pageParams().get("id") || "").trim();
             }
 
             function escapeHtml(str) {
@@ -955,6 +972,10 @@
                 }
 
                 const applyUrl = job.applyUrl || ("PostResume.html?id=" + job.jobid);
+                const applyExternal = /^https?:\/\//i.test(applyUrl);
+                const applyAttrs = applyExternal
+                    ? ' href="' + escapeHtml(applyUrl) + '" target="_blank" rel="noopener noreferrer"'
+                    : ' href="' + escapeHtml(applyUrl) + '"';
 
                 if (content) {
                     content.innerHTML =
@@ -969,7 +990,7 @@
                         "</section>" +
                         "</div>" +
                         '<div class="cd-foot-cta">' +
-                        '<a class="cd-btn cd-btn-ink" href="' + escapeHtml(applyUrl) + '">Apply now <span aria-hidden="true">&#8594;</span></a>' +
+                        '<a class="cd-btn cd-btn-ink"' + applyAttrs + '>Apply now <span aria-hidden="true">&#8594;</span></a>' +
                         '<a class="cd-btn cd-btn-panel" href="Careers.html">Back to careers</a>' +
                         '<p class="cd-foot-note">Questions? Write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a> with job code <strong class="cd-code">' +
                         escapeHtml(String(job.jobid)) +
@@ -978,10 +999,88 @@
                 }
             }
 
-            const id = getId();
+            const params = pageParams();
+            const id = (params.get("id") || "").trim();
+            const companyIdParam = (params.get("companyId") || "").trim();
 
             async function resolveJob(jobId) {
                 if (!jobId) return null;
+
+                const hrpops = window.NH_HRPOPS_CAREERS;
+                if (hrpops && typeof hrpops.fetchJobDetail === "function") {
+                    const cfg = typeof hrpops.config === "function" ? hrpops.config() : {};
+                    const companyId = companyIdParam || (cfg && cfg.companyId) || "";
+                    if (companyId) {
+                        try {
+                            const job = await hrpops.fetchJobDetail(companyId, jobId);
+                            if (job) {
+                                return {
+                                    jobid: job.job_code || job.jobPostId || jobId,
+                                    post: job.title || job.post,
+                                    experience: job.experience,
+                                    location: job.location,
+                                    responsibilities: job.responsibilities,
+                                    musthave: job.musthave || job.mustHave || job.requirements,
+                                    applyUrl: job.applyUrl || job.apply_url,
+                                    expireDate: job.expireDate || job.expire_date,
+                                    validationType: "J",
+                                    source: "hrpops",
+                                    companyId: job.companyId || companyId,
+                                };
+                            }
+                        } catch (_err) {
+                            /* try list match / local */
+                        }
+                    }
+                    /* Always try public list (covers wrong/missing companyId and detail API quirks). */
+                    try {
+                        const listed = await hrpops.fetchJobs();
+                        const match = (listed.jobs || []).find(
+                            (j) => String(j.jobPostId) === String(jobId) || String(j.job_code) === String(jobId)
+                        );
+                        if (match) {
+                            const matchCid = match.companyId || companyId || (cfg && cfg.companyId) || "";
+                            if (matchCid) {
+                                try {
+                                    const detail = await hrpops.fetchJobDetail(matchCid, match.jobPostId);
+                                    if (detail) {
+                                        return {
+                                            jobid: detail.job_code || detail.jobPostId,
+                                            post: detail.title || detail.post,
+                                            experience: detail.experience,
+                                            location: detail.location,
+                                            responsibilities: detail.responsibilities,
+                                            musthave: detail.musthave || detail.mustHave || detail.requirements,
+                                            applyUrl: detail.applyUrl || detail.apply_url,
+                                            expireDate: detail.expireDate || detail.expire_date,
+                                            validationType: "J",
+                                            source: "hrpops",
+                                            companyId: detail.companyId || matchCid,
+                                        };
+                                    }
+                                } catch (_e) {
+                                    /* use list card fields */
+                                }
+                            }
+                            return {
+                                jobid: match.job_code || match.jobPostId,
+                                post: match.title || match.post,
+                                experience: match.experience,
+                                location: match.location,
+                                responsibilities: match.responsibilities,
+                                musthave: match.musthave || match.mustHave || match.requirements,
+                                applyUrl: match.applyUrl || match.apply_url,
+                                expireDate: match.expireDate || match.expire_date,
+                                validationType: "J",
+                                source: "hrpops",
+                                companyId: match.companyId || matchCid || "",
+                            };
+                        }
+                    } catch (_err) {
+                        /* fall through */
+                    }
+                }
+
                 try {
                     const path = "/api/careers/" + encodeURIComponent(jobId);
                     const url =
@@ -1013,9 +1112,24 @@
                 return catalog[jobId] || null;
             }
 
+            function enhanceApplyLink(job) {
+                if (!job) return job;
+                const hrpops = window.NH_HRPOPS_CAREERS;
+                if (
+                    job.companyId &&
+                    job.jobid &&
+                    hrpops &&
+                    typeof hrpops.portalApplyUrl === "function" &&
+                    !job.applyUrl
+                ) {
+                    job.applyUrl = hrpops.portalApplyUrl(job.companyId, job.jobid);
+                }
+                return job;
+            }
+
             resolveJob(id).then((job) => {
                 if (!job) renderNotFound(id);
-                else renderJob(job);
+                else renderJob(enhanceApplyLink(job));
             });
         })();
     </script>

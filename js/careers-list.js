@@ -1,14 +1,17 @@
 /*
  * Open positions, grouped by department (drill-down accordion).
- * Prefers GET /api/careers (Render on GitHub Pages); the static accordion in
- * Careers.html is the offline / no-JS fallback. The API "department" field is
- * often blank, so department is inferred from the role title when needed.
+ * Prefers HRPops CandidatePortal jobs, then GET /api/careers; the static
+ * accordion in Careers.html is the offline / no-JS fallback. The API
+ * "department" field is often blank, so department is inferred from the role
+ * title when needed.
  */
 (() => {
   const container = document.querySelector("[data-careers-departments]");
   if (!container) return;
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const STATUS_MSG =
+    "color:inherit;opacity:.8;margin:0;font-size:15px;line-height:1.55;font-family:'Plus Jakarta Sans',system-ui,sans-serif";
 
   /* Department catalogue: order + presentation. Only non-empty depts render. */
   const DEPARTMENTS = [
@@ -124,16 +127,34 @@
   }
 
   function cardHtml(job, deptId) {
-    const code = job.job_code || job.jobid || "";
-    const href =
+    const code = job.job_code || job.jobid || job.jobPostId || "";
+    const detailsHref =
       job.details_url ||
-      (code ? `Careerdetails.html?id=${encodeURIComponent(code)}` : "Careerdetails.html");
+      (code
+        ? (() => {
+            const q = new URLSearchParams();
+            q.set("id", String(code));
+            if (job.companyId) q.set("companyId", String(job.companyId));
+            const qs = q.toString();
+            return `Careerdetails.html?${qs}#${qs}`;
+          })()
+        : "Careerdetails.html");
+    const applyHref = job.apply_url || job.applyUrl || detailsHref;
     const title = job.title || job.post || "Open role";
+    const applyExternal = /^https?:\/\//i.test(applyHref);
+    const applyAttrs = applyExternal
+      ? ` href="${escapeHtml(applyHref)}" target="_blank" rel="noopener noreferrer"`
+      : ` href="${escapeHtml(applyHref)}"`;
     return `<article class="careers-job" data-department="${escapeHtml(deptId)}">
-      <h4 class="careers-job-title">${escapeHtml(title)}</h4>
+      <h4 class="careers-job-title"><a class="careers-job-title-link" href="${escapeHtml(detailsHref)}">${escapeHtml(title)}</a></h4>
       <dl class="careers-job-meta">${metaRows(job)}</dl>
-      <a class="careers-job-apply" href="${escapeHtml(href)}">Apply</a>
+      <a class="careers-job-apply"${applyAttrs}>Apply</a>
     </article>`;
+  }
+
+  function showStatus(html) {
+    container.innerHTML = `<p class="careers-jobs-empty" style="${STATUS_MSG}" role="status">${html}</p>`;
+    setTotals(0, 0);
   }
 
   function countLabel(n) {
@@ -239,7 +260,30 @@
     setTotals(total, openDepts);
   }
 
-  async function loadFromApi() {
+  const staticFallbackHtml = container.innerHTML;
+
+  function restoreStaticFallback() {
+    if (!staticFallbackHtml || !staticFallbackHtml.trim()) return false;
+    container.innerHTML = staticFallbackHtml;
+    refreshCountsFromDom();
+    openFromHash(true);
+    return true;
+  }
+
+  async function loadFromHrpops() {
+    const client = window.NH_HRPOPS_CAREERS;
+    if (!client || typeof client.fetchJobs !== "function") return false;
+    const result = await client.fetchJobs();
+    if (!result || !Array.isArray(result.jobs)) return false;
+    /* Configured company with zero openings → real empty state (not static fallback). */
+    if (result.configured || result.jobs.length) {
+      renderFromApi(result.jobs);
+      return true;
+    }
+    return false;
+  }
+
+  async function loadFromLocalApi() {
     try {
       const url =
         typeof window.NH_apiUrl === "function" ? window.NH_apiUrl("/api/careers") : "/api/careers";
@@ -254,12 +298,30 @@
     }
   }
 
+  async function loadJobs() {
+    showStatus("Loading open positions\u2026");
+    try {
+      if (await loadFromHrpops()) return;
+    } catch (err) {
+      console.warn("[careers] HRPops unavailable:", err && err.message ? err.message : err);
+    }
+    try {
+      if (await loadFromLocalApi()) return;
+    } catch {
+      /* continue */
+    }
+    if (restoreStaticFallback()) return;
+    showStatus(
+      'We couldn\u2019t load openings right now. Please try again shortly or write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>.'
+    );
+  }
+
   /* Wire the static accordion immediately so it works before/without the API. */
   refreshCountsFromDom();
   openFromHash(true);
   window.addEventListener("hashchange", () => openFromHash(true));
 
-  loadFromApi().catch(() => {
-    /* static accordion remains */
+  loadJobs().catch(() => {
+    restoreStaticFallback();
   });
 })();
