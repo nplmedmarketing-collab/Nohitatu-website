@@ -12780,8 +12780,11 @@ body.footer-reveal-page .site-footer .inner-footer {
 /* Featured tiles */
 .landing-page .nh-featured-sec {
   margin-top: 0;
-  padding: 48px 0 100px;
-  background: #fff;
+  padding: 56px 0 108px;
+  background:
+    radial-gradient(ellipse 70% 55% at 12% 0%, rgba(114, 108, 244, 0.07), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 92% 100%, rgba(0, 242, 254, 0.05), transparent 50%),
+    #fff;
 }
 
 .landing-page .nh-featured-head,
@@ -12808,6 +12811,15 @@ body.footer-reveal-page .site-footer .inner-footer {
   line-height: 1.1;
 }
 
+.landing-page .nh-featured-all span {
+  display: inline-block;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-page .nh-featured-all:hover span {
+  transform: translateX(4px);
+}
+
 .landing-page .nh-featured-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -12815,32 +12827,127 @@ body.footer-reveal-page .site-footer .inner-footer {
 }
 
 .landing-page .nh-featured-tile {
-  min-height: 220px;
-  padding: 28px 24px;
-  border: 1px solid rgba(114, 108, 244, 0.45);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 248px;
+  padding: 28px 26px 26px;
+  border: 1px solid rgba(16, 35, 63, 0.1);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 10px 28px -24px rgba(16, 35, 63, 0.35);
   color: inherit;
-  cursor: default;
-  transition: border-color 0.22s ease, transform 0.22s ease;
+  text-decoration: none !important;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 0.28s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
 }
 
-.landing-page .nh-featured-tile:hover {
-  border-color: #726cf4;
-  transform: translateY(-3px);
+.landing-page .nh-featured-tile,
+.landing-page .nh-featured-tile:hover,
+.landing-page .nh-featured-tile:focus,
+.landing-page .nh-featured-tile:visited,
+.landing-page .nh-featured-tile h3,
+.landing-page .nh-featured-tile p,
+.landing-page .nh-featured-tile .nh-featured-index,
+.landing-page .nh-featured-tile .nh-featured-cue {
+  text-decoration: none !important;
+}
+
+.landing-page .nh-featured-tile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #726cf4, #5f58dc 55%, rgba(0, 242, 254, 0.7));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.landing-page .nh-featured-tile:hover,
+.landing-page .nh-featured-tile:focus-visible {
+  border-color: rgba(114, 108, 244, 0.55);
+  transform: translateY(-6px);
+  box-shadow: 0 22px 48px -24px rgba(114, 108, 244, 0.45);
+  outline: none;
+}
+
+.landing-page .nh-featured-tile:hover::before,
+.landing-page .nh-featured-tile:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.landing-page .nh-featured-tile:active {
+  transform: translateY(-2px) scale(0.985);
+}
+
+.landing-page .nh-featured-index {
+  display: block;
+  margin: 0 0 18px;
+  color: #726cf4;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
 }
 
 .landing-page .nh-featured-tile h3 {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: #10233f;
   font-family: "Plus Jakarta Sans", poppins, sans-serif;
   font-size: 20px;
   font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  text-decoration: none !important;
 }
 
 .landing-page .nh-featured-tile p {
   margin: 0;
+  flex: 1 1 auto;
   color: #667085;
   font-size: 14px;
   line-height: 1.65;
+  text-decoration: none !important;
+}
+
+.landing-page .nh-featured-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 22px;
+  color: #726cf4;
+  font-family: "Plus Jakarta Sans", poppins, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-page .nh-featured-cue em {
+  font-style: normal;
+  display: inline-block;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-page .nh-featured-tile:hover .nh-featured-cue,
+.landing-page .nh-featured-tile:focus-visible .nh-featured-cue {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.landing-page .nh-featured-tile:hover .nh-featured-cue em,
+.landing-page .nh-featured-tile:focus-visible .nh-featured-cue em {
+  transform: translateX(4px);
 }
 
 /* Same treatment as the blog quote band: the photo is anchored to the viewport
@@ -13778,10 +13885,13 @@ body.nh-case-modal-open {
   .landing-page .nh-services-shell,
   .landing-page .nh-proof-sec .nh-shell,
   .landing-page .nh-consult-grid,
-  .landing-page .nh-featured-grid,
   .landing-page .nh-insights-grid,
   .landing-page .nh-cases-grid {
     grid-template-columns: 1fr;
+  }
+
+  .landing-page .nh-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .landing-page .nh-insight-card--lead,
@@ -13819,6 +13929,10 @@ body.nh-case-modal-open {
 @media (max-width: 650px) {
   .landing-page .nh-shell {
     width: min(100% - 30px, 1180px);
+  }
+
+  .landing-page .nh-featured-grid {
+    grid-template-columns: 1fr;
   }
 
   .landing-page .nh-logo-group {
