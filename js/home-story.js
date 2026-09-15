@@ -228,6 +228,8 @@
     var panels = [].slice.call(band.querySelectorAll('.nh-services-panel'));
     var navItems = [].slice.call(band.querySelectorAll('.nh-services-nav-item'));
     var indexLabel = band.querySelector('[data-service-index]');
+    var progressFill = band.querySelector('[data-service-progress]');
+    var chapterDots = [].slice.call(band.querySelectorAll('[data-service-dot]'));
     var lastIndex = -1;
     var ticking = false;
     // Cached geometry so the band height never changes mid-scroll.
@@ -283,6 +285,10 @@
       setActive(panels, index);
       setActive(navItems, index);
       if (indexLabel) indexLabel.textContent = String(index + 1);
+      chapterDots.forEach(function (dot, i) {
+        dot.classList.toggle('is-active', i === index);
+        dot.classList.toggle('is-done', i < index);
+      });
       lastIndex = index;
     }
 
@@ -298,6 +304,13 @@
         ? Math.min(stageCount - 1, Math.floor((scrolled / Math.max(stagePortion, 1)) * stageCount))
         : stageCount - 1;
       applyIndex(index);
+
+      // Continuous chapter progress for the scrubber bar (0 → 1 across pin travel).
+      if (progressFill) {
+        var p = clamp(scrolled / Math.max(pinDistance, 1), 0, 1);
+        progressFill.style.transform = 'scaleX(' + p + ')';
+        band.style.setProperty('--nh-service-p', String(p));
+      }
 
       if (scrolled <= 0) {
         place('absolute', panelOffset);
@@ -334,7 +347,11 @@
         var stagePortion = stageCount * SERVICES_STAGE_TRAVEL * viewportH();
         var top = band.getBoundingClientRect().top + window.pageYOffset +
           stagePortion * ((index + 0.08) / stageCount);
-        window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+        if (window.__nhLenis && typeof window.__nhLenis.scrollTo === 'function') {
+          window.__nhLenis.scrollTo(top, { immediate: !!reduceMotion, duration: 1.15 });
+        } else {
+          window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
       });
     });
 

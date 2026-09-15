@@ -1,0 +1,1250 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Efficient RCM Medical Billing Services | Nohitatu – Revenue Cycle Management</title>
+    <meta name="description" content="Maximize revenue with Nohitatu’s RCM medical billing services. We streamline patient registration, coding, claims, A/R, denials, eligibility, and credentialing for healthcare providers." />
+    <link rel="shortcut icon" href="images/favicon/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css?v=20260820navpurple3" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20260820icons" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/custom.js?v=20260806nocursor1"></script>
+    <style>
+        :root {
+            --ink: #39364e;
+            --muted: #696979;
+            --blue: #726cf4;
+            --blue-dark: #5f58dc;
+            --line: #e7e6f0;
+            --soft: #f6f5ff;
+            --paper: #ffffff;
+            --navy: #0b1a2d;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+
+        body.rcm-page {
+            margin: 0;
+            padding-top: 0;
+            background: #fff;
+            color: var(--ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .shell {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        body.rcm-page header.logo-navbar {
+            background: linear-gradient(180deg, rgba(10, 16, 32, 0.58), transparent) !important;
+            border-bottom: 0 !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+        }
+
+        body.rcm-page header.logo-navbar .logo-on-dark { display: block; }
+        body.rcm-page header.logo-navbar .logo-on-light { display: none; }
+        body.rcm-page header.logo-navbar #navigation > li.nav-item > a {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+        body.rcm-page header.logo-navbar #navigation > li.nav-item:hover > a {
+            color: #b8b5ff !important;
+            -webkit-text-fill-color: #b8b5ff !important;
+        }
+        body.rcm-page header.logo-navbar #navigation > li.nav-item.active > a {
+            background: none !important;
+            color: #b8b5ff !important;
+            -webkit-text-fill-color: #b8b5ff !important;
+        }
+        body.rcm-page header.logo-navbar #navigation > li.nav-item > a::after {
+            background: #b8b5ff !important;
+        }
+
+        body.rcm-page header.logo-navbar.white-header {
+            background: rgba(255, 255, 255, 0.97) !important;
+            border-bottom: 1px solid #efedf7 !important;
+            backdrop-filter: blur(14px) !important;
+        }
+
+        body.rcm-page header.logo-navbar.white-header .logo-on-dark { display: none; }
+        body.rcm-page header.logo-navbar.white-header .logo-on-light { display: block; }
+        body.rcm-page header.logo-navbar.white-header #navigation > li.nav-item > a {
+            color: var(--ink) !important;
+            -webkit-text-fill-color: var(--ink) !important;
+        }
+        body.rcm-page header.logo-navbar.white-header #navigation > li.nav-item:hover > a {
+            color: #726cf4 !important;
+            -webkit-text-fill-color: #726cf4 !important;
+        }
+        body.rcm-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
+            background: none !important;
+            color: var(--blue) !important;
+            -webkit-text-fill-color: var(--blue) !important;
+        }
+        body.rcm-page .navbar-toggle.nav-menu { display: none; }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            margin: 0 0 22px;
+            padding: 7px 13px;
+            border-radius: 999px;
+            background: #e8e6ff;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        body.rcm-page .sd-hero.nh-curtain-banner {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            overflow: hidden;
+            padding: 128px 0 96px;
+            display: grid;
+            place-items: center;
+            background:
+                linear-gradient(rgba(18, 20, 36, 0.42), rgba(18, 20, 36, 0.55)),
+                url("images/pages/rcm.jpg") center 40% / cover no-repeat;
+            color: #fff;
+        }
+
+        body.rcm-page .sd-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(5, 7, 16, 0.5) 0%, rgba(5, 7, 16, 0.38) 28%, rgba(5, 7, 16, 0.22) 48%, rgba(5, 7, 16, 0.1) 66%, rgba(5, 7, 16, 0) 100%);
+        }
+
+        body.rcm-page .sd-hero::after { content: none; }
+
+        body.rcm-page .nh-curtain-panel {
+            background: var(--paper);
+        }
+
+        body.rcm-page .about-hero-grid {
+            position: relative;
+            z-index: 2;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        body.rcm-page .hero-copy {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        body.rcm-page .sd-hero h1 {
+            max-width: 900px;
+            margin: 0 auto;
+            color: #fff;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(2.8rem, 5.4vw, 4.6rem);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 1.08;
+            animation: heroEnter 720ms cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        body.rcm-page .hero-intro {
+            max-width: 720px;
+            margin: 24px auto 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1rem, 1.5vw, 1.18rem);
+            line-height: 1.75;
+            animation: heroEnter 720ms 120ms cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        @keyframes heroEnter {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        .sd-hero-cta {
+            margin-top: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            animation: heroEnter 720ms 220ms cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        .sd-hero-cta a {
+            min-height: 52px;
+            padding: 0 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 180ms ease, transform 180ms ease, border-color 180ms ease, color 180ms ease;
+        }
+
+        .sd-hero-cta .cta-primary {
+            border: 1px solid var(--blue);
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .sd-hero-cta .cta-primary:hover {
+            background: var(--blue-dark);
+            border-color: var(--blue-dark);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .sd-hero-cta .cta-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .sd-hero-cta .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .hero-wave {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 42px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-wave__layer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: auto;
+            height: 100px;
+            display: block;
+            background-repeat: repeat-x;
+            background-position: 0 0;
+            background-size: 1200px 100px;
+        }
+
+        .hero-wave__layer--back {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C75,85 225,85 300,60 C375,35 525,35 600,60 C675,85 825,85 900,60 C975,35 1125,35 1200,60 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.4)'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 17s linear infinite reverse;
+        }
+
+        .hero-wave__layer--front {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C75,20 225,20 300,50 C375,80 525,80 600,50 C675,20 825,20 900,50 C975,80 1125,80 1200,50 L1200,120 L0,120 Z' fill='%23ffffff'/%3E%3C/svg%3E");
+            animation: heroWaveDrift 11s linear infinite;
+        }
+
+        @keyframes heroWaveDrift {
+            from { background-position-x: 0; }
+            to { background-position-x: -1200px; }
+        }
+
+        /* Keep hero wave swaying even when OS asks for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            body.rcm-page .hero-wave__layer--back {
+                animation: heroWaveDrift 17s linear infinite reverse !important;
+            }
+            body.rcm-page .hero-wave__layer--front {
+                animation: heroWaveDrift 11s linear infinite !important;
+            }
+        }
+
+        .sd-intro {
+            position: relative;
+            z-index: 2;
+            padding: 68px 0 80px;
+            background: #fff;
+        }
+
+        .sd-intro-grid {
+            display: grid;
+            grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+            gap: 80px;
+            align-items: start;
+        }
+
+        .sd-intro-copy h2,
+        .sd-services-head h2,
+        .sd-why-head h2 {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 1.08;
+        }
+
+        .sd-intro-copy p,
+        .sd-services-head p,
+        .sd-why-head p {
+            margin: 20px 0 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .sd-intro-side {
+            display: grid;
+            gap: 20px;
+        }
+
+        .sd-assurance {
+            padding: 34px 30px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            transition: transform 180ms ease, border-color 180ms ease;
+        }
+
+        .sd-assurance:hover {
+            transform: translateY(-6px);
+            border-color: #c8c4ff;
+        }
+
+        .sd-assurance-icon {
+            width: 52px;
+            height: 52px;
+            margin-bottom: 16px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(114, 108, 244, 0.1);
+        }
+
+        .sd-assurance-icon img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .sd-assurance strong {
+            display: block;
+            margin: 0;
+            color: var(--ink);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.35;
+        }
+
+        .sd-assurance span {
+            display: block;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .sd-strengths {
+            padding: 28px 30px 30px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f8f7ff 0%, #ffffff 100%);
+        }
+
+        .sd-strengths h3 {
+            margin: 0;
+            color: var(--ink);
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.35;
+        }
+
+        .sd-strengths p {
+            margin: 12px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .sd-strengths-list {
+            margin: 18px 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .sd-strengths-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--ink);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.55;
+        }
+
+        .sd-strengths-list li::before {
+            content: "";
+            flex: 0 0 8px;
+            width: 8px;
+            height: 8px;
+            margin-top: 6px;
+            border-radius: 50%;
+            background: var(--blue);
+        }
+
+        .sd-services {
+            padding: 0 0 88px;
+            background: #f8f7ff;
+        }
+
+        .sd-services.sd-services--paper {
+            background: #fff;
+            padding-top: 0;
+        }
+
+        .sd-services-head {
+            max-width: 720px;
+            margin: 0 auto 48px;
+            padding-top: 72px;
+            text-align: center;
+        }
+
+        .sd-service-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 0;
+            border-top: 1px solid #ddd9f0;
+        }
+
+        .sd-service-item {
+            display: grid;
+            grid-template-columns: 72px minmax(0, 1fr);
+            gap: 28px;
+            align-items: start;
+            padding: 36px 8px;
+            border-bottom: 1px solid #ddd9f0;
+            transition: background 180ms ease;
+        }
+
+        .sd-service-item:hover {
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .sd-service-index {
+            margin: 4px 0 0;
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .sd-service-body h3 {
+            margin: 0;
+            color: var(--ink);
+            font-size: clamp(1.25rem, 2vw, 1.55rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+        }
+
+        .sd-service-body p {
+            margin: 12px 0 0;
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .sd-service-meta {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sd-service-meta span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: #efedff;
+            color: #4f4a7a;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .sd-why {
+            padding: 80px 0 40px;
+            background: #fff;
+        }
+
+        .sd-why-head {
+            max-width: 720px;
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .sd-why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .sd-why-item {
+            padding: 28px 26px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            transition: transform 180ms ease, border-color 180ms ease;
+        }
+
+        .sd-why-item:hover {
+            transform: translateY(-4px);
+            border-color: #c8c4ff;
+        }
+
+        .sd-why-item strong {
+            display: block;
+            margin: 0;
+            color: var(--ink);
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.35;
+        }
+
+        .sd-why-item p {
+            margin: 12px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .sd-why-num {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 14px;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+        }
+
+        .sd-intro-grid.intro-motion-ready > *,
+        .sd-service-list.list-motion-ready .sd-service-item,
+        .sd-why-grid.why-motion-ready .sd-why-item {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 520ms cubic-bezier(.2,.8,.2,1), transform 520ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        .sd-intro-grid.is-visible > *,
+        .sd-service-list.is-visible .sd-service-item,
+        .sd-why-grid.is-visible .sd-why-item {
+            opacity: 1;
+            transform: none;
+        }
+
+        .sd-service-list.list-motion-ready .sd-service-item {
+            transition-delay: calc(var(--item-index, 0) * 45ms);
+        }
+
+        .sd-why-grid.why-motion-ready .sd-why-item {
+            transition-delay: calc(var(--item-index, 0) * 55ms);
+        }
+
+        @media (max-width: 900px) {
+            .sd-intro-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .sd-why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 820px) {
+            body.rcm-page .sd-hero.nh-curtain-banner {
+                padding: 120px 0 80px;
+            }
+
+            body.rcm-page .about-hero-grid {
+                min-height: 270px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            body.rcm-page header.logo-navbar {
+                min-height: 76px !important;
+                padding: 17px 20px !important;
+                background: linear-gradient(180deg, rgba(10, 16, 32, 0.72), transparent) !important;
+            }
+
+            body.rcm-page .header-container {
+                min-height: 42px;
+                padding: 0 !important;
+            }
+
+            body.rcm-page .header-row {
+                min-height: 42px;
+                justify-content: space-between !important;
+            }
+
+            body.rcm-page .header-logo {
+                left: 0 !important;
+            }
+
+            body.rcm-page #navigation.nav.navbar-nav {
+                display: none !important;
+            }
+
+            body.rcm-page #slidemenu .inner-menu {
+                width: 100% !important;
+                justify-content: flex-end !important;
+            }
+
+            body.rcm-page .navbar-toggle.nav-menu {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                width: 40px;
+                height: 40px;
+                padding: 8px;
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                border: 0;
+                background: transparent;
+                cursor: pointer;
+            }
+
+            body.rcm-page .navbar-toggle.nav-menu span {
+                width: 23px;
+                height: 2px;
+                display: block;
+                background: #fff !important;
+                transition: transform 180ms ease;
+            }
+
+            body.rcm-page .navbar-toggle.nav-menu.open .first {
+                transform: translateY(4px) rotate(45deg);
+            }
+
+            body.rcm-page .navbar-toggle.nav-menu.open .second {
+                transform: translateY(-4px) rotate(-45deg);
+            }
+
+            body.rcm-page .full-screen-menu {
+                padding-top: 76px;
+            }
+
+            body.rcm-page .sd-hero.nh-curtain-banner {
+                padding: 110px 0 72px;
+                background-position: 57% center;
+            }
+
+            body.rcm-page .about-hero-grid {
+                min-height: 260px;
+            }
+
+            .sd-service-item {
+                grid-template-columns: 48px minmax(0, 1fr);
+                gap: 16px;
+                padding: 28px 4px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .shell {
+                width: min(100% - 32px, 1180px);
+            }
+
+            body.rcm-page .sd-hero h1 {
+                font-size: clamp(2.4rem, 11vw, 3.4rem);
+            }
+
+            body.rcm-page .hero-intro {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .hero-wave { height: 28px; }
+
+            .hero-wave__layer {
+                height: 72px;
+                background-size: 900px 72px;
+            }
+
+            .sd-intro { padding: 56px 0 62px; }
+
+            .sd-services-head { padding-top: 56px; margin-bottom: 32px; }
+
+            .sd-hero-cta {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .sd-why { padding: 60px 0 24px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sd-hero h1,
+            .hero-intro,
+            .sd-hero-cta,
+            .sd-intro-grid.intro-motion-ready > *,
+            .sd-service-list.list-motion-ready .sd-service-item,
+            .sd-why-grid.why-motion-ready .sd-why-item {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="home_body rcm-page">
+    <div id="wrapper">
+        <header class="logo-navbar blnk-header">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+                <div class="header-container">
+                    <div class="inner-overlay"></div>
+                    <div class="row header-row">
+                        <a href="index.html" class="header-logo" aria-label="Nohitatu home">
+                            <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                            <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                        </a>
+                        <div class="col-sm-12 right-menu text-center">
+                            <nav id="slidemenu" aria-label="Primary navigation">
+                                <div class="inner-menu">
+                                    <button class="navbar-toggle nav-menu cross" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                                        <span class="first"></span><span class="second"></span>
+                                    </button>
+                                    <ul id="navigation" class="nav navbar-nav">
+                                        <li class="nav-item"><a href="index.html">HOME</a></li>
+                                        <li class="nav-item">
+                                            <a href="#">CORPORATE</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="About-us.html">About Us</a></li>
+                                                    <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                                                    <li><a href="Clients.html">Clients</a></li>
+                                                    <li><a href="blogs-page.html">Blogs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#">EXPLORE NOHITATU</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                                                    <li><a href="Tech-skills.html">Tech Skills</a></li>
+                                                    <li><a href="People.html">People</a></li>
+                                                    <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <a href="#">SOLUTIONS</a>
+                                            <div class="sub corporate">
+                                                <ul class="sub-menu">
+                                                    <li><a href="Software-Development.html">Software Development</a></li>
+                                                    <li><a href="Saas.html">Saas</a></li>
+                                                    <li><a href="medical-billing-services.html" aria-current="page">Revenue Cycle Management</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item"><a href="Portfolio.html">PORTFOLIO</a></li>
+                                        <li class="nav-item"><a href="Careers.html">CAREER</a></li>
+                                        <li class="nav-item"><a href="Contact-us.html">CONTACT US</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="full-screen-menu section fadeIn">
+            <div class="container-fluid"><div class="row">
+                <div class="col-sm-7 menu-content">
+                    <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
+                    <a href="Contact-us.html" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                </div>
+                <div class="col-sm-5 right-menu">
+                    <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
+                        <a href="index.html" class="list-group-item main-link">HOME</a>
+                        <a href="#rcm-mobile-corporate" class="list-group-item main-link" data-bs-toggle="collapse">CORPORATE <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="rcm-mobile-corporate"><ul class="inner-sub-menus">
+                            <li><a href="About-us.html">About Us</a></li>
+                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="Clients.html">Clients</a></li>
+                            <li><a href="blogs-page.html">Blogs</a></li>
+                        </ul></div>
+                        <a href="#rcm-mobile-explore" class="list-group-item main-link" data-bs-toggle="collapse">EXPLORE NOHITATU <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="rcm-mobile-explore"><ul class="inner-sub-menus">
+                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills.html">Tech Skills</a></li>
+                            <li><a href="People.html">People</a></li>
+                            <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                        </ul></div>
+                        <a href="#rcm-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
+                        <div class="collapse" id="rcm-mobile-solutions"><ul class="inner-sub-menus">
+                            <li><a href="Software-Development.html">Software Development</a></li>
+                            <li><a href="Saas.html">Saas</a></li>
+                            <li><a href="medical-billing-services.html" aria-current="page">Revenue Cycle Management</a></li>
+                        </ul></div>
+                        <a href="Portfolio.html" class="list-group-item main-link">PORTFOLIO</a>
+                        <a href="Careers.html" class="list-group-item main-link">CAREER</a>
+                        <a href="Contact-us.html" class="list-group-item main-link">CONTACT US</a>
+                    </div></div>
+                </div>
+            </div></div>
+        </div>
+
+        <main>
+            <div class="nh-curtain-stack">
+                <section class="sd-hero nh-curtain-banner">
+                    <div class="shell about-hero-grid">
+                        <div class="hero-copy">
+                            <h1>Medical billing services &amp; revenue cycle management</h1>
+                            <p class="hero-intro">Get a competitive edge with RCM support that helps healthcare providers capture charges accurately, submit cleaner claims, and get paid faster.</p>
+                            <div class="sd-hero-cta">
+                                <a class="cta-primary" href="Contact-us.html">Talk to our RCM team</a>
+                                <a class="cta-secondary" href="#services">Explore billing services</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-wave" aria-hidden="true">
+                        <span class="hero-wave__layer hero-wave__layer--back"></span>
+                        <span class="hero-wave__layer hero-wave__layer--front"></span>
+                    </div>
+                </section>
+
+                <div class="nh-curtain-panel">
+                    <section class="sd-intro" id="rcm-overview" aria-labelledby="rcm-intro-title">
+                        <div class="shell sd-intro-grid">
+                            <div class="sd-intro-copy">
+                                <span class="section-kicker">Chapter 01 · Overview</span>
+                                <h2 id="rcm-intro-title">Medical billing services built to improve revenue performance.</h2>
+                                <p>Nohitatu’s goal is to help healthcare providers receive payment for the services they deliver. Our team understands the full revenue cycle — and how accurate registration, coding, claims, and follow-up improve practice performance.</p>
+                            </div>
+                            <div class="sd-intro-side">
+                                <aside class="sd-assurance">
+                                    <div class="sd-assurance-icon" aria-hidden="true">
+                                        <img src="images/icons/home/software-development-violet.png" alt="" width="28" height="28" />
+                                    </div>
+                                    <strong>Get paid faster.</strong>
+                                    <span>Error-free data capture, clean claim submission, and timely A/R follow-up reduce delays — so reimbursements move with fewer avoidable denials.</span>
+                                </aside>
+                                <section class="sd-strengths" aria-labelledby="rcm-benefits-title">
+                                    <h3 id="rcm-benefits-title">What RCM covers</h3>
+                                    <p>End-to-end medical billing support across front-end verification, mid-cycle coding and claims, and back-end recovery.</p>
+                                    <ul class="sd-strengths-list">
+                                        <li>Patient registration &amp; demographic entry</li>
+                                        <li>Medical coding, charge entry &amp; claims submission</li>
+                                        <li>Payment posting, A/R follow-up &amp; denial management</li>
+                                        <li>Eligibility, credentialing, indexing &amp; data conversion</li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="sd-services" id="services" aria-labelledby="rcm-services-title">
+                        <div class="shell">
+                            <div class="sd-services-head">
+                                <span class="section-kicker">Chapter 02 · Services</span>
+                                <h2 id="rcm-services-title">Complete medical billing &amp; RCM capabilities</h2>
+                                <p>From the first patient record through payment posting and denial recovery, each service is designed to protect revenue and shorten days in A/R.</p>
+                            </div>
+
+                            <ul class="sd-service-list" id="rcm-service-list">
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">01</span>
+                                    <div class="sd-service-body">
+                                        <h3>Patient registration / demographic entry</h3>
+                                        <p>Our team focuses on accurate capture of patient details. Demographic data forms the base of the medical record and directly affects insurance claim payment — error-free capture supports clean claim submission and faster payer processing.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Accurate demographics</span>
+                                            <span>Clean claims</span>
+                                            <span>Faster processing</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">02</span>
+                                    <div class="sd-service-body">
+                                        <h3>Medical coding services</h3>
+                                        <p>Accurate medical coding reduces denials and helps generate more revenue. Our experienced, certified coders maintain a high level of accuracy while meeting industry standards — without compromising quality.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Certified coders</span>
+                                            <span>Fewer denials</span>
+                                            <span>Higher accuracy</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">03</span>
+                                    <div class="sd-service-body">
+                                        <h3>Charge entry services</h3>
+                                        <p>Reimbursement depends on charges entered for services performed. We review medical services carefully, collaborate with coding teams, and capture charges accurately to reduce denials and limit revenue leakage.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Accurate charges</span>
+                                            <span>Coding collaboration</span>
+                                            <span>Less leakage</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">04</span>
+                                    <div class="sd-service-body">
+                                        <h3>Electronic claims submission</h3>
+                                        <p>We review claims in the practice management system and clearinghouse interface before submission. Work edits and rejects are corrected prior to filing so payers receive cleaner claims.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Clearinghouse review</span>
+                                            <span>Edit correction</span>
+                                            <span>Cleaner filing</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">05</span>
+                                    <div class="sd-service-body">
+                                        <h3>Payment posting</h3>
+                                        <p>Payment posting shows how effective your revenue cycle is — and, at scale, supports reimbursement trends and analytics. We post patient payments, manual EOBs, denials, and correspondence with accuracy and according to your procedures.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Patient payments</span>
+                                            <span>EOB posting</span>
+                                            <span>Denial posting</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">06</span>
+                                    <div class="sd-service-body">
+                                        <h3>Accounts receivable follow-up</h3>
+                                        <p>We help practices reduce days in A/R with timely follow-up — contacting payers via website, fax, and phone, monitoring aging buckets, and acting on claim status with refiles, appeals, and focused analytics.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Aging monitoring</span>
+                                            <span>Payer follow-up</span>
+                                            <span>Appeals &amp; refiles</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">07</span>
+                                    <div class="sd-service-body">
+                                        <h3>Denial management</h3>
+                                        <p>Seasoned specialists investigate every denied claim, correct codes, attach clinical documentation, appeal when needed, and use analytics to reduce recurring denial causes across the revenue cycle.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Root-cause review</span>
+                                            <span>Appeals</span>
+                                            <span>Denial analytics</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">08</span>
+                                    <div class="sd-service-body">
+                                        <h3>Insurance eligibility verification</h3>
+                                        <p>Many denials stem from eligibility gaps. Before the visit, we verify coverage and benefits with primary and secondary payers, clarify patient responsibility, initiate prior authorizations when required, and update your RCM or practice management system.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Coverage checks</span>
+                                            <span>Benefits &amp; copays</span>
+                                            <span>Prior auth support</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">09</span>
+                                    <div class="sd-service-body">
+                                        <h3>Physician credentialing services</h3>
+                                        <p>Enrollment and attestation confirm a physician is in a payer’s network and authorized to treat plan members. We support credentialing by helping verify license, experience, certification, and education against payer standards.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Network enrollment</span>
+                                            <span>Attestation</span>
+                                            <span>Payer standards</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">10</span>
+                                    <div class="sd-service-body">
+                                        <h3>Indexing medical records</h3>
+                                        <p>We organize and store patient demographic and treatment information so staff can access what they need quickly — supporting care decisions and compliant healthcare document management.</p>
+                                        <div class="sd-service-meta">
+                                            <span>Organized records</span>
+                                            <span>Fast access</span>
+                                            <span>Compliance support</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="sd-service-item">
+                                    <span class="sd-service-index">11</span>
+                                    <div class="sd-service-body">
+                                        <h3>Data conversion</h3>
+                                        <p>When practices migrate from one billing system to another, our conversion specialists help move data accurately and reliably so operations continue with minimal disruption.</p>
+                                        <div class="sd-service-meta">
+                                            <span>System migration</span>
+                                            <span>Accurate conversion</span>
+                                            <span>Reliable handoff</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="sd-why" id="why-nohitatu-rcm" aria-labelledby="rcm-why-title">
+                        <div class="shell">
+                            <div class="sd-why-head">
+                                <span class="section-kicker">Chapter 03 · Why Nohitatu</span>
+                                <h2 id="rcm-why-title">Why partner with Nohitatu for RCM</h2>
+                                <p>Practical revenue-cycle expertise focused on cleaner claims, faster reimbursement, and fewer avoidable denials.</p>
+                            </div>
+                            <div class="sd-why-grid">
+                                <article class="sd-why-item">
+                                    <span class="sd-why-num">01 · ACCURACY</span>
+                                    <strong>Clean data from the start</strong>
+                                    <p>Precise demographic entry, coding, and charge capture reduce preventable errors before claims ever reach the payer.</p>
+                                </article>
+                                <article class="sd-why-item">
+                                    <span class="sd-why-num">02 · SPEED</span>
+                                    <strong>Get paid faster</strong>
+                                    <p>Timely eligibility checks, claim review, posting, and A/R follow-up help shorten days in accounts receivable.</p>
+                                </article>
+                                <article class="sd-why-item">
+                                    <span class="sd-why-num">03 · RECOVERY</span>
+                                    <strong>Denial management that learns</strong>
+                                    <p>We investigate each denial, appeal when appropriate, and use analytics to reduce recurring causes across your cycle.</p>
+                                </article>
+                                <article class="sd-why-item">
+                                    <span class="sd-why-num">04 · COVERAGE</span>
+                                    <strong>End-to-end RCM support</strong>
+                                    <p>From registration and credentialing through posting, indexing, and data conversion — one partner across the revenue cycle.</p>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="estimate footer-reveal-cta">
+                        <div class="footer-reveal-shell">
+                            <div class="estimate-panel">
+                                <div class="estimate-copy">
+                                    <span>Ready to improve your revenue cycle?</span>
+                                    <h2>Tell us about your practice or RCM goals — we will respond within one business day.</h2>
+                                </div>
+                                <a class="estimate-button" href="Contact-us.html">
+                                    Talk to our team <span aria-hidden="true">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </div><!-- /.nh-curtain-panel -->
+            </div><!-- /.nh-curtain-stack -->
+        </main>
+
+        <footer class="footer site-footer">
+            <div class="inner-footer"><div class="container"><div class="footer-grid">
+                <div class="footer-col footer-offices">
+                    <h3 class="footer-heading">Offices</h3>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/india-flag.png" alt="" width="18" height="12" /><span>India Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V14h6v12M14 26V8h8v18M24 26V16h5v10M31 26V6h7v20M40 26V12h6v14M48 26V10h8v16" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>#402, 403 &amp; 405, 4th Floor, City Centre,<br>186/43 Purasawalkam High Road,<br>Chennai - 600010, Tamilnadu, India.</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/singapore-flag.png" alt="" width="18" height="12" /><span>Singapore Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M8 26V12h7v14M18 26V7h6v19M27 26V14h5v12M35 26V4c4 3 8 3 12 0v22M50 26V11h8v15" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>71 Bukit Batok Crescent,<br>#05-07 Prestige Centre,<br>Singapore 658071</p></div>
+                    <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
+                </div>
+                <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
+                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
+                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="People.html">People</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                </ul></div>
+                <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
+                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
+                </ul></div>
+                <div class="footer-col footer-contact">
+                    <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
+                    <div class="footer-phones">
+                        <a class="footer-phone" href="tel:+919941333344" aria-label="Call Sales +91 99413 33444">
+                            <span class="footer-phone-role">Sales</span>
+                            <span class="footer-phone-number">+91 99413 33444</span>
+                        </a>
+                        <a class="footer-phone" href="tel:+917397459131" aria-label="Call HR +91 73974 59131">
+                            <span class="footer-phone-role">HR</span>
+                            <span class="footer-phone-number">+91 73974 59131</span>
+                        </a>
+                    </div>
+                    <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
+                    <div class="footer-contact-meta"><a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a></div>
+                </div>
+            </div></div></div>
+            <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
+                <div class="footer-copy"><span>Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and global software development company. All rights reserved.</span></div>
+                <div class="social-icons"><a href="https://www.facebook.com/nohitatu/" class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a><a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a><a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a><a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a></div>
+            </div></div></div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            const toggle = document.querySelector(".navbar-toggle.nav-menu");
+            const menu = document.querySelector(".full-screen-menu");
+            if (!toggle || !menu) return;
+            const setMenuState = (open) => {
+                toggle.classList.toggle("open", open);
+                menu.classList.toggle("show", open);
+                document.body.classList.toggle("fixed", open);
+                toggle.setAttribute("aria-expanded", String(open));
+                toggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+            };
+            toggle.addEventListener("click", () => setMenuState(!menu.classList.contains("show")));
+            menu.querySelectorAll("a[href]:not([href^='#'])").forEach((link) => {
+                link.addEventListener("click", () => setMenuState(false));
+            });
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") setMenuState(false);
+            });
+        })();
+
+        (() => {
+            const intro = document.querySelector(".sd-intro-grid");
+            const serviceLists = document.querySelectorAll(".sd-service-list");
+            const whyGrid = document.querySelector(".sd-why-grid");
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const reveal = (el) => el && el.classList.add("is-visible");
+
+            serviceLists.forEach((serviceList) => {
+                serviceList.querySelectorAll(".sd-service-item").forEach((item, index) => {
+                    item.style.setProperty("--item-index", index);
+                });
+            });
+            if (whyGrid) {
+                whyGrid.querySelectorAll(".sd-why-item").forEach((item, index) => {
+                    item.style.setProperty("--item-index", index);
+                });
+            }
+
+            if (reducedMotion || !("IntersectionObserver" in window)) {
+                reveal(intro);
+                serviceLists.forEach(reveal);
+                reveal(whyGrid);
+                return;
+            }
+
+            const observe = (el, readyClass) => {
+                if (!el) return;
+                el.classList.add(readyClass);
+                const observer = new IntersectionObserver((entries) => {
+                    if (!entries.some((entry) => entry.isIntersecting)) return;
+                    reveal(el);
+                    observer.disconnect();
+                }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+                observer.observe(el);
+            };
+
+            observe(intro, "intro-motion-ready");
+            serviceLists.forEach((list) => observe(list, "list-motion-ready"));
+            observe(whyGrid, "why-motion-ready");
+        })();
+    </script>
+
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-window" class="chatbot-window hidden">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <div class="chatbot-avatar-box">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                            <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                            <circle cx="9" cy="14" r="1.2" fill="#726cf4"></circle>
+                            <circle cx="15" cy="14" r="1.2" fill="#726cf4"></circle>
+                            <path d="M10 17.5h4" stroke="#726cf4"></path>
+                        </svg>
+                    </div>
+                    <div class="chatbot-header-text">
+                        <h4>NohiAI</h4>
+                        <small><span class="status-dot"></span> Nohitatu AI Support</small>
+                    </div>
+                </div>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-content">
+                        <p>Hi there, I'm Nohi AI. Need help designing, scaling, building your next software project or to join our team? Let's chat!</p>
+                    </div>
+                </div>
+                <div class="quick-chips" role="group" aria-label="Choose one">
+                    <span class="quick-chips-label">Popular Questions</span>
+                    <button type="button" class="chip-btn" data-topic="products" data-query="Tell me about shipped products and portfolio"><span class="chip-label">Shipped Products</span></button>
+                    <button type="button" class="chip-btn" data-topic="healthcare" data-query="Tell me about healthcare tech and RCM solutions"><span class="chip-label">Healthcare RCM</span></button>
+                    <button type="button" class="chip-btn" data-topic="hire" data-query="How do I hire dedicated teams of certified professionals from Nohitatu?"><span class="chip-label">Hire Developers</span></button>
+                    <button type="button" class="chip-btn" data-topic="sales" data-query="Start a project or free quote"><span class="chip-label">Contact Sales</span></button>
+                    <button type="button" class="chip-btn" data-topic="careers" data-query="Looking for a job"><span class="chip-label">Careers &amp; Jobs</span></button>
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask NohiAI about custom AI, project quotes, or careers..." autocomplete="off" />
+                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
+            <div id="toggle-icon-chat" class="toggle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                    <rect x="4" y="9" width="16" height="11" rx="3"></rect>
+                    <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+                    <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+                    <path d="M10 17.5h4"></path>
+                </svg>
+            </div>
+            <div id="toggle-icon-close" class="toggle-icon hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+    <script src="js/chatbot.js?v=20260820icons"></script>
+</body>
+</html>

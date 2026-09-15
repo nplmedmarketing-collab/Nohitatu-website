@@ -43,11 +43,12 @@
     <link type="text/css" rel="stylesheet" href="css/aos.css" />
     <link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
     <link type="text/css" rel="stylesheet" href="css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="css/style.css?v=20260824robot6" />
+    <link type="text/css" rel="stylesheet" href="css/style.css?v=20260910robot7" />
     <link type="text/css" rel="stylesheet" href="css/responsive.css?v=20260806nocursor1" />
     <link type="text/css" rel="stylesheet" href="css/themify-icons.css" />
     <link type="text/css" rel="stylesheet" href="css/blog.css" />
     <link type="text/css" rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
+    <link type="text/css" rel="stylesheet" href="css/landing-motion.css?v=20260910hb1" />
 
     
     <script src="./js/jquery.min.js"></script>
@@ -91,11 +92,35 @@
 
 </head>
 
-<body class="home_body landing-page" style="">
+<body class="home_body landing-page nh-is-loading" style="">
 
     
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KRNSN8S7" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- Brand preloader — exits before hero cinematic -->
+    <div class="nh-preloader" id="nh-preloader" aria-hidden="true">
+        <div class="nh-preloader__veil" aria-hidden="true"></div>
+        <div class="nh-preloader__center">
+            <div class="nh-preloader__mark" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nh-preloader__word" aria-label="Nohitatu">
+                <span class="nh-preloader__char" style="--i:0">N</span>
+                <span class="nh-preloader__char" style="--i:1">O</span>
+                <span class="nh-preloader__char" style="--i:2">H</span>
+                <span class="nh-preloader__char" style="--i:3">I</span>
+                <span class="nh-preloader__char" style="--i:4">T</span>
+                <span class="nh-preloader__char" style="--i:5">A</span>
+                <span class="nh-preloader__char" style="--i:6">T</span>
+                <span class="nh-preloader__char" style="--i:7">U</span>
+            </div>
+            <div class="nh-preloader__bar" aria-hidden="true"><span></span></div>
+            <p class="nh-preloader__tag">Architecting AI-driven innovation</p>
+        </div>
+        <div class="nh-preloader__curtain nh-preloader__curtain--left" aria-hidden="true"></div>
+        <div class="nh-preloader__curtain nh-preloader__curtain--right" aria-hidden="true"></div>
+    </div>
     
 
     <div id="wrapper">
@@ -150,29 +175,8 @@
                                                     <ul class="sub-menu">
                                                         <li> <a href="Software-Development.html"> Software
                                                                 Development</a></li>
-                                                        <li> <a href="Saas.html"> Saas</a></li>
-                                                        <li class="new_mwnu"> <span class="split"><a href="#"> Revenue
-                                                                    Cycle Management</a></span><span class="split1">
-                                                                <div class="dropright">
-                                                                    <span type="button" class="" data-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false"> <i
-                                                                            class="ti-angle-right"></i></span>
-                                                                    <div class="dropdown-menu hoveropen">
-                                                                        <ul>
-                                                                            <li><a class="active"
-                                                                                    href="medical-billing-services.html">Medical
-                                                                                    Billing Services</a></li>
-                                                                            <li><a
-                                                                                    href="medical-billing-specialties.html">Medical
-                                                                                    Billing Specialties</a></li>
-                                                                            <li><a href="medical-billing-software.html">Medical
-                                                                                    Billing Software</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </span>
-
-                                                        </li>
+                                                        <li><a href="Saas.html">SaaS</a></li>
+                                                        <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
                                                         
                                                     </ul>
                                                 </div>
@@ -306,12 +310,18 @@
         </div>
 
         
-        <div class="top-banner top-banner--spline">
+        <div class="top-banner top-banner--spline top-banner--cinematic">
+            <div class="nh-hero-atmosphere" aria-hidden="true">
+                <span class="nh-hero-orb nh-hero-orb--a"></span>
+                <span class="nh-hero-orb nh-hero-orb--b"></span>
+                <span class="nh-hero-orb nh-hero-orb--c"></span>
+                <span class="nh-hero-grid"></span>
+            </div>
+
             <!-- Interactive Particle Constellation Canvas -->
             <canvas id="hero-particle-canvas" class="hero-particle-canvas" aria-hidden="true"></canvas>
 
-            <!-- Genkub Greeting Robot: full-bleed public embed iframe.
-                 Scene: https://my.spline.design/genkubgreetingrobot-rSaNfDPiGUgo5q8mAwYEc8kq/ -->
+            <!-- Genkub Greeting Robot: full-bleed public embed iframe. -->
             <div class="hero-spline-bg" aria-hidden="true">
                 <iframe
                     class="hero-spline-frame"
@@ -335,47 +345,26 @@
 
             <div class="banner-content ai-era-hero hero-content">
                 <div class="ai-era-wrapper">
+                    <p class="nh-hero-brand" aria-label="Nohitatu">NOHITATU</p>
 
-                    <!-- Main Headline -->
-                    <h1 class="ai-era-title">
-                        <span class="hero-title-line gradient-heavy">ARCHITECTING</span>
+                    <h1 class="ai-era-title nh-hero-display">
+                        <span class="hero-title-line gradient-heavy nh-flow-text">ARCHITECTING</span>
                         <span class="hero-title-line hero-title-dark">AI-DRIVEN</span>
-                        <span class="hero-title-line gradient-heavy">INNOVATION</span>
+                        <span class="hero-title-line gradient-heavy nh-flow-text">INNOVATION</span>
                     </h1>
 
-                    <!-- Subtitle (Item 5 Copy Polish) -->
                     <div class="ai-era-subtitle">
                         We design, scale, and automate enterprise software with global engineering teams.
                     </div>
 
-                    <!-- 2. Dual-CTA Action Buttons -->
                     <div class="ai-era-cta dual-cta-group">
-                        <a href="Contact-us.html" target="_blank" class="ai-era-btn-primary">
+                        <a href="Contact-us.html" target="_blank" class="ai-era-btn-primary nh-cta-pulse">
                             Get Free Estimation <span class="btn-arrow">→</span>
                         </a>
                         <a href="Portfolio.html" class="ai-era-btn-secondary">
                             Explore Solutions <span class="btn-play">▷</span>
                         </a>
                     </div>
-
-                    <!-- 3. Social Proof & Micro Metrics -->
-                    <div class="hero-proof-bar">
-                        <div class="proof-item">
-                            <span class="proof-val">100+</span>
-                            <span class="proof-lbl">Products Built</span>
-                        </div>
-                        <div class="proof-divider"></div>
-                        <div class="proof-item">
-                            <span class="proof-val">99.9%</span>
-                            <span class="proof-lbl">Reliability</span>
-                        </div>
-                        <div class="proof-divider"></div>
-                        <div class="proof-item">
-                            <span class="proof-val">Global</span>
-                            <span class="proof-lbl">dedicated teams</span>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -421,6 +410,15 @@
                     </aside>
                     <div class="nh-services-stage">
                         <p class="nh-services-kicker">Your success depends on <span data-service-index>1</span>/4</p>
+                        <div class="nh-services-progress" aria-hidden="true">
+                            <span class="nh-services-progress__fill" data-service-progress></span>
+                        </div>
+                        <div class="nh-services-chapters" aria-hidden="true">
+                            <span class="nh-services-chapter is-active" data-service-dot="0"></span>
+                            <span class="nh-services-chapter" data-service-dot="1"></span>
+                            <span class="nh-services-chapter" data-service-dot="2"></span>
+                            <span class="nh-services-chapter" data-service-dot="3"></span>
+                        </div>
                         <div class="nh-services-panels">
                             <article class="nh-services-panel is-active" data-service="0">
                                 <h2>Drive clarity into every project plan.</h2>
@@ -737,7 +735,10 @@
                         data-alt="FMO One Workplace App Mockup"
                         data-tags="Mobile · Facility ops · Audits"
                         data-desc="FMO One is a workplace and facility operations suite built for teams that need one place to run inspections, incident reporting, safety observations, risk assessments, permits, and audits. QR-based attendance and asset tracking keep field activity visible in real time, so managers can reduce paperwork and close issues faster.">
-                        <figure><img src="images/case-studies/mockup01.jpg" alt="FMO One Workplace App Mockup" loading="lazy" /></figure>
+                        <figure>
+                            <img src="images/case-studies/mockup01.jpg" alt="FMO One Workplace App Mockup" loading="lazy" />
+                            <span class="nh-case-view" aria-hidden="true"><em>View case</em> →</span>
+                        </figure>
                         <div class="nh-case-body">
                             <span>Singapore · Facility Management</span>
                             <h3>FMO One Facility &amp; Audit Suite</h3>
@@ -751,7 +752,10 @@
                         data-alt="Dojoman App Mockup"
                         data-tags="Mobile · Sports ERP · Events"
                         data-desc="Dojoman is an end-to-end martial arts management platform for academies and tournament organizers. It covers masters and student records, fixtures, grading workflows, online registration, fee payments, and live event operations — so clubs spend less time on admin and more time on training and competition.">
-                        <figure><img src="images/case-studies/mockup02.jpg" alt="Dojoman App Mockup" loading="lazy" /></figure>
+                        <figure>
+                            <img src="images/case-studies/mockup02.jpg" alt="Dojoman App Mockup" loading="lazy" />
+                            <span class="nh-case-view" aria-hidden="true"><em>View case</em> →</span>
+                        </figure>
                         <div class="nh-case-body">
                             <span>In-house ERP · Sports Automation</span>
                             <h3>Dojoman Martial Arts Management</h3>
@@ -765,7 +769,10 @@
                         data-alt="Taxation App Mockup"
                         data-tags="Mobile · Fintech · E-Sign"
                         data-desc="This taxation suite helps clients submit the documents needed to process tax returns, e-sign forms in-app, and receive completed returns securely. Built-in payment collection and guided document workflows reduce back-and-forth with the office while keeping the experience simple for end users.">
-                        <figure><img src="images/case-studies/mockup03.jpg" alt="Taxation App Mockup" loading="lazy" /></figure>
+                        <figure>
+                            <img src="images/case-studies/mockup03.jpg" alt="Taxation App Mockup" loading="lazy" />
+                            <span class="nh-case-view" aria-hidden="true"><em>View case</em> →</span>
+                        </figure>
                         <div class="nh-case-body">
                             <span>USA · Fintech &amp; E-Signatures</span>
                             <h3>US Taxation &amp; E-Sign Suite</h3>
@@ -779,7 +786,10 @@
                         data-alt="Smart Visit App Mockup"
                         data-tags="Mobile · Visitor ops · Security"
                         data-desc="Smart Visit is a visitor management system with secure check-in that helps front desks welcome guests quickly while keeping access controlled. Hosts get clearer visibility of arrivals, and organizations strengthen lobby security without slowing down everyday visitor flow.">
-                        <figure><img src="images/case-studies/mockup04.jpg" alt="Smart Visit App Mockup" loading="lazy" /></figure>
+                        <figure>
+                            <img src="images/case-studies/mockup04.jpg" alt="Smart Visit App Mockup" loading="lazy" />
+                            <span class="nh-case-view" aria-hidden="true"><em>View case</em> →</span>
+                        </figure>
                         <div class="nh-case-body">
                             <span>Global · Visitor Security</span>
                             <h3>Smart Visit Security Management</h3>
@@ -791,15 +801,17 @@
         </section>
 
         <div class="nh-case-modal" id="nh-case-modal" aria-hidden="true">
+            <div class="nh-case-modal__backdrop" data-case-close tabindex="-1" aria-hidden="true"></div>
             <div class="nh-case-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="nh-case-modal-title">
                 <button type="button" class="nh-case-modal__close" id="nh-case-modal-close" aria-label="Close product details">&times;</button>
                 <div class="nh-case-modal__media">
                     <img id="nh-case-modal-img" src="" alt="" />
+                    <div class="nh-case-modal__media-glow" aria-hidden="true"></div>
                 </div>
                 <div class="nh-case-modal__content">
                     <p class="nh-case-modal__meta" id="nh-case-modal-meta"></p>
                     <h3 class="nh-case-modal__title" id="nh-case-modal-title"></h3>
-                    <p class="nh-case-modal__tags" id="nh-case-modal-tags"></p>
+                    <div class="nh-case-modal__tags" id="nh-case-modal-tags"></div>
                     <p class="nh-case-modal__desc" id="nh-case-modal-desc"></p>
                     <div class="nh-case-modal__actions">
                         <a class="nh-case-modal__cta" href="Contact-us.html">Talk about this product <span aria-hidden="true">→</span></a>
@@ -807,6 +819,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="nh-page-transition" id="nh-page-transition" aria-hidden="true">
+            <div class="nh-page-transition__panel"></div>
+            <div class="nh-page-transition__mark">NOHITATU</div>
         </div>
 
             
@@ -1312,7 +1329,9 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"></script>
         <!-- Home story stack script -->
-        <script src="js/home-story.js?v=20260805boxes2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+        <script src="js/home-story.js?v=20260910hb1"></script>
+        <script src="js/landing-motion.js?v=20260910hb1"></script>
         <script src="js/footer-phone.js"></script>
 
     <!-- Concierge chatbot: must be a direct body child (outside footer-reveal .site-footer)
@@ -1435,16 +1454,36 @@
         return el.value;
       };
 
+      const renderTags = (raw) => {
+        if (!tags) return;
+        tags.innerHTML = "";
+        decode(raw)
+          .split("·")
+          .map((t) => t.trim())
+          .filter(Boolean)
+          .forEach((label, i) => {
+            const pill = document.createElement("span");
+            pill.className = "nh-case-modal__pill";
+            pill.style.setProperty("--i", String(i));
+            pill.textContent = label;
+            tags.appendChild(pill);
+          });
+      };
+
       const openModal = (card) => {
         lastFocus = document.activeElement;
         if (img) {
           img.src = card.dataset.img || "";
           img.alt = decode(card.dataset.alt || card.dataset.title || "");
+          img.classList.remove("is-in");
+          void img.offsetWidth;
+          img.classList.add("is-in");
         }
         if (title) title.textContent = decode(card.dataset.title || "");
         if (meta) meta.textContent = decode(card.dataset.meta || "");
-        if (tags) tags.textContent = decode(card.dataset.tags || "");
+        renderTags(card.dataset.tags || "");
         if (desc) desc.textContent = decode(card.dataset.desc || "");
+        modal.classList.remove("is-closing");
         modal.classList.add("is-open");
         modal.setAttribute("aria-hidden", "false");
         document.body.classList.add("nh-case-modal-open");
@@ -1453,9 +1492,11 @@
 
       const closeModal = () => {
         if (!modal.classList.contains("is-open")) return;
+        modal.classList.add("is-closing");
         modal.classList.remove("is-open");
         modal.setAttribute("aria-hidden", "true");
         document.body.classList.remove("nh-case-modal-open");
+        window.setTimeout(() => modal.classList.remove("is-closing"), 320);
         if (lastFocus && typeof lastFocus.focus === "function") {
           lastFocus.focus({ preventScroll: true });
         }
@@ -1472,6 +1513,9 @@
       });
 
       closeBtn?.addEventListener("click", closeModal);
+      modal.querySelectorAll("[data-case-close]").forEach((el) => {
+        el.addEventListener("click", closeModal);
+      });
       modal.addEventListener("click", (event) => {
         if (event.target === modal) closeModal();
       });
