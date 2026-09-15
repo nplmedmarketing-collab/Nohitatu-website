@@ -205,15 +205,29 @@
     el.textContent = '';
     el.setAttribute('aria-label', text.trim());
     var chars = [];
-    text.split('').forEach(function (ch, i) {
-      var span = document.createElement('span');
-      span.className = className || 'nh-kchar';
-      span.style.setProperty('--i', String(i));
-      span.dataset.char = ch === ' ' ? '\u00a0' : ch;
-      span.textContent = ch === ' ' ? '\u00a0' : ch;
-      span.setAttribute('aria-hidden', 'true');
-      el.appendChild(span);
-      chars.push(span);
+    var i = 0;
+    // Keep words intact: wrap each word (nowrap), leave real spaces as wrap points.
+    // Per-letter inline-block + NBSP previously forced mid-word breaks.
+    text.split(/(\s+)/).forEach(function (token) {
+      if (!token) return;
+      if (/^\s+$/.test(token)) {
+        el.appendChild(document.createTextNode(token.replace(/\u00a0/g, ' ')));
+        return;
+      }
+      var word = document.createElement('span');
+      word.className = 'nh-kword';
+      token.split('').forEach(function (ch) {
+        var span = document.createElement('span');
+        span.className = className || 'nh-kchar';
+        span.style.setProperty('--i', String(i));
+        span.dataset.char = ch;
+        span.textContent = ch;
+        span.setAttribute('aria-hidden', 'true');
+        word.appendChild(span);
+        chars.push(span);
+        i += 1;
+      });
+      el.appendChild(word);
     });
     el.dataset.kchars = '1';
     return chars;

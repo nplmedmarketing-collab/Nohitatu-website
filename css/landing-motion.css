@@ -454,6 +454,12 @@ body.nh-is-loading {
 }
 
 /* ---- Kinetic characters ---- */
+/* Word shell keeps per-letter spans from wrapping mid-word. */
+.nh-kword {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .nh-kchar {
   display: inline-block;
   letter-spacing: 0;
