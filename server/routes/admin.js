@@ -361,6 +361,12 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
     return res.json({ requests, count: requests.length });
   });
 
+  router.get("/contact-enquiries", auth.requireAuth, (_req, res) => {
+    const enquiries =
+      typeof store.listContactEnquiries === "function" ? store.listContactEnquiries() : [];
+    return res.json({ enquiries, count: enquiries.length });
+  });
+
   return router;
 }
 

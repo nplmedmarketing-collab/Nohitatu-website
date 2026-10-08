@@ -986,10 +986,12 @@
   background: linear-gradient(135deg, #7d77f7, #5b53d8);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #fff;
+  font: inherit;
   font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.01em;
   text-decoration: none;
+  cursor: pointer;
   box-shadow: 0 12px 30px rgba(114, 108, 244, 0.36);
   transition: transform 260ms var(--atlas-ease), box-shadow 260ms ease, background 260ms ease;
 }
@@ -1388,6 +1390,12 @@ body.pf-scroll-lock {
   background: rgba(16, 185, 129, 0.14);
   border: 1px solid rgba(16, 185, 129, 0.38);
   color: #34d399;
+}
+
+.demo-drawer__status.error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
 }
 
 .demo-drawer__submit {

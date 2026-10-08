@@ -461,6 +461,31 @@
             letter-spacing: 0.08em;
         }
 
+        .sd-service-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+
+        .sd-service-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            color: var(--blue);
+            background: #efedff;
+            border-radius: 10px;
+        }
+
+        .sd-service-icon svg {
+            display: block;
+            width: 18px;
+            height: 18px;
+        }
+
         .sd-service-body h3 {
             margin: 0;
             color: var(--ink);
@@ -679,6 +704,21 @@
                 gap: 16px;
                 padding: 28px 4px;
             }
+
+            .sd-service-heading {
+                gap: 10px;
+            }
+
+            .sd-service-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+            }
+
+            .sd-service-icon svg {
+                width: 16px;
+                height: 16px;
+            }
         }
 
         @media (max-width: 560px) {
@@ -891,7 +931,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">01</span>
                                     <div class="sd-service-body">
-                                        <h3>Web Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="18" x2="12" y2="21"></line></svg>
+                                            </span>
+                                            <h3>Web Development</h3>
+                                        </div>
                                         <p>Recognized expertise in web application development — including web portals, user-friendly apps, responsive experiences, and encrypted data security.</p>
                                         <div class="sd-service-meta">
                                             <span>Web portals</span>
@@ -903,7 +948,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">02</span>
                                     <div class="sd-service-body">
-                                        <h3>Software Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                            </span>
+                                            <h3>Software Development</h3>
+                                        </div>
                                         <p>Our development experts deliver world-class, cost-effective enterprise solutions — including strong .NET capability — that help your business compete across market verticals.</p>
                                         <div class="sd-service-meta">
                                             <span>Enterprise solutions</span>
@@ -915,7 +965,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">03</span>
                                     <div class="sd-service-body">
-                                        <h3>Microsoft ASP.NET Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                            </span>
+                                            <h3>Microsoft ASP.NET Development</h3>
+                                        </div>
                                         <p>Deep expertise in Microsoft technologies to design, develop, and integrate business solutions on the .NET platform — from new builds to modernization.</p>
                                         <div class="sd-service-meta">
                                             <span>ASP.NET</span>
@@ -927,7 +982,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">04</span>
                                     <div class="sd-service-body">
-                                        <h3>Windows Application Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                            </span>
+                                            <h3>Windows Application Development</h3>
+                                        </div>
                                         <p>End-to-end Windows application services for global clients — design and development, migration, updates, and maintenance — so desktop software stays efficient and productive.</p>
                                         <div class="sd-service-meta">
                                             <span>Desktop apps</span>
@@ -939,7 +999,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">05</span>
                                     <div class="sd-service-body">
-                                        <h3>Mobile App Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                                            </span>
+                                            <h3>Mobile App Development</h3>
+                                        </div>
                                         <p>Customizable, scalable, and cost-effective mobile development that aligns with your business objectives and supports organizational growth.</p>
                                         <div class="sd-service-meta">
                                             <span>Cross-platform ready</span>
@@ -951,7 +1016,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">06</span>
                                     <div class="sd-service-body">
-                                        <h3>Android Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4l-2-2"></path><path d="M16 4l2-2"></path><rect x="6" y="5" width="12" height="9" rx="2"></rect><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line><path d="M8 14v4"></path><path d="M16 14v4"></path><path d="M4 10v4"></path><path d="M20 10v4"></path></svg>
+                                            </span>
+                                            <h3>Android Development</h3>
+                                        </div>
                                         <p>Seamless, user-centric Android experiences — including payment gateway integration and consuming APIs from existing systems — so your app fits naturally into real workflows.</p>
                                         <div class="sd-service-meta">
                                             <span>Android</span>
@@ -963,7 +1033,12 @@
                                 <li class="sd-service-item">
                                     <span class="sd-service-index">07</span>
                                     <div class="sd-service-body">
-                                        <h3>iOS Development</h3>
+                                        <div class="sd-service-heading">
+                                            <span class="sd-service-icon" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                            </span>
+                                            <h3>iOS Development</h3>
+                                        </div>
                                         <p>Full-scale iOS application development for teams ready to grow on Apple platforms — with payment gateway support and API integrations from existing sources.</p>
                                         <div class="sd-service-meta">
                                             <span>iOS</span>

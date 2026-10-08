@@ -423,32 +423,8 @@
             transform-origin: center 30%;
         }
 
-        /* Swetha (reference): shared defaults — object-fit: cover; object-position: center; no transform.
-           Basker / Vanitha overrides below tune face fill inside the same 4 / 4.8 wrap. */
-
-        /* Basker source has large white padding — zoom in so face fill matches Swetha. */
-        body.people-page .feature-panel__ceo-flip .flip-card[aria-label="Basker Lead Consultant message"] .flip-card__image-wrap {
-            background: #fff;
-        }
-
-        body.people-page .feature-panel__ceo-flip .flip-card[aria-label="Basker Lead Consultant message"] .flip-card__image {
-            object-fit: cover;
-            object-position: center 22%;
-            transform: scale(1.28);
-            transform-origin: center 28%;
-        }
-
-        /* Vanitha source sits higher / slightly smaller than Swetha — mild zoom to match her framing (not Basker's tighter crop). */
-        body.people-page .feature-panel__ceo-flip .flip-card[aria-label="Vanitha Technical Head message"] .flip-card__image-wrap {
-            background: #fff;
-        }
-
-        body.people-page .feature-panel__ceo-flip .flip-card[aria-label="Vanitha Technical Head message"] .flip-card__image {
-            object-fit: cover;
-            object-position: center 20%;
-            transform: scale(1.12);
-            transform-origin: center 28%;
-        }
+        /* Swetha / Basker / Vanitha: identical full-bleed framing via shared .flip-card__image
+           (object-fit: cover; object-position: center; no transform). */
 
         .feature-panel__ceo-flip .flip-card-front,
         .feature-panel__ceo-flip .flip-card-back {
@@ -1169,7 +1145,7 @@
                     <div class="inner-overlay"></div>
                     <div class="row header-row">
                         <a href="index.html" class="header-logo" aria-label="Nohitatu home">
-                            <img class="logo-on-dark" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                            <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
                             <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
                         </a>
                         <div class="col-sm-12 right-menu text-center">
@@ -1441,7 +1417,7 @@
                                                 <div class="flip-card-front">
                                                     <div class="flip-card__image-wrap">
                                                         <img
-                                                            src="images/vanitha-portrait.png"
+                                                            src="images/vanitha-portrait.png?v=nowm"
                                                             alt="Vanitha, Technical Head"
                                                             class="flip-card__image"
                                                             loading="lazy" />

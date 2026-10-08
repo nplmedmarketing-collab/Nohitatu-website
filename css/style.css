@@ -90,24 +90,27 @@ header {
   flex: 0 0 auto !important;
   flex-shrink: 0;
   width: auto !important;
-  max-width: 220px !important;
+  max-width: 240px !important;
   height: auto !important;
   padding: 0 !important;
   margin: 0 !important;
   text-decoration: none !important;
   transition: opacity 0.25s ease;
   pointer-events: auto;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .header-logo img {
   display: block;
-  height: 52px;
+  height: 56px;
   width: auto;
-  max-width: 220px;
+  max-width: 240px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 0;
+  /* Avoid light fringe looking like emboss on dark headers */
+  filter: none;
+  -webkit-filter: none;
 }
 
 .header-logo .logo-on-light {
@@ -121,34 +124,34 @@ header {
 
 @media (max-width: 1199px) {
   .header-container {
-    padding-left: 200px !important;
+    padding-left: 210px !important;
   }
 
   .header-logo img {
-    height: 46px;
-    max-width: 190px;
+    height: 50px;
+    max-width: 210px;
   }
 }
 
 @media (max-width: 991px) {
   .header-container {
-    padding-left: 170px !important;
+    padding-left: 180px !important;
   }
 
   .header-logo img {
-    height: 40px;
-    max-width: 160px;
+    height: 44px;
+    max-width: 180px;
   }
 }
 
 @media (max-width: 767px) {
   .header-container {
-    padding-left: 140px !important;
+    padding-left: 150px !important;
   }
 
   .header-logo img {
-    height: 34px;
-    max-width: 140px;
+    height: 38px;
+    max-width: 155px;
   }
 }
 

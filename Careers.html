@@ -1163,7 +1163,7 @@
                     <video
                         class="careers-hero-video"
                         data-hero-slot="1"
-                        src="images/careers-video/hero-team-02.mp4"
+                        src="images/careers-video/hero-team-02.fixed.mp4?v=20261006play1"
                         muted
                         playsinline
                         webkit-playsinline
@@ -1514,31 +1514,33 @@
     </script>
 
     <script>
-        /* Careers hero: 01 → 02 → 03 → 01. Two stacked players so the next
-           clip is already buffered. Pause only when the tab is hidden. */
+        /* Careers hero playlist: 01 ↔ 02 (known on-disk clips). No HEAD probe —
+           async probing delayed start and video.load() aborted the HTML autoplay,
+           which left the hero stuck on the first frame. Skip broken srcs on error. */
         (() => {
             const media = document.querySelector("[data-careers-hero-media]");
             if (!media) return;
             const slots = Array.from(media.querySelectorAll("[data-hero-slot]"));
-            if (slots.length < 2) return;
+            if (!slots.length) return;
 
-            const sources = [
+            /* Only files that exist under images/careers-video/ (no 03). */
+            let sources = [
                 "images/careers-video/hero-team-01.mp4",
-                "images/careers-video/hero-team-02.mp4",
-                "images/careers-video/hero-team-03.mp4"
+                "images/careers-video/hero-team-02.fixed.mp4?v=20261006play1"
             ];
 
             let activeIndex = 0;
             let front = 0;
             let advancing = false;
 
-            const fileOf = (index) => sources[index % sources.length];
+            const fileOf = (index) => sources[((index % sources.length) + sources.length) % sources.length];
+            const pathOf = (src) => (src || "").replace(/^\.\//, "").split("?")[0];
 
-            const prep = (video) => {
+            const prep = (video, { loop = false } = {}) => {
                 video.muted = true;
                 video.defaultMuted = true;
                 video.volume = 0;
-                video.loop = false;
+                video.loop = loop;
                 video.controls = false;
                 video.playsInline = true;
                 video.setAttribute("muted", "");
@@ -1547,57 +1549,121 @@
                 video.setAttribute("aria-hidden", "true");
                 video.setAttribute("tabindex", "-1");
                 video.removeAttribute("controls");
+                if (loop) video.setAttribute("loop", "");
+                else video.removeAttribute("loop");
             };
 
             const playSafe = (video) => {
-                prep(video);
+                prep(video, { loop: sources.length < 2 });
                 const playPromise = video.play();
                 if (playPromise && typeof playPromise.catch === "function") {
                     playPromise.catch(() => {});
                 }
             };
 
-            const loadSrc = (video, src) => {
-                const current = (video.getAttribute("src") || "").replace(/^\.\//, "");
-                if (current === src && video.readyState >= 2) return;
+            const ensureSrc = (video, src) => {
+                const current = pathOf(video.getAttribute("src") || video.currentSrc || "");
+                const next = pathOf(src);
+                if (current === next && !video.error) return false;
                 video.src = src;
                 video.load();
+                return true;
             };
 
-            const incomingSlot = () => slots[(front + 1) % 2];
+            const showSlot = (incoming, nextIndex) => {
+                try {
+                    if (incoming.ended || incoming.currentTime > 0.05) incoming.currentTime = 0;
+                } catch (_) { /* ignore */ }
+                playSafe(incoming);
+                incoming.classList.add("is-active");
+                slots.forEach((slot) => {
+                    if (slot === incoming) return;
+                    slot.classList.remove("is-active");
+                    slot.pause();
+                });
+                front = Math.max(0, slots.indexOf(incoming));
+                activeIndex = nextIndex;
+                media.dataset.heroClip = String(activeIndex + 1);
+            };
+
+            const incomingSlot = () => (slots.length < 2 ? slots[0] : slots[(front + 1) % slots.length]);
+
+            const dropSource = (src) => {
+                const path = pathOf(src);
+                sources = sources.filter((s) => pathOf(s) !== path);
+            };
 
             const advance = () => {
                 if (advancing) return;
+
+                if (sources.length < 2) {
+                    const current = slots[front] || slots[0];
+                    prep(current, { loop: true });
+                    try { current.currentTime = 0; } catch (_) { /* ignore */ }
+                    playSafe(current);
+                    return;
+                }
+
                 advancing = true;
                 const next = (activeIndex + 1) % sources.length;
                 const incoming = incomingSlot();
-                loadSrc(incoming, fileOf(next));
+                const nextSrc = fileOf(next);
+                ensureSrc(incoming, nextSrc);
 
                 let done = false;
-                const go = () => {
+                let failTimer = 0;
+                const finishOk = () => {
                     if (done) return;
                     done = true;
-                    incoming.removeEventListener("canplay", go);
-                    playSafe(incoming);
-                    incoming.classList.add("is-active");
-                    slots[front].classList.remove("is-active");
-                    slots[front].pause();
-                    front = (front + 1) % 2;
-                    activeIndex = next;
-                    media.dataset.heroClip = String(activeIndex + 1);
+                    incoming.removeEventListener("canplay", finishOk);
+                    incoming.removeEventListener("error", finishErr);
+                    window.clearTimeout(failTimer);
+                    showSlot(incoming, next);
                     advancing = false;
-                    loadSrc(incomingSlot(), fileOf(activeIndex + 1));
+                    /* Prefetch the following clip into the idle slot. */
+                    const idle = incomingSlot();
+                    ensureSrc(idle, fileOf(activeIndex + 1));
+                };
+                const finishErr = () => {
+                    if (done) return;
+                    done = true;
+                    incoming.removeEventListener("canplay", finishOk);
+                    incoming.removeEventListener("error", finishErr);
+                    window.clearTimeout(failTimer);
+                    dropSource(nextSrc);
+                    advancing = false;
+                    if (!sources.length) {
+                        sources = ["images/careers-video/hero-team-01.mp4"];
+                        ensureSrc(slots[0], sources[0]);
+                        showSlot(slots[0], 0);
+                        return;
+                    }
+                    advance();
                 };
 
-                incoming.addEventListener("canplay", go, { once: true });
-                if (incoming.readyState >= 3) go();
-                window.setTimeout(go, 600);
+                incoming.addEventListener("canplay", finishOk, { once: true });
+                incoming.addEventListener("error", finishErr, { once: true });
+                if (incoming.readyState >= 3 && !incoming.error) {
+                    finishOk();
+                } else {
+                    /* Prefer canplay; only fail if still unloadable after a beat. */
+                    failTimer = window.setTimeout(() => {
+                        if (done) return;
+                        if (incoming.error || incoming.readyState < 2) finishErr();
+                        else finishOk();
+                    }, 2500);
+                }
             };
 
-            slots.forEach(prep);
+            /* Start immediately — do not await network probes. */
+            slots.forEach((video) => prep(video, { loop: sources.length < 2 }));
+            front = 0;
+            activeIndex = 0;
             slots[0].classList.add("is-active");
-            loadSrc(slots[0], fileOf(0));
-            loadSrc(slots[1], fileOf(1));
+            slots.slice(1).forEach((slot) => slot.classList.remove("is-active"));
+            /* Keep markup src on slot 0 if it already matches — avoid load() aborting autoplay. */
+            ensureSrc(slots[0], fileOf(0));
+            if (slots[1]) ensureSrc(slots[1], fileOf(1));
             media.dataset.heroClip = "1";
             playSafe(slots[0]);
 
@@ -1605,14 +1671,26 @@
                 video.addEventListener("ended", () => {
                     if (video.classList.contains("is-active")) advance();
                 });
+                video.addEventListener("error", () => {
+                    if (!video.classList.contains("is-active") || advancing) return;
+                    dropSource(video.getAttribute("src") || "");
+                    if (!sources.length) {
+                        sources = ["images/careers-video/hero-team-01.mp4"];
+                        ensureSrc(video, sources[0]);
+                        prep(video, { loop: true });
+                        playSafe(video);
+                        return;
+                    }
+                    advance();
+                });
             });
 
             document.addEventListener("visibilitychange", () => {
                 if (document.hidden) {
-                    slots[front].pause();
+                    (slots[front] || slots[0]).pause();
                     return;
                 }
-                playSafe(slots[front]);
+                playSafe(slots[front] || slots[0]);
             });
         })();
     </script>

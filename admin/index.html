@@ -163,19 +163,19 @@
               </svg>
               <span>Portfolio Projects</span>
             </button>
-            <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="careers" id="tab-careers">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-              </svg>
-              <span>Careers &amp; Openings</span>
-            </button>
             <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="demos" id="tab-demos">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M15 10l-4 4l-2 -2"></path>
                 <path d="M12 2a10 10 0 1 0 10 10a10 10 0 0 0 -10 -10z"></path>
               </svg>
               <span>Live Demo Requests</span>
+            </button>
+            <button type="button" class="admin-tab" role="tab" aria-selected="false" data-tab="contacts" id="tab-contacts">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>Contact Enquiries</span>
             </button>
           </nav>
         </div>
@@ -270,6 +270,34 @@
                 </tr>
               </thead>
               <tbody id="demo-rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CONTACT ENQUIRIES PANEL -->
+        <div id="panel-contacts" class="tab-panel" role="tabpanel" aria-labelledby="tab-contacts" hidden>
+          <div class="app-head">
+            <div class="head-copy">
+              <h1>Contact Us Enquiries</h1>
+              <p class="lede" id="contacts-meta">Messages submitted from the Contact Us form.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="projects-table" id="contacts-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">ID</th>
+                  <th>Inquiry</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Company</th>
+                  <th>Country</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="contact-rows"></tbody>
             </table>
           </div>
         </div>

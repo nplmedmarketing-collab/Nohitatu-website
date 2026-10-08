@@ -519,8 +519,6 @@
         .map((t) => `<span class="tech-tag">${escapeText(t)}</span>`)
         .join("");
     }
-    if (modalCta) modalCta.href = card.dataset.cta || "Contact-us.html";
-
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("pf-scroll-lock");
@@ -730,38 +728,72 @@
         const badgeEl = document.getElementById("demo-project-badge");
         const projectName = nameEl ? nameEl.textContent : "this project";
         const projectBadge = badgeEl ? badgeEl.textContent : "";
+        const name = (document.getElementById("demo-user-name").value || "").trim();
+        const email = (document.getElementById("demo-user-email").value || "").trim();
+        const phone = (document.getElementById("demo-user-phone").value || "").trim();
+        const notes = (document.getElementById("demo-user-notes").value || "").trim();
+        const submitBtn = demoForm.querySelector(".demo-drawer__submit");
+
+        const showDemoStatus = (ok, html) => {
+          if (!demoStatus) return;
+          demoStatus.hidden = false;
+          demoStatus.className = `demo-drawer__status ${ok ? "success" : "error"}`;
+          demoStatus.innerHTML = html;
+        };
+
+        if (!name || !email) {
+          showDemoStatus(false, "<strong>Name and work email are required.</strong>");
+          return;
+        }
+
         const payload = {
           project_title: projectName,
           project_badge: projectBadge,
-          name: (document.getElementById("demo-user-name").value || "").trim(),
-          email: (document.getElementById("demo-user-email").value || "").trim(),
-          phone: (document.getElementById("demo-user-phone").value || "").trim(),
-          notes: (document.getElementById("demo-user-notes").value || "").trim(),
+          name,
+          email,
+          phone,
+          notes,
         };
 
+        if (submitBtn) submitBtn.disabled = true;
         try {
           const demoUrl =
             typeof window.NH_apiUrl === "function"
               ? window.NH_apiUrl("/api/demo-request")
               : "/api/demo-request";
-          await fetch(demoUrl, {
+          const res = await fetch(demoUrl, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
             body: JSON.stringify(payload),
           });
-        } catch (err) {
-          console.warn("API submission fallback:", err);
-        }
+          const text = await res.text();
+          let data = null;
+          try {
+            data = text ? JSON.parse(text) : null;
+          } catch {
+            data = null;
+          }
+          if (!res.ok || !data || data.success === false) {
+            throw new Error((data && data.error) || `Submit failed (${res.status || 0})`);
+          }
 
-        if (demoStatus) {
-          demoStatus.hidden = false;
-          demoStatus.className = "demo-drawer__status success";
-          demoStatus.innerHTML = `<strong>Request received.</strong><p>Our engineering team will prepare a live demo of <em>${escapeText(
-            projectName
-          )}</em> and email you within 2 hours.</p>`;
+          showDemoStatus(
+            true,
+            `<strong>Request received.</strong><p>Our engineering team will prepare a live demo of <em>${escapeText(
+              projectName
+            )}</em> and email you within 2 hours.</p>`
+          );
+          demoForm.reset();
+          window.setTimeout(closeDrawer, 4500);
+        } catch (err) {
+          console.warn("Demo request failed:", err);
+          showDemoStatus(
+            false,
+            `<strong>Couldn’t send just now.</strong><p>Open Portfolio on the admin host (<code>http://localhost:5174/Portfolio.html</code>) and try again.</p>`
+          );
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
         }
-        demoForm.reset();
-        window.setTimeout(closeDrawer, 4500);
       });
     }
 

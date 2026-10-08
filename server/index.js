@@ -165,14 +165,30 @@ async function main() {
   });
 
   // Credentialed CORS for static admin hosts (e.g. GitHub Pages → Render API).
+  // Public /api routes (demo + contact) also allow other origins without cookies.
   app.use((req, res, next) => {
     const origin = req.get("origin");
+    const pathOnly = String(req.path || "").split("?")[0];
+    const isPublicApi =
+      pathOnly === "/api/health" ||
+      pathOnly === "/health" ||
+      pathOnly === "/api/demo-request" ||
+      pathOnly === "/api/contact-enquiry" ||
+      pathOnly === "/api/projects" ||
+      pathOnly === "/api/careers" ||
+      /^\/api\/careers\//.test(pathOnly);
+
     if (origin && CORS_ORIGINS.includes(origin)) {
       res.setHeader("Access-Control-Allow-Origin", origin);
       res.setHeader("Access-Control-Allow-Credentials", "true");
       res.setHeader("Vary", "Origin");
       res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, Accept");
       res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS");
+    } else if (origin && isPublicApi) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+      res.setHeader("Vary", "Origin");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+      res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,OPTIONS");
     }
     if (req.method === "OPTIONS") {
       return res.sendStatus(204);

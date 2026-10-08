@@ -284,6 +284,52 @@
     }
   }
 
+  function inquiryLabel(type) {
+    return String(type || "").toLowerCase() === "other" ? "Other / HR" : "Business / sales";
+  }
+
+  async function fetchContactEnquiries() {
+    try {
+      const res = await fetch(apiUrl("/api/admin/contact-enquiries"), {
+        credentials: CROSS_ORIGIN_API ? "include" : "same-origin",
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const rows = data.enquiries || [];
+      const tbody = document.getElementById("contact-rows");
+      const meta = document.getElementById("contacts-meta");
+      if (meta) meta.textContent = `${rows.length} total contact enquiries received`;
+      if (!tbody) return;
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 24px;">No contact enquiries received yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = rows
+        .map(
+          (r) => `
+          <tr>
+            <td><code>#${r.id}</code></td>
+            <td>
+              <strong>${escapeHtml(inquiryLabel(r.inquiry_type))}</strong>
+              ${r.interest ? `<div style="font-size:11px; opacity:0.7;">${escapeHtml(r.interest)}</div>` : ""}
+            </td>
+            <td>${escapeHtml(r.name)}</td>
+            <td><a href="mailto:${escapeHtml(r.email)}" style="color:#726cf4;">${escapeHtml(r.email)}</a></td>
+            <td>${escapeHtml(r.phone || "—")}</td>
+            <td>${escapeHtml(r.company || "—")}</td>
+            <td>${escapeHtml(r.country || "—")}</td>
+            <td style="max-width:280px; font-size:12px; color:rgba(255,255,255,0.7);">${escapeHtml(r.message || "—")}</td>
+            <td style="font-size:12px; white-space:nowrap;">${new Date(r.created_at).toLocaleDateString()} ${new Date(r.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+          </tr>
+        `
+        )
+        .join("");
+    } catch (err) {
+      console.warn("Failed to fetch contact enquiries:", err);
+    }
+  }
+
   function setTab(tab) {
     activeTab = tab;
     document.querySelectorAll(".admin-tab").forEach((btn) => {
@@ -295,7 +341,10 @@
     if (els.panelCareers) els.panelCareers.hidden = activeTab !== "careers";
     const panelDemos = document.getElementById("panel-demos");
     if (panelDemos) panelDemos.hidden = activeTab !== "demos";
+    const panelContacts = document.getElementById("panel-contacts");
+    if (panelContacts) panelContacts.hidden = activeTab !== "contacts";
     if (activeTab === "demos") fetchDemoRequests();
+    if (activeTab === "contacts") fetchContactEnquiries();
   }
 
   function openEditor(project) {
