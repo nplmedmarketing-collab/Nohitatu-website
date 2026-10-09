@@ -1,5 +1,6 @@
 const express = require("express");
 const { VERTICALS, toPublicCareerDetail } = require("../db");
+const { verifyRecaptchaToken } = require("../lib/recaptcha");
 
 function slimCareer(c) {
   return {
@@ -94,6 +95,48 @@ function createPublicRouter({ store }) {
       notes: String(notes || "").trim(),
       project_title: String(project_title || "General").trim(),
       project_badge: String(project_badge || "").trim(),
+    });
+    res.status(201).json({ success: true, record });
+  });
+
+  router.post("/contact-enquiry", async (req, res) => {
+    const body = req.body || {};
+    const name = String(body.name || "").trim();
+    const email = String(body.email || "").trim();
+    const message = String(body.message || "").trim();
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Name, email, and message are required" });
+    }
+    if (typeof store.createContactEnquiry !== "function") {
+      return res.status(503).json({ error: "Contact enquiry store unavailable" });
+    }
+
+    try {
+      const captcha = await verifyRecaptchaToken(
+        body.recaptchaToken || body["g-recaptcha-response"],
+        req.ip
+      );
+      if (!captcha.ok) {
+        return res.status(400).json({
+          error: "Please complete the reCAPTCHA and try again.",
+          code: captcha.error || "recaptcha-failed",
+        });
+      }
+    } catch (err) {
+      console.error("reCAPTCHA verify error:", err && err.message ? err.message : err);
+      return res.status(502).json({ error: "Could not verify reCAPTCHA. Please try again." });
+    }
+
+    const record = store.createContactEnquiry({
+      name,
+      email,
+      phone: String(body.phone || "").trim(),
+      company: String(body.company || "").trim(),
+      country: String(body.country || "").trim(),
+      inquiry_type: String(body.inquiry_type || "sales").trim(),
+      interest: String(body.interest || "").trim(),
+      message,
+      recipient: String(body.recipient || "").trim(),
     });
     res.status(201).json({ success: true, record });
   });
