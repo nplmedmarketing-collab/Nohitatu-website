@@ -18,6 +18,9 @@ services:
         sync: false
       - key: SESSION_SECRET
         generateValue: true
-      # Allow GitHub Pages admin UI to call this API with cookies
+      # Allow static admin UI hosts to call this API with cookies
       - key: ADMIN_CORS_ORIGINS
-        value: https://nplmedmarketing-collab.github.io
+        value: https://nplmedmarketing-collab.github.io,https://nohitatu.com,https://www.nohitatu.com
+      # Google reCAPTCHA v2 secret (set in Render Dashboard; never commit)
+      - key: RECAPTCHA_SECRET_KEY
+        sync: false

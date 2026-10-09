@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
     <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
+    <script src="js/api-base.js?v=20261008contact1"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/custom.js?v=20260806nocursor1"></script>
     <style>
@@ -658,6 +659,19 @@
             pointer-events: none;
         }
 
+        body.contact-page .contact-recaptcha-note {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 0.78rem;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        body.contact-page .contact-recaptcha-note a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
         /* Honeypot — hide from humans, leave visible to bots */
         body.contact-page .contact-hp {
             position: absolute;
@@ -821,7 +835,7 @@
                                                 <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
                                                 <li><a href="Tech-skills.html">Tech Skills</a></li>
                                                 <li><a href="People.html">People</a></li>
-                                                <li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                                                <li><a href="Life-as-a-nohitatian.html">Life as a Nohitatian</a></li>
                                             </ul></div>
                                         </li>
                                         <li class="nav-item">
@@ -1051,6 +1065,12 @@
                                     <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </button>
+                            <p class="contact-recaptcha-note">
+                                Protected by reCAPTCHA
+                                (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+                                ·
+                                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+                            </p>
                             <p class="contact-form-note">Or email <a id="contact-fallback-email" href="mailto:sales@nohitatu.com">sales@nohitatu.com</a> directly.</p>
                             <div class="contact-form-status" id="contact-form-status" role="status" aria-live="polite"></div>
                         </form>
@@ -1073,7 +1093,7 @@
                     <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
-                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="People.html">People</a></li><li><a href="Life as a nohitatian.html">Life as a Nohitatian</a></li>
+                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="People.html">People</a></li><li><a href="Life-as-a-nohitatian.html">Life as a Nohitatian</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
                     <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
@@ -1121,6 +1141,7 @@
             });
         })();
     </script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcHWeYtAAAAAIHOlGoYOjeVGctpxPhpmAD7SGAC"></script>
     <script>
         (() => {
             /*
@@ -1128,11 +1149,13 @@
              * POST https://career.dojoman.com/api/ContactForm/Submit
              * Recipients are controlled server-side; client cannot set to/cc.
              * Inquiry type is preserved via UserType + a Message prefix.
-             * Live UI uses CreateCaptcha.aspx; API accepts Captcha (empty works in practice).
+             * Google reCAPTCHA v3 (invisible) protects /api/contact-enquiry.
              */
             const DOJOMAN_ENDPOINT = "https://career.dojoman.com/api/ContactForm/Submit";
             const SALES_EMAIL = "sales@nohitatu.com";
             const HRD_EMAIL = "hrd@nohitatu.com";
+            const RECAPTCHA_SITE_KEY = "6LcHWeYtAAAAAIHOlGoYOjeVGctpxPhpmAD7SGAC";
+            const RECAPTCHA_ACTION = "contact";
 
             const form = document.getElementById("contact-form");
             const status = document.getElementById("contact-form-status");
@@ -1140,6 +1163,20 @@
             const inquirySelect = document.getElementById("contact-inquiry");
             const fallbackLink = document.getElementById("contact-fallback-email");
             if (!form) return;
+
+            const getRecaptchaToken = () =>
+                new Promise((resolve, reject) => {
+                    if (typeof grecaptcha === "undefined" || !grecaptcha.execute) {
+                        reject(new Error("reCAPTCHA is still loading. Please try again."));
+                        return;
+                    }
+                    grecaptcha.ready(() => {
+                        grecaptcha
+                            .execute(RECAPTCHA_SITE_KEY, { action: RECAPTCHA_ACTION })
+                            .then((token) => resolve(String(token || "").trim()))
+                            .catch(reject);
+                    });
+                });
 
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const defaultBtnHtml = submitBtn ? submitBtn.innerHTML : "";
@@ -1284,9 +1321,11 @@
                     "\n" +
                     message;
 
+                // Dojoman returns HTTP 200 with an empty body when CompanyName is "".
+                // That fails our success check — send a placeholder when optional company is blank.
                 const payload = {
                     ContactPerson: name,
-                    CompanyName: company,
+                    CompanyName: company || "N/A",
                     EmailAddress: email,
                     Phonenumber: phone,
                     Country: country,
@@ -1296,7 +1335,61 @@
                 };
 
                 try {
-                    await postContactForm(payload);
+                    let recaptchaToken = "";
+                    try {
+                        recaptchaToken = await getRecaptchaToken();
+                    } catch (_) {
+                        throw new Error("reCAPTCHA failed to load. Please refresh and try again.");
+                    }
+                    if (!recaptchaToken) {
+                        throw new Error("reCAPTCHA token missing. Please try again.");
+                    }
+
+                    // Save to Super Admin inbox (Render API). Server-side reCAPTCHA
+                    // verification activates after the API code is deployed via GitHub.
+                    const adminUrl =
+                        typeof window.NH_apiUrl === "function"
+                            ? window.NH_apiUrl("/api/contact-enquiry")
+                            : "/api/contact-enquiry";
+                    const adminRes = await fetch(adminUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json"
+                        },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            phone,
+                            company,
+                            country,
+                            inquiry_type: route.key,
+                            interest,
+                            message: composedMessage,
+                            recipient: route.email,
+                            recaptchaToken
+                        })
+                    });
+                    const adminText = await adminRes.text();
+                    let adminData = null;
+                    try {
+                        adminData = adminText ? JSON.parse(adminText) : null;
+                    } catch (_) {
+                        adminData = null;
+                    }
+                    if (!adminRes.ok || !adminData || adminData.success === false) {
+                        throw new Error(
+                            (adminData && adminData.error) || "Could not save enquiry"
+                        );
+                    }
+
+                    // Best-effort email via Dojoman (admin already has the enquiry).
+                    try {
+                        await postContactForm(payload);
+                    } catch (_) {
+                        /* ignore — stored in admin */
+                    }
+
                     form.reset();
                     syncFallbackEmail();
                     showStatus(
@@ -1307,11 +1400,16 @@
                         false
                     );
                 } catch (err) {
+                    const detail =
+                        err && err.message
+                            ? '<br><span style="opacity:.85">' + escapeHtml(err.message) + "</span>"
+                            : "";
                     showStatus(
                         '<strong class="contact-form-status-title">Couldn’t send just now</strong>' +
                         '<p class="contact-form-status-body">' +
                             'Please try again, or email ' +
                             '<a href="mailto:' + route.email + '">' + route.email + '</a> directly.' +
+                            detail +
                         '</p>',
                         true
                     );
