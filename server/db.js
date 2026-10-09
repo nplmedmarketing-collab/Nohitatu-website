@@ -10,6 +10,8 @@ const SEED_PATH = path.join(DATA_DIR, "seed", "projects.json");
 const CAREERS_SEED_PATH = path.join(DATA_DIR, "seed", "careers.json");
 const JSON_PATH = path.join(DATA_DIR, "projects.json");
 const CAREERS_JSON_PATH = path.join(DATA_DIR, "careers.json");
+const DEMO_JSON_PATH = path.join(DATA_DIR, "demo-requests.json");
+const CONTACT_JSON_PATH = path.join(DATA_DIR, "contact-enquiries.json");
 const SQLITE_PATH = path.join(DATA_DIR, "projects.db");
 const AUTH_PATH = path.join(DATA_DIR, "admin-auth.json");
 
@@ -372,6 +374,73 @@ class JsonStore {
     this._writeCareers(next);
     return true;
   }
+
+  _readJsonArray(filePath) {
+    if (!fs.existsSync(filePath)) return [];
+    try {
+      const raw = JSON.parse(fs.readFileSync(filePath, "utf8"));
+      return Array.isArray(raw) ? raw : [];
+    } catch {
+      return [];
+    }
+  }
+
+  _writeJsonArray(filePath, rows) {
+    const tmp = `${filePath}.${process.pid}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify(rows, null, 2), "utf8");
+    fs.renameSync(tmp, filePath);
+  }
+
+  createDemoRequest(input) {
+    const rows = this._readJsonArray(DEMO_JSON_PATH);
+    const nextId = rows.reduce((m, r) => Math.max(m, Number(r.id) || 0), 0) + 1;
+    const ts = nowIso();
+    const record = {
+      id: nextId,
+      project_title: input.project_title || "General",
+      project_badge: input.project_badge || "",
+      name: input.name || "",
+      email: input.email || "",
+      phone: input.phone || "",
+      notes: input.notes || "",
+      status: "pending",
+      created_at: ts,
+    };
+    rows.push(record);
+    this._writeJsonArray(DEMO_JSON_PATH, rows);
+    return record;
+  }
+
+  listDemoRequests() {
+    return this._readJsonArray(DEMO_JSON_PATH).sort((a, b) => Number(b.id) - Number(a.id));
+  }
+
+  createContactEnquiry(input) {
+    const rows = this._readJsonArray(CONTACT_JSON_PATH);
+    const nextId = rows.reduce((m, r) => Math.max(m, Number(r.id) || 0), 0) + 1;
+    const ts = nowIso();
+    const record = {
+      id: nextId,
+      name: input.name || "",
+      email: input.email || "",
+      phone: input.phone || "",
+      company: input.company || "",
+      country: input.country || "",
+      inquiry_type: input.inquiry_type || "sales",
+      interest: input.interest || "",
+      message: input.message || "",
+      recipient: input.recipient || "",
+      status: "new",
+      created_at: ts,
+    };
+    rows.push(record);
+    this._writeJsonArray(CONTACT_JSON_PATH, rows);
+    return record;
+  }
+
+  listContactEnquiries() {
+    return this._readJsonArray(CONTACT_JSON_PATH).sort((a, b) => Number(b.id) - Number(a.id));
+  }
 }
 
 /* ---------- SQLite store ---------- */
@@ -437,6 +506,22 @@ class SqliteStore {
         created_at TEXT NOT NULL
       );
       CREATE INDEX IF NOT EXISTS idx_demo_requests_created ON demo_requests(created_at);
+
+      CREATE TABLE IF NOT EXISTS contact_enquiries (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL DEFAULT '',
+        company TEXT NOT NULL DEFAULT '',
+        country TEXT NOT NULL DEFAULT '',
+        inquiry_type TEXT NOT NULL DEFAULT 'sales',
+        interest TEXT NOT NULL DEFAULT '',
+        message TEXT NOT NULL DEFAULT '',
+        recipient TEXT NOT NULL DEFAULT '',
+        status TEXT NOT NULL DEFAULT 'new',
+        created_at TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS idx_contact_enquiries_created ON contact_enquiries(created_at);
     `);
 
     const projectCols = this.db
@@ -797,6 +882,44 @@ class SqliteStore {
 
   listDemoRequests() {
     return this.db.prepare("SELECT * FROM demo_requests ORDER BY id DESC").all();
+  }
+
+  createContactEnquiry(input) {
+    const ts = nowIso();
+    const info = this.db.prepare(`
+      INSERT INTO contact_enquiries (
+        name, email, phone, company, country, inquiry_type, interest, message, recipient, status, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?)
+    `).run(
+      input.name || "",
+      input.email || "",
+      input.phone || "",
+      input.company || "",
+      input.country || "",
+      input.inquiry_type || "sales",
+      input.interest || "",
+      input.message || "",
+      input.recipient || "",
+      ts
+    );
+    return {
+      id: info.lastInsertRowid,
+      name: input.name || "",
+      email: input.email || "",
+      phone: input.phone || "",
+      company: input.company || "",
+      country: input.country || "",
+      inquiry_type: input.inquiry_type || "sales",
+      interest: input.interest || "",
+      message: input.message || "",
+      recipient: input.recipient || "",
+      status: "new",
+      created_at: ts,
+    };
+  }
+
+  listContactEnquiries() {
+    return this.db.prepare("SELECT * FROM contact_enquiries ORDER BY id DESC").all();
   }
 }
 
