@@ -48,4 +48,13 @@ chatbot/.pypkgs/
 _tmp*
 _portfolio-verify/
 qa-shots/
+_backups/
+__pycache__/
+**/__pycache__/
+*.recovery-report.json
+*.git_orig
+_pdf-full-text.txt
+images/_logo-backup/
+images/*.orig.png
+images/*.watermark-bak.png
 
