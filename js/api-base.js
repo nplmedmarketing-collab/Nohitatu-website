@@ -17,12 +17,15 @@
     let base = (fromWindow || fromMeta || "").replace(/\/$/, "");
     if (base === "." || /^same-?origin$/i.test(base)) base = "";
     const host = window.location.hostname || "";
-    if (!base && /\.github\.io$/i.test(host)) {
+    const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(host);
+    // Static hosts (GitHub Pages, FTP/IIS, custom domain) have no Express /api —
+    // send public forms to the Render admin API.
+    if (!base && (/\.github\.io$/i.test(host) || (!isLocal && host))) {
       base = DEFAULT_PAGES_API;
     }
     // Local static servers (Live Server, python -m http.server, etc.) have no /api —
     // point public forms at the Express admin host used in this workspace.
-    if (!base && /^(localhost|127\.0\.0\.1)$/i.test(host)) {
+    if (!base && isLocal) {
       const port = String(window.location.port || "");
       if (port && port !== "5173" && port !== "5174") {
         base = "http://localhost:5174";

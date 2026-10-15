@@ -602,31 +602,72 @@ html.pf-page .atlas__inner {
   background-color: transparent !important;
 }
 
-/* Header chrome for dark → light transition */
+/* Header chrome — white logo on dark bg; menu pill truly centered */
 html.pf-page body.portfolio-page header.logo-navbar {
   background: linear-gradient(180deg, rgba(9, 9, 11, 0.82), rgba(9, 9, 11, 0)) !important;
   border: 0 !important;
   box-shadow: none !important;
 }
 
-html.pf-page body.portfolio-page header.logo-navbar .logo-on-dark { display: block !important; }
-html.pf-page body.portfolio-page header.logo-navbar .logo-on-light { display: none !important; }
-html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item > a { color: #fff !important; }
-html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a {
-  background: none !important;
-  color: #726cf4 !important;
-  -webkit-text-fill-color: #726cf4 !important;
+html.pf-page body.portfolio-page header.logo-navbar .logo-on-dark,
+html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-dark {
+  display: block !important;
+}
+html.pf-page body.portfolio-page header.logo-navbar .logo-on-light,
+html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-light {
+  display: none !important;
 }
 
 html.pf-page body.portfolio-page header.logo-navbar.white-header {
-  background: rgba(255, 255, 255, 0.97) !important;
-  border-bottom: 1px solid #ecebf4 !important;
+  top: 14px !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: none !important;
 }
 
-html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-dark { display: none !important; }
-html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-light { display: block !important; }
-html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item > a { color: #343147 !important; }
-html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
+/* No outer pill; equal padding so the menu pill sits on true screen center */
+html.pf-page body.portfolio-page header.logo-navbar.white-header .header-container,
+html.pf-page body.portfolio-page header.logo-navbar .header-container {
+  pointer-events: auto !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 12px !important;
+  justify-content: center !important;
+}
+
+html.pf-page body.portfolio-page header.logo-navbar .header-row,
+html.pf-page body.portfolio-page header.logo-navbar.white-header .header-row {
+  justify-content: center !important;
+}
+
+html.pf-page body.portfolio-page header.logo-navbar .header-logo,
+html.pf-page body.portfolio-page header.logo-navbar.white-header .header-logo {
+  left: 20px !important;
+  z-index: 40 !important;
+}
+
+html.pf-page body.portfolio-page header.logo-navbar .right-menu,
+html.pf-page body.portfolio-page header.logo-navbar #slidemenu {
+  justify-content: center !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item > a,
+html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item > a {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a,
+html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a {
   background: none !important;
   color: #726cf4 !important;
   -webkit-text-fill-color: #726cf4 !important;

@@ -6,6 +6,11 @@ dist/
 .env.*
 !.env.example
 
+# reCAPTCHA / API secrets for Plesk proxy (FTP only — never commit)
+api/recaptcha-secret.config
+api/admin-api.config
+api/captcha-api.config
+
 # Portfolio admin runtime (secrets + writable store)
 data/admin-auth.json
 data/projects.db

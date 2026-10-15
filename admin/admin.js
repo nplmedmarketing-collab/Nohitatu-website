@@ -63,7 +63,10 @@
     const fromWindow = typeof window.NH_ADMIN_API === "string" ? window.NH_ADMIN_API.trim() : "";
     let base = (fromWindow || fromMeta || "").replace(/\/$/, "");
     if (base === "." || /^same-?origin$/i.test(base)) base = "";
-    if (!base && /\.github\.io$/i.test(window.location.hostname || "")) {
+    const host = window.location.hostname || "";
+    const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(host);
+    // Static hosts (Pages / FTP) have no Express /api — use Render.
+    if (!base && (/\.github\.io$/i.test(host) || (!isLocal && host))) {
       base = DEFAULT_PAGES_API;
     }
     return base;
@@ -71,8 +74,9 @@
 
   const API_BASE = resolveApiBase();
   const CROSS_ORIGIN_API = Boolean(API_BASE);
-  /** GitHub Project Pages has /admin/ but no Express /adminlogin route. */
-  const STATIC_PAGES_SHELL = /\.github\.io$/i.test(window.location.hostname || "");
+  /** Static hosts have /admin/ but no Express /adminlogin route. */
+  const STATIC_PAGES_SHELL =
+    /\.github\.io$/i.test(window.location.hostname || "") || CROSS_ORIGIN_API;
   const IN_PAGE_AUTH_SHELL = CROSS_ORIGIN_API || STATIC_PAGES_SHELL;
 
   (function showCrossOriginLoginHint() {

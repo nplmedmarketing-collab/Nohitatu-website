@@ -254,14 +254,18 @@ body.nh-preloader-done .nh-hero-brand {
   100% { transform: scale(1.12); opacity: 0; }
 }
 
-/* Story band — louder kinetic words */
-.landing-page .nh-story-word {
+/* Story band — louder kinetic words (same 2-stop gradient on build / scale / automate) */
+.landing-page .nh-story-word,
+.landing-page .nh-story-slide--build .nh-story-word,
+.landing-page .nh-story-slide--scale .nh-story-word,
+.landing-page .nh-story-slide--automate .nh-story-word {
   font-size: clamp(5rem, 16vw, 11rem) !important;
-  background: linear-gradient(135deg, #fff 10%, #c4b5fd 45%, #67e8f9 90%);
+  background: linear-gradient(135deg, #4f46e5 0%, #a78bfa 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.35));
+  color: #818cf8;
+  filter: drop-shadow(0 8px 24px rgba(79, 70, 229, 0.35));
 }
 
 .landing-page .nh-featured-tile {
@@ -950,9 +954,12 @@ body.nh-cursor-active button {
   }
 }
 
-.landing-page .nh-story-slide--build .nh-story-word .nh-char { color: #a5b4fc; }
-.landing-page .nh-story-slide--scale .nh-story-word .nh-char { color: #67e8f9; }
-.landing-page .nh-story-slide--automate .nh-story-word .nh-char { color: #c4b5fd; }
+.landing-page .nh-story-slide--build .nh-story-word .nh-char,
+.landing-page .nh-story-slide--scale .nh-story-word .nh-char,
+.landing-page .nh-story-slide--automate .nh-story-word .nh-char {
+  color: #818cf8;
+  -webkit-text-fill-color: transparent;
+}
 
 .landing-page .nh-story-lead,
 .landing-page .nh-story-trail {

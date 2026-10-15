@@ -615,19 +615,18 @@
     var overlay = document.getElementById('nh-page-transition');
     if (!overlay || reduceMotion) return;
 
-    var targets = [
-      'Portfolio.html',
-      'Contact-us.html',
-      './Portfolio.html',
-      './Contact-us.html'
-    ];
+    function clearOverlay() {
+      overlay.classList.remove('is-active');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
 
-    function shouldTransition(href) {
-      if (!href) return false;
-      var clean = href.split('#')[0].split('?')[0];
-      return targets.some(function (t) {
-        return clean === t || clean.endsWith('/' + t.replace('./', ''));
-      });
+    function shouldTransition(link) {
+      if (!link) return false;
+      var raw = link.getAttribute('href') || '';
+      if (!raw || raw.charAt(0) === '#') return false;
+      var clean = raw.split('#')[0].split('?')[0].replace(/^\.\//, '');
+      var file = clean.split('/').pop();
+      return file === 'Portfolio.html' || file === 'Contact-us.html';
     }
 
     document.addEventListener('click', function (e) {
@@ -635,21 +634,24 @@
       if (!link) return;
       if (link.target === '_blank' || link.hasAttribute('download')) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      var href = link.getAttribute('href');
-      if (!shouldTransition(href)) return;
+      if (!shouldTransition(link)) return;
+
+      // Use the browser-resolved absolute URL so /beta and preview hosts keep the correct base path.
+      var url = link.href;
+      if (!url) return;
 
       e.preventDefault();
       overlay.classList.add('is-active');
       overlay.setAttribute('aria-hidden', 'false');
       window.setTimeout(function () {
-        window.location.href = href;
-      }, 520);
+        window.location.assign(url);
+      }, 420);
+      // Failsafe: never leave the curtain stuck if navigation is cancelled.
+      window.setTimeout(clearOverlay, 2500);
     });
 
     // Fade in when arriving (bfcache / back)
-    window.addEventListener('pageshow', function () {
-      overlay.classList.remove('is-active');
-    });
+    window.addEventListener('pageshow', clearOverlay);
   }
 
   ready(function () {

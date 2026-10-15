@@ -55,28 +55,41 @@ $(document).ready(function() {
     }
   });
       
-  $(function() {   
-    $(window).scroll(function() {    
-        var scroll = $(window).scrollTop();    
-        if (scroll >= 80) {
-			if (header.hasClass("open-menu"))
-			{
-				header.removeClass("white-header");
-			}		
-			else if (header.hasClass("show-menu"))
-			{
-				header.removeClass("white-header").addClass("blnk-header");
-			}
-			else
-			{
-				header.removeClass('blnk-header').addClass("white-header");
-			}
-			
-        } else {
-            header.removeClass("white-header").addClass('blnk-header');
-        }
-    });
-});
+  // Homepage dark hero stays clear at top; all other pages keep the menu pill.
+  function prefersClearHeroNav() {
+    return document.body.classList.contains("landing-page");
+  }
+
+  function syncHeaderChrome() {
+    var scroll = $(window).scrollTop();
+    if (!header.length) return;
+
+    if (!prefersClearHeroNav()) {
+      if (header.hasClass("open-menu") || header.hasClass("show-menu")) {
+        header.removeClass("white-header").addClass("blnk-header");
+      } else {
+        header.removeClass("blnk-header").addClass("white-header");
+      }
+      return;
+    }
+
+    if (scroll >= 80) {
+      if (header.hasClass("open-menu")) {
+        header.removeClass("white-header");
+      } else if (header.hasClass("show-menu")) {
+        header.removeClass("white-header").addClass("blnk-header");
+      } else {
+        header.removeClass("blnk-header").addClass("white-header");
+      }
+    } else {
+      header.removeClass("white-header").addClass("blnk-header");
+    }
+  }
+
+  $(function () {
+    syncHeaderChrome();
+    $(window).on("scroll", syncHeaderChrome);
+  });
 
 // sidemenu open
     $(".nav-menu").click(function(){
@@ -84,55 +97,18 @@ $(document).ready(function() {
         header.toggleClass("open-menu");
         $(".full-screen-menu").toggleClass("show");      
         $(this).attr("aria-expanded", $(this).hasClass("open") ? "true" : "false");
-        var scroll = $(window).scrollTop();
-        if (scroll >= 80) {
-			if (header.hasClass("open-menu"))
-			{
-				header.removeClass("white-header").addClass("blnk-header");
-			}
-			else
-			{
-				header.removeClass('blnk-header').addClass("white-header");
-			}
-        } 
-    });  
-
-    
-//open contact-form
-
-    // $(".contact-number").click(function(){
-        // $(".contact-form-popup").toggleClass("show"); 
-        // $("header").toggleClass("show-menu"); 
-        // $("body").toggleClass("fixed");
-        // updateHeader(); 
-    // });
-    
-    // $(".open-form").click(function(){
-        // $(".contact-form-popup").toggleClass("show"); 
-        // $("header").toggleClass("show-menu"); 
-        // $("body").toggleClass("fixed");
-        // updateHeader(); 
-    // });
-            
-    $(".nav-menu-close").click(function(){
-        $(".contact-form-popup").toggleClass("show"); 
-        $("body").toggleClass("fixed"); 
-        header.toggleClass("show-menu");
-       	updateHeader();
+        syncHeaderChrome();
     });
-    
-    function updateHeader(){
-    	var scroll = $(window).scrollTop();
-        if (scroll >= 80) {
-			if (header.hasClass("show-menu"))
-			{
-				header.removeClass("white-header").addClass("blnk-header");
-			}
-			else
-			{
-				header.removeClass('blnk-header').addClass("white-header");
-			}
-        } 
+
+    $(".nav-menu-close").click(function(){
+        $(".contact-form-popup").toggleClass("show");
+        $("body").toggleClass("fixed");
+        header.toggleClass("show-menu");
+        syncHeaderChrome();
+    });
+
+    function updateHeader() {
+      syncHeaderChrome();
     }
     
     
@@ -144,17 +120,21 @@ $(document).ready(function() {
 	});
 });
 
-$(document).ready(function() { 
-	var scroll = $(window).scrollTop();
-	var header = $("header.logo-navbar");
-	if (!header.length) header = $("body > header").first();
-	if (scroll >= 80) {			
-		header.removeClass("blnk-header").addClass("white-header");
-	}
-	else
-	{
-		header.removeClass('white-header').addClass("blnk-header");
-	}	 
+$(document).ready(function () {
+  var header = $("header.logo-navbar");
+  if (!header.length) header = $("body > header").first();
+  if (!header.length) return;
+
+  if (document.body.classList.contains("landing-page")) {
+    var scroll = $(window).scrollTop();
+    if (scroll >= 80) {
+      header.removeClass("blnk-header").addClass("white-header");
+    } else {
+      header.removeClass("white-header").addClass("blnk-header");
+    }
+  } else {
+    header.removeClass("blnk-header").addClass("white-header");
+  }
 });
 
 
