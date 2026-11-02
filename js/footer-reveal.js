@@ -3,7 +3,7 @@
 
   function contactHref() {
     var path = (location.pathname || "").replace(/\\/g, "/");
-    return /\/blogs\//i.test(path) ? "../Contact-us.html" : "Contact-us.html";
+    return /\/blogs\//i.test(path) ? "../Contact-us" : "Contact-us";
   }
 
   function createCta() {
@@ -28,7 +28,7 @@
   function initFooterReveal() {
     var body = document.body;
     var footer = document.querySelector(".site-footer");
-    if (!body || !footer || body.classList.contains("footer-reveal-page")) return;
+    if (!body || !footer) return;
 
     var isContactPage = body.classList.contains("contact-page");
     var wrapper = footer.closest("#wrapper");
@@ -57,7 +57,7 @@
         wrapper.parentNode.insertBefore(footer, wrapper.nextSibling);
       }
     } else {
-      content = (cta && cta.closest("main")) || document.querySelector("main");
+      content = (cta && cta.closest("main")) || document.querySelector("main") || document.querySelector("#wrapper");
     }
 
     if (!content) return;
@@ -68,12 +68,16 @@
     var syncFooterHeight = function () {
       var desktop = window.innerWidth > 820;
       var footerHeight = desktop ? Math.ceil(footer.getBoundingClientRect().height) : 0;
-      body.style.setProperty("--footer-reveal-height", footerHeight + "px");
-      body.classList.toggle("footer-reveal-ready", desktop && footerHeight > 0);
+      if (footerHeight > 0) {
+        body.style.setProperty("--footer-reveal-height", footerHeight + "px");
+        body.classList.add("footer-reveal-ready");
+      } else {
+        body.classList.remove("footer-reveal-ready");
+      }
     };
 
     syncFooterHeight();
-    window.addEventListener("load", syncFooterHeight, { once: true });
+    window.addEventListener("load", syncFooterHeight);
     window.addEventListener("resize", syncFooterHeight);
 
     if ("ResizeObserver" in window) {
@@ -86,4 +90,5 @@
   } else {
     initFooterReveal();
   }
+  window.initFooterReveal = initFooterReveal;
 })();

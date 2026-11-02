@@ -1,70 +1,25 @@
 /*
- * Open positions, grouped by department (drill-down accordion).
- * Prefers HRPops CandidatePortal jobs, then GET /api/careers; the static
- * accordion in Careers.html is the offline / no-JS fallback. The API
- * "department" field is often blank, so department is inferred from the role
- * title when needed.
+ * Open positions for Careers.html - FactoHR-style cards.
+ * Prefers HRPops CandidatePortal (companyId 183) - same id space as PostResume apply.
+ * Falls back to GET /api/careers, then static HTML cards.
  */
 (() => {
-  const container = document.querySelector("[data-careers-departments]");
+  const container = document.querySelector("[data-careers-list]");
   if (!container) return;
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const STATUS_MSG =
-    "color:inherit;opacity:.8;margin:0;font-size:15px;line-height:1.55;font-family:'Plus Jakarta Sans',system-ui,sans-serif";
+  const PAGE = 6;
+  const searchInput = document.getElementById("job-search");
+  const resetBtn = document.querySelector("[data-job-search-reset]");
+  const searchBtn = document.getElementById("search-submit");
+  const moreWrap = document.querySelector("[data-careers-more]");
+  const moreBtn = moreWrap ? moreWrap.querySelector("button") : null;
 
-  /* Department catalogue: order + presentation. Only non-empty depts render. */
-  const DEPARTMENTS = [
-    {
-      id: "engineering",
-      name: "Engineering & Development",
-      blurb: "Build and ship the products our clients rely on.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
-    },
-    {
-      id: "business-analysis",
-      name: "Business Analysis",
-      blurb: "Turn business needs into clear, buildable requirements.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
-    },
-    {
-      id: "sales",
-      name: "Sales & Business Development",
-      blurb: "Grow partnerships and open new markets.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>',
-    },
-    {
-      id: "hr",
-      name: "Human Resources",
-      blurb: "Find, grow, and support our people.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
-    },
-    {
-      id: "design",
-      name: "Design",
-      blurb: "Craft intuitive, beautiful experiences.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>',
-    },
-    {
-      id: "marketing",
-      name: "Marketing",
-      blurb: "Tell the Nohitatu story to the world.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>',
-    },
-    {
-      id: "operations",
-      name: "Operations",
-      blurb: "Keep delivery running smoothly.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
-    },
-    {
-      id: "other",
-      name: "Other Opportunities",
-      blurb: "Roles that span teams.",
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>',
-    },
-  ];
-  const DEPT_BY_ID = Object.fromEntries(DEPARTMENTS.map((d) => [d.id, d]));
+  let allJobs = [];
+  let filtered = [];
+  let shown = 0;
+  let ready = false;
+
+  const staticFallbackHtml = container.innerHTML;
 
   function escapeHtml(s) {
     return String(s ?? "")
@@ -74,200 +29,154 @@
       .replace(/"/g, "&quot;");
   }
 
-  /* Map a known department label to one of our ids, or "" if unrecognised. */
-  function normalizeDept(name) {
-    const t = String(name || "").toLowerCase().trim();
-    if (!t) return "";
-    if (/(engineer|develop|software|\.net|qa|devops)/.test(t)) return "engineering";
-    if (/(business analysis|\banalyst\b|\bba\b)/.test(t)) return "business-analysis";
-    if (/(sales|business development)/.test(t)) return "sales";
-    if (/(human resource|\bhr\b|people|talent|recruit)/.test(t)) return "hr";
-    if (/design/.test(t)) return "design";
-    if (/market/.test(t)) return "marketing";
-    if (/(operation|delivery|admin)/.test(t)) return "operations";
-    return DEPT_BY_ID[t] ? t : "";
+  function typeLabel(job) {
+    const raw = job.category_name || job.employment_type || "";
+    if (!raw) return "Full-time";
+    return String(raw)
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) =>c.toUpperCase());
   }
 
-  /* Resolve a department id for a job: explicit field first, then title. */
-  function deptIdFor(job) {
-    const explicit = normalizeDept(job.department);
-    if (explicit) return explicit;
-    const t = String(job.title || job.post || "").toLowerCase();
-    if (/(business analyst|business analysis|\banalyst\b)/.test(t)) return "business-analysis";
-    if (/(business development|\bsales\b|account (executive|manager)|\bbdm\b)/.test(t)) return "sales";
-    if (/(\bhr\b|human resource|recruit|talent)/.test(t)) return "hr";
-    if (/(develop|engineer|angular|react|full[ -]?stack|node|java|python|\.net|software|programmer|architect|\bqa\b|tester|devops)/.test(t)) return "engineering";
-    if (/(design|\bux\b|\bui\b)/.test(t)) return "design";
-    if (/market/.test(t)) return "marketing";
-    return "other";
-  }
-
-  function metaRows(job) {
-    const rows = [];
-    const code = job.job_code || job.jobid || "";
-    if (code) {
-      rows.push(`<div><dt>Job Code</dt><dd><span class="careers-job-code">${escapeHtml(code)}</span></dd></div>`);
-    }
-    if (job.experience) {
-      rows.push(`<div><dt>Experience</dt><dd>${escapeHtml(job.experience)}</dd></div>`);
-    }
-    if (job.location) {
-      rows.push(`<div><dt>Location</dt><dd>${escapeHtml(job.location)}</dd></div>`);
-    }
-    if (job.shift_timings) {
-      rows.push(`<div><dt>Shift Timings</dt><dd>${escapeHtml(job.shift_timings)}</dd></div>`);
-    }
-    if (job.employment_type && job.employment_type !== "full-time") {
-      const label = String(job.employment_type)
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-      rows.push(`<div><dt>Type</dt><dd>${escapeHtml(label)}</dd></div>`);
-    }
-    return rows.join("");
-  }
-
-  function cardHtml(job, deptId) {
+  function detailsHref(job) {
     const code = job.job_code || job.jobid || job.jobPostId || "";
-    const detailsHref =
-      job.details_url ||
-      (code
-        ? (() => {
-            const q = new URLSearchParams();
-            q.set("id", String(code));
-            if (job.companyId) q.set("companyId", String(job.companyId));
-            const qs = q.toString();
-            return `Careerdetails.html?${qs}#${qs}`;
-          })()
-        : "Careerdetails.html");
-    const applyHref = job.apply_url || job.applyUrl || detailsHref;
+    if (job.details_url) return job.details_url;
+    if (!code) return "Careerdetails";
+    const q = new URLSearchParams();
+    q.set("id", String(code));
+    if (job.companyId) q.set("companyId", String(job.companyId));
+    const qs = q.toString();
+    return `Careerdetails?${qs}#${qs}`;
+  }
+
+  function cardHtml(job) {
+    const href = detailsHref(job);
     const title = job.title || job.post || "Open role";
-    const applyExternal = /^https?:\/\//i.test(applyHref);
-    const applyAttrs = applyExternal
-      ? ` href="${escapeHtml(applyHref)}" target="_blank" rel="noopener noreferrer"`
-      : ` href="${escapeHtml(applyHref)}"`;
-    return `<article class="careers-job" data-department="${escapeHtml(deptId)}">
-      <h4 class="careers-job-title"><a class="careers-job-title-link" href="${escapeHtml(detailsHref)}">${escapeHtml(title)}</a></h4>
-      <dl class="careers-job-meta">${metaRows(job)}</dl>
-      <a class="careers-job-apply"${applyAttrs}>Apply</a>
+    const code = job.job_code || job.jobid || job.jobPostId || "-";
+    const dept = job.department || "General";
+    const vacancies =
+      job.vacancies != null && String(job.vacancies).trim() !== ""
+        ? String(job.vacancies)
+        : "-";
+    const location = job.location || "-";
+    const experience = job.experience || "-";
+    return `<article class="nh-job-card">
+      <div class="nh-job-card-head">
+        <div>
+          <h3><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></h3>
+          <p class="nh-job-codes">
+            <span><strong>JOB CODE</strong> ${escapeHtml(code)}</span>
+            <span><strong>DEPARTMENT</strong> ${escapeHtml(dept)}</span>
+          </p>
+        </div>
+        <a class="nh-job-arrow" href="${escapeHtml(href)}" aria-label="View ${escapeHtml(title)}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 18L12.6 16.55L16.15 13H4V11H16.15L12.6 7.45L14 6L20 12L14 18Z" fill="currentColor"/></svg>
+        </a>
+      </div>
+      <dl class="nh-job-meta">
+        <div><dt>NO. OF POSITION</dt><dd>${escapeHtml(vacancies)}</dd></div>
+        <div><dt>WORK LOCATION</dt><dd>${escapeHtml(location)}</dd></div>
+        <div><dt>EXPERIENCE</dt><dd>${escapeHtml(experience)}</dd></div>
+        <div><dt>TYPE</dt><dd>${escapeHtml(typeLabel(job))}</dd></div>
+      </dl>
     </article>`;
   }
 
-  function showStatus(html) {
-    container.innerHTML = `<p class="careers-jobs-empty" style="${STATUS_MSG}" role="status">${html}</p>`;
-    setTotals(0, 0);
-  }
-
-  function countLabel(n) {
-    return `${n} open ${n === 1 ? "role" : "roles"}`;
-  }
-
-  function sectionHtml(dept, jobs) {
-    const cards = jobs.map((job) => cardHtml(job, dept.id)).join("");
-    return `<section class="careers-dept" data-department="${dept.id}" id="department-${dept.id}">
-      <h3 class="careers-dept-heading">
-        <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-${dept.id}" id="dept-toggle-${dept.id}">
-          <span class="careers-dept-icon" aria-hidden="true">${dept.icon}</span>
-          <span class="careers-dept-head-text">
-            <span class="careers-dept-name">${escapeHtml(dept.name)}</span>
-            <span class="careers-dept-blurb">${escapeHtml(dept.blurb)}</span>
-          </span>
-          <span class="careers-dept-count">${countLabel(jobs.length)}</span>
-          <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </button>
+  function emptyHtml(query) {
+    const note = query
+      ? "We couldn't find any job openings"
+      : 'No open positions right now. Check back soon or write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>.';
+    return `<div class="nh-jobs-empty" role="status">
+      <h3 class="nh-jobs-empty-head">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" aria-hidden="true"><path fill="#ef4444" d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>No Job Openings
       </h3>
-      <div class="careers-dept-panel" id="dept-panel-${dept.id}" role="region" aria-labelledby="dept-toggle-${dept.id}">
-        <div class="careers-dept-panel-inner" inert>
-          <div class="careers-dept-grid">${cards}</div>
-        </div>
-      </div>
-    </section>`;
+      <p>${note}</p>
+    </div>`;
   }
 
-  function setTotals(total, deptCount) {
-    const el = document.querySelector("[data-careers-total]");
-    if (!el) return;
-    if (!total) {
-      el.textContent = "";
+  function setMore(visible) {
+    if (!moreWrap) return;
+    moreWrap.classList.toggle("is-hidden", !visible);
+  }
+
+  function showLoading() {
+    ready = false;
+    setMore(false);
+    container.innerHTML =
+      '<div class="nh-jobs-status" role="status"><span class="nh-job-loader" aria-hidden="true"></span><span class="visually-hidden">Loading open positions</span></div>';
+  }
+
+  function paint(reset) {
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    filtered = !query
+      ? allJobs.slice()
+      : allJobs.filter((job) => {
+          const blob = [job.title, job.post, job.job_code, job.location, job.department, job.experience]
+            .join(" ")
+            .toLowerCase();
+          return blob.includes(query);
+        });
+    if (reset) shown = Math.min(PAGE, filtered.length);
+    else shown = Math.min(filtered.length, Math.max(shown, Math.min(PAGE, filtered.length)));
+
+    if (!filtered.length) {
+      container.innerHTML = emptyHtml(query);
+      setMore(false);
       return;
     }
-    el.textContent = `${countLabel(total)} across ${deptCount} department${deptCount === 1 ? "" : "s"}`;
+    container.innerHTML = filtered.slice(0, shown).map(cardHtml).join("");
+    setMore(shown < filtered.length);
   }
 
   function renderFromApi(careers) {
-    const groups = new Map();
-    careers.forEach((job) => {
-      const id = deptIdFor(job);
-      if (!groups.has(id)) groups.set(id, []);
-      groups.get(id).push(job);
-    });
-
-    const ordered = DEPARTMENTS.filter((d) => groups.get(d.id) && groups.get(d.id).length);
-    if (!ordered.length) {
-      container.innerHTML =
-        '<p class="careers-jobs-empty" style="color:inherit;opacity:.75;margin:0">No open positions right now. Check back soon or write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>.</p>';
-      setTotals(0, 0);
-      return;
-    }
-
-    container.innerHTML = ordered.map((d) => sectionHtml(d, groups.get(d.id))).join("");
-    setTotals(careers.length, ordered.length);
-    openFromHash(false);
+    allJobs = Array.isArray(careers) ? careers : [];
+    ready = true;
+    paint(true);
   }
-
-  /* ---- Interaction (event delegation; bound once on the stable container) ---- */
-  function setOpen(section, open) {
-    if (!section) return;
-    section.classList.toggle("is-open", open);
-    const btn = section.querySelector(".careers-dept-toggle");
-    const inner = section.querySelector(".careers-dept-panel-inner");
-    if (btn) btn.setAttribute("aria-expanded", String(open));
-    if (inner) inner.inert = !open;
-  }
-
-  container.addEventListener("click", (event) => {
-    const btn = event.target.closest(".careers-dept-toggle");
-    if (!btn || !container.contains(btn)) return;
-    const section = btn.closest(".careers-dept");
-    setOpen(section, !section.classList.contains("is-open"));
-  });
-
-  function openFromHash(scroll) {
-    const match = /^#department-([a-z0-9-]+)$/i.exec(window.location.hash || "");
-    if (!match) return;
-    const section = container.querySelector(`#department-${CSS.escape(match[1])}`);
-    if (!section) return;
-    setOpen(section, true);
-    if (scroll) {
-      section.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
-      const btn = section.querySelector(".careers-dept-toggle");
-      if (btn) btn.focus({ preventScroll: true });
-    }
-  }
-
-  /* Recompute counts + totals from whatever cards are currently in the DOM
-     (keeps the static fallback accurate without hardcoding). */
-  function refreshCountsFromDom() {
-    const sections = container.querySelectorAll(".careers-dept");
-    let total = 0;
-    let openDepts = 0;
-    sections.forEach((section) => {
-      const n = section.querySelectorAll(".careers-job").length;
-      total += n;
-      if (n) openDepts += 1;
-      const countEl = section.querySelector(".careers-dept-count");
-      if (countEl) countEl.textContent = countLabel(n);
-    });
-    setTotals(total, openDepts);
-  }
-
-  const staticFallbackHtml = container.innerHTML;
 
   function restoreStaticFallback() {
     if (!staticFallbackHtml || !staticFallbackHtml.trim()) return false;
+    if (!staticFallbackHtml.includes("nh-job-card")) return false;
     container.innerHTML = staticFallbackHtml;
-    refreshCountsFromDom();
-    openFromHash(true);
+    ready = false;
+    setMore(false);
     return true;
+  }
+
+  if (searchInput) {
+    const syncReset = () => {
+      if (!resetBtn) return;
+      resetBtn.hidden = !searchInput.value;
+    };
+    searchInput.addEventListener("input", () => {
+      syncReset();
+      if (ready) paint(true);
+    });
+    syncReset();
+  }
+
+  if (resetBtn && searchInput) {
+    resetBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      resetBtn.hidden = true;
+      searchInput.focus();
+      if (ready) paint(true);
+    });
+  }
+
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener("click", () => {
+      searchInput.focus();
+      if (ready) paint(true);
+    });
+  }
+
+  if (moreBtn) {
+    moreBtn.addEventListener("click", () => {
+      if (!ready) return;
+      shown = Math.min(filtered.length, shown + PAGE);
+      container.innerHTML = filtered.slice(0, shown).map(cardHtml).join("");
+      setMore(shown < filtered.length);
+    });
   }
 
   async function loadFromHrpops() {
@@ -275,7 +184,6 @@
     if (!client || typeof client.fetchJobs !== "function") return false;
     const result = await client.fetchJobs();
     if (!result || !Array.isArray(result.jobs)) return false;
-    /* Configured company with zero openings → real empty state (not static fallback). */
     if (result.configured || result.jobs.length) {
       renderFromApi(result.jobs);
       return true;
@@ -299,7 +207,7 @@
   }
 
   async function loadJobs() {
-    showStatus("Loading open positions\u2026");
+    showLoading();
     try {
       if (await loadFromHrpops()) return;
     } catch (err) {
@@ -311,17 +219,16 @@
       /* continue */
     }
     if (restoreStaticFallback()) return;
-    showStatus(
-      'We couldn\u2019t load openings right now. Please try again shortly or write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>.'
-    );
+    ready = true;
+    allJobs = [];
+    paint(true);
   }
 
-  /* Wire the static accordion immediately so it works before/without the API. */
-  refreshCountsFromDom();
-  openFromHash(true);
-  window.addEventListener("hashchange", () => openFromHash(true));
-
   loadJobs().catch(() => {
-    restoreStaticFallback();
+    if (!restoreStaticFallback()) {
+      ready = true;
+      allJobs = [];
+      paint(true);
+    }
   });
 })();

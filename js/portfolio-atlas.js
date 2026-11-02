@@ -58,7 +58,7 @@
   function clientLabel(raw) {
     if (!raw) return "In-house product";
     if (/in-house/i.test(raw)) return raw;
-    return `Client — ${raw}`;
+    return `Client - ${raw}`;
   }
 
   function tagsFor(vertical) {
@@ -132,7 +132,7 @@
         data-desc="${escapeAttr(p.description || "")}" data-src="${escapeAttr(image)}" data-alt="${escapeAttr(p.alt || title)}"${featuredAttr}>
         <div class="pf-card__media">
           <img src="${escapeAttr(p.thumb || image)}" alt="" width="600" height="375" loading="lazy" decoding="async">
-          <span class="pf-card__code">${escapeText(id)} · ${escapeText(code)}</span>
+          <span class="pf-card__code">${escapeText(id)} | ${escapeText(code)}</span>
         </div>
         <div class="pf-card__body">
           <p class="pf-card__vertical">${escapeText(verticalLabel(vertical))}</p>
@@ -144,7 +144,7 @@
             <span class="pf-card__cta" aria-hidden="true">Quick view<span class="pf-card__arrow">&#8594;</span></span>
           </div>
         </div>
-        <button type="button" class="pf-card__hit" aria-label="Quick view ${escapeAttr(title)} — ${escapeAttr(long)}"></button>
+        <button type="button" class="pf-card__hit" aria-label="Quick view ${escapeAttr(title)} - ${escapeAttr(long)}"></button>
       </article>`;
   }
 
@@ -237,7 +237,7 @@
   }
 
   // A card that never crossed the viewport is still parked at opacity 0. Once the
-  // user starts filtering, promote every match immediately — otherwise switching
+  // user starts filtering, promote every match immediately - otherwise switching
   // segments leaves the rows below the fold blank until they are scrolled to.
   function forceReveal(list) {
     list.forEach((card) => {
@@ -296,7 +296,7 @@
 
     const noun = activeSegment === "product" ? "products" : "projects";
     if (searchQuery) {
-      if (emptyTitle) emptyTitle.textContent = `No ${noun} match “${searchQuery}”`;
+      if (emptyTitle) emptyTitle.textContent = `No ${noun} match "${searchQuery}"`;
       if (emptyCopy) {
         emptyCopy.innerHTML =
           'Try a different keyword or a broader vertical, or <a href="Contact-us.html">tell us what you\'re building</a>.';
@@ -359,14 +359,14 @@
       btn.classList.toggle("is-barren", count === 0);
       // The visible label may be abbreviated and the count is decorative, so the
       // accessible name is spelled out here instead.
-      btn.setAttribute("aria-label", `${filterLabel(btn)} — ${count} ${noun}`);
+      btn.setAttribute("aria-label", `${filterLabel(btn)} - ${count} ${noun}`);
     });
 
     return inSegment.length;
   }
 
   // The placeholder promises "search by tech", so the tag chips have to be part of
-  // the index. Built once per card and cached — the markup never changes after boot.
+  // the index. Built once per card and cached - the markup never changes after boot.
   function searchIndex(el) {
     if (!el.dataset.searchIndex) {
       const tags = el.querySelector(".pf-card__tags");
@@ -438,7 +438,7 @@
       btn.tabIndex = isActive ? 0 : -1;
     });
 
-    // Toggle chips, so pressed state rather than tab selection — and none pressed is
+    // Toggle chips, so pressed state rather than tab selection - and none pressed is
     // a legitimate state. Roving tabindex parks on the pressed chip, else the first.
     const roving = filters.find((btn) => btn.dataset.filter === activeFilter) || filters[0];
     filters.forEach((btn) => {
@@ -511,7 +511,7 @@
       modalBadge.className = `pf-card__badge pf-card__badge--${category}`;
     }
     if (modalCode) {
-      modalCode.textContent = `${card.dataset.id || ""} · ${card.dataset.long || card.dataset.code || ""}`;
+      modalCode.textContent = `${card.dataset.id || ""} | ${card.dataset.long || card.dataset.code || ""}`;
     }
     if (modalDesc) modalDesc.textContent = card.dataset.desc || "";
     if (modalTags) {
@@ -581,7 +581,7 @@
     const badge = document.getElementById("demo-project-badge");
     if (name) name.textContent = card ? card.dataset.title : "this project";
     if (badge) {
-      badge.textContent = card ? `${card.dataset.id || ""} · ${card.dataset.long || ""}` : "";
+      badge.textContent = card ? `${card.dataset.id || ""} | ${card.dataset.long || ""}` : "";
     }
     demoDrawer.hidden = false;
     if (demoBackdrop) demoBackdrop.hidden = false;
@@ -605,7 +605,7 @@
 
   // The chip row never wraps, so narrow viewports swipe it. CSS can't tell whether
   // it actually overflows, and a permanent fade would dim the last chip when the
-  // whole row fits — so the hint is flagged from measurement instead.
+  // whole row fits - so the hint is flagged from measurement instead.
   function armFilterScrollHint() {
     const row = root.querySelector(".atlas__filters");
     if (!row) return;
@@ -618,7 +618,7 @@
 
   // `activate` is true for the segment tablist, where a tab is selected the moment it
   // is reached. The vertical chips are toggles, so arrowing onto one must not press
-  // it — that would silently switch, or worse un-press, the filter in passing.
+  // it - that would silently switch, or worse un-press, the filter in passing.
   function land(list, el, activate) {
     if (!activate) list.forEach((b) => (b.tabIndex = b === el ? 0 : -1));
     el.focus();
@@ -789,7 +789,7 @@
           console.warn("Demo request failed:", err);
           showDemoStatus(
             false,
-            `<strong>Couldn’t send just now.</strong><p>Open Portfolio on the admin host (<code>http://localhost:5174/Portfolio.html</code>) and try again.</p>`
+            `<strong>Couldn't send just now.</strong><p>Open Portfolio on the admin host (<code>http://localhost:5174/Portfolio.html</code>) and try again.</p>`
           );
         } finally {
           if (submitBtn) submitBtn.disabled = false;

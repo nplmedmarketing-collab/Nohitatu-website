@@ -7,7 +7,7 @@
   function contactUrl() {
     var path = (location.pathname || '').replace(/\\/g, '/');
     var base = /\/blogs\//i.test(path) ? '../' : '';
-    return base + 'Contact-us.html';
+    return base + 'Contact-us';
   }
 
   function cleanText(node) {

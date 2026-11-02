@@ -1,1 +1,1 @@
-/* Legacy placeholder script — intentionally empty. */
+/* Legacy placeholder script - intentionally empty. */

@@ -37,7 +37,7 @@
   }
 
   /**
-   * Hero → build → scale → automate cascading curtains.
+   * Hero -> build -> scale -> automate cascading curtains.
    * Each slide fills the viewport, holds, then lifts to reveal the next.
    */
   function initStoryBand() {
@@ -96,7 +96,7 @@
         return;
       }
       var vh = viewportH();
-      // Use px from the same viewport metric as slides — avoids vh/innerHeight gaps.
+      // Use px from the same viewport metric as slides - avoids vh/innerHeight gaps.
       var units = curtainCount * (HOLD + LIFT) + FINAL_HOLD + 1;
       band.style.height = Math.round(units * vh) + 'px';
     }
@@ -305,7 +305,7 @@
         : stageCount - 1;
       applyIndex(index);
 
-      // Continuous chapter progress for the scrubber bar (0 → 1 across pin travel).
+      // Continuous chapter progress for the scrubber bar (0 -> 1 across pin travel).
       if (progressFill) {
         var p = clamp(scrolled / Math.max(pinDistance, 1), 0, 1);
         progressFill.style.transform = 'scaleX(' + p + ')';
@@ -320,7 +320,7 @@
       }
 
       if (scrolled < pinDistance) {
-        // Pinned at the same viewport offset it held while entering — no jump.
+        // Pinned at the same viewport offset it held while entering - no jump.
         place('fixed', panelOffset);
         panel.classList.add('is-pinned');
         panel.classList.remove('is-before', 'is-after');

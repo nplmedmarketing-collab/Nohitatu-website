@@ -1,0 +1,666 @@
+/* Careers — FactoHR layout, Nohitatu tokens.
+   Banner → searchable job cards → benefits. */
+
+body.careers-page {
+  --nh-lavender: #ecebff;
+  margin: 0;
+  background: #fff;
+  color: #222;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+/* Legacy .navbar-toggle sits inside the desktop nav pill and overlaps HOME.
+   Hide it at all widths — phone nav is provided by mobile-nav.js (CSS bars). */
+body.careers-page .navbar-toggle.nav-menu {
+  display: none !important;
+}
+
+/* Desktop only: drop the frosted white pill and center the links on the
+   viewport. Logo stays absolutely parked on the left (logo-navbar). The
+   shared header reserves ~200px on the left, which shoved the pill right. */
+@media (min-width: 768px) {
+  html body.careers-page header.logo-navbar,
+  html body.careers-page header.logo-navbar.white-header {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  html body.careers-page header.logo-navbar .header-container,
+  html body.careers-page header.logo-navbar.white-header .header-container {
+    padding: 0 12px !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  html body.careers-page header.logo-navbar .header-row,
+  html body.careers-page header.logo-navbar.white-header .header-row,
+  html body.careers-page header.logo-navbar .right-menu,
+  html body.careers-page header.logo-navbar #slidemenu {
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html body.careers-page header.logo-navbar .header-logo,
+  html body.careers-page header.logo-navbar.white-header .header-logo {
+    left: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  html body.careers-page header.logo-navbar #slidemenu .inner-menu,
+  html body.careers-page header.logo-navbar.white-header #slidemenu .inner-menu {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+body.careers-page main {
+  background: #fff;
+}
+
+.nh-careers-wrap {
+  width: min(1248px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* Hero — centered title, lead, fraud link, search */
+.nh-careers-banner {
+  padding: 132px 0 28px;
+  background: linear-gradient(180deg, var(--nh-lavender) 0%, rgba(236, 235, 255, 0) 100%);
+}
+
+.nh-careers-banner-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nh-careers-banner h1 {
+  margin: 0;
+  color: #14243d;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 55px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.nh-careers-banner p {
+  margin: 12px auto 0;
+  max-width: 760px;
+  color: #333;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.nh-fraud-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #726cf4;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nh-fraud-link svg {
+  flex: 0 0 auto;
+}
+
+.nh-fraud-link:hover {
+  color: #5f58dc;
+}
+
+.nh-fraud-link:focus-visible {
+  outline: 2px solid #726cf4;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.nh-job-search {
+  position: relative;
+  display: flex;
+  width: min(500px, 100%);
+  margin: 28px auto 0;
+}
+
+.nh-job-search input {
+  width: 100%;
+  height: 45px;
+  padding: 6px 92px 6px 14px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-family: inherit;
+  font-size: 18px;
+  box-shadow: none;
+}
+
+.nh-job-search input::placeholder {
+  color: #333;
+  font-size: 16px;
+}
+
+.nh-job-search input:focus {
+  outline: none;
+  border-color: #726cf4;
+}
+
+.nh-job-search-reset,
+.nh-job-search-go {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+}
+
+.nh-job-search-reset {
+  right: 52px;
+  background: transparent;
+  padding: 0 4px;
+}
+
+.nh-job-search-reset[hidden] {
+  display: none;
+}
+
+.nh-job-search-go {
+  right: 0;
+  width: 46px;
+  background: #726cf4;
+  border-radius: 0 8px 8px 0;
+  transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nh-job-search-go:hover {
+  background: #5f58dc;
+}
+
+.nh-job-search-go:focus-visible,
+.nh-job-search-reset:focus-visible {
+  outline: 2px solid #14243d;
+  outline-offset: 2px;
+}
+
+.nh-job-search-go:active {
+  transform: scale(0.97);
+}
+
+/* Job list */
+.nh-careers-jobs {
+  padding: 8px 0 72px;
+}
+
+.nh-job-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  min-height: 80px;
+}
+
+.nh-job-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px 30px 20px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Soft brand wash + lift — pointer devices only (no sticky hover on touch) */
+@media (hover: hover) {
+  .nh-job-card:hover {
+    background: rgba(114, 108, 244, 0.07);
+    border-color: rgba(114, 108, 244, 0.22);
+    box-shadow:
+      0 10px 28px rgba(114, 108, 244, 0.14),
+      0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  .nh-job-card:hover .nh-job-arrow {
+    transform: translateX(6px);
+  }
+}
+
+.nh-job-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nh-job-card h3 {
+  margin: 0 0 5px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.nh-job-card h3 a {
+  color: #222;
+  text-decoration: none;
+}
+
+.nh-job-card h3 a:hover {
+  color: #726cf4;
+}
+
+.nh-job-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  margin: 0;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.nh-job-codes strong {
+  margin-right: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.nh-job-arrow {
+  flex: 0 0 auto;
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  color: #222;
+  transition: transform 0.3s ease;
+}
+
+.nh-job-arrow:focus-visible {
+  outline: 2px solid #726cf4;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.nh-job-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  width: 100%;
+  margin: 24px 0 0;
+}
+
+.nh-job-meta dt {
+  margin: 0;
+  color: #333;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+.nh-job-meta dd {
+  margin: 2px 0 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.nh-jobs-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.nh-jobs-more.is-hidden {
+  display: none;
+}
+
+.nh-jobs-more a,
+.nh-jobs-more button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 148px;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 8px;
+  background: #726cf4;
+  color: #fff;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(114, 108, 244, 0.3);
+  transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nh-jobs-more a:hover,
+.nh-jobs-more button:hover {
+  background: #5f58dc;
+  color: #fff;
+}
+
+.nh-jobs-more a:active,
+.nh-jobs-more button:active {
+  transform: scale(0.97);
+}
+
+.nh-jobs-more a:focus-visible,
+.nh-jobs-more button:focus-visible {
+  outline: 2px solid #14243d;
+  outline-offset: 3px;
+}
+
+.nh-jobs-status,
+.nh-jobs-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+  text-align: center;
+}
+
+.nh-jobs-empty-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: #222;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nh-jobs-empty p,
+.nh-jobs-status {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.nh-jobs-empty a {
+  color: #726cf4;
+  font-weight: 600;
+}
+
+.nh-job-loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border-top: 3px solid #726cf4;
+  border-right: 3px solid transparent;
+  animation: nh-career-spin 1s linear infinite;
+}
+
+@keyframes nh-career-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Benefits */
+.nh-careers-benefits {
+  padding: 72px 0 88px;
+  background: linear-gradient(0deg, var(--nh-lavender) 0%, rgba(236, 235, 255, 0) 100%);
+}
+
+.nh-careers-benefits-head {
+  text-align: center;
+  padding: 0 16px;
+}
+
+.nh-careers-kicker {
+  margin: 0 0 8px;
+  color: #726cf4;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nh-careers-benefits h2 {
+  margin: 0;
+  color: #14243d;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.nh-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.nh-benefit-card {
+  height: 100%;
+  padding: 40px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nh-benefit-card:hover {
+  transform: translateY(-3px);
+}
+
+.nh-benefit-card svg {
+  display: block;
+  width: 70px;
+  height: 70px;
+}
+
+.nh-benefit-card h3 {
+  margin: 22px 0 8px;
+  color: #222;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.nh-benefit-card p {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Footer-reveal CTA sits after benefits. Global panel is #f3f1ff on a white
+   wrapper, which reads as a mismatched lavender + white seam over navy.
+   Keep Careers token #ecebff continuous into the gutter and the card. */
+body.careers-page .footer-reveal-cta,
+body.careers-page .footer-reveal-cta .estimate-panel {
+  background: var(--nh-lavender);
+}
+
+/* Fraud dialog */
+.nh-fraud-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.nh-fraud-modal[hidden] {
+  display: none;
+}
+
+.nh-fraud-dialog {
+  position: relative;
+  width: min(600px, 100%);
+  padding: 28px 28px 24px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  box-shadow: 0 16px 50px rgba(15, 23, 42, 0.18);
+}
+
+.nh-fraud-dialog h2 {
+  margin: 0 36px 12px 0;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.nh-fraud-dialog p {
+  margin: 0 0 12px;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.nh-fraud-dialog p:last-of-type {
+  margin-bottom: 0;
+}
+
+.nh-fraud-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.nh-fraud-close:hover {
+  background: #111;
+}
+
+.nh-fraud-close:focus-visible {
+  outline: 2px solid #726cf4;
+  outline-offset: 2px;
+}
+
+@media (max-width: 991px) {
+  .nh-job-grid,
+  .nh-benefit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nh-job-card {
+    padding: 20px 20px 12px;
+  }
+
+  .nh-job-card h3 {
+    font-size: 18px;
+  }
+
+  .nh-benefit-card {
+    padding: 28px;
+  }
+
+  .nh-benefit-card h3 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .nh-careers-banner {
+    padding: 112px 0 24px;
+  }
+
+  .nh-careers-banner h1 {
+    font-size: 36px;
+  }
+
+  .nh-careers-banner p,
+  .nh-fraud-link {
+    font-size: 16px;
+  }
+
+  .nh-careers-jobs {
+    padding-bottom: 40px;
+  }
+
+  .nh-job-grid,
+  .nh-benefit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nh-job-meta {
+    margin-top: 16px;
+  }
+
+  .nh-careers-benefits {
+    padding: 40px 0 56px;
+  }
+
+  .nh-careers-benefits h2 {
+    font-size: 28px;
+  }
+
+  .nh-benefit-card {
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .nh-benefit-card svg {
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+  }
+
+  .nh-jobs-status,
+  .nh-jobs-empty {
+    padding: 48px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nh-job-loader {
+    animation: none;
+    border-right-color: #726cf4;
+  }
+
+  .nh-job-card:hover .nh-job-arrow,
+  .nh-benefit-card:hover,
+  .nh-job-search-go:active,
+  .nh-jobs-more button:active {
+    transform: none;
+  }
+}

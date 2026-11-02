@@ -1,4 +1,4 @@
-/* Shared public/admin API host. GitHub Pages is static-only — /api does not exist there. */
+/* Shared public/admin API host. GitHub Pages is static-only - /api does not exist there. */
 (() => {
   const DEFAULT_PAGES_API = "https://nohitatu-website-admin.onrender.com";
 
@@ -18,12 +18,12 @@
     if (base === "." || /^same-?origin$/i.test(base)) base = "";
     const host = window.location.hostname || "";
     const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(host);
-    // Static hosts (GitHub Pages, FTP/IIS, custom domain) have no Express /api —
+    // Static hosts (GitHub Pages, FTP/IIS, custom domain) have no Express /api -
     // send public forms to the Render admin API.
     if (!base && (/\.github\.io$/i.test(host) || (!isLocal && host))) {
       base = DEFAULT_PAGES_API;
     }
-    // Local static servers (Live Server, python -m http.server, etc.) have no /api —
+    // Local static servers (Live Server, python -m http.server, etc.) have no /api -
     // point public forms at the Express admin host used in this workspace.
     if (!base && isLocal) {
       const port = String(window.location.port || "");

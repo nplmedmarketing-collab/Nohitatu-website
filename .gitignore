@@ -58,3 +58,9 @@ images/_logo-backup/
 images/*.orig.png
 images/*.watermark-bak.png
 
+videos/*-original-4k.mp4
+videos/*4k*.mp4
+videos/complex*.mp4
+videos/*-full*.mp4
+videos/*-optimized*.mp4
+images/backup_solutions_cards/

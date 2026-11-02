@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Careers | Nohitatu</title>
-    <meta name="description" content="Join Nohitatu — open roles, life at our team, and opportunities in software development." />
-    <!-- HRPops CandidatePortal: set company id to your HRPops tenant (required for live listings). -->
+    <meta name="description" content="Join Nohitatu - browse open roles, explore our culture, and grow with a global software team." />
+    <!-- Listings and applications use HRPops CandidatePortal, company 183. -->
     <meta name="nh-hrpops-company-id" content="183" />
     <meta name="nh-hrpops-api" content="https://api.hrpops.com/api" />
     <meta name="nh-hrpops-portal" content="https://hrpops.com" />
@@ -17,1084 +17,62 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css?v=20261014navpill2" />
+    <link rel="stylesheet" href="css/style.css?v=20261102cleanfooter2" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
     <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
     <script src="js/jquery.min.js"></script>
-    <script src="js/custom.js?v=20261014navpill1"></script>
-    <style>
-        :root {
-            --ink: #14243d;
-            --muted: #5f6c7d;
-            --blue: #726cf4;
-            --blue-dark: #5f58dc;
-            --line: #d4d4d4;
-            --navy: #0b1a2d;
-            --ground: #e4e4e4;
-            --ground-image: url("images/careers-page-bg.png");
-            --ground-size: 41px 88px;
-        }
-
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body.careers-page,
-        body.careers-page.home_body,
-        body.careers-page.footer-reveal-page {
-            margin: 0;
-            color: var(--ink);
-            font-family: "Plus Jakarta Sans", sans-serif;
-            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
-            /* Sticky curtains die if a scrollport/transform is created on html/body/wrapper */
-            overflow: visible !important;
-            overflow-x: visible !important;
-            overflow-y: visible !important;
-            transform: none !important;
-            filter: none !important;
-            perspective: none !important;
-            contain: none !important;
-        }
-
-        html:has(body.careers-page) {
-            overflow: visible !important;
-            overflow-x: visible !important;
-            overflow-y: visible !important;
-            transform: none !important;
-            filter: none !important;
-            contain: none !important;
-        }
-
-        body.careers-page #wrapper,
-        body.careers-page #wrapper.footer-reveal-content {
-            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
-            overflow: visible !important;
-            overflow-x: visible !important;
-            overflow-y: visible !important;
-            transform: none !important;
-            filter: none !important;
-            perspective: none !important;
-            contain: none !important;
-            isolation: auto !important;
-        }
-
-        body.careers-page main {
-            overflow: visible !important;
-            transform: none !important;
-            filter: none !important;
-            isolation: auto !important;
-            contain: none !important;
-            background: transparent !important;
-            background-color: transparent !important;
-        }
-
-        body.careers-page .careers-jobs-head,
-        body.careers-page .careers-jobs-grid,
-        body.careers-page .careers-job,
-        body.careers-page .careers-life-inner,
-        body.careers-page .careers-life-figure {
-            background: transparent !important;
-            background-color: transparent !important;
-        }
-
-        body.careers-page .careers-life,
-        body.careers-page .careers-jobs {
-            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
-        }
-
-        body.careers-page .careers-job:hover {
-            background: rgba(20, 36, 61, 0.05) !important;
-        }
-
-        .shell {
-            width: min(1180px, calc(100% - 48px));
-            margin: 0 auto;
-        }
-
-        /* Header — matches About Us */
-        body.careers-page header.logo-navbar {
-            background: linear-gradient(180deg, rgba(10, 16, 32, 0.58), transparent) !important;
-            border-bottom: 0 !important;
-            backdrop-filter: none !important;
-        }
-
-        body.careers-page header.logo-navbar .logo-on-dark { display: block; }
-        body.careers-page header.logo-navbar .logo-on-light { display: none; }
-
-        body.careers-page header.logo-navbar #navigation > li.nav-item > a {
-            color: #fff !important;
-            -webkit-text-fill-color: #fff !important;
-        }
-
-        body.careers-page header.logo-navbar #navigation > li.nav-item:hover > a {
-            color: #a855f7 !important;
-            -webkit-text-fill-color: #a855f7 !important;
-        }
-
-        body.careers-page header.logo-navbar #navigation > li.nav-item.active > a {
-            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
-            background-clip: text !important;
-            -webkit-background-clip: text !important;
-            color: transparent !important;
-            -webkit-text-fill-color: transparent !important;
-        }
-
-        body.careers-page header.logo-navbar #navigation > li.nav-item > a::after {
-            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
-        }
-
-        body.careers-page header.logo-navbar.white-header {
-            background-color: rgba(228, 228, 228, 0.96) !important;
-            background-image: var(--ground-image) !important;
-            background-repeat: repeat !important;
-            background-size: var(--ground-size) !important;
-            border-bottom: 1px solid #d4d4d4 !important;
-            backdrop-filter: blur(14px) !important;
-        }
-
-        body.careers-page header.logo-navbar.white-header .logo-on-dark { display: none; }
-        body.careers-page header.logo-navbar.white-header .logo-on-light { display: block; }
-
-        body.careers-page header.logo-navbar.white-header #navigation > li.nav-item > a {
-            color: var(--ink) !important;
-            -webkit-text-fill-color: var(--ink) !important;
-        }
-
-        body.careers-page header.logo-navbar.white-header #navigation > li.nav-item:hover > a {
-            color: #a855f7 !important;
-            -webkit-text-fill-color: #a855f7 !important;
-        }
-
-        body.careers-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
-            background: linear-gradient(90deg, #d946ef 0%, #ec4899 35%, #3b82f6 85%, #2563eb 100%) !important;
-            background-clip: text !important;
-            -webkit-background-clip: text !important;
-            color: transparent !important;
-            -webkit-text-fill-color: transparent !important;
-        }
-
-        body.careers-page .navbar-toggle.nav-menu { display: none; }
-
-        /* Hero — sticky full-viewport video banner; Day panel curtains over it.
-           NEVER position:relative — kills sticky. height:auto keeps sticky valid. */
-        body.careers-page .careers-hero.nh-curtain-banner,
-        body.careers-page .careers-hero {
-            position: sticky !important;
-            top: 0 !important;
-            left: 0;
-            z-index: 1;
-            box-sizing: border-box;
-            width: 100%;
-            min-height: 100svh;
-            min-height: max(100svh, 560px);
-            height: auto;
-            margin: 0;
-            overflow: hidden;
-            padding: 0;
-            display: block;
-            background: #111;
-            color: #fff;
-            transform: none !important;
-            filter: none !important;
-        }
-
-        .careers-hero-media {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .careers-hero-video {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            object-position: 50% 42%;
-            opacity: 0;
-            visibility: visible;
-            transition: opacity .45s ease;
-            will-change: opacity;
-            background: #111;
-        }
-
-        .careers-hero-video.is-active {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        .careers-hero h1.visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        /* Clip tall wave art so only peaks tip into the first viewport */
-        .hero-wave {
-            position: absolute;
-            z-index: 2;
-            left: 0;
-            right: 0;
-            bottom: -1px;
-            width: 100%;
-            height: 42px;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .hero-wave__layer {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: auto;
-            height: 100px;
-            display: block;
-            background-repeat: repeat-x;
-            background-position: 0 0;
-            background-size: 1200px 100px;
-        }
-
-        .hero-wave__layer--back {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C75,85 225,85 300,60 C375,35 525,35 600,60 C675,85 825,85 900,60 C975,35 1125,35 1200,60 L1200,120 L0,120 Z' fill='rgba(228,228,228,0.45)'/%3E%3C/svg%3E");
-            animation: heroWaveDrift 17s linear infinite reverse;
-        }
-
-        .hero-wave__layer--front {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C75,20 225,20 300,50 C375,80 525,80 600,50 C675,20 825,20 900,50 C975,80 1125,80 1200,50 L1200,120 L0,120 Z' fill='%23e4e4e4'/%3E%3C/svg%3E");
-            animation: heroWaveDrift 11s linear infinite;
-        }
-
-        @keyframes heroWaveDrift {
-            from { background-position-x: 0; }
-            to { background-position-x: -1200px; }
-        }
-
-        /* Keep hero wave swaying even when OS asks for reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            body.careers-page .hero-wave__layer--back {
-                animation: heroWaveDrift 17s linear infinite reverse !important;
-            }
-            body.careers-page .hero-wave__layer--front {
-                animation: heroWaveDrift 11s linear infinite !important;
-            }
-        }
-
-        /*
-         * Continuous Careers curtain chain (one .nh-curtain-stack.careers-full-stack):
-         * 1) Sticky Join hero; Day panel scrolls over it.
-         * 2) Day pulls sticky talent mountain under itself (margin-bottom: -100svh)
-         *    so Day peels away revealing mountain — not a hard stack half/half.
-         * 3) Navy dwell holds full-bleed mountain, then jobs panel covers quote.
-         *
-         * Single stack is required: dual stacks left a hard Day → mountain split.
-         * Life z-index above sticky quote (and hero); jobs above sticky quote.
-         */
-        body.careers-page .nh-curtain-stack.careers-full-stack,
-        body.careers-page .nh-curtain-stack.careers-reveal,
-        body.careers-page .careers-full-stack,
-        body.careers-page .careers-reveal {
-            position: relative;
-            z-index: 1;
-            overflow: visible !important;
-            transform: none !important;
-            filter: none !important;
-            perspective: none !important;
-            contain: none !important;
-            isolation: isolate;
-        }
-
-        /* Day→mountain sticky contract (authoritative; no relative on banners) */
-        body.careers-page .careers-hero.nh-curtain-banner,
-        body.careers-page .careers-quote.nh-curtain-banner {
-            position: sticky !important;
-            top: 0 !important;
-            z-index: 1;
-            min-height: 100svh;
-            height: auto;
-        }
-        body.careers-page .careers-life.nh-curtain-panel,
-        body.careers-page .careers-jobs.nh-curtain-panel {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Sticky + full-bleed mountain — NEVER position:relative (kills sticky) */
-        body.careers-page .careers-quote.nh-curtain-banner,
-        body.careers-page .careers-quote,
-        .careers-quote.nh-curtain-banner,
-        .careers-quote {
-            position: sticky !important;
-            top: 0 !important;
-            left: 0;
-            z-index: 1;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: none;
-            /* Full-window sticky banner — height:auto keeps sticky; no gray strip */
-            min-height: 100svh;
-            min-height: max(100svh, 560px);
-            height: auto;
-            margin: 0;
-            padding: clamp(64px, 10vh, 120px) max(24px, calc((100% - 820px) / 2));
-            border: 0;
-            text-align: center;
-            background-color: #0b1a2d;
-            background-image:
-                linear-gradient(
-                    180deg,
-                    rgba(11, 26, 45, 0.55) 0%,
-                    rgba(11, 26, 45, 0.42) 48%,
-                    rgba(11, 26, 45, 0.5) 100%
-                ),
-                url("images/careers-talent-banner.jpg");
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            transform: none !important;
-            filter: none !important;
-        }
-
-        .careers-quote p {
-            position: relative;
-            z-index: 1;
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: clamp(1.7rem, 3vw, 2.5rem);
-            font-weight: 500;
-            line-height: 1.4;
-            color: #fff;
-            margin: 0 auto 26px;
-            max-width: 940px;
-            text-shadow: 0 2px 20px rgba(7, 18, 31, 0.55);
-        }
-
-        .careers-quote cite {
-            position: relative;
-            z-index: 1;
-            font-family: "Plus Jakarta Sans", sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            font-style: normal;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 1px 12px rgba(7, 18, 31, 0.45);
-        }
-
-        /*
-         * Day life — dual role without cloning:
-         * - Opaque .nh-curtain-panel over sticky hero (z above both stickies).
-         * - margin-bottom ≈ -banner height pulls sticky quote under Day so
-         *   continued scroll peels Day and reveals the mountain banner.
-         */
-        body.careers-page .careers-life.nh-curtain-panel,
-        body.careers-page .careers-life,
-        .careers-life.nh-curtain-panel {
-            position: relative;
-            z-index: 2;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: max(100vh, 560px);
-            min-height: max(100svh, 560px);
-            margin: 0;
-            margin-top: 0;
-            /* Overlap sticky quote by one full banner height (peel, not hard stack) */
-            margin-bottom: calc(-1 * max(100vh, 560px));
-            margin-bottom: calc(-1 * max(100svh, 560px));
-            padding: clamp(48px, 7vh, 88px) 0 clamp(40px, 6vh, 72px);
-            background-color: var(--ground) !important;
-            background-image: var(--ground-image) !important;
-            background-repeat: repeat !important;
-            background-size: var(--ground-size) !important;
-            background-position: 0 0 !important;
-            /* Flush against the sticky hero edge — no hairline of body ground */
-            box-shadow: none;
-            /* Opaque paint so sticky mountain never shows through Day */
-            isolation: isolate;
-        }
-
-        .careers-life-inner {
-            width: min(1180px, calc(100% - 48px));
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .careers-life-inner h2 {
-            margin: 0 0 28px;
-            color: var(--navy);
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: clamp(1.85rem, 3.2vw, 2.55rem);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-
-        .careers-life-figure {
-            position: relative;
-            margin: 0 auto;
-            width: min(100%, 1180px);
-            overflow: visible;
-            mix-blend-mode: multiply;
-        }
-
-        .careers-life-figure img {
-            display: none !important;
-        }
-
-        /* Hidden source video; canvas is the visible surface */
-        .careers-life-figure video {
-            position: absolute !important;
-            width: 1px !important;
-            height: 1px !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-            overflow: hidden !important;
-        }
-
-        /*
-         * Preserve intrinsic ratio — never force mismatched width+height.
-         * max-height alone used to stretch when paired with width:100%.
-         */
-        .careers-life-figure canvas.careers-life-canvas {
-            display: block;
-            width: min(100%, calc(min(70vh, 640px) * 16 / 9));
-            max-width: 100%;
-            height: auto;
-            margin: 0 auto;
-            aspect-ratio: 16 / 9;
-            object-fit: contain;
-            background: transparent !important;
-            border: 0;
-        }
-
-        /* Culture photo marquee — clipped to this section, not the page */
-        .careers-life-marquee {
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 100%;
-            margin: 32px 0 0;
-            padding: 0;
-            overflow: hidden;
-            overflow-x: hidden;
-        }
-
-        .careers-life-marquee-row {
-            display: flex;
-            width: max-content;
-            gap: 12px;
-            will-change: transform;
-            backface-visibility: hidden;
-        }
-
-        .careers-life-marquee-row + .careers-life-marquee-row {
-            margin-top: 12px;
-        }
-
-        .careers-life-marquee-row--a {
-            animation: careersLifeMarquee 48s linear infinite;
-        }
-
-        .careers-life-marquee-row--b {
-            animation: careersLifeMarquee 56s linear infinite reverse;
-        }
-
-        .careers-life-marquee-seq {
-            display: flex;
-            gap: 12px;
-            flex: 0 0 auto;
-        }
-
-        .careers-life-marquee figure {
-            flex: 0 0 auto;
-            width: 240px;
-            height: 152px;
-            margin: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            background: #ececec;
-        }
-
-        .careers-life-marquee img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: 50% 46%;
-        }
-
-        @keyframes careersLifeMarquee {
-            from { transform: translate3d(0, 0, 0); }
-            to { transform: translate3d(calc(-50% - 6px), 0, 0); }
-        }
-
-        /* Scroll gap while sticky quote dwells alone before jobs cover it.
-         * Navy (not page-ground) so a failed/unpinned frame never flashes textured gray. */
-        .careers-banner-dwell {
-            position: relative;
-            z-index: 0;
-            min-height: 100vh;
-            min-height: 100svh;
-            height: calc(100vh + 80px);
-            height: calc(100svh + 80px);
-            min-height: max(calc(100vh + 80px), 560px);
-            min-height: max(calc(100svh + 80px), 560px);
-            margin: 0;
-            padding: 0;
-            pointer-events: none;
-            background-color: #0b1a2d !important;
-            background-image: none !important;
-        }
-
-        /* Open positions — second curtain panel; covers sticky talent banner */
-        body.careers-page .careers-jobs.nh-curtain-panel,
-        body.careers-page .careers-jobs,
-        .careers-jobs.nh-curtain-panel,
-        .careers-jobs {
-            position: relative;
-            z-index: 2;
-            margin: 0;
-            margin-top: 0;
-            padding: clamp(100px, 14vh, 128px) 0 96px;
-            scroll-margin-top: 96px;
-            background: var(--ground) var(--ground-image) repeat 0 0 / var(--ground-size) !important;
-            background-color: var(--ground) !important;
-        }
-
-        .careers-jobs > .shell {
-            width: min(920px, calc(100% - 48px));
-            margin: 0 auto;
-        }
-
-        .careers-jobs-head {
-            max-width: 560px;
-            margin: 0 0 36px;
-        }
-
-        .careers-jobs-head h2 {
-            margin: 0 0 12px;
-            color: var(--ink);
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: clamp(2rem, 3.5vw, 2.75rem);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.15;
-        }
-
-        .careers-jobs-head p {
-            margin: 0;
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        .careers-jobs-linkedin {
-            display: inline-block;
-            margin-top: 14px;
-            color: var(--blue-dark);
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            text-decoration: none;
-        }
-
-        .careers-jobs-linkedin:hover {
-            color: var(--blue);
-        }
-
-        .careers-jobs-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            border-top: 1px solid var(--line);
-            border-left: 1px solid var(--line);
-        }
-
-        .careers-job {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            padding: 22px 22px 20px;
-            border-right: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-            background: transparent;
-            transition: background 0.2s ease;
-        }
-
-        .careers-job:hover {
-            background: rgba(20, 36, 61, 0.05);
-        }
-
-        .careers-job-title {
-            margin: 0;
-            color: var(--navy);
-            font-family: "Plus Jakarta Sans", sans-serif;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            line-height: 1.35;
-            text-transform: uppercase;
-        }
-
-        .careers-job-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 0;
-            padding: 0;
-            flex: 1;
-        }
-
-        .careers-job-meta > div {
-            display: grid;
-            grid-template-columns: 108px 1fr;
-            gap: 8px 12px;
-            align-items: start;
-        }
-
-        .careers-job-meta dt {
-            margin: 0;
-            color: #8a93a3;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            line-height: 1.45;
-        }
-
-        .careers-job-meta dd {
-            margin: 0;
-            color: var(--ink);
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.45;
-        }
-
-        .careers-job-code {
-            color: #e11d48;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-        }
-
-        .careers-job-title-link {
-            color: inherit !important;
-            text-decoration: none !important;
-            transition: color 0.2s ease;
-        }
-
-        .careers-job-title-link:hover {
-            color: var(--blue-dark) !important;
-        }
-
-        .careers-job-apply {
-            display: inline-flex;
-            align-items: center;
-            align-self: flex-start;
-            margin-top: 4px;
-            color: var(--blue-dark) !important;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-decoration: none !important;
-            transition: color 0.2s ease;
-        }
-
-        .careers-job-apply::after {
-            content: "→";
-            margin-left: 6px;
-            transition: transform 0.2s ease;
-        }
-
-        .careers-job-apply:hover {
-            color: var(--blue) !important;
-        }
-
-        .careers-job-apply:hover::after {
-            transform: translateX(3px);
-        }
-
-        .careers-jobs-foot {
-            margin-top: 36px;
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .careers-jobs-foot a {
-            color: var(--blue-dark);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .careers-jobs-foot a:hover {
-            color: var(--blue);
-        }
-
-        .careers-jobs-total {
-            margin: 12px 0 0;
-            color: var(--navy);
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-        }
-
-        .careers-departments {
-            margin: 0;
-        }
-
-        .careers-dept {
-            margin: 0 0 14px;
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.42);
-            overflow: hidden;
-            scroll-margin-top: 96px;
-        }
-
-        .careers-dept:last-child {
-            margin-bottom: 0;
-        }
-
-        .careers-dept-heading {
-            margin: 0;
-            font: inherit;
-        }
-
-        .careers-dept-toggle {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            width: 100%;
-            margin: 0;
-            padding: 20px 22px;
-            border: 0;
-            background: transparent;
-            color: inherit;
-            font-family: "Plus Jakarta Sans", sans-serif;
-            text-align: left;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .careers-dept-toggle:hover {
-            background: rgba(20, 36, 61, 0.05);
-        }
-
-        .careers-dept-toggle:focus-visible {
-            outline: 2px solid var(--blue);
-            outline-offset: -2px;
-        }
-
-        .careers-dept-icon {
-            flex: 0 0 auto;
-            display: grid;
-            place-items: center;
-            width: 44px;
-            height: 44px;
-            border-radius: 11px;
-            background: rgba(114, 108, 244, 0.12);
-            color: var(--blue-dark);
-        }
-
-        .careers-dept-icon svg {
-            width: 22px;
-            height: 22px;
-        }
-
-        .careers-dept-head-text {
-            flex: 1 1 auto;
-            min-width: 0;
-        }
-
-        .careers-dept-name {
-            display: block;
-            color: var(--navy);
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: 0.01em;
-            line-height: 1.3;
-        }
-
-        .careers-dept-blurb {
-            display: block;
-            margin-top: 3px;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        .careers-dept-count {
-            flex: 0 0 auto;
-            display: inline-flex;
-            align-items: center;
-            padding: 5px 12px;
-            border-radius: 999px;
-            background: rgba(114, 108, 244, 0.12);
-            color: var(--blue-dark);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            white-space: nowrap;
-        }
-
-        .careers-dept-chevron {
-            flex: 0 0 auto;
-            width: 18px;
-            height: 18px;
-            color: var(--muted);
-            transition: transform 0.3s ease;
-        }
-
-        .careers-dept.is-open .careers-dept-chevron {
-            transform: rotate(180deg);
-        }
-
-        .careers-dept-panel {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.32s ease;
-        }
-
-        .careers-dept.is-open .careers-dept-panel {
-            grid-template-rows: 1fr;
-        }
-
-        .careers-dept-panel-inner {
-            min-height: 0;
-            overflow: hidden;
-        }
-
-        .careers-dept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-            gap: 16px;
-            padding: 4px 22px 22px;
-        }
-
-        .careers-dept-grid .careers-job {
-            border: 1px solid var(--line);
-            border-radius: 12px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .careers-dept-panel { transition: none; }
-            .careers-dept-chevron { transition: none; }
-        }
-
-        @media (max-width: 560px) {
-            .careers-dept-toggle { padding: 16px; gap: 12px; }
-            .careers-dept-icon { width: 40px; height: 40px; }
-            .careers-dept-grid { padding: 4px 14px 16px; }
-            .careers-dept-blurb { display: none; }
-        }
-
-        body.careers-page:not(.footer-reveal-ready) .site-footer {
-            position: relative;
-            z-index: 2;
-        }
-
-        @media (max-width: 991px) {
-            body.careers-page .navbar-toggle.nav-menu {
-                display: block !important;
-                position: absolute;
-                top: 50%;
-                right: 16px;
-                z-index: 20;
-                width: 44px;
-                height: 44px;
-                margin: 0;
-                padding: 0;
-                border: 0;
-                background: transparent;
-                transform: translateY(-50%);
-            }
-
-            body.careers-page .navbar-toggle.nav-menu span {
-                display: block;
-                width: 22px;
-                height: 2px;
-                margin: 5px auto;
-                background: #fff;
-                transition: transform .25s ease, opacity .2s ease;
-            }
-
-            body.careers-page header.logo-navbar.white-header .navbar-toggle.nav-menu span {
-                background: var(--ink);
-            }
-
-            body.careers-page .navbar-toggle.nav-menu.open .first {
-                transform: translateY(7px) rotate(45deg);
-            }
-
-            body.careers-page .navbar-toggle.nav-menu.open .second {
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 820px) {
-            body.careers-page .careers-hero.nh-curtain-banner,
-            body.careers-page .careers-hero {
-                min-height: max(100svh, 520px);
-                height: auto;
-                padding: 0;
-            }
-
-            .shell { width: min(100% - 30px, 1180px); }
-            body.careers-page .careers-life.nh-curtain-panel,
-            body.careers-page .careers-life,
-            .careers-life.nh-curtain-panel {
-                min-height: max(100svh, 520px);
-                margin-top: 0;
-                margin-bottom: calc(-1 * max(100svh, 520px));
-                padding: clamp(36px, 5vh, 56px) 0;
-            }
-            .careers-life-inner { width: min(100% - 30px, 1180px); }
-            .careers-life-inner h2 { margin-bottom: 20px; }
-            .careers-life-marquee { margin-top: 24px; }
-            .careers-life-marquee figure { width: 168px; height: 108px; border-radius: 10px; }
-
-            body.careers-page .careers-quote.nh-curtain-banner,
-            body.careers-page .careers-quote {
-                min-height: max(100svh, 520px);
-                height: auto;
-                padding: clamp(48px, 8vh, 80px) 24px;
-            }
-
-            .careers-banner-dwell {
-                height: calc(100vh + 64px);
-                height: calc(100svh + 64px);
-                min-height: max(calc(100vh + 64px), 520px);
-                min-height: max(calc(100svh + 64px), 520px);
-            }
-
-            body.careers-page .careers-jobs.nh-curtain-panel,
-            body.careers-page .careers-jobs {
-                padding: 88px 0 80px;
-            }
-
-            .careers-jobs > .shell {
-                width: min(100% - 30px, 920px);
-            }
-
-            .careers-jobs-head { margin-bottom: 28px; }
-        }
-
-        @media (max-width: 767px) {
-            body.careers-page header.logo-navbar {
-                background: linear-gradient(180deg, rgba(10, 16, 32, 0.72), transparent) !important;
-            }
-
-            body.careers-page .navbar-toggle.nav-menu span {
-                background: #fff !important;
-            }
-
-            body.careers-page header.logo-navbar.white-header .navbar-toggle.nav-menu span {
-                background: var(--ink) !important;
-            }
-        }
-
-        @media (max-width: 560px) {
-            body.careers-page .careers-hero.nh-curtain-banner {
-                padding: 0;
-                background-position: 50% 42%;
-            }
-
-            .careers-hero-video {
-                object-position: 50% 38%;
-            }
-
-            .hero-wave {
-                height: 28px;
-            }
-
-            .hero-wave__layer {
-                height: 72px;
-                background-size: 900px 72px;
-            }
-
-            .careers-jobs-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .careers-job {
-                padding: 24px 20px;
-            }
-
-            .careers-job-meta > div {
-                grid-template-columns: 96px 1fr;
-            }
-
-            .careers-jobs.nh-curtain-panel {
-                padding: 80px 0 64px;
-            }
-        }
-    </style>
+    <script src="js/custom.js?v=20261102cardoverlap2"></script>
+    <link rel="stylesheet" href="css/careers-page.css?v=20261021careers11" />
 </head>
 <body class="home_body careers-page">
     <div id="wrapper">
-        <header class="logo-navbar blnk-header">
+        <header class="logo-navbar blnk-header white-header">
             <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
                 <div class="header-container">
                     <div class="inner-overlay"></div>
                     <div class="row header-row">
-                        <a href="index.html" class="header-logo" aria-label="Nohitatu home">
+                        <a href="/" class="header-logo" aria-label="Nohitatu home">
                             <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
-                            <img class="logo-on-light" src="images/nohitatu-logo.png" alt="Nohitatu" />
+                            <img class="logo-on-light" src="images/nohitatu-logo-black.png" alt="Nohitatu" />
                         </a>
                         <div class="col-sm-12 right-menu text-center">
                             <nav id="slidemenu" aria-label="Primary navigation">
                                 <div class="inner-menu">
-                                    <button class="navbar-toggle nav-menu cross" type="button" aria-label="Open navigation menu" aria-expanded="false">
-                                        <span class="first"></span><span class="second"></span>
-                                    </button>
+                                    <!-- Mobile menu: js/mobile-nav.js injects .mobile-nav-trigger (CSS bars). Do not put a legacy toggle in the desktop pill. -->
                                     <ul id="navigation" class="nav navbar-nav">
-                                        <li class="nav-item"><a href="index.html">HOME</a></li>
+                                        <li class="nav-item"><a href="/">HOME</a></li>
                                         <li class="nav-item">
                                             <a href="#">CORPORATE</a>
                                             <div class="sub corporate">
                                                 <ul class="sub-menu">
-                                                    <li><a href="About-us.html">About Us</a></li>
-                                                    <li><a href="Privacy-policy.html">Privacy Policy</a></li>
-                                                    <li><a href="Clients.html">Clients</a></li>
-                                                    <li><a href="blogs-page.html">Blogs</a></li>
+                                                    <li><a href="About-us">About Us</a></li>
+                                                    <li><a href="Privacy-policy">Privacy Policy</a></li>
+                                                    <li><a href="Clients">Clients</a></li>
+                                                    <li><a href="blogs-page">Blogs</a></li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#">EXPLORE NOHITATU</a>
                                             <div class="sub corporate"><ul class="sub-menu">
-                                                <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
-                                                <li><a href="Tech-skills.html">Tech Skills</a></li>
-                                                <li><a href="People.html">People</a></li>
-                                                <li><a href="Life-as-a-nohitatian.html">Life as a Nohitatian</a></li>
+                                                <li><a href="Why-nohitatu">Why Nohitatu</a></li>
+                                                <li><a href="Tech-skills">Tech Skills</a></li>
+                                                <li><a href="People">People</a></li>
+                                                <li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
                                             </ul></div>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#">SOLUTIONS</a>
                                             <div class="sub corporate"><ul class="sub-menu">
-                                                <li><a href="Software-Development.html">Software Development</a></li>
-                                                <li><a href="Saas.html">Saas</a></li>
-                                                <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                                                <li><a href="Software-Development">Software Development</a></li>
+                                                <li><a href="Saas">Saas</a></li>
+                                                <li><a href="medical-billing-services">Revenue Cycle Management</a></li>
                                             </ul></div>
                                         </li>
-                                        <li class="nav-item"><a href="Portfolio.html">PORTFOLIO</a></li>
-                                        <li class="nav-item active"><a href="Careers.html" aria-current="page">CAREER</a></li>
-                                            <li class="nav-item"><a href="Contact-us.html">CONTACT US</a></li>
+                                        <li class="nav-item"><a href="Portfolio">PORTFOLIO</a></li>
+                                        <li class="nav-item active"><a href="Careers" aria-current="page">CAREER</a></li>
+                                        <li class="nav-item"><a href="Contact-us">CONTACT US</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -1108,348 +86,85 @@
             <div class="container-fluid"><div class="row">
                 <div class="col-sm-7 menu-content">
                     <div class="menu-title">WE MAKE THINGS <span class="blueTxt">EASY</span></div>
-                    <a href="Contact-us.html" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
+                    <a href="Contact-us" class="red-btn"><span class="circle-dot wht-circle"></span>Get Free Estimation</a>
                 </div>
                 <div class="col-sm-5 right-menu">
                     <div class="side-navigation nohitatu-mobile-menu" id="MainMenu"><div class="list-group panel">
-                        <a href="index.html" class="list-group-item main-link">HOME</a>
+                        <a href="/" class="list-group-item main-link">HOME</a>
                         <a href="#careers-mobile-corporate" class="list-group-item main-link" data-bs-toggle="collapse">CORPORATE <i class="menu-ti-icons ti-angle-down"></i></a>
                         <div class="collapse" id="careers-mobile-corporate"><ul class="inner-sub-menus">
-                            <li><a href="About-us.html">About Us</a></li>
-                            <li><a href="Privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="Clients.html">Clients</a></li>
-                            <li><a href="blogs-page.html">Blogs</a></li>
+                            <li><a href="About-us">About Us</a></li>
+                            <li><a href="Privacy-policy">Privacy Policy</a></li>
+                            <li><a href="Clients">Clients</a></li>
+                            <li><a href="blogs-page">Blogs</a></li>
                         </ul></div>
                         <a href="#careers-mobile-explore" class="list-group-item main-link" data-bs-toggle="collapse">EXPLORE NOHITATU <i class="menu-ti-icons ti-angle-down"></i></a>
                         <div class="collapse" id="careers-mobile-explore"><ul class="inner-sub-menus">
-                            <li><a href="Why-nohitatu.html">Why Nohitatu</a></li>
-                            <li><a href="Tech-skills.html">Tech Skills</a></li>
-                            <li><a href="People.html">People</a></li>
+                            <li><a href="Why-nohitatu">Why Nohitatu</a></li>
+                            <li><a href="Tech-skills">Tech Skills</a></li>
+                            <li><a href="People">People</a></li>
+                            <li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
                         </ul></div>
                         <a href="#careers-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
                         <div class="collapse" id="careers-mobile-solutions"><ul class="inner-sub-menus">
-                            <li><a href="Software-Development.html">Software Development</a></li>
-                            <li><a href="Saas.html">Saas</a></li>
-                            <li><a href="medical-billing-services.html">Revenue Cycle Management</a></li>
+                            <li><a href="Software-Development">Software Development</a></li>
+                            <li><a href="Saas">Saas</a></li>
+                            <li><a href="medical-billing-services">Revenue Cycle Management</a></li>
                         </ul></div>
-                        <a href="Portfolio.html" class="list-group-item main-link">PORTFOLIO</a>
-                        <a href="Careers.html" class="list-group-item main-link" aria-current="page">CAREER</a>
-                                    <a href="Contact-us.html" class="list-group-item main-link">CONTACT US</a>
+                        <a href="Portfolio" class="list-group-item main-link">PORTFOLIO</a>
+                        <a href="Careers" class="list-group-item main-link" aria-current="page">CAREER</a>
+                        <a href="Contact-us" class="list-group-item main-link">CONTACT US</a>
                     </div></div>
                 </div>
             </div></div>
         </div>
 
         <main>
-            <!--
-              Continuous curtain chain (one stack):
-              sticky hero ← Day panel (covers hero + peels onto sticky mountain)
-              sticky mountain quote + dwell ← jobs panel
-            -->
-            <div class="nh-curtain-stack careers-full-stack" id="careers-quote-pin">
-            <section class="careers-hero nh-curtain-banner">
-                <h1 class="visually-hidden">Careers at Nohitatu</h1>
-                <div class="careers-hero-media" data-careers-hero-media aria-hidden="true">
-                    <video
-                        class="careers-hero-video is-active"
-                        data-hero-slot="0"
-                        src="images/careers-video/hero-team-01.mp4"
-                        autoplay
-                        muted
-                        playsinline
-                        webkit-playsinline
-                        preload="auto"
-                    ></video>
-                    <video
-                        class="careers-hero-video"
-                        data-hero-slot="1"
-                        src="images/careers-video/hero-team-02.fixed.mp4?v=20261006play1"
-                        muted
-                        playsinline
-                        webkit-playsinline
-                        preload="auto"
-                    ></video>
-                </div>
-                <div class="hero-wave" aria-hidden="true">
-                    <span class="hero-wave__layer hero-wave__layer--back"></span>
-                    <span class="hero-wave__layer hero-wave__layer--front"></span>
+            <section class="nh-careers-banner" aria-labelledby="careers-hero-title">
+                <div class="nh-careers-wrap">
+                    <div class="nh-careers-banner-inner">
+                        <h1 id="careers-hero-title">Job Openings</h1>
+                        <p>We are a growing firm looking for passionate people! We have openings for the following exciting positions across our offices. Please have a look at our current openings and contact us.</p>
+                        <button type="button" class="nh-fraud-link" data-nh-fraud-open>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" aria-hidden="true"><path fill="#2c948c" d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>Beware of Fraudulent Activity
+                        </button>
+                        <div class="nh-job-search">
+                            <input type="search" id="job-search" placeholder="Search Jobs..." autocomplete="off" aria-label="Search jobs" />
+                            <button type="button" class="nh-job-search-reset" data-job-search-reset hidden aria-label="Clear search">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" aria-hidden="true"><path fill="#333" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            </button>
+                            <button type="button" class="nh-job-search-go" id="search-submit" aria-label="Search jobs">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" aria-hidden="true"><path fill="#fff" d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <blockquote class="careers-quote nh-curtain-banner" id="careers-quote-banner">
-                <p>We are committed to attracting, developing and retaining the best talent.</p>
-                <cite>Attract · Develop · Retain</cite>
-            </blockquote>
-
-            <div class="careers-banner-dwell" aria-hidden="true"></div>
-
-            <section class="careers-jobs nh-curtain-panel" aria-labelledby="careers-jobs-title" id="open-positions">
-                <div class="shell">
-                    <div class="careers-jobs-head">
-                        <h2 id="careers-jobs-title">Open positions</h2>
-                        <p>Browse openings by department. Select a department to see its current roles, then apply with your resume and the job code that matches your interest.</p>
-                        <p class="careers-jobs-total" data-careers-total>6 open roles across 4 departments</p>
-                        <a class="careers-jobs-linkedin" href="https://www.linkedin.com/company/nohitatu" target="_blank" rel="noopener noreferrer">Follow us on LinkedIn</a>
-                    </div>
-
-                    <div class="careers-jobs-grid" id="careers-jobs-grid" data-careers-grid style="display:none" hidden>
-                        <article class="careers-job">
-                            <h3 class="careers-job-title">Business Analyst Internship</h3>
-                            <dl class="careers-job-meta">
+            <section class="nh-careers-jobs" id="Career" aria-label="Current openings">
+                <div class="nh-careers-wrap">
+                    <div class="nh-job-grid" id="post_main" data-careers-list>
+                        <article class="nh-job-card">
+                            <div class="nh-job-card-head">
                                 <div>
-                                    <dt>Job Code</dt>
-                                    <dd><span class="careers-job-code">569</span></dd>
+                                    <h3><a href="Careerdetails.html?id=1040&amp;companyId=183#id=1040&amp;companyId=183">Software Developer</a></h3>
+                                    <p class="nh-job-codes"><span><strong>JOB CODE</strong> 1040</span><span><strong>DEPARTMENT</strong>Administration</span></p>
                                 </div>
-                                <div>
-                                    <dt>Experience</dt>
-                                    <dd>Fresher</dd>
-                                </div>
-                                <div>
-                                    <dt>Location</dt>
-                                    <dd>Chennai</dd>
-                                </div>
+                                <a class="nh-job-arrow" href="Careerdetails.html?id=1040&amp;companyId=183#id=1040&amp;companyId=183" aria-label="View Software Developer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 18L12.6 16.55L16.15 13H4V11H16.15L12.6 7.45L14 6L20 12L14 18Z" fill="currentColor"/></svg></a>
+                            </div>
+                            <dl class="nh-job-meta">
+                                <div><dt>NO. OF POSITION</dt><dd>3</dd></div>
+                                <div><dt>WORK LOCATION</dt><dd>purasaivalkam</dd></div>
+                                <div><dt>EXPERIENCE</dt><dd>2+ Years</dd></div>
+                                <div><dt>TYPE</dt><dd>Permanent</dd></div>
                             </dl>
-                            <a class="careers-job-apply" href="Careerdetails.html?id=569">Apply</a>
-                        </article>
-
-                        <article class="careers-job">
-                            <h3 class="careers-job-title">Business Analyst</h3>
-                            <dl class="careers-job-meta">
-                                <div>
-                                    <dt>Job Code</dt>
-                                    <dd><span class="careers-job-code">556</span></dd>
-                                </div>
-                                <div>
-                                    <dt>Experience</dt>
-                                    <dd>1-2 Years</dd>
-                                </div>
-                                <div>
-                                    <dt>Location</dt>
-                                    <dd>Chennai</dd>
-                                </div>
-                            </dl>
-                            <a class="careers-job-apply" href="Careerdetails.html?id=556">Apply</a>
-                        </article>
-
-                        <article class="careers-job">
-                            <h3 class="careers-job-title">Angular Developer</h3>
-                            <dl class="careers-job-meta">
-                                <div>
-                                    <dt>Job Code</dt>
-                                    <dd><span class="careers-job-code">554</span></dd>
-                                </div>
-                                <div>
-                                    <dt>Experience</dt>
-                                    <dd>1-5 Years</dd>
-                                </div>
-                                <div>
-                                    <dt>Location</dt>
-                                    <dd>Chennai</dd>
-                                </div>
-                                <div>
-                                    <dt>Shift Timings</dt>
-                                    <dd>08.30AM to 06:30PM</dd>
-                                </div>
-                            </dl>
-                            <a class="careers-job-apply" href="Careerdetails.html?id=554">Apply</a>
-                        </article>
-
-                        <article class="careers-job">
-                            <h3 class="careers-job-title">Hiring Freshers – HR Internship</h3>
-                            <dl class="careers-job-meta">
-                                <div>
-                                    <dt>Job Code</dt>
-                                    <dd><span class="careers-job-code">512</span></dd>
-                                </div>
-                                <div>
-                                    <dt>Experience</dt>
-                                    <dd>Fresher</dd>
-                                </div>
-                                <div>
-                                    <dt>Location</dt>
-                                    <dd>Chennai</dd>
-                                </div>
-                            </dl>
-                            <a class="careers-job-apply" href="Careerdetails.html?id=512">Apply</a>
-                        </article>
-
-                        <article class="careers-job">
-                            <h3 class="careers-job-title">Full Stack Developer (AI-Enabled)</h3>
-                            <dl class="careers-job-meta">
-                                <div>
-                                    <dt>Job Code</dt>
-                                    <dd><span class="careers-job-code">501</span></dd>
-                                </div>
-                                <div>
-                                    <dt>Experience</dt>
-                                    <dd>2+ Years</dd>
-                                </div>
-                                <div>
-                                    <dt>Location</dt>
-                                    <dd>Chennai</dd>
-                                </div>
-                            </dl>
-                            <a class="careers-job-apply" href="Careerdetails.html?id=501">Apply</a>
-                        </article>
-
-                        <article class="careers-job">
-                            <h3 class="careers-job-title">Business Development Manager</h3>
-                            <dl class="careers-job-meta">
-                                <div>
-                                    <dt>Job Code</dt>
-                                    <dd><span class="careers-job-code">500</span></dd>
-                                </div>
-                                <div>
-                                    <dt>Experience</dt>
-                                    <dd>6 and Above</dd>
-                                </div>
-                                <div>
-                                    <dt>Location</dt>
-                                    <dd>Chennai</dd>
-                                </div>
-                            </dl>
-                            <a class="careers-job-apply" href="Careerdetails.html?id=500">Apply</a>
                         </article>
                     </div>
-
-                    <div class="careers-departments" id="careers-departments" data-careers-departments>
-                        <section class="careers-dept" data-department="engineering" id="department-engineering">
-                            <h3 class="careers-dept-heading">
-                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-engineering" id="dept-toggle-engineering">
-                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
-                                    <span class="careers-dept-head-text">
-                                        <span class="careers-dept-name">Engineering &amp; Development</span>
-                                        <span class="careers-dept-blurb">Build and ship the products our clients rely on.</span>
-                                    </span>
-                                    <span class="careers-dept-count">2 open roles</span>
-                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </button>
-                            </h3>
-                            <div class="careers-dept-panel" id="dept-panel-engineering" role="region" aria-labelledby="dept-toggle-engineering">
-                                <div class="careers-dept-panel-inner" inert>
-                                    <div class="careers-dept-grid">
-                                        <article class="careers-job" data-department="engineering">
-                                            <h4 class="careers-job-title">Angular Developer</h4>
-                                            <dl class="careers-job-meta">
-                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">554</span></dd></div>
-                                                <div><dt>Experience</dt><dd>1-5 Years</dd></div>
-                                                <div><dt>Location</dt><dd>Chennai</dd></div>
-                                                <div><dt>Shift Timings</dt><dd>08.30AM to 06:30PM</dd></div>
-                                            </dl>
-                                            <a class="careers-job-apply" href="Careerdetails.html?id=554">Apply</a>
-                                        </article>
-                                        <article class="careers-job" data-department="engineering">
-                                            <h4 class="careers-job-title">Full Stack Developer (AI-Enabled)</h4>
-                                            <dl class="careers-job-meta">
-                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">501</span></dd></div>
-                                                <div><dt>Experience</dt><dd>2+ Years</dd></div>
-                                                <div><dt>Location</dt><dd>Chennai</dd></div>
-                                            </dl>
-                                            <a class="careers-job-apply" href="Careerdetails.html?id=501">Apply</a>
-                                        </article>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="careers-dept" data-department="business-analysis" id="department-business-analysis">
-                            <h3 class="careers-dept-heading">
-                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-business-analysis" id="dept-toggle-business-analysis">
-                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
-                                    <span class="careers-dept-head-text">
-                                        <span class="careers-dept-name">Business Analysis</span>
-                                        <span class="careers-dept-blurb">Turn business needs into clear, buildable requirements.</span>
-                                    </span>
-                                    <span class="careers-dept-count">2 open roles</span>
-                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </button>
-                            </h3>
-                            <div class="careers-dept-panel" id="dept-panel-business-analysis" role="region" aria-labelledby="dept-toggle-business-analysis">
-                                <div class="careers-dept-panel-inner" inert>
-                                    <div class="careers-dept-grid">
-                                        <article class="careers-job" data-department="business-analysis">
-                                            <h4 class="careers-job-title">Business Analyst Internship</h4>
-                                            <dl class="careers-job-meta">
-                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">569</span></dd></div>
-                                                <div><dt>Experience</dt><dd>Fresher</dd></div>
-                                                <div><dt>Location</dt><dd>Chennai</dd></div>
-                                            </dl>
-                                            <a class="careers-job-apply" href="Careerdetails.html?id=569">Apply</a>
-                                        </article>
-                                        <article class="careers-job" data-department="business-analysis">
-                                            <h4 class="careers-job-title">Business Analyst</h4>
-                                            <dl class="careers-job-meta">
-                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">556</span></dd></div>
-                                                <div><dt>Experience</dt><dd>1-2 Years</dd></div>
-                                                <div><dt>Location</dt><dd>Chennai</dd></div>
-                                            </dl>
-                                            <a class="careers-job-apply" href="Careerdetails.html?id=556">Apply</a>
-                                        </article>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="careers-dept" data-department="sales" id="department-sales">
-                            <h3 class="careers-dept-heading">
-                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-sales" id="dept-toggle-sales">
-                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></span>
-                                    <span class="careers-dept-head-text">
-                                        <span class="careers-dept-name">Sales &amp; Business Development</span>
-                                        <span class="careers-dept-blurb">Grow partnerships and open new markets.</span>
-                                    </span>
-                                    <span class="careers-dept-count">1 open role</span>
-                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </button>
-                            </h3>
-                            <div class="careers-dept-panel" id="dept-panel-sales" role="region" aria-labelledby="dept-toggle-sales">
-                                <div class="careers-dept-panel-inner" inert>
-                                    <div class="careers-dept-grid">
-                                        <article class="careers-job" data-department="sales">
-                                            <h4 class="careers-job-title">Business Development Manager</h4>
-                                            <dl class="careers-job-meta">
-                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">500</span></dd></div>
-                                                <div><dt>Experience</dt><dd>6 and Above</dd></div>
-                                                <div><dt>Location</dt><dd>Chennai</dd></div>
-                                            </dl>
-                                            <a class="careers-job-apply" href="Careerdetails.html?id=500">Apply</a>
-                                        </article>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="careers-dept" data-department="hr" id="department-hr">
-                            <h3 class="careers-dept-heading">
-                                <button class="careers-dept-toggle" type="button" aria-expanded="false" aria-controls="dept-panel-hr" id="dept-toggle-hr">
-                                    <span class="careers-dept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
-                                    <span class="careers-dept-head-text">
-                                        <span class="careers-dept-name">Human Resources</span>
-                                        <span class="careers-dept-blurb">Find, grow, and support our people.</span>
-                                    </span>
-                                    <span class="careers-dept-count">1 open role</span>
-                                    <svg class="careers-dept-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </button>
-                            </h3>
-                            <div class="careers-dept-panel" id="dept-panel-hr" role="region" aria-labelledby="dept-toggle-hr">
-                                <div class="careers-dept-panel-inner" inert>
-                                    <div class="careers-dept-grid">
-                                        <article class="careers-job" data-department="hr">
-                                            <h4 class="careers-job-title">Hiring Freshers – HR Internship</h4>
-                                            <dl class="careers-job-meta">
-                                                <div><dt>Job Code</dt><dd><span class="careers-job-code">512</span></dd></div>
-                                                <div><dt>Experience</dt><dd>Fresher</dd></div>
-                                                <div><dt>Location</dt><dd>Chennai</dd></div>
-                                            </dl>
-                                            <a class="careers-job-apply" href="Careerdetails.html?id=512">Apply</a>
-                                        </article>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+                    <div class="nh-jobs-more is-hidden" data-careers-more>
+                        <button type="button">Load More</button>
                     </div>
-
-                    <p class="careers-jobs-foot">Questions about a role? Write to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a> or <a href="Contact-us.html">contact us</a>. Follow openings and company updates on <a href="https://www.linkedin.com/company/nohitatu" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
                 </div>
             </section>
-            </div>
         </main>
 
         <footer class="footer site-footer">
@@ -1461,42 +176,49 @@
                     <div class="footer-office"><div class="footer-office-top"><div class="footer-office-label"><img src="images/newyork-flag.png" alt="" width="18" height="12" /><span>New York Office</span></div><span class="footer-office-skyline" aria-hidden="true"><svg viewBox="0 0 64 28" fill="none"><path d="M2 26h60M6 26V10h8v16M16 26V6h7v20M25 26V12h5v14M32 26V3h8v23M42 26V9h6v17M50 26V13h8v13" stroke="currentColor" stroke-width="1.6"/></svg></span></div><p>1805 5th Ave F,<br>Bay Shore,<br>NY 11706</p></div>
                 </div>
                 <div class="footer-col"><h3 class="footer-heading">Corporate</h3><ul class="footernav">
-                    <li><a href="About-us.html">About Us</a></li><li><a href="Privacy-policy.html">Privacy Policy</a></li><li><a href="Portfolio.html">Portfolio</a></li><li><a href="Careers.html">Careers</a></li><li><a href="Contact-us.html">Contact Us</a></li><li><a href="Clients.html">Clients</a></li><li><a href="blogs-page.html">Blogs</a></li>
+                    <li><a href="About-us">About Us</a></li><li><a href="Privacy-policy">Privacy Policy</a></li><li><a href="Portfolio">Portfolio</a></li><li><a href="Careers">Careers</a></li><li><a href="Contact-us">Contact Us</a></li><li><a href="Clients">Clients</a></li><li><a href="blogs-page">Blogs</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
-                    <li><a href="Why-nohitatu.html">Why Nohitatu</a></li><li><a href="Tech-skills.html">Tech Skills</a></li><li><a href="People.html">People</a></li><li><a href="Life-as-a-nohitatian.html">Life as a Nohitatian</a></li>
+                    <li><a href="Why-nohitatu">Why Nohitatu</a></li><li><a href="Tech-skills">Tech Skills</a></li><li><a href="People">People</a></li><li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
-                    <li><a href="Software-Development.html">Software Development</a></li><li><a href="Saas.html">SaaS</a></li><li><a href="Contact-us.html">Contact</a></li>
+                    <li><a href="Software-Development">Software Development</a></li><li><a href="Saas">SaaS</a></li><li><a href="Contact-us">Contact</a></li>
                 </ul></div>
                 <div class="footer-col footer-contact">
                     <h3 class="footer-heading footer-heading-accent">Have Questions?</h3><p class="footer-contact-lead">Get in touch with us</p>
                     <div class="footer-phones">
-                                <a class="footer-phone" href="tel:+917397459131" aria-label="Call HR +91 73974 59131">
-                                    <span class="footer-phone-role">HR</span>
-                                    <span class="footer-phone-number">+91 73974 59131</span>
-                                </a>
-                                <a class="footer-phone" href="tel:+919941333344" aria-label="Call Sales +91 99413 33444">
-                                    <span class="footer-phone-role">Sales</span>
-                                    <span class="footer-phone-number">+91 99413 33444</span>
-                                </a>
-                            </div>
+                        <a class="footer-phone" href="tel:+917397459131" aria-label="Call HR +91 73974 59131">
+                            <span class="footer-phone-role">HR</span>
+                            <span class="footer-phone-number">+91 73974 59131</span>
+                        </a>
+                        <a class="footer-phone" href="tel:+919941333344" aria-label="Call Sales +91 99413 33444">
+                            <span class="footer-phone-role">Sales</span>
+                            <span class="footer-phone-number">+91 99413 33444</span>
+                        </a>
+                    </div>
                     <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
                     <div class="footer-contact-meta"><a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a></div>
                 </div>
             </div></div></div>
             <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
                 <div class="footer-copy"><span>Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and global software development company. All rights reserved.</span></div>
-                <div class="social-icons"><a href="https://www.facebook.com/nohitatu/" class="fb-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook"></a><a href="https://twitter.com/nohitatu" class="tw-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter"></a><a href="https://www.linkedin.com/company/nohitatu" class="lnkd-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a><a href="https://www.instagram.com/nohitatu" class="insta-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"></a></div>
             </div></div></div>
         </footer>
+    </div>
+
+    <!-- Fraud warning modal -->
+    <div class="nh-fraud-modal" id="nh-fraud-modal" role="dialog" aria-modal="true" aria-labelledby="nh-fraud-title" hidden>
+        <div class="nh-fraud-dialog">
+            <button type="button" class="nh-fraud-close" data-nh-fraud-close aria-label="Close">&times;</button>
+            <h2 id="nh-fraud-title">Beware of Fraudulent Activity</h2>
+            <p><strong>Note:</strong>Fraudulent individuals may falsely pose as Nohitatu representatives and offer fake job openings. Nohitatu does not offer part-time or work-from-home task-based jobs that require payment. Official communications come from <strong>@nohitatu.com</strong>only. We never ask for payment in exchange for employment. Do not share sensitive information through unofficial channels. Stay vigilant and safe.</p>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script>
-        (() => {
+    <script>(() => {
             const toggle = document.querySelector(".navbar-toggle.nav-menu");
             const menu = document.querySelector(".full-screen-menu");
             if (!toggle || !menu) return;
@@ -1506,217 +228,55 @@
                 document.body.classList.toggle("fixed", open);
                 toggle.setAttribute("aria-expanded", String(open));
             };
-            toggle.addEventListener("click", () => setMenuState(!menu.classList.contains("show")));
+            toggle.addEventListener("click", () =>setMenuState(!menu.classList.contains("show")));
             document.addEventListener("keydown", (event) => {
                 if (event.key === "Escape") setMenuState(false);
             });
         })();
     </script>
-
-    <script>
-        /* Careers hero playlist: 01 ↔ 02 (known on-disk clips). No HEAD probe —
-           async probing delayed start and video.load() aborted the HTML autoplay,
-           which left the hero stuck on the first frame. Skip broken srcs on error. */
-        (() => {
-            const media = document.querySelector("[data-careers-hero-media]");
-            if (!media) return;
-            const slots = Array.from(media.querySelectorAll("[data-hero-slot]"));
-            if (!slots.length) return;
-
-            /* Only files that exist under images/careers-video/ (no 03). */
-            let sources = [
-                "images/careers-video/hero-team-01.mp4",
-                "images/careers-video/hero-team-02.fixed.mp4?v=20261006play1"
-            ];
-
-            let activeIndex = 0;
-            let front = 0;
-            let advancing = false;
-
-            const fileOf = (index) => sources[((index % sources.length) + sources.length) % sources.length];
-            const pathOf = (src) => (src || "").replace(/^\.\//, "").split("?")[0];
-
-            const prep = (video, { loop = false } = {}) => {
-                video.muted = true;
-                video.defaultMuted = true;
-                video.volume = 0;
-                video.loop = loop;
-                video.controls = false;
-                video.playsInline = true;
-                video.setAttribute("muted", "");
-                video.setAttribute("playsinline", "");
-                video.setAttribute("webkit-playsinline", "");
-                video.setAttribute("aria-hidden", "true");
-                video.setAttribute("tabindex", "-1");
-                video.removeAttribute("controls");
-                if (loop) video.setAttribute("loop", "");
-                else video.removeAttribute("loop");
+    <script>(() => {
+            const modal = document.getElementById("nh-fraud-modal");
+            if (!modal) return;
+            const openers = document.querySelectorAll("[data-nh-fraud-open]");
+            const closers = document.querySelectorAll("[data-nh-fraud-close]");
+            const open = () => {
+                modal.hidden = false;
+                requestAnimationFrame(() =>modal.classList.add("is-open"));
+                document.body.style.overflow = "hidden";
             };
-
-            const playSafe = (video) => {
-                prep(video, { loop: sources.length < 2 });
-                const playPromise = video.play();
-                if (playPromise && typeof playPromise.catch === "function") {
-                    playPromise.catch(() => {});
-                }
+            const close = () => {
+                modal.classList.remove("is-open");
+                document.body.style.overflow = "";
+                window.setTimeout(() => { modal.hidden = true; }, 220);
             };
-
-            const ensureSrc = (video, src) => {
-                const current = pathOf(video.getAttribute("src") || video.currentSrc || "");
-                const next = pathOf(src);
-                if (current === next && !video.error) return false;
-                video.src = src;
-                video.load();
-                return true;
-            };
-
-            const showSlot = (incoming, nextIndex) => {
-                try {
-                    if (incoming.ended || incoming.currentTime > 0.05) incoming.currentTime = 0;
-                } catch (_) { /* ignore */ }
-                playSafe(incoming);
-                incoming.classList.add("is-active");
-                slots.forEach((slot) => {
-                    if (slot === incoming) return;
-                    slot.classList.remove("is-active");
-                    slot.pause();
-                });
-                front = Math.max(0, slots.indexOf(incoming));
-                activeIndex = nextIndex;
-                media.dataset.heroClip = String(activeIndex + 1);
-            };
-
-            const incomingSlot = () => (slots.length < 2 ? slots[0] : slots[(front + 1) % slots.length]);
-
-            const dropSource = (src) => {
-                const path = pathOf(src);
-                sources = sources.filter((s) => pathOf(s) !== path);
-            };
-
-            const advance = () => {
-                if (advancing) return;
-
-                if (sources.length < 2) {
-                    const current = slots[front] || slots[0];
-                    prep(current, { loop: true });
-                    try { current.currentTime = 0; } catch (_) { /* ignore */ }
-                    playSafe(current);
-                    return;
-                }
-
-                advancing = true;
-                const next = (activeIndex + 1) % sources.length;
-                const incoming = incomingSlot();
-                const nextSrc = fileOf(next);
-                ensureSrc(incoming, nextSrc);
-
-                let done = false;
-                let failTimer = 0;
-                const finishOk = () => {
-                    if (done) return;
-                    done = true;
-                    incoming.removeEventListener("canplay", finishOk);
-                    incoming.removeEventListener("error", finishErr);
-                    window.clearTimeout(failTimer);
-                    showSlot(incoming, next);
-                    advancing = false;
-                    /* Prefetch the following clip into the idle slot. */
-                    const idle = incomingSlot();
-                    ensureSrc(idle, fileOf(activeIndex + 1));
-                };
-                const finishErr = () => {
-                    if (done) return;
-                    done = true;
-                    incoming.removeEventListener("canplay", finishOk);
-                    incoming.removeEventListener("error", finishErr);
-                    window.clearTimeout(failTimer);
-                    dropSource(nextSrc);
-                    advancing = false;
-                    if (!sources.length) {
-                        sources = ["images/careers-video/hero-team-01.mp4"];
-                        ensureSrc(slots[0], sources[0]);
-                        showSlot(slots[0], 0);
-                        return;
-                    }
-                    advance();
-                };
-
-                incoming.addEventListener("canplay", finishOk, { once: true });
-                incoming.addEventListener("error", finishErr, { once: true });
-                if (incoming.readyState >= 3 && !incoming.error) {
-                    finishOk();
-                } else {
-                    /* Prefer canplay; only fail if still unloadable after a beat. */
-                    failTimer = window.setTimeout(() => {
-                        if (done) return;
-                        if (incoming.error || incoming.readyState < 2) finishErr();
-                        else finishOk();
-                    }, 2500);
-                }
-            };
-
-            /* Start immediately — do not await network probes. */
-            slots.forEach((video) => prep(video, { loop: sources.length < 2 }));
-            front = 0;
-            activeIndex = 0;
-            slots[0].classList.add("is-active");
-            slots.slice(1).forEach((slot) => slot.classList.remove("is-active"));
-            /* Keep markup src on slot 0 if it already matches — avoid load() aborting autoplay. */
-            ensureSrc(slots[0], fileOf(0));
-            if (slots[1]) ensureSrc(slots[1], fileOf(1));
-            media.dataset.heroClip = "1";
-            playSafe(slots[0]);
-
-            slots.forEach((video) => {
-                video.addEventListener("ended", () => {
-                    if (video.classList.contains("is-active")) advance();
-                });
-                video.addEventListener("error", () => {
-                    if (!video.classList.contains("is-active") || advancing) return;
-                    dropSource(video.getAttribute("src") || "");
-                    if (!sources.length) {
-                        sources = ["images/careers-video/hero-team-01.mp4"];
-                        ensureSrc(video, sources[0]);
-                        prep(video, { loop: true });
-                        playSafe(video);
-                        return;
-                    }
-                    advance();
-                });
-            });
-
-            document.addEventListener("visibilitychange", () => {
-                if (document.hidden) {
-                    (slots[front] || slots[0]).pause();
-                    return;
-                }
-                playSafe(slots[front] || slots[0]);
+            openers.forEach((el) =>el.addEventListener("click", open));
+            closers.forEach((el) =>el.addEventListener("click", close));
+            modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && modal.classList.contains("is-open")) close();
             });
         })();
     </script>
 
-    <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
-    <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
     <div id="chatbot-container" class="chatbot-container">
         <div id="chatbot-window" class="chatbot-window hidden">
             <div class="chatbot-header">
                 <div class="chatbot-header-content">
                     <div class="chatbot-avatar-box">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2c948c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
                             <rect x="4" y="9" width="16" height="11" rx="3"></rect>
-                            <circle cx="9" cy="14" r="1.2" fill="#726cf4"></circle>
-                            <circle cx="15" cy="14" r="1.2" fill="#726cf4"></circle>
-                            <path d="M10 17.5h4" stroke="#726cf4"></path>
+                            <circle cx="9" cy="14" r="1.2" fill="#2c948c"></circle>
+                            <circle cx="15" cy="14" r="1.2" fill="#2c948c"></circle>
+                            <path d="M10 17.5h4" stroke="#2c948c"></path>
                         </svg>
                     </div>
                     <div class="chatbot-header-text">
                         <h4>NohiAI</h4>
-                        <small><span class="status-dot"></span> Nohitatu AI Support</small>
+                        <small><span class="status-dot"></span>Nohitatu AI Support</small>
                     </div>
                 </div>
             </div>
-
             <div id="chatbot-messages" class="chatbot-messages">
                 <div class="chatbot-message bot-message">
                     <div class="message-content">
@@ -1725,14 +285,13 @@
                 </div>
                 <div class="quick-chips" role="group" aria-label="Choose one">
                     <span class="quick-chips-label">Popular Questions</span>
-                    <button class="chip-btn" data-query="Tell me about shipped products and portfolio">📦 Shipped Products</button>
-                    <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">🏥 Healthcare RCM</button>
-                    <button class="chip-btn" data-query="How do dedicated developer teams work?">🚀 Hire Developers</button>
-                    <button class="chip-btn" data-query="Start a project or free quote">📞 Contact Sales</button>
-                    <button class="chip-btn" data-query="Looking for a job">📄 Careers &amp; Jobs</button>
+                    <button class="chip-btn" data-query="Tell me about shipped products and portfolio">Shipped Products</button>
+                    <button class="chip-btn" data-query="Tell me about healthcare tech and RCM solutions">Healthcare RCM</button>
+                    <button class="chip-btn" data-query="How do dedicated developer teams work?">Hire Developers</button>
+                    <button class="chip-btn" data-query="Start a project or free quote">Contact Sales</button>
+                    <button class="chip-btn" data-query="Looking for a job">Careers &amp; Jobs</button>
                 </div>
             </div>
-
             <div class="chatbot-input-area">
                 <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask NohiAI about custom AI, project quotes, or careers..." autocomplete="off" />
                 <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
@@ -1742,37 +301,6 @@
                 </button>
             </div>
         </div>
-
-        <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
-            <div id="toggle-icon-chat" class="toggle-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
-                    <rect x="4" y="9" width="16" height="11" rx="3"></rect>
-                    <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
-                    <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
-                    <path d="M10 17.5h4"></path>
-                </svg>
-            </div>
-            <div id="toggle-icon-close" class="toggle-icon hidden">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </div>
-        </button>
-    </div>
-            </div>
-
-            <div class="chatbot-input-area">
-                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask NohiAI about custom AI, project quotes, or careers..." autocomplete="off" />
-                <button id="chatbot-send" class="chatbot-send-btn" title="Send Message">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
         <button id="chatbot-toggle" class="chatbot-toggle" title="Chat with NohiAI">
             <div id="toggle-icon-chat" class="toggle-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1793,8 +321,8 @@
     </div>
 
     <script src="js/api-base.js?v=20260812liveapi1"></script>
-    <script src="js/hrpops-careers.js?v=20260915hrpops2"></script>
-    <script src="js/careers-list.js?v=20260915hrpops2"></script>
+    <script src="js/hrpops-careers.js?v=20261023hrpops1"></script>
+    <script src="js/careers-list.js?v=20261023hrpops1"></script>
     <script src="js/chatbot.js?v=20260817backbtn"></script>
 </body>
 </html>

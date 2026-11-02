@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NohiAI — Nohitatu AI Support widget
+   NohiAI - Nohitatu AI Support widget
    Calls FastAPI /api/chat; keeps branded panel + quick chips.
    Config: window.NOHI_CHAT_API or #chatbot-container[data-api]
    Default API: http://localhost:8010 (avoids common :8000 conflicts)
@@ -20,6 +20,12 @@ function initNohiChatbot() {
   if (toggleBtn.dataset.nohiBound === '1') return;
   toggleBtn.dataset.nohiBound = '1';
 
+  /* Keep FAB a direct body child so position:fixed is viewport-relative
+     (hero transforms / footer wrappers otherwise trap it mid-screen). */
+  if (container && container.parentElement !== document.body) {
+    document.body.appendChild(container);
+  }
+
   const CONTACT_EMAIL = 'sales@nohitatu.com';
   const HR_EMAIL = 'hrd@nohitatu.com';
   const SALES_PHONE = '+91 99413 33444';
@@ -27,7 +33,7 @@ function initNohiChatbot() {
   const MAX_HISTORY = 20;
   const HISTORY_CONTENT_MAX = 1500;
 
-  /** Dual-tone mini-illustrations (brand violet + navy) — filled, not outline clones. */
+  /** Dual-tone mini-illustrations (brand violet + navy) - filled, not outline clones. */
   const TOPIC_ICONS = {
     products:
       '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2" width="12.5" height="9.5" rx="2" fill="#1a2332"/><rect x="6.5" y="6.2" width="14.5" height="11.8" rx="2.2" fill="#726cf4"/><rect x="9" y="9" width="9.5" height="1.7" rx="0.7" fill="#fff"/><rect x="9" y="12.2" width="6.2" height="1.7" rx="0.7" fill="#fff" opacity=".55"/><circle cx="18.4" cy="19.1" r="4.1" fill="#1a2332"/><path d="M16.6 19.15l1.3 1.3 2.5-2.65" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -41,41 +47,41 @@ function initNohiChatbot() {
       '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 18.8V13.4c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v5.4" fill="#1a2332"/><path d="M9.6 18.8V10.1c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v8.7" fill="#726cf4"/><path d="M15 18.8V6.6c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v12.2" fill="#1a2332"/><circle cx="17.4" cy="4.35" r="2.55" fill="#726cf4"/><path d="M17.4 3.15l.45 1.1 1.2.1-1 .75.3 1.15-1-.65-1 .65.3-1.15-1-.75 1.2-.1z" fill="#fff"/><rect x="2.4" y="19.35" width="19.2" height="1.9" rx="0.7" fill="#1a2332"/></svg>'
   };
 
-  /** Knowledge-base replies keyed by menu topic (1:1 chip → answer). */
+  /** Knowledge-base replies keyed by menu topic (1:1 chip -> answer). */
   const TOPIC_KB = {
     products:
       "Nohitatu has designed and shipped over 29 custom software products and enterprise client systems:\n\n" +
-      "• **Healthcare RCM & CMS 1500 Claim Billing**\n" +
-      "• **Sales CRM & Real-time Analytics**\n" +
-      "• **Dojoman Event & Tournament Management**\n" +
-      "• **HR Suite & Automated Payroll**\n" +
-      "• **FinTechesh Financial Automation**\n\n" +
+      "* **Healthcare RCM & CMS 1500 Claim Billing**\n" +
+      "* **Sales CRM & Real-time Analytics**\n" +
+      "* **Dojoman Event & Tournament Management**\n" +
+      "* **HR Suite & Automated Payroll**\n" +
+      "* **FinTechesh Financial Automation**\n\n" +
       "Explore full case studies and live demos at Portfolio.html!",
     healthcare:
       "Healthcare software & Revenue Cycle Management (RCM) is one of Nohitatu's flagship specializations:\n\n" +
-      "• **Automated CMS-1500 & 837P electronic claim processing**\n" +
-      "• **Patient eligibility verification & charge entry**\n" +
-      "• **Denial management and HIPAA-compliant workflow dashboards**\n\n" +
+      "* **Automated CMS-1500 & 837P electronic claim processing**\n" +
+      "* **Patient eligibility verification & charge entry**\n" +
+      "* **Denial management and HIPAA-compliant workflow dashboards**\n\n" +
       "Contact our sales specialists at " + CONTACT_EMAIL + " or " + SALES_PHONE + " to discuss your healthcare IT needs.",
     hire:
-      "You can hire pre-vetted senior certified professionals — software developers, mobile app engineers, and UI/UX designers — from Nohitatu.\n\n" +
-      "• **Flexible Engagement**: Dedicated Team, Time & Material, or Fixed Price models\n" +
-      "• **Rapid Onboarding**: Dedicated teams of certified professionals onboard within 3 to 7 business days\n" +
-      "• **Direct Integration**: Integrated directly into your tools, timezone, and product roadmap\n\n" +
+      "You can hire pre-vetted senior certified professionals - software developers, mobile app engineers, and UI/UX designers - from Nohitatu.\n\n" +
+      "* **Flexible Engagement**: Dedicated Team, Time & Material, or Fixed Price models\n" +
+      "* **Rapid Onboarding**: Dedicated teams of certified professionals onboard within 3 to 7 business days\n" +
+      "* **Direct Integration**: Integrated directly into your tools, timezone, and product roadmap\n\n" +
       "Chat directly with our sales team at " + CONTACT_EMAIL + " or " + SALES_PHONE + " to get started!",
     sales:
       "Ready to scale your software product or get a custom cost estimation?\n\n" +
-      "• **Sales Email**: " + CONTACT_EMAIL + "\n" +
-      "• **Sales Phone**: " + SALES_PHONE + "\n" +
-      "• **Online Request Form**: Contact-us.html\n" +
-      "• **Explore Shipped Products**: Portfolio.html\n\n" +
+      "* **Sales Email**: " + CONTACT_EMAIL + "\n" +
+      "* **Sales Phone**: " + SALES_PHONE + "\n" +
+      "* **Online Request Form**: Contact-us.html\n" +
+      "* **Explore Shipped Products**: Portfolio.html\n\n" +
       "Our team of certified professionals typically responds within 24 business hours for project consultations.",
     careers:
       "Looking to join Nohitatu? We are always hiring talented software engineers, QA leads, and UI designers!\n\n" +
-      "• **View Open Roles**: Careers.html\n" +
-      "• **Submit Resume**: PostResume.html\n" +
-      "• **HR Contact Email**: " + HR_EMAIL + "\n" +
-      "• **HR Phone**: " + HR_PHONE + "\n\n" +
+      "* **View Open Roles**: Careers.html\n" +
+      "* **Submit Resume**: PostResume.html\n" +
+      "* **HR Contact Email**: " + HR_EMAIL + "\n" +
+      "* **HR Phone**: " + HR_PHONE + "\n\n" +
       "For job inquiries, please contact our HR team directly."
   };
 
@@ -106,15 +112,15 @@ function initNohiChatbot() {
   }
 
   function careersUrl() {
-    return pageBase() + 'Careers.html';
+    return pageBase() + 'Careers';
   }
 
   function portfolioUrl() {
-    return pageBase() + 'Portfolio.html';
+    return pageBase() + 'Portfolio';
   }
 
   function contactUrl() {
-    return pageBase() + 'Contact-us.html';
+    return pageBase() + 'Contact-us';
   }
 
   function resolveApiBase() {
@@ -128,6 +134,9 @@ function initNohiChatbot() {
 
   function setOpen(open) {
     chatWindow.classList.toggle('hidden', !open);
+    if (container) {
+      container.classList.toggle('is-chat-open', open);
+    }
     if (open) {
       chatWindow.removeAttribute('inert');
       chatWindow.setAttribute('aria-hidden', 'false');
@@ -148,8 +157,12 @@ function initNohiChatbot() {
 
   setOpen(false);
 
-  function toggleChat() {
-    setOpen(chatWindow.classList.contains('hidden'));
+  function toggleChat(e) {
+    const willOpen = chatWindow.classList.contains('hidden');
+    if (willOpen && toggleBtn.classList.contains('chatbot-toggle--robot') && e && e.clientX) {
+      triggerEnergyWave(e.clientX, e.clientY);
+    }
+    setOpen(willOpen);
   }
 
   window.openNohiChat = function () {
@@ -157,6 +170,14 @@ function initNohiChatbot() {
   };
 
   toggleBtn.addEventListener('click', toggleChat);
+
+  const headerCloseBtn = document.getElementById('chatbot-header-close');
+  if (headerCloseBtn) {
+    headerCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setOpen(false);
+    });
+  }
 
   const robotHotspot = document.getElementById('robot-interactive-overlay');
   const robotBubble = document.getElementById('robot-speech-bubble');
@@ -184,9 +205,50 @@ function initNohiChatbot() {
     setOpen(true);
   }
 
+  function isMobileHeroLayout() {
+    return window.matchMedia('(max-width: 991px)').matches;
+  }
+
   if (robotHotspot) {
     robotHotspot.addEventListener('click', handleRobotClick);
     robotHotspot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleRobotClick(e);
+      }
+    });
+  }
+
+  /* Mobile: tapping the 3D robot opens NohiAI. Desktop stays look-at only. */
+  const robotStage = document.querySelector('.hero-spline-bg:not(.chatbot-robot-stage)');
+  const mobileHeroMq = window.matchMedia('(max-width: 991px)');
+
+  function syncMobileRobotA11y() {
+    if (!robotStage) return;
+    if (mobileHeroMq.matches) {
+      robotStage.setAttribute('role', 'button');
+      robotStage.setAttribute('tabindex', '0');
+      robotStage.setAttribute('aria-label', 'Open NohiAI chat');
+      robotStage.removeAttribute('aria-hidden');
+    } else {
+      robotStage.removeAttribute('role');
+      robotStage.removeAttribute('tabindex');
+      robotStage.removeAttribute('aria-label');
+      robotStage.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  if (robotStage) {
+    syncMobileRobotA11y();
+    if (typeof mobileHeroMq.addEventListener === 'function') {
+      mobileHeroMq.addEventListener('change', syncMobileRobotA11y);
+    }
+    robotStage.addEventListener('click', (e) => {
+      if (!isMobileHeroLayout()) return;
+      handleRobotClick(e);
+    }, true);
+    robotStage.addEventListener('keydown', (e) => {
+      if (!isMobileHeroLayout()) return;
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         handleRobotClick(e);
@@ -241,7 +303,7 @@ function initNohiChatbot() {
     let safe = escapeHtml(raw || '');
     safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\r\n|\r|\n/g, '<br>');
-    safe = safe.replace(/•\s*/g, '• ');
+    safe = safe.replace(/*\s*/g, '* ');
     safe = safe.replace(
       /\b([a-zA-Z0-9._%+-]+@nohitatu\.com)\b/g,
       '<a class="cb-cta" href="mailto:$1">$1</a>'
@@ -258,11 +320,11 @@ function initNohiChatbot() {
       ['Careers.html', careersUrl()],
       ['Portfolio.html', portfolioUrl()],
       ['Contact-us.html', contactUrl()],
-      ['PostResume.html', pageBase() + 'PostResume.html']
+      ['PostResume.html', pageBase() + 'PostResume']
     ];
     pages.forEach(([name, href]) => {
       const re = new RegExp(name.replace('.', '\\.'), 'gi');
-      safe = safe.replace(re, `<a class="cb-cta" href="${href}">${name}</a>`);
+      safe = safe.replace(re, `<a class="cb-cta" href="${href}">${name.replace(/\.html$/i, '')}</a>`);
     });
     return safe;
   }
@@ -468,8 +530,8 @@ function initNohiChatbot() {
     return (
       "I'm here to help with whatever you need! Whether you're building custom software, exploring healthcare solutions, or looking to join our team, we'd love to assist.\n\n" +
       "Direct Contacts:\n" +
-      "• Sales: " + CONTACT_EMAIL + " | " + SALES_PHONE + "\n" +
-      "• HR: " + HR_EMAIL + " | " + HR_PHONE
+      "* Sales: " + CONTACT_EMAIL + " | " + SALES_PHONE + "\n" +
+      "* HR: " + HR_EMAIL + " | " + HR_PHONE
     );
   }
 
@@ -578,7 +640,7 @@ function initNohiChatbot() {
     showTypingIndicator();
     setTimeout(() => {
       removeTypingIndicator();
-      addBotMessage('Opening that page for you…');
+      addBotMessage('Opening that page for you...');
       setTimeout(() => {
         window.location.href = navUrl;
       }, 350);

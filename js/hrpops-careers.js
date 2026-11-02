@@ -4,7 +4,7 @@
  * Endpoints (official):
  *   GET  {apiBase}/CandidatePortal/jobs[?companyId=]
  *   GET  {apiBase}/CandidatePortal/jobs/{companyId}/{jobPostId}
- *   POST {apiBase}/CandidatePortal/apply/{companyId}  (multipart + Bearer — use portal)
+ *   POST {apiBase}/CandidatePortal/apply/{companyId}  (multipart + Bearer - use portal)
  *
  * Config (any of):
  *   <meta name="nh-hrpops-company-id" content="YOUR_COMPANY_ID">
@@ -13,7 +13,7 @@
  *   window.NH_HRPOPS = { companyId, apiBase, portalBase, companyName }
  *
  * Set companyId to your HRPops tenant id so other companies' public jobs are excluded.
- * Apply uses the HRPops candidate portal (API apply requires a logged-in candidate token).
+ * Site CTAs apply via local PostResume.html; portalApplyUrl remains for reference only.
  */
 (() => {
   const DEFAULT_API = "https://api.hrpops.com/api";
@@ -69,18 +69,28 @@
     return `${portalBase}/careers/apply/${encodeURIComponent(companyId)}/${encodeURIComponent(jobPostId)}`;
   }
 
-  function localDetailsUrl(companyId, jobPostId) {
+  function jobQuery(companyId, jobPostId) {
     const q = new URLSearchParams();
     q.set("id", String(jobPostId));
     if (companyId != null && String(companyId).trim() !== "" && Number(companyId) !== 0) {
       q.set("companyId", String(companyId));
     }
-    const qs = q.toString();
+    return q.toString();
+  }
+
+  function localDetailsUrl(companyId, jobPostId) {
+    const qs = jobQuery(companyId, jobPostId);
     /* Duplicate params in the hash: `npx serve` cleanUrls 301 drops ?query but keeps #hash. */
     return `Careerdetails.html?${qs}#${qs}`;
   }
 
-  /** Map HRPops job → shape expected by careers-list / career detail UI. */
+  /** On-site application form. Same hash-safe query as job detail. */
+  function localApplyUrl(companyId, jobPostId) {
+    const qs = jobQuery(companyId, jobPostId);
+    return `PostResume.html?${qs}#${qs}`;
+  }
+
+  /** Map HRPops job ->shape expected by careers-list / career detail UI. */
   function normalizeJob(raw) {
     if (!raw || typeof raw !== "object") return null;
     const companyId = raw.companyId ?? raw.CompanyId;
@@ -125,8 +135,8 @@
       vacancies: raw.noOfVacancies ?? raw.NoOfVacancies,
       public_job_post: !!(raw.publicJobPost ?? raw.PublicJobPost ?? true),
       details_url: localDetailsUrl(cid || companyId, jobPostId),
-      apply_url: portalApplyUrl(cid || companyId, jobPostId),
-      applyUrl: portalApplyUrl(cid || companyId, jobPostId),
+      apply_url: localApplyUrl(cid || companyId, jobPostId),
+      applyUrl: localApplyUrl(cid || companyId, jobPostId),
       portal_job_url: portalJobUrl(cid || companyId, jobPostId),
       source: "hrpops",
     };
@@ -174,13 +184,13 @@
     const rawJobs = Array.isArray(list) ? list : [];
     let jobs = rawJobs.map(normalizeJob).filter(Boolean);
     if (!cfg.companyId) {
-      const filtered = jobs.filter((j) => matchesCompany(j, cfg));
+      const filtered = jobs.filter((j) =>matchesCompany(j, cfg));
       /* If name filter matches nothing and companyId is unset, do not leak other tenants. */
       jobs = filtered;
     } else {
-      jobs = jobs.filter((j) => matchesCompany(j, cfg) || !j.companyId);
+      jobs = jobs.filter((j) =>matchesCompany(j, cfg) || !j.companyId);
     }
-    jobs = jobs.filter((j) => j.public_job_post !== false);
+    jobs = jobs.filter((j) =>j.public_job_post !== false);
     return {
       jobs,
       configured: Boolean(cfg.companyId),
@@ -204,11 +214,11 @@
     if (!raw || typeof raw !== "object") {
       throw new Error("Job not found");
     }
-    /* Detail payload sometimes returns companyId: 0 — keep path companyId. */
+    /* Detail payload sometimes returns companyId: 0 - keep path companyId. */
     const normalized = normalizeJob({ ...raw, companyId: raw.companyId || cid });
     if (normalized && (!normalized.companyId || Number(normalized.companyId) === 0)) {
       normalized.companyId = cid;
-      normalized.apply_url = portalApplyUrl(cid, jobPostId);
+      normalized.apply_url = localApplyUrl(cid, jobPostId);
       normalized.applyUrl = normalized.apply_url;
       normalized.details_url = localDetailsUrl(cid, jobPostId);
       normalized.portal_job_url = portalJobUrl(cid, jobPostId);
@@ -218,7 +228,7 @@
 
   /**
    * Build FormData for POST /CandidatePortal/apply/{companyId}.
-   * Requires candidate Bearer token (CORS + auth) — prefer portalApplyUrl for site CTAs.
+   * Requires candidate Bearer token (CORS + auth) - site CTAs use localApplyUrl / PostResume.
    * Documented field names from HRPops SPA apply form (multipart).
    */
   function buildApplyFormData(fields) {
@@ -250,7 +260,7 @@
 
   /**
    * POST application. Needs Authorization: Bearer <candidateToken>.
-   * Prefer linking candidates to portalApplyUrl() from the public site.
+   * Public site CTAs use localApplyUrl() ->PostResume.html instead.
    */
   async function submitApplication(companyId, formData, candidateToken) {
     const cfg = config();
@@ -267,7 +277,7 @@
         headers,
       }
     );
-    const payload = await res.json().catch(() => null);
+    const payload = await res.json().catch(() =>null);
     if (!res.ok || !apiOk(payload)) {
       const err = new Error(
         (payload && (payload.message || payload.Message)) ||
@@ -288,6 +298,7 @@
     portalApplyUrl,
     portalJobUrl,
     localDetailsUrl,
+    localApplyUrl,
     buildApplyFormData,
     submitApplication,
   };
