@@ -122,9 +122,65 @@
         });
     }
 
+    /**
+     * 3. Hero Video Full Moon Synchronization
+     * Reveals the glowing full moon in the top right during the last 4 seconds
+     * of video playback (cosmic slate), and smoothly hides it prior to looping.
+     */
+    function initHeroMoonSync() {
+        var video = document.getElementById('lmn-hero-video');
+        var moon = document.getElementById('lmn-hero-moon');
+        if (!video || !moon) return;
+
+        function updateMoonState() {
+            var duration = video.duration;
+            if (!duration || isNaN(duration)) {
+                duration = 36.6;
+            }
+            var current = video.currentTime;
+            // Active window: last 4 seconds until 0.35s before loop reset
+            var isLast4Seconds = (current >= (duration - 4.0)) && (current < (duration - 0.35));
+            if (isLast4Seconds) {
+                moon.classList.add('is-visible');
+            } else {
+                moon.classList.remove('is-visible');
+            }
+        }
+
+        video.addEventListener('timeupdate', updateMoonState);
+        video.addEventListener('seeking', updateMoonState);
+        video.addEventListener('seeked', updateMoonState);
+        video.addEventListener('ended', function () {
+            moon.classList.remove('is-visible');
+        });
+
+        // Query param support for testing / previewing (e.g. ?t=34 or ?moon=1)
+        if (typeof window !== 'undefined' && window.location) {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('moon') === '1') {
+                moon.classList.add('is-visible');
+            }
+            var seekParam = parseFloat(params.get('t'));
+            if (!isNaN(seekParam)) {
+                var applySeek = function () {
+                    try {
+                        video.currentTime = seekParam;
+                    } catch (e) {}
+                    updateMoonState();
+                };
+                if (video.readyState >= 1) {
+                    applySeek();
+                } else {
+                    video.addEventListener('loadedmetadata', applySeek, { once: true });
+                }
+            }
+        }
+    }
+
     function initAll() {
         initLumenDisrupterTabs();
         initLumenIndustrySelector();
+        initHeroMoonSync();
     }
 
     if (document.readyState === 'loading') {
