@@ -428,7 +428,7 @@ body.careers-page main {
 /* Benefits */
 .nh-careers-benefits {
   padding: 72px 0 88px;
-  background: linear-gradient(0deg, var(--nh-lavender) 0%, rgba(236, 235, 255, 0) 100%);
+  background: #ffffff;
 }
 
 .nh-careers-benefits-head {
@@ -500,9 +500,12 @@ body.careers-page main {
 /* Footer-reveal CTA sits after benefits. Global panel is #f3f1ff on a white
    wrapper, which reads as a mismatched lavender + white seam over navy.
    Keep Careers token #ecebff continuous into the gutter and the card. */
-body.careers-page .footer-reveal-cta,
+body.careers-page .footer-reveal-cta {
+  background: transparent !important;
+}
+
 body.careers-page .footer-reveal-cta .estimate-panel {
-  background: var(--nh-lavender);
+  background: #ffffff !important;
 }
 
 /* Fraud dialog */

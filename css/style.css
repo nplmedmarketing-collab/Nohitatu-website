@@ -12473,7 +12473,7 @@ body.footer-reveal-page #wrapper,
   position: relative !important;
   z-index: 20 !important;
   overflow: visible !important;
-  background: var(--lmn-warm-canvas, #faf9f7);
+  background: #ffffff !important;
 }
 
 .footer-reveal-cta {
@@ -12483,6 +12483,7 @@ body.footer-reveal-page #wrapper,
   padding: 0 24px !important;
   transform: translateY(40px) !important;
   pointer-events: none !important;
+  background: transparent !important;
 }
 
 .footer-reveal-cta::before {
