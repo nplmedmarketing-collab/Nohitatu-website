@@ -65,6 +65,17 @@ body.careers-page .navbar-toggle.nav-menu {
   }
 }
 
+/* Logo: Always black throughout on Careers page alone */
+html body.careers-page .header-logo .logo-on-dark,
+body.careers-page .header-logo .logo-on-dark {
+  display: none !important;
+}
+
+html body.careers-page .header-logo .logo-on-light,
+body.careers-page .header-logo .logo-on-light {
+  display: block !important;
+}
+
 body.careers-page main {
   background: #fff;
 }

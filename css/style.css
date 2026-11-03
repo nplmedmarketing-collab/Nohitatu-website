@@ -12876,14 +12876,24 @@ body.footer-reveal-page .site-footer .inner-footer,
    - Over hero banner (top of page / not .white-header): ALWAYS WHITE LOGO
    - Rest of page (scrolled / .white-header): ALWAYS CRISP BLACK LOGO
    ========================================================================== */
-/* Over Hero Banner (top of every page, before scroll) */
-header.logo-navbar:not(.white-header) .header-logo .logo-on-dark,
-header.blnk-header:not(.white-header) .header-logo .logo-on-dark {
+/* Over Hero Banner (top of pages before scroll, EXCEPT careers page) */
+body:not(.careers-page) header.logo-navbar:not(.white-header) .header-logo .logo-on-dark,
+body:not(.careers-page) header.blnk-header:not(.white-header) .header-logo .logo-on-dark {
   display: block !important;
 }
-header.logo-navbar:not(.white-header) .header-logo .logo-on-light,
-header.blnk-header:not(.white-header) .header-logo .logo-on-light {
+body:not(.careers-page) header.logo-navbar:not(.white-header) .header-logo .logo-on-light,
+body:not(.careers-page) header.blnk-header:not(.white-header) .header-logo .logo-on-light {
   display: none !important;
+}
+
+/* Careers Page Alone — ALWAYS CRISP BLACK LOGO THROUGHOUT */
+body.careers-page .header-logo .logo-on-dark,
+body.careers-page header .header-logo .logo-on-dark {
+  display: none !important;
+}
+body.careers-page .header-logo .logo-on-light,
+body.careers-page header .header-logo .logo-on-light {
+  display: block !important;
 }
 
 /* Rest of the Page (when scrolled, .white-header activates) */
