@@ -135,7 +135,7 @@
         function updateMoonState() {
             var duration = video.duration;
             if (!duration || isNaN(duration)) {
-                duration = 36.6;
+                duration = 41.13;
             }
             var current = video.currentTime;
             // Active window: last 4 seconds until 0.35s before loop reset
