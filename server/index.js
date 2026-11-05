@@ -174,6 +174,7 @@ async function main() {
       pathOnly === "/health" ||
       pathOnly === "/api/demo-request" ||
       pathOnly === "/api/contact-enquiry" ||
+      pathOnly === "/api/resume-parse" ||
       pathOnly === "/api/projects" ||
       pathOnly === "/api/careers" ||
       /^\/api\/careers\//.test(pathOnly);
@@ -228,7 +229,16 @@ async function main() {
     message: { error: "Too many login attempts. Try again later." },
   });
 
+  const resumeParseLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 30,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: "Too many resume parse requests. Try again later." },
+  });
+  app.use("/api/resume-parse", resumeParseLimiter);
   app.use("/api", createPublicRouter({ store }));
+
   app.use("/api/admin/login", loginLimiter);
   app.use("/api/admin", createAdminRouter({ store, auth, workspaceRoot: WORKSPACE }));
 

@@ -1,6 +1,29 @@
 const express = require("express");
+const multer = require("multer");
 const { VERTICALS, toPublicCareerDetail } = require("../db");
 const { verifyRecaptchaToken } = require("../lib/recaptcha");
+const { parseResumeBuffer } = require("../lib/resume-parse");
+
+const resumeUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    const name = String(file.originalname || "").toLowerCase();
+    const mime = String(file.mimetype || "").toLowerCase();
+    const ok =
+      /\.pdf$/i.test(name) ||
+      /\.docx$/i.test(name) ||
+      mime === "application/pdf" ||
+      mime ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    if (!ok) {
+      const err = new Error("Only PDF or DOCX resumes are supported for auto-fill.");
+      err.code = "unsupported-format";
+      return cb(err);
+    }
+    return cb(null, true);
+  },
+});
 
 function slimCareer(c) {
   return {
@@ -139,6 +162,48 @@ function createPublicRouter({ store }) {
       recipient: String(body.recipient || "").trim(),
     });
     res.status(201).json({ success: true, record });
+  });
+
+  /** Parse an uploaded resume (PDF/DOCX) and return suggested form fields. */
+  router.post("/resume-parse", (req, res) => {
+    resumeUpload.single("resume")(req, res, async (uploadErr) => {
+      if (uploadErr) {
+        const code = uploadErr.code || "";
+        if (code === "LIMIT_FILE_SIZE") {
+          return res.status(400).json({ error: "Resume must be 5 MB or smaller." });
+        }
+        return res.status(400).json({
+          error: uploadErr.message || "Could not read the uploaded resume.",
+          code: uploadErr.code || "upload-failed",
+        });
+      }
+      if (!req.file || !req.file.buffer) {
+        return res.status(400).json({ error: "Please choose a resume file first." });
+      }
+      try {
+        const result = await parseResumeBuffer(req.file.buffer, req.file.originalname);
+        return res.json({
+          success: true,
+          fields: result.fields,
+          meta: result.meta,
+        });
+      } catch (err) {
+        const status =
+          err && (err.code === "unsupported-format" || err.code === "empty-text")
+            ? 400
+            : 500;
+        console.error(
+          "resume-parse error:",
+          err && err.message ? err.message : err
+        );
+        return res.status(status).json({
+          error:
+            (err && err.message) ||
+            "Could not parse this resume. Try a text-based PDF or DOCX.",
+          code: (err && err.code) || "parse-failed",
+        });
+      }
+    });
   });
 
   return router;

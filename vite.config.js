@@ -11,6 +11,21 @@ export default defineConfig({
   server: {
     fs: {
       allow: ['.']
+    },
+    // Resume parse + public forms need Express (npm start in /server, port 5174).
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:5174',
+        changeOrigin: true
+      },
+      '/health': {
+        target: 'http://127.0.0.1:5174',
+        changeOrigin: true
+      },
+      '/uploads': {
+        target: 'http://127.0.0.1:5174',
+        changeOrigin: true
+      }
     }
   },
   plugins: [

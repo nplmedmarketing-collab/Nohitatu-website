@@ -247,12 +247,27 @@
     if (f.resume) fd.append("resume", f.resume, f.resume.name || "resume.pdf");
     if (f.photo) fd.append("photo", f.photo, f.photo.name || "photo.jpg");
     if (Array.isArray(f.skillsRating)) {
-      f.skillsRating.forEach((row, i) => {
-        fd.append(`skillsRating[${i}].SkillId`, String(row.skillId ?? 0));
-        fd.append(`skillsRating[${i}].Skill`, row.skill || "");
-        fd.append(`skillsRating[${i}].ExperienceYear`, String(row.experienceYear ?? 0));
-        fd.append(`skillsRating[${i}].ExperienceMonth`, String(row.experienceMonth ?? 0));
-        fd.append(`skillsRating[${i}].Rating`, String(row.rating ?? 0));
+      let i = 0;
+      f.skillsRating.forEach((row) => {
+        if (!row) return;
+        const skillId = Number(row.skillId);
+        const skill = String(row.skill || "").trim();
+        if (!Number.isFinite(skillId) || skillId <= 0 || !skill) return;
+        fd.append(`skillsRating[${i}].SkillId`, String(skillId));
+        fd.append(`skillsRating[${i}].Skill`, skill);
+        fd.append(
+          `skillsRating[${i}].ExperienceYear`,
+          String(Math.max(0, Number(row.experienceYear) || 0))
+        );
+        fd.append(
+          `skillsRating[${i}].ExperienceMonth`,
+          String(Math.max(0, Number(row.experienceMonth) || 0))
+        );
+        fd.append(
+          `skillsRating[${i}].Rating`,
+          String(Math.max(1, Number(row.rating) || 2))
+        );
+        i += 1;
       });
     }
     return fd;

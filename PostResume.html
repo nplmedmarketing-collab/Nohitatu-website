@@ -581,10 +581,19 @@
             padding-top: 4px;
         }
 
-        /* Willingness to Relocate: Yes / No / Open stay on one row */
+        /* Willingness to Relocate: Yes / No / Open stay together on the left */
+        .pr-field--relocate {
+            min-width: 0;
+        }
+
         #relocateYes.pr-radios {
+            display: flex;
             flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
             gap: 8px 10px;
+            width: max-content;
+            max-width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -636,7 +645,8 @@
         }
 
         @media (min-width: 1100px) {
-            .pr-field:has(.pr-radios--row) {
+            /* Keep relocate options with Join Period on the left; don't push Open into Work mode column */
+            body.post-resume-page .pr-form .pr-field--relocate {
                 grid-column: span 2;
             }
         }
@@ -953,6 +963,115 @@
             background: rgba(114, 108, 244, 0.1);
             color: #3f3a9e;
             border: 1px solid rgba(114, 108, 244, 0.22);
+        }
+        .pr-status--warn {
+            background: rgba(154, 103, 0, 0.1);
+            color: #9a6700;
+            border: 1px solid rgba(154, 103, 0, 0.28);
+        }
+        .pr-returning-hint {
+            margin: 0 0 14px;
+            color: #4b5563;
+        }
+
+        /* Apply success modal (Congratulations) */
+        .pr-success-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            background: rgba(180, 220, 235, 0.72);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+        .pr-success-overlay[hidden] { display: none !important; }
+        .pr-success-card {
+            width: min(100%, 440px);
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 12px 40px rgba(20, 36, 61, 0.18);
+            padding: 36px 32px 28px;
+            text-align: center;
+            font-family: Lato, var(--font-sans), sans-serif;
+            animation: pr-success-in 0.28s ease-out;
+        }
+        @keyframes pr-success-in {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: none; }
+        }
+        .pr-success-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 18px;
+            border: 2.5px solid #2e7d32;
+            border-radius: 6px;
+            display: grid;
+            place-items: center;
+            color: #2e7d32;
+        }
+        .pr-success-icon svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        .pr-success-card h2 {
+            margin: 0 0 14px;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #2e7d32;
+            letter-spacing: -0.01em;
+        }
+        .pr-success-card p {
+            margin: 0;
+            color: #4a5568;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        .pr-success-card p + p { margin-top: 4px; }
+        .pr-success-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 28px;
+        }
+        .pr-success-actions .pr-success-btn {
+            min-width: 96px;
+            padding: 10px 28px;
+            border: 0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+        }
+        .pr-success-actions .pr-success-btn:hover {
+            filter: brightness(0.96);
+            transform: translateY(-1px);
+        }
+        .pr-success-actions .pr-success-btn:active { transform: scale(0.98); }
+        .pr-success-actions .pr-success-btn--yes {
+            background: #56cbb9;
+            box-shadow: 0 4px 12px rgba(86, 203, 185, 0.35);
+        }
+        .pr-success-actions .pr-success-btn--no {
+            background: #e53935;
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.28);
+        }
+        @media (max-width: 420px) {
+            .pr-success-card { padding: 28px 20px 22px; }
+            .pr-success-card h2 { font-size: 1.45rem; }
+            .pr-success-actions .pr-success-btn {
+                min-width: 0;
+                flex: 1;
+                padding: 10px 16px;
+            }
         }
 
         .pr-declare {
@@ -1606,6 +1725,58 @@
             color: #023575;
             font-size: 15px;
         }
+        .pr-intro {
+            padding: 18px 18px 16px;
+            border: 1px solid #d7dde5;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .pr-intro > h5 {
+            margin: 0 0 14px;
+            color: #2f3a45;
+            font-size: 1.05rem;
+            font-weight: 700;
+            justify-content: flex-start;
+        }
+        .pr-intro-story {
+            margin: 0 0 18px;
+            padding: 14px 16px;
+            border-radius: 6px;
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .pr-intro-story strong {
+            display: block;
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .pr-intro-story ul {
+            margin: 0;
+            padding-left: 1.15rem;
+            display: grid;
+            gap: 4px;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: #4b5563;
+        }
+        .pr-intro .pr-field {
+            margin-bottom: 14px;
+        }
+        .pr-intro .pr-field > label {
+            display: block;
+            margin-bottom: 6px;
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .pr-intro-audio-hint {
+            margin: 10px 0 0;
+            color: #6b7280;
+            font-size: 0.86rem;
+            line-height: 1.4;
+        }
         .pr-cert-row { margin-bottom: 12px; align-items: end; }
         .cert-remove {
             grid-column: 1 / -1;
@@ -1644,7 +1815,28 @@
         .pr-field--invalid.pr-declare {
             border-color: #b42318 !important;
         }
-        .audio-recorder { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .audio-recorder {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            padding: 14px;
+            border: 1px solid #d7dde5;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .audio-recorder__controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            width: 100%;
+        }
+        .audio-recorder #rec-preview {
+            width: min(100%, 360px);
+            margin-top: 10px;
+        }
         .recorder-btn, .pr-photo-edit, #pr-photo-rotate, #pr-photo-save {
             border: 0;
             background: #023575;
@@ -1653,10 +1845,46 @@
             padding: 8px 14px;
             cursor: pointer;
         }
+        .recorder-btn--record {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #e53935;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.28);
+        }
+        .recorder-btn--record:hover { background: #d32f2f; }
+        .recorder-btn--stop { background: #9b2c2c; }
+        .recorder-btn--again { background: #023575; }
+        .recorder-mic { display: block; flex: 0 0 auto; }
         #pr-photo-msg.is-error { color: #b42318; }
         #pr-photo-msg.is-ok { color: #0b6b4f; }
-        #rec-stop { background: #9b2c2c; }
-        .rec-time { font-variant-numeric: tabular-nums; font-weight: 700; }
+        #pr-photo-msg.is-info { color: #175cd3; }
+        #pr-photo-msg.is-warn { color: #9a6700; }
+        .pr-autofill-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 16px;
+            margin-top: 14px;
+        }
+        .pr-autofill-row .pr-btn {
+            margin: 0;
+            padding: 10px 16px;
+            font-size: 14px;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+        .pr-autofill-row .pr-btn[hidden] { display: none !important; }
+        #pr-autofill-msg { margin: 0; flex: 1 1 220px; }
+        #pr-autofill-msg.is-error { color: #b42318; }
+        #pr-autofill-msg.is-ok { color: #0b6b4f; }
+        #pr-autofill-msg.is-warn { color: #9a6700; }
+        #pr-autofill-msg.is-info { color: #175cd3; }
+        .rec-time { font-variant-numeric: tabular-nums; font-weight: 700; color: #374151; }
         .pr-editor {
             position: fixed;
             inset: 0;
@@ -1868,9 +2096,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-    <script src="js/api-base.js?v=20260812liveapi1"></script>
-    <script src="js/hrpops-careers.js?v=20261023hrpops1"></script>
-    <script src="js/post-resume.js?v=20261030majorcities1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js"></script>
+    <script src="js/api-base.js?v=20261105apifix1"></script>
+    <script src="js/hrpops-careers.js?v=20261105skillid2"></script>
+    <script src="js/post-resume.js?v=20261105recog3"></script>
 
     <!-- Luxury Concierge Chatbot Widget (Abode Advisor Style) -->
     <div id="chatbot-container" class="chatbot-container">

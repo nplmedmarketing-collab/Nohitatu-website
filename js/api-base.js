@@ -23,11 +23,12 @@
     if (!base && (/\.github\.io$/i.test(host) || (!isLocal && host))) {
       base = DEFAULT_PAGES_API;
     }
-    // Local static servers (Live Server, python -m http.server, etc.) have no /api -
-    // point public forms at the Express admin host used in this workspace.
+    // Local: Vite (npm run dev) usually owns 5173 and has no Express /api.
+    // Point public APIs at Express on 5174 (start with: cd server && set PORT=5174&& npm start).
+    // Opening the site on :5174 (Express itself) keeps same-origin "".
     if (!base && isLocal) {
       const port = String(window.location.port || "");
-      if (port && port !== "5173" && port !== "5174") {
+      if (port !== "5174") {
         base = "http://localhost:5174";
       }
     }

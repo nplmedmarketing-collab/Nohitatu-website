@@ -78,6 +78,8 @@
   var knownSkills = [];
   var introAudioFile = null;
   var editedPhotoFile = null;
+  var photoFaceOk = false;
+  var photoAiSuspect = false;
   var mediaRecorder = null;
   var recordingTimer = null;
   var photoDataUrl = "";
@@ -158,6 +160,65 @@
     return html;
   }
 
+  var MIN_APPLICANT_AGE = 20;
+
+  function toIsoDate(d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
+  }
+
+  /** Latest allowed DOB so the applicant is at least `years` old today. */
+  function maxDobIso(years) {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setFullYear(d.getFullYear() - (years || MIN_APPLICANT_AGE));
+    return toIsoDate(d);
+  }
+
+  function minDobIso() {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setFullYear(d.getFullYear() - 100);
+    return toIsoDate(d);
+  }
+
+  function isAgeAtLeast(isoDate, years) {
+    var raw = String(isoDate || "").trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(raw)) return false;
+    var parts = raw.split("-");
+    var birth = new Date(
+      Number(parts[0]),
+      Number(parts[1]) - 1,
+      Number(parts[2])
+    );
+    if (Number.isNaN(birth.getTime())) return false;
+    var cutoff = new Date();
+    cutoff.setHours(0, 0, 0, 0);
+    cutoff.setFullYear(cutoff.getFullYear() - (years || MIN_APPLICANT_AGE));
+    return birth.getTime() <= cutoff.getTime();
+  }
+
+  function wireDobAge(form) {
+    var dob = form && form.elements.namedItem("Dob");
+    if (!dob) return;
+    dob.min = minDobIso();
+    dob.max = maxDobIso(MIN_APPLICANT_AGE);
+    function clampOrWarn() {
+      if (!dob.value) return;
+      if (!isAgeAtLeast(dob.value, MIN_APPLICANT_AGE)) {
+        markFieldError(form, "Dob");
+        setStatus(
+          "Applicant must be at least " + MIN_APPLICANT_AGE + " years old",
+          "error"
+        );
+      }
+    }
+    dob.addEventListener("change", clampOrWarn);
+    dob.addEventListener("blur", clampOrWarn);
+  }
+
   function setStatus(msg, type) {
     var box = qs("#pr-status");
     if (!box) return;
@@ -171,6 +232,88 @@
         /* ignore */
       }
     }
+  }
+
+  function ensureSuccessModal() {
+    var existing = qs("#pr-success-modal");
+    if (existing) return existing;
+    var wrap = document.createElement("div");
+    wrap.id = "pr-success-modal";
+    wrap.className = "pr-success-overlay";
+    wrap.hidden = true;
+    wrap.setAttribute("role", "dialog");
+    wrap.setAttribute("aria-modal", "true");
+    wrap.setAttribute("aria-labelledby", "pr-success-title");
+    wrap.innerHTML =
+      '<div class="pr-success-card">' +
+      '<div class="pr-success-icon" aria-hidden="true">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">' +
+      '<polyline points="20 6 9 17 4 12"></polyline></svg></div>' +
+      '<h2 id="pr-success-title">Congratulations</h2>' +
+      '<p id="pr-success-line1">You have submitted your job application successfully.</p>' +
+      '<p id="pr-success-line2">Do you want to add more details for better results</p>' +
+      '<div class="pr-success-actions">' +
+      '<button type="button" class="pr-success-btn pr-success-btn--yes" id="pr-success-yes">Yes</button>' +
+      '<button type="button" class="pr-success-btn pr-success-btn--no" id="pr-success-no">No</button>' +
+      "</div></div>";
+    document.body.appendChild(wrap);
+    return wrap;
+  }
+
+  function hideSuccessModal() {
+    var modal = qs("#pr-success-modal");
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  function showSuccessModal(options) {
+    var opts = options || {};
+    var modal = ensureSuccessModal();
+    var line1 = qs("#pr-success-line1", modal);
+    var line2 = qs("#pr-success-line2", modal);
+    var yesBtn = qs("#pr-success-yes", modal);
+    var noBtn = qs("#pr-success-no", modal);
+    if (line1) {
+      line1.textContent = opts.already
+        ? "You have already applied for this job successfully."
+        : "You have submitted your job application successfully.";
+    }
+    if (line2) {
+      line2.textContent = "Do you want to add more details for better results";
+    }
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    try {
+      if (yesBtn) yesBtn.focus();
+    } catch (e) {}
+
+    function cleanup() {
+      if (yesBtn) yesBtn.removeEventListener("click", onYes);
+      if (noBtn) noBtn.removeEventListener("click", onNo);
+      modal.removeEventListener("click", onBackdrop);
+      document.removeEventListener("keydown", onKey);
+    }
+    function onYes() {
+      cleanup();
+      hideSuccessModal();
+      if (typeof opts.onYes === "function") opts.onYes();
+    }
+    function onNo() {
+      cleanup();
+      hideSuccessModal();
+      if (typeof opts.onNo === "function") opts.onNo();
+    }
+    function onBackdrop(ev) {
+      if (ev.target === modal) onNo();
+    }
+    function onKey(ev) {
+      if (ev.key === "Escape") onNo();
+    }
+    if (yesBtn) yesBtn.addEventListener("click", onYes);
+    if (noBtn) noBtn.addEventListener("click", onNo);
+    modal.addEventListener("click", onBackdrop);
+    document.addEventListener("keydown", onKey);
   }
 
   function fieldValue(form, name) {
@@ -783,6 +926,10 @@
         missing = true;
         return;
       }
+      if (!Number.isFinite(id) || id <= 0) {
+        /* Skip rows without a real SkillId — HRPops rejects NULL/0. */
+        return;
+      }
       if (isIntern) {
         list.push({
           skillid: id,
@@ -1149,8 +1296,10 @@
     ]
   };
 
-  function validateEducation(form, requireField) {
+  function validateEducation(form, requireField, options) {
     var checkedSteps = {};
+    var opts = options || {};
+    var requireByHighest = opts.requireByHighest !== false;
 
     function hasAnyEduField(step) {
       var keys = EDU_REQUIRED_FIELDS[step] || [];
@@ -1177,46 +1326,49 @@
       });
     }
 
-    /* 10th Standard is always mandatory */
-    requireEduStep("10th");
-
-    var highest = fieldValue(form, "HighestQualification");
-    if (highest === "12th Standard") {
-      requireEduStep("12th");
-    } else if (highest === "Diploma") {
-      requireEduStep("diploma");
-    } else if (
-      highest === "Under Graduate" ||
-      highest === "Post Graduate" ||
-      highest === "Doctorate"
-    ) {
-      if (!hasAllEduFields("12th") && !hasAllEduFields("diploma")) {
-        var preferDiploma =
-          !hasAnyEduField("12th") &&
-          (hasAnyEduField("diploma") || activeEduStep(form) === "diploma");
-        requireEduStep(preferDiploma ? "diploma" : "12th");
-      }
-      requireEduStep("ug");
-      if (highest === "Post Graduate" || highest === "Doctorate") {
-        requireEduStep("pg");
-      }
-      if (highest === "Doctorate") {
-        requireEduStep("phd");
+    if (requireByHighest) {
+      /* Legacy full check: 10th + levels implied by Highest Qualification */
+      requireEduStep("10th");
+      var highest = fieldValue(form, "HighestQualification");
+      if (highest === "12th Standard") {
+        requireEduStep("12th");
+      } else if (highest === "Diploma") {
+        requireEduStep("diploma");
+      } else if (
+        highest === "Under Graduate" ||
+        highest === "Post Graduate" ||
+        highest === "Doctorate"
+      ) {
+        if (!hasAllEduFields("12th") && !hasAllEduFields("diploma")) {
+          var preferDiploma =
+            !hasAnyEduField("12th") &&
+            (hasAnyEduField("diploma") || activeEduStep(form) === "diploma");
+          requireEduStep(preferDiploma ? "diploma" : "12th");
+        }
+        requireEduStep("ug");
+        if (highest === "Post Graduate" || highest === "Doctorate") {
+          requireEduStep("pg");
+        }
+        if (highest === "Doctorate") {
+          requireEduStep("phd");
+        }
       }
     }
 
-    /* Any other step that was partially filled must be completed */
-    ["12th", "diploma", "ug", "pg", "phd"].forEach(function (step) {
+    /* Any step that was partially filled must be completed */
+    ["10th", "12th", "diploma", "ug", "pg", "phd"].forEach(function (step) {
       if (hasAnyEduField(step)) {
         requireEduStep(step);
       }
     });
   }
 
-  function validate(form, isIntern, skillPack, langList) {
+  function validate(form, isIntern, skillPack, langList, options) {
     clearFieldErrors(form);
     var missing = [];
     var formatIssues = [];
+    var opts = options || {};
+    var includeEducation = !!opts.includeEducation;
 
     function requireField(cond, nameOrEl, formatMsg) {
       if (cond) return;
@@ -1233,7 +1385,15 @@
     if (name && name.length < 3) {
       requireField(false, "Name", "Name should contain atleast 3 characters");
     }
-    requireField(!!fieldValue(form, "Dob"), "Dob");
+    var dob = fieldValue(form, "Dob");
+    requireField(!!dob, "Dob");
+    if (dob && !isAgeAtLeast(dob, MIN_APPLICANT_AGE)) {
+      requireField(
+        false,
+        "Dob",
+        "Applicant must be at least " + MIN_APPLICANT_AGE + " years old"
+      );
+    }
     requireField(!!fieldValue(form, "Gender"), "Gender");
     requireField(!!fieldValue(form, "StateID"), "StateID");
     requireField(!!fieldValue(form, "CityID"), "CityID");
@@ -1329,6 +1489,12 @@
     var photo = form.elements.namedItem("ProfilePhoto");
     if (!editedPhotoFile && (!photo || !photo.files || !photo.files[0])) {
       requireField(false, "ProfilePhoto");
+    } else if (!photoFaceOk) {
+      requireField(
+        false,
+        "ProfilePhoto",
+        "Upload a clear photo with exactly one face"
+      );
     }
 
     var resume = form.elements.namedItem("ResumeFile");
@@ -1354,9 +1520,12 @@
       requireField(false, "skill-entry");
     }
 
-    var certs = collectCertifications(form);
-    if (certs.partial) {
-      requireField(false, qs("#cert-rows"));
+    if (includeEducation) {
+      var certs = collectCertifications(form);
+      if (certs.partial) {
+        requireField(false, qs("#cert-rows"));
+      }
+      validateEducation(form, requireField, { requireByHighest: false });
     }
 
     var yt = fieldValue(form, "IntroVideoLink");
@@ -1381,9 +1550,8 @@
       !!fieldValue(form, "WorkModePreference"),
       "WorkModePreference"
     );
-    requireField(!!fieldValue(form, "MaritalStatus"), "MaritalStatus");
 
-    validateEducation(form, requireField);
+    /* Education & certifications live on the other tab and are optional for apply. */
 
     var declared = form.elements.namedItem("isDeclared");
     if (!declared || !declared.checked) {
@@ -1721,12 +1889,13 @@
     if (currentState) fd.append("CurrentStateId", currentState);
     if (currentCity) fd.append("CurrentCityId", currentCity);
     fd.append("CurrentPincode", pincode);
-    fd.append("CurrentCTC", currentSalary);
     fd.append("WorkModePreference", workMode);
-    fd.append("MaritalStatus", fieldValue(form, "MaritalStatus"));
+    var marital = fieldValue(form, "MaritalStatus");
+    if (marital) fd.append("MaritalStatus", marital);
     fd.append("HighestQualification", fieldValue(form, "HighestQualification"));
     fd.append("InterviewMode", fieldValue(form, "InterviewMode1"));
-    fd.append("ReasonForQuit", reasonQuit);
+    if (reasonQuit) fd.append("ReasonForQuit", reasonQuit);
+    if (currentSalary) fd.append("CurrentCTC", currentSalary);
     fd.append(
       "LanguagesJson",
       JSON.stringify(
@@ -1742,31 +1911,63 @@
       )
     );
 
-    var skillIndex = 0;
-    var jobPostId = String(job.jobid);
+    /* Build skills in memory first — only rows with a real positive SkillId are sent.
+       HRPops AppliedJobCandidateSkillSetRating.SkillId is NOT NULL. */
+    var jobPostId = String(job.jobid || "").trim();
+    var presetSkillIdsByName = {};
+    qsa(".pr-skill-row", form).forEach(function (row) {
+      var sid = parseInt(row.getAttribute("data-skill-id"), 10);
+      var sname = String(
+        row.getAttribute("data-skill-name") ||
+          ((row.querySelector(".pr-skill-name") || {}).textContent || "")
+      )
+        .trim()
+        .toLowerCase();
+      if (Number.isFinite(sid) && sid > 0 && sname) {
+        presetSkillIdsByName[sname] = sid;
+      }
+    });
+
+    var skillRowsOut = [];
     var seenSkills = {};
-    function appendSkill(name, skillId, year, month, rating) {
+    function queueSkill(name, skillId, year, month, rating) {
       var label = String(name || "").trim();
       if (!label) return;
+      var idNum = parseInt(skillId, 10);
+      if (!Number.isFinite(idNum) || idNum <= 0) return;
       var key = label.toLowerCase();
-      if (seenSkills[key]) return;
+      if (seenSkills[key] || seenSkills["id:" + idNum]) return;
       seenSkills[key] = true;
-      var prefix = "skillsRating[" + skillIndex + "].";
-      fd.append(prefix + "JobpostId", jobPostId);
-      fd.append(prefix + "SkillId", String(skillId || 0));
-      fd.append(prefix + "Skill", label);
-      fd.append(prefix + "ExperienceYear", String(year || 0));
-      fd.append(prefix + "ExperienceMonth", String(month || 0));
-      fd.append(prefix + "Rating", String(rating || 2));
-      skillIndex += 1;
+      seenSkills["id:" + idNum] = true;
+      var rateNum = parseInt(rating, 10);
+      if (!Number.isFinite(rateNum) || rateNum <= 0) rateNum = 2;
+      skillRowsOut.push({
+        jobPostId: jobPostId,
+        skillId: idNum,
+        skill: label,
+        year: Math.max(0, parseInt(year, 10) || 0),
+        month: Math.max(0, parseInt(month, 10) || 0),
+        rating: rateNum
+      });
     }
     (skillList || []).forEach(function (row) {
       if (!row) return;
-      appendSkill(row.skill, row.skillid, row.year, row.month, row.rating);
+      queueSkill(row.skill, row.skillid, row.year, row.month, row.rating);
     });
     knownSkills.forEach(function (ks) {
-      if (!ks) return;
-      appendSkill(ks.name, 0, 0, 0, 2);
+      if (!ks || !ks.name) return;
+      var matchId = presetSkillIdsByName[String(ks.name).trim().toLowerCase()];
+      if (matchId) queueSkill(ks.name, matchId, 0, 0, 2);
+    });
+    skillRowsOut.forEach(function (row, i) {
+      if (!row || !(row.skillId > 0) || !row.skill) return;
+      var prefix = "skillsRating[" + i + "].";
+      fd.append(prefix + "JobpostId", String(row.jobPostId || jobPostId));
+      fd.append(prefix + "SkillId", String(row.skillId));
+      fd.append(prefix + "Skill", String(row.skill));
+      fd.append(prefix + "ExperienceYear", String(row.year));
+      fd.append(prefix + "ExperienceMonth", String(row.month));
+      fd.append(prefix + "Rating", String(row.rating));
     });
 
     var photoFile =
@@ -1779,7 +1980,65 @@
     if (resume && resume.files && resume.files[0]) {
       fd.append("Resume", resume.files[0], resume.files[0].name);
     }
-    return fd;
+    return scrubHrpopsFormData(fd);
+  }
+
+  /** Drop empty / null-like values and any skillsRating row missing a positive SkillId. */
+  function scrubHrpopsFormData(fd) {
+    var next = new FormData();
+    var skillBuckets = {};
+    var other = [];
+    fd.forEach(function (value, key) {
+      var m = String(key).match(/^skillsRating\[(\d+)\]\.(.+)$/);
+      if (m) {
+        var idx = m[1];
+        var field = m[2];
+        if (!skillBuckets[idx]) skillBuckets[idx] = {};
+        skillBuckets[idx][field] = value;
+        return;
+      }
+      if (value == null) return;
+      if (typeof value === "string") {
+        var trimmed = value.trim();
+        if (!trimmed || /^(null|undefined)$/i.test(trimmed)) return;
+        other.push([key, trimmed]);
+        return;
+      }
+      other.push([key, value]);
+    });
+    other.forEach(function (pair) {
+      next.append(pair[0], pair[1]);
+    });
+    var outIndex = 0;
+    Object.keys(skillBuckets)
+      .sort(function (a, b) {
+        return Number(a) - Number(b);
+      })
+      .forEach(function (idx) {
+        var row = skillBuckets[idx] || {};
+        var idNum = parseInt(row.SkillId, 10);
+        var label = String(row.Skill || "").trim();
+        if (!Number.isFinite(idNum) || idNum <= 0 || !label) return;
+        if (row.SkillId instanceof Blob) return;
+        var prefix = "skillsRating[" + outIndex + "].";
+        next.append(prefix + "JobpostId", String(row.JobpostId || "").trim());
+        next.append(prefix + "SkillId", String(idNum));
+        next.append(prefix + "Skill", label);
+        next.append(
+          prefix + "ExperienceYear",
+          String(Math.max(0, parseInt(row.ExperienceYear, 10) || 0))
+        );
+        next.append(
+          prefix + "ExperienceMonth",
+          String(Math.max(0, parseInt(row.ExperienceMonth, 10) || 0))
+        );
+        next.append(
+          prefix + "Rating",
+          String(Math.max(1, parseInt(row.Rating, 10) || 2))
+        );
+        outIndex += 1;
+      });
+    return next;
   }
 
   function readPayloadMessage(data) {
@@ -1792,8 +2051,29 @@
     return raw;
   }
 
+  /** Collapse duplicated API error spam into one readable line. */
+  function tidyErrorMessage(raw) {
+    var text = String(raw || "").replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    if (/SkillId/i.test(text) && /INSERT fails/i.test(text)) {
+      return "Skills could not be saved. Rate at least one skill from the job list (each needs a valid skill id), then try again.";
+    }
+    var parts = text.split(/(?<=\.)\s+/);
+    var unique = [];
+    parts.forEach(function (p) {
+      var t = p.trim();
+      if (!t) return;
+      if (unique.indexOf(t) === -1) unique.push(t);
+    });
+    if (unique.length && unique.length < parts.length) {
+      return unique.slice(0, 2).join(" ");
+    }
+    if (text.length > 280) return text.slice(0, 277) + "...";
+    return text;
+  }
+
   function statusFromFailure(data, status) {
-    var detail = readPayloadMessage(data);
+    var detail = tidyErrorMessage(readPayloadMessage(data));
     var msg = detail || "The application was not accepted. Please check the form and try again.";
     if (status && Number(status) >= 400) msg += " (HTTP " + status + ")";
     return msg;
@@ -1944,6 +2224,7 @@
         panel.hidden = panel.getAttribute("data-pr-panel") !== name;
       });
     }
+    form._prShowPanel = showPanel;
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
         showPanel(tab.getAttribute("data-pr-tab"));
@@ -1965,6 +2246,12 @@
             eduPanel.scrollIntoView({ behavior: "smooth", block: "start" });
           } catch (e2) {}
         }
+      });
+    }
+    var backJob = qs("#pr-back-job", form);
+    if (backJob) {
+      backJob.addEventListener("click", function () {
+        showPanel("job");
       });
     }
 
@@ -2321,6 +2608,8 @@
   function clearPhotoInput(input) {
     input.value = "";
     editedPhotoFile = null;
+    photoFaceOk = false;
+    photoAiSuspect = false;
     photoDataUrl = "";
     destroyPhotoCropper();
     var edit = document.getElementById("pr-photo-edit");
@@ -2329,17 +2618,145 @@
     if (editor) editor.hidden = true;
   }
 
+  var AI_IMAGE_SIGNAL_RE =
+    /midjourney|dall[\s.\-]?e|chatgpt|openai|stable[\s\-]?diffusion|automatic1111|a1111|comfyui|invokeai|fooocus|novelai|dreamstudio|stability[\s\-]?ai|firefly|adobe[\s\-]?firefly|leonardo[\s.\-]?ai|ideogram|flux\.?1|blackforestlabs|runwayml|runway\s*gen|nightcafe|craiyon|bing[\s\-]?image|image\s*creator|trainedalgorithmicmedia|synthetic\.?media|ai[\s\-]?generated|generated[\s\-]?by[\s\-]?ai|thiscnc|diffusion\s*model|sdxl|sora|gemini[\s\-]?image|imagen\s*[23]|luma\s*ai|pika\s*labs/i;
+
+  var CAMERA_SIGNAL_RE =
+    /\b(iphone|ipad|android|pixel\s?\d|samsung|galaxy|canon|nikon|sony|fujifilm|olympus|panasonic|leica|hasselblad|oneplus|xiaomi|huawei|realme|oppo|vivo|camera|dji)\b/i;
+
+  function bytesToAsciiSample(buffer, maxLen) {
+    var view = new Uint8Array(buffer);
+    var limit = Math.min(view.length, maxLen || 256000);
+    var out = "";
+    for (var i = 0; i < limit; i++) {
+      var c = view[i];
+      if (c === 9 || c === 10 || c === 13 || (c >= 32 && c <= 126)) {
+        out += String.fromCharCode(c);
+      } else {
+        out += " ";
+      }
+    }
+    return out;
+  }
+
+  function photoAcceptMessage() {
+    if (photoAiSuspect) {
+      return "Face OK, but this image may be AI-generated. Prefer a real camera photo. You can still continue.";
+    }
+    return "Single face verified. Adjust the crop if needed, then Save.";
+  }
+
+  function photoSavedMessage() {
+    if (photoAiSuspect) {
+      return "Photo saved. Reminder: it may be AI-generated — a real camera photo is preferred.";
+    }
+    return "Photo saved — single face verified.";
+  }
+
+  /**
+   * Soft AI-image screen: metadata / embedded-generator signals only.
+   * Warns when suspicious; never blocks upload by itself.
+   */
+  async function checkPhotoAiSignals(file) {
+    var reasons = [];
+    if (!file) return { suspect: false, reasons: reasons };
+
+    var name = String(file.name || "");
+    if (AI_IMAGE_SIGNAL_RE.test(name)) {
+      reasons.push("filename");
+    }
+
+    try {
+      var buffer = await file.arrayBuffer();
+      var sample = bytesToAsciiSample(buffer, 320000);
+      if (AI_IMAGE_SIGNAL_RE.test(sample)) {
+        reasons.push("metadata");
+      }
+
+      if (typeof exifr !== "undefined" && exifr && typeof exifr.parse === "function") {
+        try {
+          var meta = await exifr.parse(file, {
+            pick: [
+              "Software",
+              "Artist",
+              "ImageDescription",
+              "UserComment",
+              "XPComment",
+              "Make",
+              "Model",
+              "CreatorTool",
+              "HistorySoftwareAgent",
+              "DigitalSourceType"
+            ]
+          });
+          if (meta) {
+            var blob =
+              [
+                meta.Software,
+                meta.Artist,
+                meta.ImageDescription,
+                meta.UserComment,
+                meta.XPComment,
+                meta.CreatorTool,
+                meta.HistorySoftwareAgent,
+                meta.DigitalSourceType,
+                meta.Make,
+                meta.Model
+              ]
+                .filter(Boolean)
+                .join(" ");
+            if (AI_IMAGE_SIGNAL_RE.test(blob)) {
+              reasons.push("exif");
+            }
+            if (
+              /trainedAlgorithmicMedia|compositeWithTrainedAlgorithmicMedia/i.test(
+                String(meta.DigitalSourceType || "")
+              )
+            ) {
+              reasons.push("c2pa");
+            }
+            /* Strong camera EXIF without AI tags → not treated as suspect from Make/Model alone */
+            if (
+              !reasons.length &&
+              CAMERA_SIGNAL_RE.test(
+                String(meta.Make || "") + " " + String(meta.Model || "")
+              )
+            ) {
+              return { suspect: false, reasons: reasons };
+            }
+          }
+        } catch (exifErr) {
+          /* ignore structured EXIF failures; byte scan still applies */
+        }
+      }
+    } catch (err) {
+      console.warn("AI photo signal check failed", err);
+    }
+
+    return { suspect: reasons.length > 0, reasons: reasons };
+  }
+
+  function faceRejectMessage(result) {
+    if (result === "none") {
+      return "No face detected. Please upload a clear photo of your face only.";
+    }
+    if (result === "group") {
+      return "More than one face found. Please upload a photo with only you in it.";
+    }
+    return "Could not verify your face. Check your connection and try another clear photo.";
+  }
+
   async function verifySingleFace(file) {
     var ready = await ensureFaceModels();
-    if (!ready || typeof faceapi === "undefined") return "skip";
-    setPhotoMsg("Scanning photo... verifying face.", "");
+    if (!ready || typeof faceapi === "undefined") return "fail";
+    setPhotoMsg("Scanning photo for a single face...", "info");
     try {
       var source = await faceapi.bufferToImage(file);
-      var maxW = 400;
+      var maxW = 640;
       var canvas = document.createElement("canvas");
       var w = source.width;
       var h = source.height;
-      if (w >maxW) {
+      if (w > maxW) {
         h = Math.round((h * maxW) / w);
         w = maxW;
       }
@@ -2348,8 +2765,8 @@
       var ctx = canvas.getContext("2d");
       if (ctx) ctx.drawImage(source, 0, 0, w, h);
       var opts = new faceapi.TinyFaceDetectorOptions({
-        inputSize: 320,
-        scoreThreshold: 0.1
+        inputSize: 416,
+        scoreThreshold: 0.4
       });
       var faces = await faceapi.detectAllFaces(canvas, opts);
       if (!faces.length) return "none";
@@ -2357,7 +2774,7 @@
       return "ok";
     } catch (err) {
       console.error("Face detection check failed:", err);
-      return "skip";
+      return "fail";
     }
   }
 
@@ -2370,13 +2787,18 @@
     var close = document.getElementById("pr-photo-close");
     if (!input || !editor) return;
     editedPhotoFile = null;
+    photoFaceOk = false;
+    photoAiSuspect = false;
     photoDataUrl = "";
     destroyPhotoCropper();
     ensureFaceModels();
 
-    input.addEventListener("change", function () {
+    input.addEventListener("change", async function () {
       var file = input.files && input.files[0];
       if (!file) return;
+      photoFaceOk = false;
+      photoAiSuspect = false;
+      editedPhotoFile = null;
       if (!PHOTO_NAME_RE.test(file.name)) {
         clearPhotoInput(input);
         setPhotoMsg(
@@ -2386,33 +2808,30 @@
         return;
       }
       photoFileName = file.name || "profile.png";
-      verifySingleFace(file).then(function (result) {
-        if (result === "none") {
-          clearPhotoInput(input);
-          setPhotoMsg(
-            "No face detected. Please upload a photo showing your face clearly.",
-            "error"
-          );
-          return;
-        }
-        if (result === "group") {
-          clearPhotoInput(input);
-          setPhotoMsg(
-            "Group photos not allowed. Please upload a single person photo.",
-            "error"
-          );
-          return;
-        }
-        var reader = new FileReader();
-        reader.onload = function () {
-          photoDataUrl = String(reader.result || "");
-          if (edit) edit.hidden = false;
-          if (result === "ok") setPhotoMsg("Face verified successfully.", "ok");
-          else setPhotoMsg("", "");
-          openPhotoEditor();
-        };
-        reader.readAsDataURL(file);
-      });
+      input.disabled = true;
+      var result = await verifySingleFace(file);
+      if (result !== "ok") {
+        input.disabled = false;
+        clearPhotoInput(input);
+        setPhotoMsg(faceRejectMessage(result), "error");
+        return;
+      }
+      setPhotoMsg("Checking whether the image looks AI-generated...", "info");
+      var aiCheck = await checkPhotoAiSignals(file);
+      input.disabled = false;
+      photoFaceOk = true;
+      photoAiSuspect = !!aiCheck.suspect;
+      var reader = new FileReader();
+      reader.onload = function () {
+        photoDataUrl = String(reader.result || "");
+        if (edit) edit.hidden = false;
+        setPhotoMsg(
+          photoAcceptMessage(),
+          photoAiSuspect ? "warn" : "ok"
+        );
+        openPhotoEditor();
+      };
+      reader.readAsDataURL(file);
     });
     if (edit) {
       edit.addEventListener("click", function () {
@@ -2439,11 +2858,29 @@
         });
         if (!canvas) return;
         var outName = photoFileName.replace(/\.[^.]+$/, "") + ".png";
-        canvas.toBlob(function (blob) {
-          if (!blob) return;
-          editedPhotoFile = new File([blob], outName || "profile.png", {
+        save.disabled = true;
+        setPhotoMsg("Checking cropped photo for a single face...", "info");
+        canvas.toBlob(async function (blob) {
+          if (!blob) {
+            save.disabled = false;
+            setPhotoMsg("Could not save cropped photo. Try again.", "error");
+            return;
+          }
+          var cropped = new File([blob], outName || "profile.png", {
             type: "image/png"
           });
+          var result = await verifySingleFace(cropped);
+          save.disabled = false;
+          if (result !== "ok") {
+            photoFaceOk = false;
+            setPhotoMsg(
+              faceRejectMessage(result) + " Adjust the crop to show only your face.",
+              "error"
+            );
+            return;
+          }
+          editedPhotoFile = cropped;
+          photoFaceOk = true;
           try {
             var dt = new DataTransfer();
             dt.items.add(editedPhotoFile);
@@ -2452,7 +2889,7 @@
             /* keep editedPhotoFile for submit */
           }
           editor.hidden = true;
-          setPhotoMsg("Cropped photo saved.", "ok");
+          setPhotoMsg(photoSavedMessage(), photoAiSuspect ? "warn" : "ok");
         }, "image/png");
       });
     }
@@ -2466,6 +2903,7 @@
 
   /* -- Save draft (localStorage; text/select/checkbox only - no file blobs) -- */
   var DRAFT_PREFIX = "nh-pr-draft:";
+  var APPLIED_PREFIX = "nh-pr-applied:";
 
   function draftStorageKey(job) {
     var jobId = String((job && job.jobid) || getId() || "").trim();
@@ -2473,6 +2911,139 @@
       (job && job.companyId) || getCompanyId() || ""
     ).trim();
     return DRAFT_PREFIX + jobId + ":" + company;
+  }
+
+  function normalizeApplicantName(name) {
+    return String(name || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+  }
+
+  function appliedJobId(job) {
+    return String((job && job.jobid) || getId() || "").trim();
+  }
+
+  /** Stable key: job + phone only (company omitted so lookup does not miss). */
+  function appliedStorageKey(job, phone) {
+    return APPLIED_PREFIX + appliedJobId(job) + ":" + digitsOnly(phone);
+  }
+
+  function namesMatch(a, b) {
+    var left = normalizeApplicantName(a);
+    var right = normalizeApplicantName(b);
+    if (!left || !right) return false;
+    if (left === right) return true;
+    /* Tolerate minor spacing / extra middle initials */
+    return left.replace(/\s/g, "") === right.replace(/\s/g, "");
+  }
+
+  function buildApplicantSnapshot(form, job) {
+    var name = fieldValue(form, "Name");
+    var phone = digitsOnly(fieldValue(form, "Phoneno"));
+    return {
+      v: 2,
+      savedAt: Date.now(),
+      submittedAt: Date.now(),
+      jobId: appliedJobId(job),
+      companyId: String(job.companyId || getCompanyId() || ""),
+      name: name,
+      nameKey: normalizeApplicantName(name),
+      phone: phone,
+      fields: collectDraftFields(form),
+      knownSkills: knownSkills.slice(),
+      languages: collectDraftLanguages(form),
+      certifications: collectCertifications(form).list,
+      skillRatings: collectDraftSkillRatings(form),
+      activePanel: "education",
+      activeEduStep: activeEduStep(form)
+    };
+  }
+
+  function saveAppliedProfile(form, job) {
+    if (!form || !job) return false;
+    var phone = digitsOnly(fieldValue(form, "Phoneno"));
+    var name = fieldValue(form, "Name");
+    if (!phone || phone.length !== 10 || !name) return false;
+    var snapshot = buildApplicantSnapshot(form, job);
+    try {
+      var key = appliedStorageKey(job, phone);
+      localStorage.setItem(key, JSON.stringify(snapshot));
+      /* Also write legacy company-scoped key for older builds. */
+      var company = String(job.companyId || getCompanyId() || "").trim();
+      if (company) {
+        localStorage.setItem(
+          APPLIED_PREFIX + appliedJobId(job) + ":" + company + ":" + phone,
+          JSON.stringify(snapshot)
+        );
+      }
+      return true;
+    } catch (err) {
+      console.warn("Applied profile save failed", err);
+      return false;
+    }
+  }
+
+  function parseAppliedRaw(raw) {
+    if (!raw) return null;
+    try {
+      var data = JSON.parse(raw);
+      return data && typeof data === "object" ? data : null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function readAppliedProfile(job, name, phone) {
+    var digits = digitsOnly(phone);
+    if (!digits || digits.length !== 10) return null;
+    var jobId = appliedJobId(job);
+    if (!jobId) return null;
+    try {
+      var candidates = [];
+      var primary = localStorage.getItem(appliedStorageKey(job, digits));
+      if (primary) candidates.push(primary);
+
+      var company = String((job && job.companyId) || getCompanyId() || "").trim();
+      if (company) {
+        var legacy = localStorage.getItem(
+          APPLIED_PREFIX + jobId + ":" + company + ":" + digits
+        );
+        if (legacy) candidates.push(legacy);
+      }
+
+      /* Scan any applied keys for this job + phone (covers company mismatches). */
+      var prefix = APPLIED_PREFIX + jobId + ":";
+      var primaryKey = APPLIED_PREFIX + jobId + ":" + digits;
+      var i;
+      for (i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (!k || k.indexOf(prefix) !== 0) continue;
+        if (k === primaryKey || k.lastIndexOf(":" + digits) === k.length - (digits.length + 1)) {
+          var raw = localStorage.getItem(k);
+          if (raw) candidates.push(raw);
+        }
+      }
+
+      var typedName = name;
+      for (i = 0; i < candidates.length; i++) {
+        var data = parseAppliedRaw(candidates[i]);
+        if (!data) continue;
+        var savedName =
+          data.name ||
+          data.nameKey ||
+          (data.fields && data.fields.Name) ||
+          "";
+        var savedPhone = digitsOnly(data.phone || (data.fields && data.fields.Phoneno));
+        if (savedPhone && savedPhone !== digits) continue;
+        if (!namesMatch(savedName, typedName)) continue;
+        return data;
+      }
+      return null;
+    } catch (err) {
+      console.warn("Applied profile read failed", err);
+      return null;
+    }
   }
 
   function collectDraftFields(form) {
@@ -2556,7 +3127,7 @@
     }
   }
 
-  function saveDraft(form, job) {
+  function saveDraft(form, job, quiet) {
     if (!form || !job) return;
     var payload = {
       v: 1,
@@ -2573,13 +3144,15 @@
     };
     try {
       localStorage.setItem(draftStorageKey(job), JSON.stringify(payload));
-      setStatus("Draft saved", "ok");
+      if (!quiet) setStatus("Draft saved", "ok");
     } catch (err) {
       console.warn(err);
-      setStatus(
-        "Could not save draft (browser storage may be full or blocked).",
-        "error"
-      );
+      if (!quiet) {
+        setStatus(
+          "Could not save draft (browser storage may be full or blocked).",
+          "error"
+        );
+      }
     }
   }
 
@@ -2605,6 +3178,204 @@
       }
       if (el.type === "file") return;
       el.value = val == null ? "" : String(val);
+    });
+  }
+
+  function setAutofillMsg(form, text, kind) {
+    var msg = qs("#pr-autofill-msg", form);
+    if (!msg) return;
+    if (!text) {
+      msg.hidden = true;
+      msg.textContent = "";
+      msg.className = "pr-hint";
+      return;
+    }
+    msg.hidden = false;
+    msg.textContent = text;
+    msg.className = "pr-hint" + (kind ? " is-" + kind : "");
+  }
+
+  function setEditableField(form, name, value) {
+    if (value == null || value === "") return false;
+    var el = form.elements.namedItem(name);
+    if (!el) return false;
+    if (el.type === "file") return false;
+    if (el.disabled) el.disabled = false;
+    if (el.readOnly) el.readOnly = false;
+    if (name === "Dob" && !isAgeAtLeast(value, MIN_APPLICANT_AGE)) {
+      return false;
+    }
+    el.value = String(value);
+    try {
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    } catch (e) {
+      /* ignore */
+    }
+    return true;
+  }
+
+  function applyResumeAutofill(form, fields, isIntern) {
+    if (!form || !fields) return 0;
+    var filled = 0;
+    var map = [
+      "Name",
+      "Email",
+      "Phoneno",
+      "Dob",
+      "Gender",
+      "Address",
+      "AboutYourSelf",
+      "HighestQualification"
+    ];
+    map.forEach(function (name) {
+      if (setEditableField(form, name, fields[name])) filled += 1;
+    });
+    if (!isIntern && setEditableField(form, "Experience", fields.Experience)) {
+      filled += 1;
+      onExperienceChange(form);
+    }
+    var skills = Array.isArray(fields.skills) ? fields.skills : [];
+    if (skills.length) {
+      ensureKnownSkillsUi(form);
+      skills.forEach(function (raw) {
+        var value = String(raw || "").trim();
+        if (!value || knownSkills.length >= 20) return;
+        if (
+          knownSkills.some(function (skill) {
+            return skill.name.toLowerCase() === value.toLowerCase();
+          })
+        ) {
+          return;
+        }
+        knownSkills.push({ name: value.slice(0, 40), certified: false });
+        filled += 1;
+      });
+      renderKnownSkills(form);
+    }
+    return filled;
+  }
+
+  function resumeParseUrl() {
+    return typeof window.NH_apiUrl === "function"
+      ? window.NH_apiUrl("/api/resume-parse")
+      : "/api/resume-parse";
+  }
+
+  function wireResumeAutofill(form, isIntern) {
+    var fileInput = form.elements.namedItem("ResumeFile");
+    var btn = qs("#pr-autofill-resume", form);
+    if (!fileInput || !btn) return;
+    if (btn.getAttribute("data-pr-wired") === "1") return;
+    btn.setAttribute("data-pr-wired", "1");
+    var parseInFlight = false;
+
+    function syncButton() {
+      var file = fileInput.files && fileInput.files[0];
+      var name = file ? String(file.name || "").toLowerCase() : "";
+      var canParse = !!file && /\.(pdf|docx)$/.test(name);
+      btn.hidden = !file;
+      btn.disabled = !canParse || parseInFlight;
+      if (!file) {
+        setAutofillMsg(form, "");
+        return;
+      }
+      if (/\.doc$/.test(name) && !/\.docx$/.test(name)) {
+        setAutofillMsg(
+          form,
+          "Auto-fill supports PDF and DOCX. You can still submit this .doc file.",
+          "warn"
+        );
+      } else if (!canParse) {
+        setAutofillMsg(form, "Choose a PDF or DOCX to auto-fill.", "warn");
+      } else if (!parseInFlight) {
+        setAutofillMsg(form, "");
+      }
+    }
+
+    async function runAutofill() {
+      var file = fileInput.files && fileInput.files[0];
+      if (!file || parseInFlight) return;
+      var name = String(file.name || "").toLowerCase();
+      if (!/\.(pdf|docx)$/.test(name)) {
+        setAutofillMsg(form, "Auto-fill needs a PDF or DOCX file.", "warn");
+        return;
+      }
+      parseInFlight = true;
+      btn.disabled = true;
+      btn.textContent = "Reading resume...";
+      setAutofillMsg(form, "Extracting details from your resume...", "info");
+      try {
+        var fd = new FormData();
+        fd.append("resume", file, file.name);
+        var url = resumeParseUrl();
+        var res = await fetch(url, {
+          method: "POST",
+          body: fd,
+          credentials: "omit"
+        });
+        var rawText = await res.text();
+        var data = null;
+        try {
+          data = rawText ? JSON.parse(rawText) : null;
+        } catch (e) {
+          data = null;
+        }
+        if (!data || !data.fields) {
+          var looksHtml = /^\s*</.test(rawText || "");
+          setAutofillMsg(
+            form,
+            (data && data.error) ||
+              (looksHtml
+                ? "Auto-fill API is not running. Start the server with: cd server && set PORT=5174&& npm start"
+                : "Could not read this resume. You can still fill the form manually."),
+            "error"
+          );
+          return;
+        }
+        var count = applyResumeAutofill(form, data.fields, isIntern);
+        if (count > 0) {
+          setAutofillMsg(
+            form,
+            "Filled " +
+              count +
+              " field" +
+              (count === 1 ? "" : "s") +
+              " from your resume. Review and edit anything that looks off.",
+            "ok"
+          );
+        } else {
+          setAutofillMsg(
+            form,
+            "No clear fields were found. Please complete the form manually.",
+            "warn"
+          );
+        }
+      } catch (err) {
+        console.warn("Resume auto-fill failed", err);
+        setAutofillMsg(
+          form,
+          "Could not reach the auto-fill service (is Express running on port 5174?). Please fill the form manually.",
+          "error"
+        );
+      } finally {
+        parseInFlight = false;
+        btn.textContent = "Auto-fill from resume";
+        syncButton();
+      }
+    }
+
+    fileInput.addEventListener("change", function () {
+      syncButton();
+      var file = fileInput.files && fileInput.files[0];
+      var name = file ? String(file.name || "").toLowerCase() : "";
+      if (file && /\.(pdf|docx)$/.test(name)) {
+        runAutofill();
+      }
+    });
+    syncButton();
+    btn.addEventListener("click", function () {
+      runAutofill();
     });
   }
 
@@ -2712,8 +3483,9 @@
     });
   }
 
-  async function restoreDraft(form, job, draft, isIntern) {
+  async function restoreApplicantSnapshot(form, job, draft, isIntern, options) {
     if (!form || !draft) return;
+    var opts = options || {};
     applyDraftFields(form, draft.fields || {});
 
     var stateCityPairs = [
@@ -2752,13 +3524,154 @@
     renderKnownSkills(form);
     restoreDraftCerts(form, draft.certifications);
     restoreDraftSkillRatings(form, draft.skillRatings);
-    showDraftPanel(form, draft.activePanel);
-    showDraftEduStep(form, draft.activeEduStep);
+    var panel = opts.forcePanel || draft.activePanel || "job";
+    showDraftPanel(form, panel);
+    if (typeof form._prShowPanel === "function") form._prShowPanel(panel);
+    showDraftEduStep(form, draft.activeEduStep || "10th");
+    if (opts.statusMessage) {
+      setStatus(opts.statusMessage, opts.statusType || "ok");
+    }
+  }
 
-    setStatus(
-      "Draft restored. Re-attach photo and resume if needed - files are not saved in drafts.",
-      "ok"
-    );
+  async function restoreDraft(form, job, draft, isIntern) {
+    await restoreApplicantSnapshot(form, job, draft, isIntern, {
+      statusMessage:
+        "Draft restored. Re-attach photo and resume if needed - files are not saved in drafts."
+    });
+  }
+
+  function wireReturningApplicant(form, job, isIntern) {
+    if (!form || !job) return;
+    var nameEl = form.elements.namedItem("Name");
+    var phoneEl = form.elements.namedItem("Phoneno");
+    if (!nameEl || !phoneEl) return;
+    var lastKey = "";
+    var lastMissKey = "";
+    var busy = false;
+    var debounceTimer = null;
+
+    form._prClearReturningKey = function () {
+      lastKey = "";
+      lastMissKey = "";
+    };
+
+    async function maybeRestore() {
+      if (busy) return;
+      var name = fieldValue(form, "Name");
+      var phone = digitsOnly(fieldValue(form, "Phoneno"));
+      /* Clear leftover submit errors while they re-enter identity. */
+      clearFieldErrors(form);
+
+      if (name && name.length >= 3 && phone.length > 0 && phone.length < 10) {
+        setStatus(
+          "Enter your full 10-digit phone number to check for an existing application.",
+          "info"
+        );
+        return;
+      }
+      if (!name || name.length < 3 || phone.length !== 10) return;
+
+      var key = normalizeApplicantName(name) + "|" + phone;
+      if (key === lastKey) return;
+
+      var profile = readAppliedProfile(job, name, phone);
+      if (!profile) {
+        if (key !== lastMissKey) {
+          lastMissKey = key;
+          setStatus(
+            "No saved application found for this name and phone on this job. Complete a successful submit first (then use No on the success popup).",
+            "warn"
+          );
+        }
+        return;
+      }
+
+      lastKey = key;
+      lastMissKey = "";
+      busy = true;
+      try {
+        clearFieldErrors(form);
+        await restoreApplicantSnapshot(form, job, profile, isIntern, {
+          forcePanel: "education",
+          statusMessage:
+            "Welcome back — we recognised your earlier application for this role. Details were restored. Continue with Education & Certifications.",
+          statusType: "ok"
+        });
+        clearFieldErrors(form);
+        var eduPanel = qs('[data-pr-panel="education"]', form);
+        if (eduPanel) {
+          try {
+            eduPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+          } catch (e) {}
+        }
+      } finally {
+        busy = false;
+      }
+    }
+
+    function scheduleRestore() {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () {
+        maybeRestore();
+      }, 250);
+    }
+
+    nameEl.addEventListener("blur", maybeRestore);
+    nameEl.addEventListener("change", scheduleRestore);
+    nameEl.addEventListener("input", scheduleRestore);
+    phoneEl.addEventListener("blur", maybeRestore);
+    phoneEl.addEventListener("change", scheduleRestore);
+    phoneEl.addEventListener("input", scheduleRestore);
+  }
+
+  async function resetToEmptyApplicationForm(form, job, isIntern, skillsEl, presetSkills) {
+    if (!form) return;
+    form.reset();
+    knownSkills = [];
+    introAudioFile = null;
+    editedPhotoFile = null;
+    photoFaceOk = false;
+    photoAiSuspect = false;
+    photoDataUrl = "";
+    destroyPhotoCropper();
+    var photoEdit = document.getElementById("pr-photo-edit");
+    if (photoEdit) photoEdit.hidden = true;
+    setPhotoMsg("", "");
+    renderKnownSkills(form);
+    var certRows = qs("#cert-rows", form);
+    if (certRows) certRows.innerHTML = "";
+    var langBox = qs("#pr-languages", form);
+    if (langBox) {
+      langUid = 1;
+      knownLanguages = [];
+      resetLanguageEntry(langBox);
+      renderKnownLanguages(langBox);
+      setLangMsg(langBox, "");
+    }
+    var declared = form.elements.namedItem("isDeclared");
+    if (declared) declared.checked = false;
+    if (typeof form._prShowPanel === "function") {
+      form._prShowPanel("job");
+    } else {
+      showDraftPanel(form, "job");
+    }
+    showDraftEduStep(form, "10th");
+    if (typeof form._prClearReturningKey === "function") {
+      form._prClearReturningKey();
+    }
+    clearFieldErrors(form);
+    setStatus("", "");
+    await fillHrpopsStates(form);
+    if (skillsEl) {
+      await loadSkills(job.jobid, skillsEl, isIntern, presetSkills);
+      ensureKnownSkillsUi(form);
+    }
+    if (!isIntern) onExperienceChange(form);
+    try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
   }
 
   async function wireDraft(form, job, isIntern) {
@@ -2798,7 +3711,7 @@
     langUid = 1;
     knownLanguages = [];
     var maritalField =
-      '<div class="pr-field"><label for="MaritalStatus">Marital Status <span class="pr-req">*</span></label>' +
+      '<div class="pr-field"><label for="MaritalStatus">Marital Status</label>' +
       '<div class="pr-radios" role="radiogroup" id="MaritalStatus">' +
       '<label><input type="radio" name="MaritalStatus" value="Single" />Single</label>' +
       '<label><input type="radio" name="MaritalStatus" value="Married" />Married</label></div></div>';
@@ -2818,13 +3731,38 @@
       '<li class="preview-tab-item"><button type="button" class="preview-tab-link" data-pr-tab="education" role="tab">Education &amp; Certifications</button></li>' +
       "</ul>" +
       '<div class="pr-old-panel" data-pr-panel="job">' +
+      /* RESUME (top) */ '<section class="pr-section" id="pr-resume-section">' +
+      sectionHead("01", "Upload resume") +
+      '<div class="pr-grid">' +
+      '<div class="pr-field pr-field--full"><label for="ResumeFile">Upload Resume' +
+      (isIntern ? "" : ' <span class="pr-req">*</span>') +
+      "</label>" +
+      '<input id="ResumeFile" name="ResumeFile" type="file" accept=".pdf,.doc,.docx,application/pdf"' +
+      (isIntern ? "" : " required") +
+      " />" +
+      '<span class="pr-hint">PDF, DOC, or DOCX' +
+      (isIntern ? " (optional for internships)" : "") +
+      ". After uploading, you can auto-fill details — every field stays editable.</span>" +
+      '<div class="pr-autofill-row">' +
+      '<button type="button" class="pr-btn pr-btn-outline" id="pr-autofill-resume" hidden disabled>Auto-fill from resume</button>' +
+      '<p id="pr-autofill-msg" class="pr-hint" hidden role="status"></p>' +
+      "</div></div>" +
+      "</div></section>" +
       /* PERSONAL */ '<section class="pr-section" id="pr-personal">' +
-      sectionHead("01", "Personal details") +
+      sectionHead("02", "Personal details") +
+      '<p class="pr-hint pr-returning-hint">Already applied? Enter the same name and 10-digit phone — we will restore your details and open Education.</p>' +
       '<div class="pr-grid pr-grid--personal">' +
       '<div class="pr-field"><label for="Name">Name <span class="pr-req">*</span></label>' +
       '<input id="Name" name="Name" type="text" placeholder="Enter your name" autocomplete="name" minlength="3" maxlength="50" required /></div>' +
       '<div class="pr-field"><label for="Dob">Date of Birth <span class="pr-req">*</span></label>' +
-      '<input id="Dob" name="Dob" type="date" required /></div>' +
+      '<input id="Dob" name="Dob" type="date" required min="' +
+      escapeHtml(minDobIso()) +
+      '" max="' +
+      escapeHtml(maxDobIso(MIN_APPLICANT_AGE)) +
+      '" />' +
+      '<span class="pr-hint">Must be at least ' +
+      MIN_APPLICANT_AGE +
+      " years old</span></div>" +
       '<div class="pr-field"><label for="Gender">Gender <span class="pr-req">*</span></label>' +
       '<select id="Gender" name="Gender" required><option value="">Select Gender</option>' +
       '<option value="1">Male</option><option value="2">Female</option><option value="3">Others</option></select></div>' +
@@ -2912,7 +3850,7 @@
       '<select id="JoinPeriod" name="JoinPeriod" required><option value="">Choose...</option>' +
       '<option value="Immediate">Immediate</option><option value="15 Days">15 Days</option>' +
       '<option value="30 Days">30 Days</option><option value="More than 30 Days">More than 30 Days</option></select></div>' +
-      '<div class="pr-field"><label>Willingness to Relocate <span class="pr-req">*</span></label>' +
+      '<div class="pr-field pr-field--relocate"><label>Willingness to Relocate <span class="pr-req">*</span></label>' +
       '<div class="pr-radios pr-radios--row" id="relocateYes">' +
       '<label><input type="radio" name="ReadyToRelocate" value="Yes" />Yes</label>' +
       '<label><input type="radio" name="ReadyToRelocate" value="No" />No</label>' +
@@ -2935,29 +3873,29 @@
       '<div class="pr-field"><label for="ExpectedDOJ">Expected date of joining</label>' +
       '<input id="ExpectedDOJ" name="ExpectedDOJ" type="date" /></div>' +
       "</div></section>" +
-      /* UPLOADS */ '<section class="pr-section" id="upload-photo-resume-section">' +
-      sectionHead("07", "Uploads") +
+      /* PHOTO */ '<section class="pr-section" id="upload-photo-resume-section">' +
+      sectionHead("07", "Photo") +
       '<div class="pr-grid">' +
       '<div class="pr-field"><label for="ProfilePhoto">Upload Your Photo <span class="pr-req">*</span></label>' +
       '<input id="ProfilePhoto" name="ProfilePhoto" type="file" accept="image/*" required />' +
       '<button type="button" class="pr-photo-edit" id="pr-photo-edit" hidden>Edit Photo</button>' +
       '<p id="pr-photo-msg" class="pr-hint" hidden></p>' +
-      '<span class="pr-hint">JPG, PNG, GIF, or BMP. A single face is checked, then drag the crop box to choose the area.</span></div>' +
-      '<div class="pr-field"><label for="ResumeFile">Upload Resume' +
-      (isIntern ? "" : ' <span class="pr-req">*</span>') +
-      "</label>" +
-      '<input id="ResumeFile" name="ResumeFile" type="file" accept=".pdf,.doc,.docx,application/pdf"' +
-      (isIntern ? "" : " required") +
-      " />" +
-      '<span class="pr-hint">PDF, DOC, or DOCX' +
-      (isIntern ? " (optional for internships)" : "") +
-      "</span></div>" +
+      '<span class="pr-hint">JPG, PNG, GIF, or BMP. Requires exactly one face. AI-looking images get a warning but are not blocked.</span></div>' +
       "</div></section>" +
-      '<section class="pr-section pr-section--tab-nav">' +
+      /* SUBMIT lives on Job Application tab; education is optional */ '<section class="pr-section pr-section--submit">' +
+      '<p class="pr-declare-copy">By sharing the above details, I hereby declare that the information provided is true and correct to the best of my knowledge. I understand that any false or misleading information may lead to rejection or termination at any stage. I also consent to the use of my personal data for recruitment purposes.</p>' +
+      '<label class="pr-declare" for="isDeclared">' +
+      '<input type="checkbox" name="isDeclared" id="isDeclared" required aria-required="true" />' +
+      "<span>I hereby Declare &amp; Consent <span class=\"pr-req\">*</span></span></label>" +
       '<div class="pr-actions">' +
-      '<button type="button" class="pr-btn pr-btn-ink" id="pr-next-education">Continue to Education</button>' +
+      '<button type="submit" class="pr-btn pr-btn-ink" id="pr-submit">Submit Application</button>' +
       '<button type="button" class="pr-btn pr-btn-draft" id="pr-save-draft" data-pr-save-draft>Save draft</button>' +
-      "</div></section></div>" +
+      '<a class="pr-btn pr-btn-panel" href="' +
+      escapeHtml(backToRoleHref(job)) +
+      '">Back to role</a>' +
+      "</div>" +
+      '<p class="pr-hint">Education details are optional for this submit. You can add them later from the Education tab (returning applicants are recognised by name + phone).</p>' +
+      "</section></div>" +
       '<div class="pr-old-panel" data-pr-panel="education" hidden>' +
       '<section class="pr-section">' +
       sectionHead("", "Education &amp; Certifications") +
@@ -3031,31 +3969,39 @@
       '<div class="pr-cert-head"><h5>Add Certifications</h5><button type="button" class="skill-add-button" id="cert-add">Add</button></div>' +
       '<div id="cert-rows"></div></div>' +
       '<div class="pr-intro">' +
-      '<h5>Self Introduction</h5>' +
-      '<p class="pr-edu-lead">Tell us about yourself and your professional journey.</p>' +
-      '<div class="pr-field"><label for="IntroVideoLink">Video (Paste YouTube link only)</label>' +
+      "<h5>Self Introduction</h5>" +
+      '<div class="pr-intro-story">' +
+      "<strong>Share Your Story</strong>" +
+      "<ul>" +
+      "<li>Walk us through your professional journey and key achievements</li>" +
+      "<li>Explain why you&apos;re interested in this role and our company</li>" +
+      "<li>Highlight your top skills and how they apply to this position</li>" +
+      "</ul></div>" +
+      '<div class="pr-field pr-field--full"><label for="IntroVideoLink">Video (Paste YouTube link only)</label>' +
       '<input id="IntroVideoLink" name="IntroVideoLink" type="url" placeholder="https://www.youtube.com/watch?v=..." />' +
       '<small id="yt-error" class="pr-yt-error" hidden>Please enter a valid YouTube link.</small></div>' +
-      '<div class="pr-field"><label>Audio (Max 2 minutes)</label>' +
+      '<div class="pr-field pr-field--full"><label>Audio (Max 2 minutes)</label>' +
       '<div class="audio-recorder" id="pr-recorder">' +
-      '<button type="button" class="recorder-btn" id="rec-start">Record</button>' +
-      '<button type="button" class="recorder-btn" id="rec-stop" hidden>Stop</button>' +
+      '<div class="audio-recorder__controls">' +
+      '<button type="button" class="recorder-btn recorder-btn--record" id="rec-start">' +
+      '<svg class="recorder-mic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">' +
+      '<path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/>' +
+      "</svg>" +
+      "<span>Record</span></button>" +
+      '<button type="button" class="recorder-btn recorder-btn--stop" id="rec-stop" hidden>Stop</button>' +
+      '<button type="button" class="recorder-btn recorder-btn--again" id="rec-again" hidden>Re-record</button>' +
       '<span id="rec-time" class="rec-time" hidden>0:00</span>' +
+      "</div>" +
       '<audio id="rec-preview" controls hidden></audio>' +
-      '<button type="button" class="recorder-btn" id="rec-again" hidden>Re-record</button>' +
+      '<p class="pr-intro-audio-hint">Click Record to capture your intro (max 2 minutes). Recording will auto-stop at 2:00.</p>' +
       "</div></div></div>" +
       "</section>" +
-      /* SUBMIT - Education tab only (matches old Angular end-of-form flow) */ '<section class="pr-section pr-section--submit">' +
-      '<p class="pr-declare-copy">By sharing the above details, I hereby declare that the information provided is true and correct to the best of my knowledge. I understand that any false or misleading information may lead to rejection or termination at any stage. I also consent to the use of my personal data for recruitment purposes.</p>' +
-      '<label class="pr-declare" for="isDeclared">' +
-      '<input type="checkbox" name="isDeclared" id="isDeclared" required aria-required="true" />' +
-      "<span>I hereby Declare &amp; Consent <span class=\"pr-req\">*</span></span></label>" +
+      '<section class="pr-section pr-section--tab-nav">' +
+      '<p class="pr-edu-lead">Optional — add qualifications anytime after applying. If you already submitted with the same name and phone, we will recognise you here.</p>' +
       '<div class="pr-actions">' +
-      '<button type="submit" class="pr-btn pr-btn-ink" id="pr-submit">Submit Application</button>' +
+      '<button type="button" class="pr-btn pr-btn-ink" id="pr-submit-education">Save education details</button>' +
       '<button type="button" class="pr-btn pr-btn-draft" id="pr-save-draft-edu" data-pr-save-draft>Save draft</button>' +
-      '<a class="pr-btn pr-btn-panel" href="' +
-      escapeHtml(backToRoleHref(job)) +
-      '">Back to role</a>' +
+      '<button type="button" class="pr-btn pr-btn-panel" id="pr-back-job">Back to Job Application</button>' +
       "</div>" +
       "</section></div>" +
       '<div id="pr-photo-editor" class="pr-editor" hidden>' +
@@ -3190,8 +4136,10 @@
     revealForm(form);
     wireSameAsCurrent(form);
     wirePhoneDigits(form);
+    wireDobAge(form);
     wireLanguageSection(qs("#pr-languages"));
     wireOldForm(form);
+    wireResumeAutofill(form, isIntern);
     await fillHrpopsStates(form);
 
     form.elements.namedItem("StateID").addEventListener("change", function (e) {
@@ -3219,13 +4167,11 @@
     await loadSkills(job.jobid, skillsEl, isIntern, presetSkills);
     ensureKnownSkillsUi(form);
     await wireDraft(form, job, isIntern);
+    wireReturningApplicant(form, job, isIntern);
 
-    form.addEventListener("submit", async function (ev) {
-      ev.preventDefault();
+    async function postApplication(btn, btnLabel) {
       var skillPack = collectSkills(qs("#pr-skills"), isIntern);
       var languages = collectLanguages(qs("#pr-languages"));
-      if (!validate(form, isIntern, skillPack, languages)) return;
-
       var companyId = resolveCompanyId(job);
       var fd = buildHrpopsFormData(
         form,
@@ -3234,13 +4180,11 @@
         skillPack.list,
         languages
       );
-      var btn = qs("#pr-submit");
       if (btn) {
         btn.disabled = true;
         btn.textContent = "Submitting...";
       }
       setStatus("Sending application...", "info");
-
       try {
         var res = await fetch(hrpopsApplyUrl(companyId), {
           method: "POST",
@@ -3271,32 +4215,7 @@
         } else {
           setStatus(statusFromFailure(data, res.status), "error");
         }
-
-        if (result === "ok") {
-          clearDraft(job);
-          form.reset();
-          knownSkills = [];
-          introAudioFile = null;
-          editedPhotoFile = null;
-          photoDataUrl = "";
-          destroyPhotoCropper();
-          var photoEdit = document.getElementById("pr-photo-edit");
-          if (photoEdit) photoEdit.hidden = true;
-          setPhotoMsg("", "");
-          renderKnownSkills(form);
-          var certRows = qs("#cert-rows", form);
-          if (certRows) certRows.innerHTML = "";
-          var langBox = qs("#pr-languages");
-          if (langBox) {
-            langUid = 1;
-            knownLanguages = [];
-            resetLanguageEntry(langBox);
-            renderKnownLanguages(langBox);
-            setLangMsg(langBox, "");
-          }
-          await fillHrpopsStates(form);
-          if (skillsEl) await loadSkills(job.jobid, skillsEl, isIntern, presetSkills);
-        }
+        return result;
       } catch (err) {
         console.error(err);
         setStatus(
@@ -3307,13 +4226,143 @@
             " if this continues.",
           "error"
         );
+        return "fail";
       } finally {
         if (btn) {
           btn.disabled = false;
-          btn.textContent = "Submit Application";
+          btn.textContent = btnLabel || "Submit Application";
         }
       }
+    }
+
+    form.addEventListener("submit", async function (ev) {
+      ev.preventDefault();
+      var skillPack = collectSkills(qs("#pr-skills"), isIntern);
+      var languages = collectLanguages(qs("#pr-languages"));
+      if (!validate(form, isIntern, skillPack, languages)) return;
+
+      var btn = qs("#pr-submit");
+      var result = await postApplication(btn, "Submit Application");
+      if (result === "ok" || result === "already") {
+        var savedOk = saveAppliedProfile(form, job);
+        clearDraft(job);
+        setStatus("", "");
+        if (!savedOk) {
+          console.warn(
+            "Could not store returning-applicant profile (localStorage blocked or incomplete name/phone)."
+          );
+        }
+        showSuccessModal({
+          already: result === "already",
+          onYes: function () {
+            /* Keep details so they can finish Education on this visit. */
+            if (typeof form._prShowPanel === "function") {
+              form._prShowPanel("education");
+            } else {
+              showDraftPanel(form, "education");
+            }
+            setStatus(
+              "Add Education & Certifications below for a stronger application.",
+              "ok"
+            );
+            var eduPanel = qs('[data-pr-panel="education"]', form);
+            if (eduPanel) {
+              try {
+                eduPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+              } catch (e) {}
+            }
+          },
+          onNo: function () {
+            /* Empty form again; applied profile stays so name+phone can reopen Education. */
+            resetToEmptyApplicationForm(
+              form,
+              job,
+              isIntern,
+              skillsEl,
+              presetSkills
+            );
+            if (savedOk) {
+              setStatus(
+                "Application saved. Enter the same name and phone later to continue with Education.",
+                "ok"
+              );
+            }
+          }
+        });
+      }
     });
+
+    var eduSaveBtn = qs("#pr-submit-education", form);
+    if (eduSaveBtn) {
+      eduSaveBtn.addEventListener("click", async function () {
+        clearFieldErrors(form);
+        var missing = [];
+        function requireField(cond, nameOrEl, formatMsg) {
+          if (cond) return;
+          markFieldError(form, nameOrEl);
+          missing.push(formatMsg || nameOrEl);
+        }
+        /* Optional education: only finish steps the candidate started */
+        validateEducation(form, requireField, { requireByHighest: false });
+        var certs = collectCertifications(form);
+        if (certs.partial) {
+          requireField(false, qs("#cert-rows"));
+        }
+        var yt = fieldValue(form, "IntroVideoLink");
+        if (yt && !isYouTube(yt)) {
+          requireField(
+            false,
+            "IntroVideoLink",
+            "Please enter a valid YouTube link."
+          );
+        }
+        if (missing.length) {
+          setStatus(
+            "Please complete the education fields you started (or clear them).",
+            "error"
+          );
+          return;
+        }
+
+        saveAppliedProfile(form, job);
+        saveDraft(form, job, true);
+
+        var canResubmit =
+          photoFaceOk &&
+          !!(
+            editedPhotoFile ||
+            (form.elements.namedItem("ProfilePhoto").files &&
+              form.elements.namedItem("ProfilePhoto").files[0])
+          );
+
+        if (canResubmit) {
+          var skillPack = collectSkills(qs("#pr-skills"), isIntern);
+          var languages = collectLanguages(qs("#pr-languages"));
+          if (!validate(form, isIntern, skillPack, languages, { includeEducation: true })) {
+            return;
+          }
+          var result = await postApplication(
+            eduSaveBtn,
+            "Save education details"
+          );
+          if (result === "ok" || result === "already") {
+            saveAppliedProfile(form, job);
+            setStatus(
+              result === "already"
+                ? "Education details saved. Your application for this role was already on file."
+                : "Education details submitted with your application.",
+              "ok"
+            );
+          }
+          return;
+        }
+
+        setStatus(
+          "Education details saved for this name and phone. Re-attach photo and resume only if you need to resubmit the full application.",
+          "ok"
+        );
+      });
+    }
   }
 
   if (document.readyState === "loading") {
