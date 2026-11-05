@@ -161,7 +161,11 @@ async function main() {
 
   // Liveness for Render / load balancers (no auth).
   app.get(["/health", "/api/health"], (_req, res) => {
-    res.status(200).json({ ok: true, service: "nohitatu-website-admin" });
+    res.status(200).json({
+      ok: true,
+      service: "nohitatu-website-admin",
+      features: { resumeParse: true },
+    });
   });
 
   // Credentialed CORS for static admin hosts (e.g. GitHub Pages → Render API).

@@ -3306,29 +3306,42 @@
       btn.textContent = "Reading resume...";
       setAutofillMsg(form, "Extracting details from your resume...", "info");
       try {
-        var fd = new FormData();
-        fd.append("resume", file, file.name);
-        var url = resumeParseUrl();
-        var res = await fetch(url, {
-          method: "POST",
-          body: fd,
-          credentials: "omit"
-        });
-        var rawText = await res.text();
         var data = null;
+        var usedClient = false;
         try {
-          data = rawText ? JSON.parse(rawText) : null;
-        } catch (e) {
+          var fd = new FormData();
+          fd.append("resume", file, file.name);
+          var url = resumeParseUrl();
+          var res = await fetch(url, {
+            method: "POST",
+            body: fd,
+            credentials: "omit"
+          });
+          var rawText = await res.text();
+          try {
+            data = rawText ? JSON.parse(rawText) : null;
+          } catch (e) {
+            data = null;
+          }
+          if (!res.ok || !data || !data.fields) {
+            data = null;
+          }
+        } catch (apiErr) {
+          console.warn("Resume API unavailable, trying in-browser parse", apiErr);
           data = null;
         }
+
+        if ((!data || !data.fields) && typeof window.NH_parseResumeClient === "function") {
+          setAutofillMsg(form, "Reading resume in your browser...", "info");
+          data = await window.NH_parseResumeClient(file);
+          usedClient = true;
+        }
+
         if (!data || !data.fields) {
-          var looksHtml = /^\s*</.test(rawText || "");
           setAutofillMsg(
             form,
             (data && data.error) ||
-              (looksHtml
-                ? "Auto-fill API is not running. Start the server with: cd server && set PORT=5174&& npm start"
-                : "Could not read this resume. You can still fill the form manually."),
+              "Could not read this resume. You can still fill the form manually.",
             "error"
           );
           return;
@@ -3341,7 +3354,9 @@
               count +
               " field" +
               (count === 1 ? "" : "s") +
-              " from your resume. Review and edit anything that looks off.",
+              " from your resume" +
+              (usedClient ? " (browser parse)" : "") +
+              ". Review and edit anything that looks off.",
             "ok"
           );
         } else {
@@ -3355,7 +3370,8 @@
         console.warn("Resume auto-fill failed", err);
         setAutofillMsg(
           form,
-          "Could not reach the auto-fill service (is Express running on port 5174?). Please fill the form manually.",
+          (err && err.message) ||
+            "Could not read this resume. Please fill the form manually.",
           "error"
         );
       } finally {
