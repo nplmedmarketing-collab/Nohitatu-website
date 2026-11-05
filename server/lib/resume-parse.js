@@ -58,22 +58,75 @@ function cleanPhone(raw) {
   return digits;
 }
 
-function guessName(text) {
-  const lines = String(text)
+function looksLikeName(candidate) {
+  const name = String(candidate || "").replace(/\s+/g, " ").trim();
+  if (name.length < 3 || name.length > 50) return "";
+  if (/@|http|www\.|linkedin|github|\d{5,}/i.test(name)) return "";
+  if (
+    /resume|curriculum|vitae|\bcv\b|objective|summary|profile|software|engineer|developer|experience|education|skills|phone|mobile|email|address|contact/i.test(
+      name
+    )
+  ) {
+    return "";
+  }
+  if (!/^[A-Za-z][A-Za-z.\s'-]{1,48}$/.test(name)) return "";
+  const parts = name.split(/\s+/).filter(Boolean);
+  if (parts.length < 1 || parts.length > 5) return "";
+  if (
+    parts.length === 1 &&
+    /^(name|email|phone|mobile|gender|address|dob|age|city|state|objective|summary|profile)$/i.test(
+      parts[0]
+    )
+  ) {
+    return "";
+  }
+  return name;
+}
+
+function guessName(text, filename) {
+  const raw = String(text || "");
+  const labeled = firstMatch(raw, [
+    /(?:^|\n|\r)\s*(?:full\s*name|candidate\s*name|applicant\s*name|name)\s*[:\-]\s*([A-Za-z][A-Za-z.\s'-]{1,48})/i,
+  ]);
+  const labeledOk = looksLikeName(labeled);
+  if (labeledOk) return labeledOk;
+
+  const lines = raw
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter(Boolean);
-  for (let i = 0; i < Math.min(lines.length, 8); i++) {
-    const line = lines[i];
-    if (/@|http|linkedin|github|resume|curriculum|objective|summary/i.test(line)) {
-      continue;
-    }
+  for (let i = 0; i < Math.min(lines.length, 12); i++) {
+    let line = lines[i];
+    if (/@|http|linkedin|github/i.test(line)) continue;
     if (/^\+?\d[\d\s\-()]{7,}$/.test(line)) continue;
-    if (/^[A-Za-z][A-Za-z.\s'-]{2,48}$/.test(line) && line.split(/\s+/).length <= 5) {
-      return line.replace(/\s+/g, " ").trim();
+    if (/^[A-Za-z][A-Za-z\s]{0,20}:\s+\S/.test(line)) {
+      line = line.replace(/^[^:]+:\s*/, "").trim();
     }
+    const head = line.match(
+      /^((?:[A-Za-z][A-Za-z.'-]{1,30}\s+){0,4}[A-Za-z][A-Za-z.'-]{1,30})/
+    );
+    const ok = looksLikeName(head && head[1] ? head[1] : line);
+    if (ok) return ok;
   }
-  return "";
+
+  const emailIdx = raw.search(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+  const head = (emailIdx > 0 ? raw.slice(0, emailIdx) : raw.slice(0, 220))
+    .replace(/[\t|•·]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const headMatch = head.match(
+    /^((?:[A-Za-z][A-Za-z.'-]{1,30}\s+){0,4}[A-Za-z][A-Za-z.'-]{1,30})/
+  );
+  const fromHead = looksLikeName(headMatch && headMatch[1]);
+  if (fromHead) return fromHead;
+
+  const base = String(filename || "")
+    .replace(/\.[^.]+$/, "")
+    .replace(/[_\-]+/g, " ")
+    .replace(/\b(resume|cv|curriculum|vitae|updated|final|copy)\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return looksLikeName(base) || "";
 }
 
 function extractSkills(text) {
@@ -139,7 +192,7 @@ function mapHighestQualification(text) {
   return "";
 }
 
-function heuristicFields(text) {
+function heuristicFields(text, filename) {
   const email = firstMatch(text, [
     /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/,
   ]);
@@ -178,8 +231,17 @@ function heuristicFields(text) {
     /(?:address|location)\s*[:\-]?\s*([^\n]{10,120})/i,
   ]);
 
+  let name = guessName(text, filename);
+  if (!name && email) {
+    const local = String(email).split("@")[0] || "";
+    const fromEmail = looksLikeName(
+      local.replace(/[._+\-]+/g, " ").replace(/\d+/g, " ").replace(/\s+/g, " ").trim()
+    );
+    if (fromEmail && fromEmail.split(/\s+/).length >= 2) name = fromEmail;
+  }
+
   return {
-    Name: guessName(text),
+    Name: name,
     Email: email,
     Phoneno: phone.length === 10 ? phone : "",
     Dob: dobIso,
@@ -277,7 +339,7 @@ async function parseResumeBuffer(buffer, filename) {
     err.code = "empty-text";
     throw err;
   }
-  const base = heuristicFields(text);
+  const base = heuristicFields(text, filename);
   const fields = await refineWithOpenAI(text, base);
   if (fields.Phoneno && fields.Phoneno.length !== 10) fields.Phoneno = "";
   return {
