@@ -128,7 +128,22 @@
   }
 
   function renderFromApi(careers) {
-    allJobs = Array.isArray(careers) ? careers : [];
+    const client = window.NH_HRPOPS_CAREERS;
+    const list = Array.isArray(careers) ? careers : [];
+    /* Never show the Open Application / Talent pool inbox on the public list. */
+    allJobs =
+      client && typeof client.isTalentPoolJob === "function"
+        ? list.filter((job) => !client.isTalentPoolJob(job))
+        : list.filter((job) => {
+            const id = String(
+              (job && (job.jobPostId || job.job_code || job.id)) || ""
+            ).trim();
+            if (id === "1141") return false;
+            const title = String(
+              (job && (job.title || job.post || job.postName)) || ""
+            ).toLowerCase();
+            return !/open\s*applications?|talent\s*pool/.test(title);
+          });
     ready = true;
     paint(true);
   }

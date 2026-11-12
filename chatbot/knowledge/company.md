@@ -79,7 +79,6 @@ Primary Contact Channels:
 - **Sales & Business Development** (Consultations, Quotes, Project Estimation, Demos):
   - Sales Phone: **+91 99413 33444**
   - Sales Email: **sales@nohitatu.com**
-  - Skype: **sales.nohitatu**
   - Web Form: **Contact-us.html**
 
 - **Human Resources & Careers** (Jobs, Resume Submission, Hiring Queries):

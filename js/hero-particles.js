@@ -21,7 +21,7 @@
       'rgba(129, 140, 248, ', // Soft indigo
       'rgba(167, 139, 250, ', // Violet
       'rgba(52, 211, 153, ',  // Emerald status dot accent
-      'rgba(99, 102, 241, '   // Deep indigo
+      'rgba(44, 148, 140, '   // Deep indigo
     ];
 
     function resize() {

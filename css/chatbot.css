@@ -21,10 +21,10 @@
     --cb-soft: #f5f6f8;
     --cb-paper: #ffffff;
     --cb-live: #22c55e;
-    --cb-violet: #726cf4;
-    --cb-violet-deep: #5f58dc;
-    --cb-user: #ebe9fe;
-    --cb-user-ink: #2e2a6b;
+    --cb-violet: #2c948c;
+    --cb-violet-deep: #20756e;
+    --cb-user: #e6f7f5;
+    --cb-user-ink: #0b1a2d;
     --cb-radius: 14px;
     --cb-radius-sm: 10px;
     --cb-shadow: 0 18px 48px rgba(26, 35, 50, 0.14);
@@ -50,7 +50,7 @@
     border: none !important;
     color: #ffffff !important;
     cursor: pointer;
-    box-shadow: 0 10px 24px rgba(114, 108, 244, 0.32);
+    box-shadow: 0 10px 24px rgba(44, 148, 140, 0.32);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,13 +143,13 @@
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #726cf4, #00f2fe) !important;
+    background: linear-gradient(135deg, #2c948c, #84dcd5) !important;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(114, 108, 244, 0.35);
+    box-shadow: 0 4px 14px rgba(44, 148, 140, 0.35);
 }
 
 .chatbot-avatar-box svg {
@@ -278,12 +278,12 @@
 }
 
 .user-message .message-content {
-    background: linear-gradient(135deg, #726cf4, #6366f1) !important;
+    background: linear-gradient(135deg, #2c948c, #2c948c) !important;
     color: #ffffff !important;
     border: none;
     border-bottom-right-radius: 4px;
     font-weight: 600;
-    box-shadow: 0 4px 14px rgba(114, 108, 244, 0.28);
+    box-shadow: 0 4px 14px rgba(44, 148, 140, 0.28);
 }
 
 /* Quick replies */
@@ -356,10 +356,10 @@
 
 .chip-btn:hover {
     background: #f5f3ff !important;
-    color: #6366f1 !important;
-    border-color: rgba(99, 102, 241, 0.45) !important;
+    color: #2c948c !important;
+    border-color: rgba(44, 148, 140, 0.45) !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(44, 148, 140, 0.12) !important;
 }
 
 .chip-btn:hover .chip-icon-svg {
@@ -368,24 +368,24 @@
 }
 
 .chip-btn--cta {
-    border-color: rgba(114, 108, 244, 0.4) !important;
+    border-color: rgba(44, 148, 140, 0.4) !important;
     color: var(--cb-violet-deep) !important;
     background: #f7f6ff !important;
 }
 
 .chip-btn--cta:hover {
-    background: #efedff !important;
-    border-color: rgba(114, 108, 244, 0.55) !important;
+    background: #e6f7f5 !important;
+    border-color: rgba(44, 148, 140, 0.55) !important;
 }
 
 .chip-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(114, 108, 244, 0.22);
+    box-shadow: 0 0 0 3px rgba(44, 148, 140, 0.22);
 }
 
 /* In-message CTAs */
 .bot-message .message-content a.cb-cta,
 .message-content a.cb-cta {
-    color: #6366f1 !important;
+    color: #2c948c !important;
     font-weight: 700 !important;
     text-decoration: underline !important;
     text-underline-offset: 3px;
@@ -428,16 +428,16 @@
 }
 
 .chatbot-input:focus {
-    border-color: #6366f1 !important;
+    border-color: #2c948c !important;
     background: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+    box-shadow: 0 0 0 3px rgba(44, 148, 140, 0.15) !important;
 }
 
 .chatbot-send-btn {
     width: 42px;
     height: 42px;
     border-radius: 12px !important;
-    background: linear-gradient(135deg, #726cf4, #6366f1) !important;
+    background: linear-gradient(135deg, #2c948c, #2c948c) !important;
     border: none !important;
     color: #ffffff !important;
     cursor: pointer;
@@ -447,12 +447,12 @@
     transition: transform 0.18s ease, box-shadow 0.18s ease;
     outline: none !important;
     flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(114, 108, 244, 0.32);
+    box-shadow: 0 4px 14px rgba(44, 148, 140, 0.32);
 }
 
 .chatbot-send-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(114, 108, 244, 0.42);
+    box-shadow: 0 6px 18px rgba(44, 148, 140, 0.42);
 }
 
 .chatbot-send-btn:active {
@@ -460,7 +460,7 @@
 }
 
 .chatbot-send-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(114, 108, 244, 0.28);
+    box-shadow: 0 0 0 3px rgba(44, 148, 140, 0.28);
 }
 
 /* Typing */
@@ -517,8 +517,8 @@
     gap: 4px;
     padding: 2px 8px;
     border-radius: 6px;
-    background: rgba(114, 108, 244, 0.1);
-    color: #5f58dc !important;
+    background: rgba(44, 148, 140, 0.1);
+    color: #20756e !important;
     font-weight: 700;
     font-size: 13px;
     text-decoration: none !important;
@@ -526,7 +526,7 @@
 }
 
 .message-content a.cb-cta:hover {
-    background: rgba(114, 108, 244, 0.2);
+    background: rgba(44, 148, 140, 0.2);
     transform: translateY(-1px);
 }
 

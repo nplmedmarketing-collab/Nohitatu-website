@@ -4,6 +4,7 @@ const fs = require("fs");
 const crypto = require("crypto");
 const multer = require("multer");
 const { VERTICALS, platformMeta, EMPLOYMENT_TYPES, CAREER_STATUSES } = require("../db");
+const { validateFilename, inspectDiskImageFile } = require("../lib/fileguard");
 
 const ALLOWED_IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp"]);
 const ALLOWED_MIME = new Set([
@@ -43,6 +44,10 @@ function createUpload(workspaceRoot) {
     storage,
     limits: { fileSize: 16 * 1024 * 1024, files: 4 },
     fileFilter: (_req, file, cb) => {
+      const nameCheck = validateFilename(file.originalname);
+      if (!nameCheck.ok) {
+        return cb(new Error(nameCheck.reason));
+      }
       const ext = path.extname(file.originalname || "").toLowerCase();
       const mime = (file.mimetype || "").toLowerCase();
       if (ALLOWED_IMAGE_EXT.has(ext) || ALLOWED_MIME.has(mime) || mime.startsWith("image/")) {
@@ -229,6 +234,19 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
     { name: "thumb", maxCount: 1 },
   ]);
 
+  function verifyUploadedProjectFiles(filesMap) {
+    if (!filesMap || typeof filesMap !== "object") return { ok: true };
+    for (const key of Object.keys(filesMap)) {
+      const arr = filesMap[key];
+      if (!Array.isArray(arr)) continue;
+      for (const file of arr) {
+        const res = inspectDiskImageFile(file);
+        if (!res.ok) return res;
+      }
+    }
+    return { ok: true };
+  }
+
   router.post(
     "/projects",
     auth.requireAuth,
@@ -236,6 +254,8 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
     (req, res, next) => {
       dualFields(req, res, (err) => {
         if (err) return res.status(400).json({ error: err.message || "Upload failed" });
+        const guard = verifyUploadedProjectFiles(req.files);
+        if (!guard.ok) return res.status(400).json({ error: guard.reason });
         return next();
       });
     },
@@ -256,6 +276,8 @@ function createAdminRouter({ store, auth, workspaceRoot }) {
     (req, res, next) => {
       dualFields(req, res, (err) => {
         if (err) return res.status(400).json({ error: err.message || "Upload failed" });
+        const guard = verifyUploadedProjectFiles(req.files);
+        if (!guard.ok) return res.status(400).json({ error: guard.reason });
         return next();
       });
     },

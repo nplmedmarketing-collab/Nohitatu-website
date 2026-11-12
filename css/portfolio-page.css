@@ -276,7 +276,7 @@ html.pf-page .pf-hero__copy {
 
 html.pf-page .pf-hero__kicker {
   margin: 0 0 17px !important;
-  color: #726cf4 !important;
+  color: #2c948c !important;
   font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   font-weight: 800 !important;
@@ -296,7 +296,7 @@ html.pf-page .pf-hero__copy h1 {
 }
 
 html.pf-page .pf-hero__copy h1 em {
-  color: #726cf4 !important;
+  color: #2c948c !important;
   font-style: italic !important;
   font-weight: 500 !important;
 }
@@ -318,7 +318,7 @@ html.pf-page .pf-hero__cta {
   margin-top: 32px !important;
   padding: 0 22px !important;
   border-radius: 999px !important;
-  background: #726cf4 !important;
+  background: #2c948c !important;
   color: #fff !important;
   font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 13px !important;
@@ -329,7 +329,7 @@ html.pf-page .pf-hero__cta {
 }
 
 html.pf-page .pf-hero__cta:hover {
-  background: #5f58dc !important;
+  background: #20756e !important;
   transform: translateY(-1px);
 }
 
@@ -390,7 +390,7 @@ html.pf-page .pf-ethos__grid {
 html.pf-page .pf-ethos__eyebrow {
   grid-column: 1 / -1 !important;
   margin: 0 0 34px !important;
-  color: #5f58dc !important;
+  color: #20756e !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.28em !important;
@@ -409,7 +409,7 @@ html.pf-page .pf-ethos__title {
 
 html.pf-page .pf-ethos__title em {
   font-style: italic !important;
-  color: #5f58dc !important;
+  color: #20756e !important;
 }
 
 html.pf-page .pf-ethos__body p {
@@ -568,8 +568,8 @@ html.pf-page .atlas__filters button > span {
 
 html.pf-page .atlas__filters button:hover {
   color: #fff !important;
-  background: rgba(114, 108, 244, 0.16) !important;
-  border-color: rgba(114, 108, 244, 0.55) !important;
+  background: rgba(44, 148, 140, 0.16) !important;
+  border-color: rgba(44, 148, 140, 0.55) !important;
 }
 
 html.pf-page .atlas__filters button.is-active,
@@ -577,7 +577,7 @@ html.pf-page .atlas__filters button[aria-pressed="true"] {
   background: linear-gradient(135deg, #7d77f7, #5b53d8) !important;
   border-color: rgba(255, 255, 255, 0.32) !important;
   color: #fff !important;
-  box-shadow: 0 6px 18px rgba(114, 108, 244, 0.42) !important;
+  box-shadow: 0 6px 18px rgba(44, 148, 140, 0.42) !important;
 }
 
 /* The trailing fade is the only hint that the row scrolls, since the scrollbar is
@@ -609,13 +609,24 @@ html.pf-page body.portfolio-page header.logo-navbar {
   box-shadow: none !important;
 }
 
-html.pf-page body.portfolio-page header.logo-navbar .logo-on-dark,
-html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-dark {
+/* White logo on dark hero; black logo after scroll (with or without pf-page) */
+html body.portfolio-page header.logo-navbar:not(.white-header) .logo-on-dark,
+html.pf-page body.portfolio-page header.logo-navbar:not(.white-header) .logo-on-dark,
+html body.portfolio-page header.logo-navbar.blnk-header:not(.white-header) .logo-on-dark {
   display: block !important;
 }
-html.pf-page body.portfolio-page header.logo-navbar .logo-on-light,
-html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-light {
+html body.portfolio-page header.logo-navbar:not(.white-header) .logo-on-light,
+html.pf-page body.portfolio-page header.logo-navbar:not(.white-header) .logo-on-light,
+html body.portfolio-page header.logo-navbar.blnk-header:not(.white-header) .logo-on-light {
   display: none !important;
+}
+html body.portfolio-page header.logo-navbar.white-header .logo-on-dark,
+html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-dark {
+  display: none !important;
+}
+html body.portfolio-page header.logo-navbar.white-header .logo-on-light,
+html.pf-page body.portfolio-page header.logo-navbar.white-header .logo-on-light {
+  display: block !important;
 }
 
 html.pf-page body.portfolio-page header.logo-navbar.white-header {
@@ -669,8 +680,8 @@ html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item > 
 html.pf-page body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a,
 html.pf-page body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a {
   background: none !important;
-  color: #726cf4 !important;
-  -webkit-text-fill-color: #726cf4 !important;
+  color: #0b1a2d !important;
+  -webkit-text-fill-color: #0b1a2d !important;
 }
 html.pf-page body.portfolio-page .navbar-toggle.nav-menu { display: none !important; }
 

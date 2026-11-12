@@ -3,11 +3,18 @@ const multer = require("multer");
 const { VERTICALS, toPublicCareerDetail } = require("../db");
 const { verifyRecaptchaToken } = require("../lib/recaptcha");
 const { parseResumeBuffer } = require("../lib/resume-parse");
+const { validateFilename, inspectResumeBuffer } = require("../lib/fileguard");
 
 const resumeUpload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
+    const nameCheck = validateFilename(file.originalname);
+    if (!nameCheck.ok) {
+      const err = new Error(nameCheck.reason);
+      err.code = "fileguard-blocked";
+      return cb(err);
+    }
     const name = String(file.originalname || "").toLowerCase();
     const mime = String(file.mimetype || "").toLowerCase();
     const ok =
@@ -170,7 +177,7 @@ function createPublicRouter({ store }) {
       if (uploadErr) {
         const code = uploadErr.code || "";
         if (code === "LIMIT_FILE_SIZE") {
-          return res.status(400).json({ error: "Resume must be 5 MB or smaller." });
+          return res.status(400).json({ error: "Resume must be 2 MB or smaller." });
         }
         return res.status(400).json({
           error: uploadErr.message || "Could not read the uploaded resume.",
@@ -179,6 +186,13 @@ function createPublicRouter({ store }) {
       }
       if (!req.file || !req.file.buffer) {
         return res.status(400).json({ error: "Please choose a resume file first." });
+      }
+      const guard = inspectResumeBuffer(req.file.buffer, req.file.originalname);
+      if (!guard.ok) {
+        return res.status(400).json({
+          error: guard.reason,
+          code: "fileguard-blocked",
+        });
       }
       try {
         const result = await parseResumeBuffer(req.file.buffer, req.file.originalname);

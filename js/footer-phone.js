@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   phones.forEach((phone) => {
     phone.addEventListener('mouseenter', () => {
-      phone.style.color = '#019add';
+      phone.style.color = '#c25e2e';
     });
 
     phone.addEventListener('mouseleave', () => {

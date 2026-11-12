@@ -3,7 +3,7 @@
   var currentScript = document.currentScript;
   if (!currentScript || !currentScript.src) return;
 
-  ['footer-reveal.js', 'mobile-nav.js'].forEach(function (name) {
+  ['footer-reveal.js', 'mobile-nav.js', 'back-to-top.js'].forEach(function (name) {
     var script = document.createElement('script');
     var url = new URL(name, currentScript.src);
     // Soft-bump when custom.js itself is versioned (?v=...) so CTA/footer fixes land.
@@ -17,22 +17,44 @@
 })();
 
 // Bulletproof header & logo controller:
-// - Over hero banner (top of page, scroll < 60): white logo (.blnk-header)
-// - Rest of page (scrolled, scroll >= 60): crisp black logo (.white-header)
+// - Over dark hero banner: white logo (.blnk-header)
+// - Past hero / light chrome: black logo (.white-header)
+// Homepage (lmn-homepage) keeps black logo via CSS regardless of these classes.
+// Curtain pages use sticky heroes — detect via the scrolling panel, not hero bottom.
 (function () {
+  function heroPastHeader() {
+    var panel = document.querySelector(".nh-curtain-panel");
+    if (panel) {
+      // Panel has scrolled up over the sticky hero.
+      return panel.getBoundingClientRect().top <= 100;
+    }
+
+    var hero = document.querySelector(
+      ".nh-curtain-banner, #portfolio-hero, .about-hero, .people-hero, .life-hero, .contact-hero, .sd-hero, .top-banner, .page-hero, .nh-careers-banner"
+    );
+    if (!hero) {
+      return Math.max(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0, 0) >= 60;
+    }
+    return hero.getBoundingClientRect().bottom <= 96;
+  }
+
   function syncHeaderChrome() {
-    var scroll = Math.max(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0, 0);
     var headers = document.querySelectorAll("header.logo-navbar, body > header");
     if (!headers.length) return;
 
-    var isScrolled = scroll >= 60;
+    // Homepage: leave class toggling alone; CSS forces black logo either way.
+    if (document.body && document.body.classList.contains("lmn-homepage")) {
+      return;
+    }
+
+    var isPastHero = heroPastHeader();
     headers.forEach(function (h) {
       if (h.classList.contains("open-menu")) {
         h.classList.remove("white-header");
       } else if (h.classList.contains("show-menu")) {
         h.classList.remove("white-header");
         h.classList.add("blnk-header");
-      } else if (isScrolled) {
+      } else if (isPastHero) {
         h.classList.remove("blnk-header");
         h.classList.add("white-header");
       } else {
@@ -60,7 +82,45 @@
     return /\/blogs\//i.test(path) ? "../Contact-us" : "Contact-us";
   }
 
+  function isCareerFlowPage(body) {
+    if (!body) return false;
+    return (
+      body.classList.contains("careers-page") ||
+      body.classList.contains("career-detail-page") ||
+      body.classList.contains("post-resume-page")
+    );
+  }
+
+  function openApplicationHref() {
+    var path = (location.pathname || "").replace(/\\/g, "/");
+    return /\/blogs\//i.test(path) ? "../PostResume.html" : "PostResume.html";
+  }
+
+  function createOpenApplicationCta() {
+    var section = document.createElement("section");
+    section.className = "estimate footer-reveal-cta";
+    section.setAttribute("aria-label", "Open application");
+    section.innerHTML =
+      '<div class="footer-reveal-shell">' +
+        '<div class="estimate-panel">' +
+          '<div class="estimate-copy">' +
+            "<span>Still looking?</span>" +
+            "<h2>Didn't find the role you are looking for? You can get in touch and we will get back to you if we find your profile suitable.</h2>" +
+          "</div>" +
+          '<a class="estimate-button" href="' +
+      openApplicationHref() +
+      '">' +
+            'Apply now <span aria-hidden="true">\u2192</span>' +
+          "</a>" +
+        "</div>" +
+      "</div>";
+    return section;
+  }
+
   function createCta() {
+    if (isCareerFlowPage(document.body)) {
+      return createOpenApplicationCta();
+    }
     var section = document.createElement("section");
     section.className = "estimate footer-reveal-cta";
     section.setAttribute("aria-labelledby", "footer-reveal-title");
@@ -79,6 +139,25 @@
     return section;
   }
 
+  /** Keep careers CTA copy/button on the open-application path. */
+  function ensureOpenApplicationCta(cta) {
+    if (!cta || !isCareerFlowPage(document.body)) return;
+    cta.setAttribute("aria-label", "Open application");
+    var title = cta.querySelector(".estimate-copy h2");
+    var eyebrow = cta.querySelector(".estimate-copy > span");
+    var btn = cta.querySelector(".estimate-button");
+    if (eyebrow) eyebrow.textContent = "Still looking?";
+    if (title) {
+      title.textContent =
+        "Didn't find the role you are looking for? You can get in touch and we will get back to you if we find your profile suitable.";
+    }
+    if (btn) {
+      btn.setAttribute("href", openApplicationHref());
+      btn.innerHTML =
+        'Apply now <span aria-hidden="true">\u2192</span>';
+    }
+  }
+
   function initFooterReveal() {
     var body = document.body;
     var footer = document.querySelector(".site-footer");
@@ -91,12 +170,15 @@
 
     if (!cta && !isContactPage) {
       cta = createCta();
-      var panel = document.querySelector(".nh-curtain-panel");
-      if (panel) {
-        panel.appendChild(cta);
+      var main = document.querySelector("main");
+      /* Career flow: keep CTA as a sibling after the form/details panel, not inside it. */
+      if (isCareerFlowPage(body) && main) {
+        main.appendChild(cta);
       } else {
-        var main = document.querySelector("main");
-        if (main) {
+        var panel = document.querySelector(".nh-curtain-panel");
+        if (panel) {
+          panel.appendChild(cta);
+        } else if (main) {
           main.appendChild(cta);
         } else if (wrapper) {
           footer.parentNode.insertBefore(cta, footer);
@@ -107,6 +189,7 @@
     } else if (cta) {
       cta.classList.add("footer-reveal-cta");
     }
+    ensureOpenApplicationCta(cta);
 
     if (wrapper) {
       content = wrapper;
@@ -142,10 +225,18 @@
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initFooterReveal);
-  } else {
+  function bootFooterReveal() {
     initFooterReveal();
+    /* Re-assert after other deferred scripts so a stale cached sibling can't win. */
+    window.addEventListener("load", function () {
+      ensureOpenApplicationCta(document.querySelector(".footer-reveal-cta"));
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootFooterReveal);
+  } else {
+    bootFooterReveal();
   }
   window.initFooterReveal = initFooterReveal;
 })();
@@ -236,8 +327,10 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   var date = new Date();
-  document.getElementById('copyRight').innerText = "Copyright (c) " + date.getFullYear() + " Nohitatu";
-
+  var copyEl = document.getElementById('copyRight');
+  if (copyEl) {
+    copyEl.innerText = "Copyright (c) " + date.getFullYear() + " Nohitatu";
+  }
 });
 
 

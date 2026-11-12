@@ -6,7 +6,45 @@
     return /\/blogs\//i.test(path) ? "../Contact-us" : "Contact-us";
   }
 
+  function isCareerFlowPage(body) {
+    if (!body) return false;
+    return (
+      body.classList.contains("careers-page") ||
+      body.classList.contains("career-detail-page") ||
+      body.classList.contains("post-resume-page")
+    );
+  }
+
+  function openApplicationHref() {
+    var path = (location.pathname || "").replace(/\\/g, "/");
+    return /\/blogs\//i.test(path) ? "../PostResume.html" : "PostResume.html";
+  }
+
+  function createOpenApplicationCta() {
+    var section = document.createElement("section");
+    section.className = "estimate footer-reveal-cta";
+    section.setAttribute("aria-label", "Open application");
+    section.innerHTML =
+      '<div class="footer-reveal-shell">' +
+        '<div class="estimate-panel">' +
+          '<div class="estimate-copy">' +
+            "<span>Still looking?</span>" +
+            "<h2>Didn't find the role you are looking for? You can get in touch and we will get back to you if we find your profile suitable.</h2>" +
+          "</div>" +
+          '<a class="estimate-button" href="' +
+      openApplicationHref() +
+      '">' +
+            'Apply now <span aria-hidden="true">\u2192</span>' +
+          "</a>" +
+        "</div>" +
+      "</div>";
+    return section;
+  }
+
   function createCta() {
+    if (isCareerFlowPage(document.body)) {
+      return createOpenApplicationCta();
+    }
     var section = document.createElement("section");
     section.className = "estimate footer-reveal-cta";
     section.setAttribute("aria-labelledby", "footer-reveal-title");
@@ -23,6 +61,25 @@
         '</div>' +
       '</div>';
     return section;
+  }
+
+  /** Keep careers CTA copy/button on the open-application path. */
+  function ensureOpenApplicationCta(cta) {
+    if (!cta || !isCareerFlowPage(document.body)) return;
+    cta.setAttribute("aria-label", "Open application");
+    var title = cta.querySelector(".estimate-copy h2");
+    var eyebrow = cta.querySelector(".estimate-copy > span");
+    var btn = cta.querySelector(".estimate-button");
+    if (eyebrow) eyebrow.textContent = "Still looking?";
+    if (title) {
+      title.textContent =
+        "Didn't find the role you are looking for? You can get in touch and we will get back to you if we find your profile suitable.";
+    }
+    if (btn) {
+      btn.setAttribute("href", openApplicationHref());
+      btn.innerHTML =
+        'Apply now <span aria-hidden="true">\u2192</span>';
+    }
   }
 
   function initFooterReveal() {
@@ -50,6 +107,7 @@
     } else if (cta) {
       cta.classList.add("footer-reveal-cta");
     }
+    ensureOpenApplicationCta(cta);
 
     if (wrapper) {
       content = wrapper;

@@ -47,19 +47,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css?v=20261102cleanfooter2" />
+    <link rel="stylesheet" href="css/style.css?v=20261112backtop1" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
-    <link rel="stylesheet" href="css/chatbot.css?v=20260820icons" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20261106deployall1" />
     <script src="js/jquery.min.js"></script>
-    <script src="js/custom.js?v=20261102cardoverlap2"></script>
+    <script src="js/custom.js?v=20261112backtop1"></script>
     <style>
         :root {
             --privacy-ink: #24223a;
             --privacy-muted: #646276;
             --privacy-blue: #2c948c;
             --privacy-blue-dark: #20756e;
-            --privacy-navy: #071f43;
+            --privacy-navy: #0b1a2d;
             --privacy-line: #e5e4ef;
             --privacy-soft: #faf9f7;
         }
@@ -115,8 +115,8 @@
         body.why-page header.logo-navbar #navigation > li.nav-item > a { color: #fff !important; }
         body.why-page header.logo-navbar #navigation > li.nav-item.active > a {
             background: none !important;
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
         }
 
         body.why-page header.logo-navbar.white-header {
@@ -129,8 +129,8 @@
         body.why-page header.logo-navbar.white-header #navigation > li.nav-item > a { color: #343147 !important; }
         body.why-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
             background: none !important;
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
         }
         body.why-page .navbar-toggle.nav-menu { display: none; }
 
@@ -409,7 +409,7 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: rgba(114, 108, 244, .7);
+            background: rgba(44, 148, 140, .7);
         }
 
         .why-mission-callout {
@@ -440,7 +440,7 @@
             bottom: 0;
             left: 0;
             height: 3px;
-            background: linear-gradient(90deg, rgba(114, 108, 244, .18), rgba(114, 108, 244, .96), rgba(114, 108, 244, .18));
+            background: linear-gradient(90deg, rgba(44, 148, 140, .18), rgba(44, 148, 140, .96), rgba(44, 148, 140, .18));
             transform: scaleX(.32);
             transform-origin: center;
             opacity: .72;
@@ -653,13 +653,13 @@
             letter-spacing: -.045em;
             line-height: 1.1;
             font-variant-numeric: tabular-nums;
-            text-shadow: 0 0 0 rgba(114, 108, 244, 0);
+            text-shadow: 0 0 0 rgba(44, 148, 140, 0);
             transition: filter 260ms ease, text-shadow 360ms ease, transform 260ms ease;
         }
 
         .proof-strip-item:hover .proof-strip-value {
             filter: brightness(1.24);
-            text-shadow: 0 0 22px rgba(114, 108, 244, .22);
+            text-shadow: 0 0 22px rgba(44, 148, 140, .22);
             transform: translateY(-1px);
         }
 
@@ -688,7 +688,7 @@
             height: 3px;
             margin: 18px auto 0;
             border-radius: 999px;
-            background: linear-gradient(90deg, rgba(114, 108, 244, .18), rgba(114, 108, 244, .98), rgba(114, 108, 244, .18));
+            background: linear-gradient(90deg, rgba(44, 148, 140, .18), rgba(44, 148, 140, .98), rgba(44, 148, 140, .18));
             opacity: .36;
             transform: scaleX(.58);
             transform-origin: center;
@@ -1089,6 +1089,23 @@
                 transition: none !important;
             }
         }
+    
+        /* Logo: white over dark hero, black after scroll (hardened) */
+        body.why-page header.logo-navbar:not(.white-header) .header-logo .logo-on-dark,
+        body.why-page header.logo-navbar.blnk-header:not(.white-header) .header-logo .logo-on-dark {
+            display: block !important;
+        }
+        body.why-page header.logo-navbar:not(.white-header) .header-logo .logo-on-light,
+        body.why-page header.logo-navbar.blnk-header:not(.white-header) .header-logo .logo-on-light {
+            display: none !important;
+        }
+        body.why-page header.logo-navbar.white-header .header-logo .logo-on-dark {
+            display: none !important;
+        }
+        body.why-page header.logo-navbar.white-header .header-logo .logo-on-light {
+            display: block !important;
+        }
+
     </style>
 </head>
 <body class="home_body privacy-page why-page">
@@ -1609,10 +1626,7 @@
                                     <span>Quality-driven delivery</span>
                                 </div>
                             </div>
-                            <div class="footer-contact-meta">
-                                <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>
-                            </div>
-                        </div>
+</div>
                     </div>
                 </div>
             </div>

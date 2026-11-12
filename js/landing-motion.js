@@ -132,15 +132,22 @@
         var moon = document.getElementById('lmn-hero-moon');
         if (!video || !moon) return;
 
+        var forceMoon = false;
+
         function updateMoonState() {
-            var duration = video.duration;
-            if (!duration || isNaN(duration)) {
-                duration = 41.13;
+            if (forceMoon) {
+                moon.classList.add('is-visible');
+                return;
             }
-            var current = video.currentTime;
-            // Active window: last 4 seconds until 0.35s before loop reset
-            var isLast4Seconds = (current >= (duration - 4.0)) && (current < (duration - 0.35));
-            if (isLast4Seconds) {
+            var duration = video.duration;
+            if (!duration || isNaN(duration) || !isFinite(duration)) {
+                duration = 38.67;
+            }
+            var current = video.currentTime || 0;
+            // The company logo clip transitions in at 34.25s and plays through 38.67s (duration)
+            // Active window: from 34.25s until 0.20s before loop reset
+            var isLogoClipPlaying = (current >= 34.25) && (current < (duration - 0.20));
+            if (isLogoClipPlaying) {
                 moon.classList.add('is-visible');
             } else {
                 moon.classList.remove('is-visible');
@@ -150,29 +157,44 @@
         video.addEventListener('timeupdate', updateMoonState);
         video.addEventListener('seeking', updateMoonState);
         video.addEventListener('seeked', updateMoonState);
+        video.addEventListener('play', updateMoonState);
+        video.addEventListener('playing', updateMoonState);
+        video.addEventListener('loadedmetadata', updateMoonState);
+        video.addEventListener('canplay', updateMoonState);
         video.addEventListener('ended', function () {
-            moon.classList.remove('is-visible');
+            if (!forceMoon) {
+                moon.classList.remove('is-visible');
+            }
         });
 
-        // Query param support for testing / previewing (e.g. ?t=34 or ?moon=1)
+        // High-frequency poll (100ms) so the moon never misses a cue if timeupdate is throttled
+        setInterval(updateMoonState, 100);
+
+        // Query param support for testing / previewing (e.g. ?t=37 or ?moon=1)
         if (typeof window !== 'undefined' && window.location) {
             var params = new URLSearchParams(window.location.search);
             if (params.get('moon') === '1') {
+                forceMoon = true;
                 moon.classList.add('is-visible');
             }
             var seekParam = parseFloat(params.get('t'));
             if (!isNaN(seekParam)) {
+                var hasSeeked = false;
                 var applySeek = function () {
+                    if (hasSeeked && Math.abs(video.currentTime - seekParam) < 1.5) return;
                     try {
                         video.currentTime = seekParam;
+                        if (Math.abs(video.currentTime - seekParam) < 1.5) {
+                            hasSeeked = true;
+                        }
                     } catch (e) {}
                     updateMoonState();
                 };
                 if (video.readyState >= 1) {
                     applySeek();
-                } else {
-                    video.addEventListener('loadedmetadata', applySeek, { once: true });
                 }
+                video.addEventListener('loadedmetadata', applySeek);
+                video.addEventListener('canplay', applySeek);
             }
         }
     }

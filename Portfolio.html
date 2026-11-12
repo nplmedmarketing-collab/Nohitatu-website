@@ -12,16 +12,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css?v=20261102cleanfooter2" />
+    <link rel="stylesheet" href="css/style.css?v=20261112backtop1" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
-    <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20261106deployall1" />
     <script src="js/jquery.min.js"></script>
-    <!-- custom.js?v=20261102cardoverlap2 initialises owl sliders at document-ready; without the plugin
+    <!-- custom.js initialises owl sliders at document-ready; without the plugin
          its first call throws and the rest of the shared header script never
          runs. Loaded in the same order as index.html. -->
     <script src="js/owl.carousel.js"></script>
-    <script src="js/custom.js?v=20261102cardoverlap2"></script>
+    <script src="js/custom.js?v=20261112backtop1"></script>
     <script src="js/footer-reveal.js" defer></script>
     <style>
         :root {
@@ -30,7 +30,7 @@
             --line: #dfe6ee;
             --blue: #2c948c;
             --blue-dark: #20756e;
-            --navy: #023575;
+            --navy: #0b1a2d;
             --paper: #fff;
             --soft: #faf9f7;
             --wall-gap: 18px;
@@ -60,20 +60,22 @@
             backdrop-filter: none !important;
         }
 
-        body.portfolio-page header.logo-navbar .logo-on-dark { display: block; }
-        body.portfolio-page header.logo-navbar .logo-on-light { display: none; }
-        body.portfolio-page header.logo-navbar #navigation > li.nav-item > a { color: #fff !important; }
-        body.portfolio-page header.logo-navbar #navigation > li.nav-item.active > a { color: #84dcd5 !important; }
+        body.portfolio-page header.logo-navbar:not(.white-header) .logo-on-dark,
+        body.portfolio-page header.logo-navbar.blnk-header:not(.white-header) .logo-on-dark { display: block !important; }
+        body.portfolio-page header.logo-navbar:not(.white-header) .logo-on-light,
+        body.portfolio-page header.logo-navbar.blnk-header:not(.white-header) .logo-on-light { display: none !important; }
+        body.portfolio-page header.logo-navbar:not(.white-header) #navigation > li.nav-item > a { color: #fff !important; }
+        body.portfolio-page header.logo-navbar:not(.white-header) #navigation > li.nav-item.active > a { color: #fff !important; }
 
         body.portfolio-page header.logo-navbar.white-header {
             background: rgba(255, 255, 255, 0.97) !important;
             border-bottom: 1px solid #ecebf4 !important;
         }
 
-        body.portfolio-page header.logo-navbar.white-header .logo-on-dark { display: none; }
-        body.portfolio-page header.logo-navbar.white-header .logo-on-light { display: block; }
+        body.portfolio-page header.logo-navbar.white-header .logo-on-dark { display: none !important; }
+        body.portfolio-page header.logo-navbar.white-header .logo-on-light { display: block !important; }
         body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item > a { color: #343147 !important; }
-        body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a { color: var(--blue) !important; }
+        body.portfolio-page header.logo-navbar.white-header #navigation > li.nav-item.active > a { color: #0b1a2d !important; }
         body.portfolio-page .navbar-toggle.nav-menu { display: none; }
 
         .shell {
@@ -482,7 +484,7 @@
             font-weight: 600;
             letter-spacing: -0.038em;
             line-height: 1.02;
-            color: #fff;
+            color: #fff !important;
         }
 
         .reel__brief {
@@ -688,7 +690,7 @@
         /* Read-head / selection cue &mdash; orientation only, no scale.
            Scale is reserved for hover, keyboard focus, and mobile tap. */
         .frame.is-active .frame__gate {
-            border-color: rgba(114, 108, 244, 0.55);
+            border-color: rgba(44, 148, 140, 0.55);
         }
 
         .frame.is-active .frame__gate img {
@@ -696,7 +698,7 @@
         }
 
         .frame.is-active .frame__id {
-            background: rgba(114, 108, 244, 0.42);
+            background: rgba(44, 148, 140, 0.42);
             color: #fff;
         }
 
@@ -724,7 +726,7 @@
 
         .frame:focus-visible .frame__gate {
             border-color: var(--blue);
-            box-shadow: 0 0 0 2px rgba(114, 108, 244, 0.5), 0 24px 56px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 0 2px rgba(44, 148, 140, 0.5), 0 24px 56px rgba(0, 0, 0, 0.7);
         }
 
         /* ---- transport + readout ---- */
@@ -787,7 +789,7 @@
             font-weight: 600;
             letter-spacing: -0.022em;
             line-height: 1.2;
-            color: #fff;
+            color: #fff !important;
         }
 
         .reel__detail p {
@@ -1000,6 +1002,23 @@
             .reel__detail h3 { font-size: 1.15rem; }
             .reel__detail p { font-size: 13px; -webkit-line-clamp: 2; }
         }
+    
+        /* Logo: white over dark hero, black after scroll (hardened) */
+        body.portfolio-page header.logo-navbar:not(.white-header) .header-logo .logo-on-dark,
+        body.portfolio-page header.logo-navbar.blnk-header:not(.white-header) .header-logo .logo-on-dark {
+            display: block !important;
+        }
+        body.portfolio-page header.logo-navbar:not(.white-header) .header-logo .logo-on-light,
+        body.portfolio-page header.logo-navbar.blnk-header:not(.white-header) .header-logo .logo-on-light {
+            display: none !important;
+        }
+        body.portfolio-page header.logo-navbar.white-header .header-logo .logo-on-dark {
+            display: none !important;
+        }
+        body.portfolio-page header.logo-navbar.white-header .header-logo .logo-on-light {
+            display: block !important;
+        }
+
     </style>
 </head>
 <body class="portfolio-page">
@@ -1037,10 +1056,7 @@
                                             <div class="sub corporate"><ul class="sub-menu">
                                                 <li><a href="Why-nohitatu">Why Nohitatu</a></li>
                                                 <li><a href="Tech-skills">Tech Skills</a></li>
-                                                <li><a href="Vision-and-values">Vision and Values</a></li>
                                                 <li><a href="People">People</a></li>
-                                                <li><a href="Our-advantages">Our Advantages</a></li>
-                                                <li><a href="Who-need-us">Who Need Us?</a></li>
                                                 <li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
                                             </ul></div>
                                         </li>
@@ -1084,10 +1100,8 @@
                         <div class="collapse" id="pf-mobile-explore"><ul class="inner-sub-menus">
                             <li><a href="Why-nohitatu">Why Nohitatu</a></li>
                             <li><a href="Tech-skills">Tech Skills</a></li>
-                            <li><a href="Vision-and-values">Vision and Values</a></li>
                             <li><a href="People">People</a></li>
-                            <li><a href="Our-advantages">Our Advantages</a></li>
-                            <li><a href="Who-need-us">Who Need Us?</a></li>
+                            <li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
                         </ul></div>
                         <a href="#pf-mobile-solutions" class="list-group-item main-link" data-bs-toggle="collapse">SOLUTIONS <i class="menu-ti-icons ti-angle-down"></i></a>
                         <div class="collapse" id="pf-mobile-solutions"><ul class="inner-sub-menus">
@@ -1854,7 +1868,7 @@
                     <li><a href="About-us">About Us</a></li><li><a href="Privacy-policy">Privacy Policy</a></li><li><a href="Portfolio">Portfolio</a></li><li><a href="Careers">Careers</a></li><li><a href="Contact-us">Contact Us</a></li><li><a href="Clients">Clients</a></li><li><a href="blogs-page">Blogs</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Explore Nohitatu</h3><ul class="footernav">
-                    <li><a href="Why-nohitatu">Why Nohitatu</a></li><li><a href="Tech-skills">Tech Skills</a></li><li><a href="Vision-and-values">Vision and Values</a></li><li><a href="People">People</a></li><li><a href="Our-advantages">Our Advantages</a></li><li><a href="Who-need-us">Who Need Us?</a></li><li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
+                    <li><a href="Why-nohitatu">Why Nohitatu</a></li><li><a href="Tech-skills">Tech Skills</a></li><li><a href="People">People</a></li><li><a href="Life-as-a-nohitatian">Life as a Nohitatian</a></li>
                 </ul></div>
                 <div class="footer-col"><h3 class="footer-heading">Solutions</h3><ul class="footernav">
                     <li><a href="Software-Development">Software Development</a></li><li><a href="Saas">SaaS</a></li><li><a href="Contact-us">Contact</a></li>
@@ -1872,11 +1886,10 @@
                                 </a>
                             </div>
                     <div class="footer-trust-item"><img src="images/ISOLogo.png" alt="ISO certified" class="footer-trust-iso" /><div class="footer-trust-copy"><strong>ISO Certified</strong><span>Quality-driven delivery</span></div></div>
-                    <div class="footer-contact-meta"><a href="skype:sales.nohitatu">Skype: sales.nohitatu</a><a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a></div>
                 </div>
             </div></div></div>
             <div class="bottom-footer"><div class="container"><div class="footer-bottom-row">
-                <!-- custom.js?v=20261102cardoverlap2 refreshes #copyRight with the current year; scoping the
+                <!-- custom.js refreshes #copyRight with the current year; scoping the
                      id to the first span keeps the rest of the line intact. -->
                 <div class="footer-copy"><span id="copyRight">Copyright &copy; 2026 Nohitatu</span><span class="footer-copy-sep"></span><span>Software outsourcing and global software development company. All rights reserved.</span></div>
             </div></div></div>
@@ -2517,6 +2530,6 @@
         </button>
     </div>
 
-    <script src="js/chatbot.js?v=20260817backbtn"></script>
+    <script src="js/chatbot.js?v=20261112chatfix1"></script>
 </body>
 </html>

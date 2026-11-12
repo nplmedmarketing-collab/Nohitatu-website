@@ -16,6 +16,55 @@
   var DEFAULT_COMPANY_ID = "183";
   var locationSource = "hrpops";
 
+  /* Open application (talent pool) preference dropdowns — website-only; folded into AboutYourself.
+     Role category options depend on the selected department. */
+  var OPEN_APP_DEPARTMENTS = [
+    "Software Development",
+    "Information Technology",
+    "HR Department",
+    "Payment Posting",
+    "Sales / Business Development",
+    "Other"
+  ];
+  var OPEN_APP_ROLES_BY_DEPARTMENT = {
+    "Software Development": [
+      "Software Developer",
+      "Angular Developer",
+      "Full Stack Developer",
+      "Senior Developer",
+      "Intern / Fresher",
+      "Other"
+    ],
+    "Information Technology": [
+      "Business Analyst",
+      "QA / Tester",
+      "Support Engineer",
+      "IT Support",
+      "Intern / Fresher",
+      "Other"
+    ],
+    "HR Department": [
+      "HR / Recruitment",
+      "HR Intern",
+      "Talent Acquisition",
+      "Other"
+    ],
+    "Payment Posting": [
+      "Process Associate",
+      "Junior Process Associate",
+      "Intern / Fresher",
+      "Other"
+    ],
+    "Sales / Business Development": [
+      "Business Development",
+      "Sales Executive",
+      "Account Manager",
+      "Intern / Fresher",
+      "Other"
+    ],
+    Other: ["Intern / Fresher", "Other"]
+  };
+
   var STATES = [
     { stateId: 1, stateName: "Tamil Nadu" },
     { stateId: 2, stateName: "Arunachal Pradesh" },
@@ -80,6 +129,8 @@
   var editedPhotoFile = null;
   var photoFaceOk = false;
   var photoAiSuspect = false;
+  var resumeFileGuardOk = true;
+  var resumeFileGuardError = "";
   var mediaRecorder = null;
   var recordingTimer = null;
   var photoDataUrl = "";
@@ -145,6 +196,98 @@
     return html;
   }
 
+  function stringOptionList(values, placeholder) {
+    return optionList(values, null, null, placeholder);
+  }
+
+  function rolesForOpenAppDepartment(department) {
+    var key = String(department || "").trim();
+    var list = OPEN_APP_ROLES_BY_DEPARTMENT[key];
+    return Array.isArray(list) && list.length ? list.slice() : ["Other"];
+  }
+
+  function fillOpenAppRoleCategory(form, department, keepValue) {
+    var roleEl = form && form.elements.namedItem("OpenAppRoleCategory");
+    if (!roleEl) return;
+    var prev = keepValue ? String(roleEl.value || "").trim() : "";
+    var roles = department
+      ? rolesForOpenAppDepartment(department)
+      : [];
+    roleEl.innerHTML = stringOptionList(
+      roles,
+      department ? "Select role category" : "Select preferred department first"
+    );
+    roleEl.disabled = !department;
+    if (prev && roles.indexOf(prev) >= 0) {
+      roleEl.value = prev;
+    } else {
+      roleEl.value = "";
+    }
+  }
+
+  function wireOpenApplicationPrefs(form) {
+    var deptEl = form && form.elements.namedItem("OpenAppDepartment");
+    if (!deptEl) return;
+    fillOpenAppRoleCategory(form, deptEl.value, true);
+    deptEl.addEventListener("change", function () {
+      fillOpenAppRoleCategory(form, deptEl.value, false);
+    });
+  }
+
+  var ABOUT_YOURSELF_MAX = 6000;
+
+  function updateAboutYourselfCounter(form) {
+    if (!form) return;
+    var ta = qs("#AboutYourSelf", form);
+    var counter = qs("#AboutYourSelf-count", form);
+    if (!ta || !counter) return;
+    var max = ABOUT_YOURSELF_MAX;
+    var len = String(ta.value || "").length;
+    if (len > max) {
+      ta.value = String(ta.value || "").slice(0, max);
+      len = max;
+    }
+    var remaining = max - len;
+    counter.textContent = remaining + " / " + max + " characters remaining";
+  }
+
+  function wireAboutYourselfCounter(form) {
+    if (!form) return;
+    var ta = qs("#AboutYourSelf", form);
+    if (!ta) return;
+    ta.setAttribute("maxlength", String(ABOUT_YOURSELF_MAX));
+    ta.addEventListener("input", function () {
+      updateAboutYourselfCounter(form);
+    });
+    updateAboutYourselfCounter(form);
+  }
+
+  function openApplicationPrefsMarkup() {
+    return (
+      '<div class="pr-pair pr-field--full pr-open-app-prefs">' +
+      '<div class="pr-field"><label for="OpenAppDepartment">Preferred department <span class="pr-req">*</span></label>' +
+      '<select id="OpenAppDepartment" name="OpenAppDepartment" required>' +
+      stringOptionList(OPEN_APP_DEPARTMENTS, "Select preferred department") +
+      "</select>" +
+      '<span class="pr-hint">Which team are you most interested in?</span></div>' +
+      '<div class="pr-field"><label for="OpenAppRoleCategory">Role category <span class="pr-req">*</span></label>' +
+      '<select id="OpenAppRoleCategory" name="OpenAppRoleCategory" required disabled>' +
+      '<option value="">Select preferred department first</option>' +
+      "</select>" +
+      '<span class="pr-hint">Options update after you pick a preferred department.</span></div>' +
+      "</div>"
+    );
+  }
+
+  function openApplicationInterestNote(form) {
+    var dept = fieldValue(form, "OpenAppDepartment");
+    var roleCat = fieldValue(form, "OpenAppRoleCategory");
+    var lines = [];
+    if (dept) lines.push("Preferred department: " + dept);
+    if (roleCat) lines.push("Role category: " + roleCat);
+    return lines.join("\n");
+  }
+
   function fillSelect(el, html) {
     if (el) el.innerHTML = html;
   }
@@ -160,7 +303,7 @@
     return html;
   }
 
-  var MIN_APPLICANT_AGE = 20;
+  var MIN_APPLICANT_AGE = 18;
 
   function toIsoDate(d) {
     var y = d.getFullYear();
@@ -910,6 +1053,7 @@
   }
 
   function collectSkills(container, isIntern) {
+    if (!container) return { list: [], missing: false };
     var rows = qsa(".pr-skill-row", container);
     var list = [];
     var missing = false;
@@ -1413,6 +1557,13 @@
     if (!isIntern) {
       requireField(!!fieldValue(form, "Experience"), "Experience");
     }
+    if (form.elements.namedItem("OpenAppDepartment")) {
+      requireField(!!fieldValue(form, "OpenAppDepartment"), "OpenAppDepartment");
+      requireField(
+        !!fieldValue(form, "OpenAppRoleCategory"),
+        "OpenAppRoleCategory"
+      );
+    }
     var aboutSelf = fieldValue(form, "AboutYourSelf");
     requireField(!!aboutSelf, "AboutYourSelf");
     if (aboutSelf && aboutSelf.length > 6000) {
@@ -1505,19 +1656,32 @@
       var rName = resume.files[0].name.toLowerCase();
       if (!/\.(pdf|doc|docx)$/.test(rName)) {
         requireField(false, "ResumeFile", "Resume must be PDF, DOC, or DOCX");
+      } else if (!resumeFileGuardOk) {
+        requireField(
+          false,
+          "ResumeFile",
+          resumeFileGuardError || "Resume rejected by FileGuard security scan"
+        );
       }
     }
 
-    if (skillPack && skillPack.missing) {
-      requireField(false, qs("#pr-skills"));
-    }
+    var skillsSection = qs("#skills-section");
+    var skillsShown =
+      skillsSection &&
+      skillsSection.getAttribute("data-pr-visible") !== "0" &&
+      !skillsSection.hidden;
+    if (skillsShown) {
+      if (skillPack && skillPack.missing) {
+        requireField(false, qs("#pr-skills"));
+      }
 
-    var typedSkills = knownSkills.filter(function (s) {
-      return s && s.name;
-    });
-    var skillRows = qsa(".pr-skill-row", qs("#pr-skills")).length;
-    if (!typedSkills.length || (!skillRows && !typedSkills.length)) {
-      requireField(false, "skill-entry");
+      var typedSkills = knownSkills.filter(function (s) {
+        return s && s.name;
+      });
+      var skillRows = qsa(".pr-skill-row", qs("#pr-skills")).length;
+      if (!typedSkills.length || (!skillRows && !typedSkills.length)) {
+        requireField(false, "skill-entry");
+      }
     }
 
     if (includeEducation) {
@@ -1860,13 +2024,21 @@
     var workMode = fieldValue(form, "WorkModePreference");
     if (workMode === "Office") workMode = "Work From Office";
     var about = fieldValue(form, "AboutYourSelf");
+    var openInterest = job && job.openApplication ? openApplicationInterestNote(form) : "";
+    if (openInterest) {
+      about = about ? openInterest + "\n\n" + about : openInterest;
+    }
     var extra = educationNote(form);
     if (extra) about = about ? about + "\n" + extra : extra;
     var relocate = String(fieldValue(form, "ReadyToRelocate")).toLowerCase() === "no"
       ? "false"
       : "true";
 
-    fd.append("JobPostID", String(job.jobid));
+    /* Talent-pool / open applications still need a real HRPops JobPostID. */
+    var jobPostIdValue = String((job && job.jobid) || "").trim();
+    if (jobPostIdValue && jobPostIdValue !== "open") {
+      fd.append("JobPostID", jobPostIdValue);
+    }
     fd.append("CandidateName", fieldValue(form, "Name"));
     fd.append("Dob", fieldValue(form, "Dob"));
     fd.append("Gender", genderLabel(fieldValue(form, "Gender")));
@@ -1911,64 +2083,65 @@
       )
     );
 
-    /* Build skills in memory first — only rows with a real positive SkillId are sent.
-       HRPops AppliedJobCandidateSkillSetRating.SkillId is NOT NULL. */
+    /* Skills only when Skill Set is candidate-visible (HRPops endUser / fail-closed). */
     var jobPostId = String(job.jobid || "").trim();
-    var presetSkillIdsByName = {};
-    qsa(".pr-skill-row", form).forEach(function (row) {
-      var sid = parseInt(row.getAttribute("data-skill-id"), 10);
-      var sname = String(
-        row.getAttribute("data-skill-name") ||
-          ((row.querySelector(".pr-skill-name") || {}).textContent || "")
-      )
-        .trim()
-        .toLowerCase();
-      if (Number.isFinite(sid) && sid > 0 && sname) {
-        presetSkillIdsByName[sname] = sid;
-      }
-    });
+    if (skillSetVisibleOnForm(job)) {
+      var presetSkillIdsByName = {};
+      qsa(".pr-skill-row", form).forEach(function (row) {
+        var sid = parseInt(row.getAttribute("data-skill-id"), 10);
+        var sname = String(
+          row.getAttribute("data-skill-name") ||
+            ((row.querySelector(".pr-skill-name") || {}).textContent || "")
+        )
+          .trim()
+          .toLowerCase();
+        if (Number.isFinite(sid) && sid > 0 && sname) {
+          presetSkillIdsByName[sname] = sid;
+        }
+      });
 
-    var skillRowsOut = [];
-    var seenSkills = {};
-    function queueSkill(name, skillId, year, month, rating) {
-      var label = String(name || "").trim();
-      if (!label) return;
-      var idNum = parseInt(skillId, 10);
-      if (!Number.isFinite(idNum) || idNum <= 0) return;
-      var key = label.toLowerCase();
-      if (seenSkills[key] || seenSkills["id:" + idNum]) return;
-      seenSkills[key] = true;
-      seenSkills["id:" + idNum] = true;
-      var rateNum = parseInt(rating, 10);
-      if (!Number.isFinite(rateNum) || rateNum <= 0) rateNum = 2;
-      skillRowsOut.push({
-        jobPostId: jobPostId,
-        skillId: idNum,
-        skill: label,
-        year: Math.max(0, parseInt(year, 10) || 0),
-        month: Math.max(0, parseInt(month, 10) || 0),
-        rating: rateNum
+      var skillRowsOut = [];
+      var seenSkills = {};
+      function queueSkill(name, skillId, year, month, rating) {
+        var label = String(name || "").trim();
+        if (!label) return;
+        var idNum = parseInt(skillId, 10);
+        if (!Number.isFinite(idNum) || idNum <= 0) return;
+        var key = label.toLowerCase();
+        if (seenSkills[key] || seenSkills["id:" + idNum]) return;
+        seenSkills[key] = true;
+        seenSkills["id:" + idNum] = true;
+        var rateNum = parseInt(rating, 10);
+        if (!Number.isFinite(rateNum) || rateNum <= 0) rateNum = 2;
+        skillRowsOut.push({
+          jobPostId: jobPostId,
+          skillId: idNum,
+          skill: label,
+          year: Math.max(0, parseInt(year, 10) || 0),
+          month: Math.max(0, parseInt(month, 10) || 0),
+          rating: rateNum
+        });
+      }
+      (skillList || []).forEach(function (row) {
+        if (!row) return;
+        queueSkill(row.skill, row.skillid, row.year, row.month, row.rating);
+      });
+      knownSkills.forEach(function (ks) {
+        if (!ks || !ks.name) return;
+        var matchId = presetSkillIdsByName[String(ks.name).trim().toLowerCase()];
+        if (matchId) queueSkill(ks.name, matchId, 0, 0, 2);
+      });
+      skillRowsOut.forEach(function (row, i) {
+        if (!row || !(row.skillId > 0) || !row.skill) return;
+        var prefix = "skillsRating[" + i + "].";
+        fd.append(prefix + "JobpostId", String(row.jobPostId || jobPostId));
+        fd.append(prefix + "SkillId", String(row.skillId));
+        fd.append(prefix + "Skill", String(row.skill));
+        fd.append(prefix + "ExperienceYear", String(row.year));
+        fd.append(prefix + "ExperienceMonth", String(row.month));
+        fd.append(prefix + "Rating", String(row.rating));
       });
     }
-    (skillList || []).forEach(function (row) {
-      if (!row) return;
-      queueSkill(row.skill, row.skillid, row.year, row.month, row.rating);
-    });
-    knownSkills.forEach(function (ks) {
-      if (!ks || !ks.name) return;
-      var matchId = presetSkillIdsByName[String(ks.name).trim().toLowerCase()];
-      if (matchId) queueSkill(ks.name, matchId, 0, 0, 2);
-    });
-    skillRowsOut.forEach(function (row, i) {
-      if (!row || !(row.skillId > 0) || !row.skill) return;
-      var prefix = "skillsRating[" + i + "].";
-      fd.append(prefix + "JobpostId", String(row.jobPostId || jobPostId));
-      fd.append(prefix + "SkillId", String(row.skillId));
-      fd.append(prefix + "Skill", String(row.skill));
-      fd.append(prefix + "ExperienceYear", String(row.year));
-      fd.append(prefix + "ExperienceMonth", String(row.month));
-      fd.append(prefix + "Rating", String(row.rating));
-    });
 
     var photoFile =
       editedPhotoFile ||
@@ -2298,7 +2471,7 @@
   }
 
   function knownSkillsMarkup() {
-    /* CandidateSkills / Skills Known - always shown on Job Application Skills section */
+    /* CandidateSkills / Skills Known — only when Skill Set is candidate-visible. */
     return (
       '<div class="pr-known-skills" id="pr-known-skills">' +
       '<label class="pr-skill-entry-label" for="skill-entry">Your skills <span class="pr-req">*</span></label>' +
@@ -2307,6 +2480,27 @@
       '<label class="pr-certified"><input type="checkbox" id="skill-certified" />Certified</label>' +
       '<button type="button" class="skill-add-button" id="skill-add">Add</button></div>' +
       '<div id="skill-tags" class="skills-tags-container" hidden></div></div>'
+    );
+  }
+
+  /**
+   * Skill Set section respects HRPops hr / endUser visibility.
+   * Hidden when rules say internal-only or flags are unknown (fail closed).
+   */
+  function skillsSectionMarkup(job) {
+    if (!skillSetVisibleOnForm(job)) {
+      return (
+        '<div id="skills-section" class="pr-skills-hidden" hidden data-pr-field="skillSet" data-pr-visible="0" aria-hidden="true">' +
+        '<input type="hidden" name="prSkillSetVisible" value="0" />' +
+        "</div>"
+      );
+    }
+    return (
+      '<section class="pr-section" id="skills-section" data-pr-field="skillSet" data-pr-visible="1">' +
+      '<input type="hidden" name="prSkillSetVisible" value="1" />' +
+      sectionHead("04", "Skills") +
+      knownSkillsMarkup() +
+      '<div id="pr-skills" class="pr-skills">Loading skills...</div></section>'
     );
   }
 
@@ -2375,6 +2569,13 @@
     var root = form || qs("#pr-form") || document;
     var section = qs("#skills-section", root);
     if (!section) return;
+    if (
+      section.getAttribute("data-pr-visible") === "0" ||
+      section.hidden ||
+      section.classList.contains("pr-skills-hidden")
+    ) {
+      return;
+    }
     if (qs("#skill-entry", section)) {
       wireKnownSkills(root);
       return;
@@ -2624,6 +2825,178 @@
   var CAMERA_SIGNAL_RE =
     /\b(iphone|ipad|android|pixel\s?\d|samsung|galaxy|canon|nikon|sony|fujifilm|olympus|panasonic|leica|hasselblad|oneplus|xiaomi|huawei|realme|oppo|vivo|camera|dji)\b/i;
 
+  var FILEGUARD_DANGEROUS_MID_EXT_RE =
+    /\.(php\d*|phtml|phar|exe|dll|bat|cmd|sh|bash|ps1|vbs|vbe|js|jse|wsf|wsh|msc|scr|msi|com|cpl|hta|jar|py|pl|rb|cgi|asp|aspx|jsp|jspx|war|htaccess|svg|html|htm|xhtml|docm|xlsm|pptm)(?=\.)/i;
+
+  var FILEGUARD_MALICIOUS_PAYLOAD_RE =
+    /<\?php|<\?=|<script[\s>]|javascript\s*:|vbscript\s*:|onload\s*=|onerror\s*=|eval\s*\(\s*base64_decode|shell_exec\s*\(|passthru\s*\(|system\s*\(\s*\$|powershell(?:\.exe)?\s+-(?:e|enc|encodedcommand)/i;
+
+  var FILEGUARD_PDF_ACTION_RE =
+    /\/(?:Launch|JavaScript|JS|RichMedia|AA|OpenAction)\b[\s\S]{0,120}(?:\/(?:S\s*\/Launch|JS|JavaScript)|cmd\.exe|powershell|\/F\s*\()/i;
+
+  function fgStartsWithBytes(view, bytes, offset) {
+    var off = offset || 0;
+    if (!view || view.length < off + bytes.length) return false;
+    for (var i = 0; i < bytes.length; i++) {
+      if (view[off + i] !== bytes[i]) return false;
+    }
+    return true;
+  }
+
+  function fgIsExecutableHeader(view) {
+    if (!view || view.length < 4) return false;
+    if (view[0] === 0x4d && view[1] === 0x5a) return true; /* MZ / PE */
+    if (fgStartsWithBytes(view, [0x7f, 0x45, 0x4c, 0x46])) return true; /* ELF */
+    if (
+      fgStartsWithBytes(view, [0xfe, 0xed, 0xfa, 0xce]) ||
+      fgStartsWithBytes(view, [0xfe, 0xed, 0xfa, 0xcf]) ||
+      fgStartsWithBytes(view, [0xce, 0xfa, 0xed, 0xfe]) ||
+      fgStartsWithBytes(view, [0xcf, 0xfa, 0xed, 0xfe])
+    ) {
+      return true; /* Mach-O */
+    }
+    if (view[0] === 0x23 && view[1] === 0x21) return true; /* #! shebang */
+    return false;
+  }
+
+  /**
+   * FileGuard client-side binary & malware inspection for uploaded photos and resumes.
+   */
+  async function fileGuardInspectPhoto(file) {
+    if (!file) return { ok: false, reason: "No photo selected." };
+    var name = String(file.name || "").trim();
+    if (name.indexOf("\0") !== -1 || name.indexOf("%00") !== -1) {
+      return { ok: false, reason: "FileGuard blocked photo: invalid filename." };
+    }
+    if (FILEGUARD_DANGEROUS_MID_EXT_RE.test(name)) {
+      return {
+        ok: false,
+        reason: "FileGuard blocked photo: suspicious double file extension."
+      };
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      return { ok: false, reason: "Photo must be 10 MB or smaller." };
+    }
+    try {
+      var slice = file.slice(0, Math.min(file.size, 262144));
+      var buf = await slice.arrayBuffer();
+      var view = new Uint8Array(buf);
+      if (view.length < 12) {
+        return { ok: false, reason: "FileGuard blocked photo: file is empty or corrupted." };
+      }
+      if (fgIsExecutableHeader(view)) {
+        return {
+          ok: false,
+          reason: "FileGuard blocked photo: executable file disguised as an image."
+        };
+      }
+      var isJpeg = fgStartsWithBytes(view, [0xff, 0xd8, 0xff]);
+      var isPng = fgStartsWithBytes(view, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+      var isGif =
+        fgStartsWithBytes(view, [0x47, 0x49, 0x46, 0x38, 0x37, 0x61]) ||
+        fgStartsWithBytes(view, [0x47, 0x49, 0x46, 0x38, 0x39, 0x61]);
+      var isBmp = fgStartsWithBytes(view, [0x42, 0x4d]);
+      if (!isJpeg && !isPng && !isGif && !isBmp) {
+        return {
+          ok: false,
+          reason: "FileGuard blocked photo: file signature does not match a valid image."
+        };
+      }
+      var sample = bytesToAsciiSample(buf, 262144);
+      if (FILEGUARD_MALICIOUS_PAYLOAD_RE.test(sample)) {
+        return {
+          ok: false,
+          reason: "FileGuard blocked photo: embedded script or malicious payload detected."
+        };
+      }
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, reason: "Could not read photo file for security scan." };
+    }
+  }
+
+  async function fileGuardInspectResume(file) {
+    if (!file) return { ok: false, reason: "No resume file selected." };
+    var name = String(file.name || "").trim();
+    if (name.indexOf("\0") !== -1 || name.indexOf("%00") !== -1) {
+      return { ok: false, reason: "FileGuard blocked resume: invalid filename." };
+    }
+    if (FILEGUARD_DANGEROUS_MID_EXT_RE.test(name)) {
+      return {
+        ok: false,
+        reason: "FileGuard blocked resume: suspicious double file extension."
+      };
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      return { ok: false, reason: "Resume must be 2 MB or smaller." };
+    }
+    var lower = name.toLowerCase();
+    try {
+      var slice = file.slice(0, Math.min(file.size, 524288));
+      var buf = await slice.arrayBuffer();
+      var view = new Uint8Array(buf);
+      if (view.length < 8) {
+        return { ok: false, reason: "FileGuard blocked resume: file is empty or corrupted." };
+      }
+      if (fgIsExecutableHeader(view)) {
+        return {
+          ok: false,
+          reason: "FileGuard blocked resume: executable binary disguised as a document."
+        };
+      }
+      var sample = bytesToAsciiSample(buf, 524288);
+      if (FILEGUARD_MALICIOUS_PAYLOAD_RE.test(sample)) {
+        return {
+          ok: false,
+          reason: "FileGuard blocked resume: embedded script or web-shell signature detected."
+        };
+      }
+      if (/\.pdf$/.test(lower)) {
+        var firstKb = bytesToAsciiSample(buf, 1024);
+        if (firstKb.indexOf("%PDF-") === -1) {
+          return {
+            ok: false,
+            reason: "FileGuard blocked resume: file does not have a valid PDF signature."
+          };
+        }
+        if (FILEGUARD_PDF_ACTION_RE.test(sample)) {
+          return {
+            ok: false,
+            reason: "FileGuard blocked resume: PDF contains active scripts or launch actions."
+          };
+        }
+        return { ok: true };
+      }
+      if (/\.docx$/.test(lower)) {
+        if (!fgStartsWithBytes(view, [0x50, 0x4b, 0x03, 0x04])) {
+          return {
+            ok: false,
+            reason: "FileGuard blocked resume: file does not have a valid DOCX signature."
+          };
+        }
+        if (/vbaProject\.bin/i.test(sample)) {
+          return {
+            ok: false,
+            reason: "FileGuard blocked resume: macro-enabled Word documents (VBA) are not allowed."
+          };
+        }
+        return { ok: true };
+      }
+      if (/\.doc$/.test(lower)) {
+        if (!fgStartsWithBytes(view, [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1])) {
+          return {
+            ok: false,
+            reason: "FileGuard blocked resume: file does not have a valid Word (.doc) signature."
+          };
+        }
+        return { ok: true };
+      }
+      return { ok: false, reason: "Resume must be PDF, DOC, or DOCX." };
+    } catch (e) {
+      return { ok: false, reason: "Could not read resume file for security scan." };
+    }
+  }
+
   function bytesToAsciiSample(buffer, maxLen) {
     var view = new Uint8Array(buffer);
     var limit = Math.min(view.length, maxLen || 256000);
@@ -2807,8 +3180,15 @@
         );
         return;
       }
-      photoFileName = file.name || "profile.png";
       input.disabled = true;
+      var photoGuard = await fileGuardInspectPhoto(file);
+      if (!photoGuard.ok) {
+        input.disabled = false;
+        clearPhotoInput(input);
+        setPhotoMsg(photoGuard.reason, "error");
+        return;
+      }
+      photoFileName = file.name || "profile.png";
       var result = await verifySingleFace(file);
       if (result !== "ok") {
         input.disabled = false;
@@ -3381,11 +3761,32 @@
       }
     }
 
-    fileInput.addEventListener("change", function () {
-      syncButton();
+    fileInput.addEventListener("change", async function () {
       var file = fileInput.files && fileInput.files[0];
-      var name = file ? String(file.name || "").toLowerCase() : "";
-      if (file && /\.(pdf|docx)$/.test(name)) {
+      if (!file) {
+        resumeFileGuardOk = true;
+        resumeFileGuardError = "";
+        syncButton();
+        return;
+      }
+      var guard = await fileGuardInspectResume(file);
+      if (!guard.ok) {
+        resumeFileGuardOk = false;
+        resumeFileGuardError = guard.reason;
+        try {
+          fileInput.value = "";
+        } catch (e) {}
+        btn.hidden = true;
+        btn.disabled = true;
+        setAutofillMsg(form, guard.reason, "error");
+        markFieldError(form, "ResumeFile");
+        return;
+      }
+      resumeFileGuardOk = true;
+      resumeFileGuardError = "";
+      syncButton();
+      var name = String(file.name || "").toLowerCase();
+      if (/\.(pdf|docx)$/.test(name)) {
         runAutofill();
       }
     });
@@ -3503,6 +3904,7 @@
     if (!form || !draft) return;
     var opts = options || {};
     applyDraftFields(form, draft.fields || {});
+    updateAboutYourselfCounter(form);
 
     var stateCityPairs = [
       ["StateID", "CityID"],
@@ -3678,9 +4080,15 @@
     clearFieldErrors(form);
     setStatus("", "");
     await fillHrpopsStates(form);
-    if (skillsEl) {
-      await loadSkills(job.jobid, skillsEl, isIntern, presetSkills);
+    if (skillSetVisibleOnForm(job) && skillsEl) {
+      var visiblePresets =
+        Array.isArray(presetSkills) && presetSkills.length
+          ? presetSkills
+          : candidateVisibleSkillPresets(job);
+      await loadSkills(job.jobid, skillsEl, isIntern, visiblePresets);
       ensureKnownSkillsUi(form);
+    } else {
+      knownSkills = [];
     }
     if (!isIntern) onExperienceChange(form);
     try {
@@ -3735,7 +4143,7 @@
     return (
       '<form id="pr-form" class="pr-form" novalidate>' +
       '<input type="hidden" name="JobPostID" value="' +
-      escapeHtml(String(job.jobid)) +
+      escapeHtml(String(job.jobid || "")) +
       '" />' +
       '<input type="hidden" name="CountryID" value="' +
       HRPOPS_COUNTRY_ID +
@@ -3756,9 +4164,9 @@
       '<input id="ResumeFile" name="ResumeFile" type="file" accept=".pdf,.doc,.docx,application/pdf"' +
       (isIntern ? "" : " required") +
       " />" +
-      '<span class="pr-hint">PDF, DOC, or DOCX' +
+      '<span class="pr-hint">PDF, DOC, or DOCX — max 2 MB' +
       (isIntern ? " (optional for internships)" : "") +
-      ". After uploading, you can auto-fill details — every field stays editable.</span>" +
+      "</span>" +
       '<div class="pr-autofill-row">' +
       '<button type="button" class="pr-btn pr-btn-outline" id="pr-autofill-resume" hidden disabled>Auto-fill from resume</button>' +
       '<p id="pr-autofill-msg" class="pr-hint" hidden role="status"></p>' +
@@ -3804,9 +4212,10 @@
           '<option value="4">4-6 Years</option><option value="5">6-10 Years</option><option value="6">&gt; 10 Years</option></select></div>' +
           maritalField +
           "</div>") +
+      (job.openApplication ? openApplicationPrefsMarkup() : "") +
       '<div class="pr-field pr-field--full"><label for="AboutYourSelf">Explain About Yourself <span class="pr-req">*</span></label>' +
-      '<textarea id="AboutYourSelf" name="AboutYourSelf" rows="4" maxlength="6000" placeholder="Explain about yourself" required></textarea>' +
-      '<p class="pr-hint pr-char-limit">Max 6000 Characters</p></div>' +
+      '<textarea id="AboutYourSelf" name="AboutYourSelf" rows="4" maxlength="6000" placeholder="Explain about yourself" required aria-describedby="AboutYourSelf-count"></textarea>' +
+      '<p class="pr-hint pr-char-limit" id="AboutYourSelf-count" aria-live="polite">6000 / 6000 characters remaining</p></div>' +
       "</div></section>" +
       /* ADDRESS */ '<section class="pr-section" id="pr-address">' +
       sectionHead("02", "Address details") +
@@ -3842,10 +4251,7 @@
       '<div id="pr-languages" class="pr-languages">' +
       languagesSheetHtml() +
       "</div></section>" +
-      /* Skill entry is always on this section so candidates can add skills even when the role has no presets. */ '<section class="pr-section" id="skills-section">' +
-      sectionHead("04", "Skills") +
-      knownSkillsMarkup() +
-      '<div id="pr-skills" class="pr-skills">Loading skills...</div></section>' +
+      skillsSectionMarkup(job) +
       /* PROFESSIONAL */ '<section class="pr-section">' +
       sectionHead("", "Professional Info") +
       '<div class="pr-grid">' +
@@ -3908,7 +4314,9 @@
       '<button type="button" class="pr-btn pr-btn-draft" id="pr-save-draft" data-pr-save-draft>Save draft</button>' +
       '<a class="pr-btn pr-btn-panel" href="' +
       escapeHtml(backToRoleHref(job)) +
-      '">Back to role</a>' +
+      '">' +
+      (job.openApplication ? "Back to careers" : "Back to role") +
+      "</a>" +
       "</div>" +
       '<p class="pr-hint">Education details are optional for this submit. You can add them later from the Education tab (returning applicants are recognised by name + phone).</p>' +
       "</section></div>" +
@@ -4032,11 +4440,154 @@
   }
 
   function backToRoleHref(job) {
+    if (job && job.openApplication) return "Careers.html";
     var q = new URLSearchParams();
     q.set("id", String(job.jobid));
     if (job.companyId) q.set("companyId", String(job.companyId));
     var qs = q.toString();
     return "Careerdetails.html?" + qs + "#" + qs;
+  }
+
+  function getOpenApplicationJobId() {
+    var fromUrl = (pageParams().get("openJobId") || "").trim();
+    if (fromUrl) return fromUrl;
+    var meta = document.querySelector('meta[name="nh-hrpops-open-application-job-id"]');
+    var fromMeta = meta && meta.getAttribute("content");
+    if (fromMeta && String(fromMeta).trim()) return String(fromMeta).trim();
+    var hrpops = window.NH_HRPOPS_CAREERS;
+    if (hrpops && typeof hrpops.config === "function") {
+      var cfg = hrpops.config();
+      if (cfg && cfg.openApplicationJobId) return String(cfg.openApplicationJobId).trim();
+    }
+    var w = typeof window.NH_HRPOPS === "object" && window.NH_HRPOPS;
+    if (w && w.openApplicationJobId) return String(w.openApplicationJobId).trim();
+    return "";
+  }
+
+  function markOpenApplication(job) {
+    if (!job) return null;
+    job.openApplication = true;
+    if (!job.post) job.post = "Open application / Talent pool";
+    return job;
+  }
+
+  /**
+   * Resolve the HRPops job that stores Get in touch applications.
+   * Order: configured job id → title match (Open application / Talent pool).
+   */
+  async function resolveOpenApplicationJob() {
+    var hrpops = window.NH_HRPOPS_CAREERS;
+    if (!hrpops) return null;
+
+    var configuredId = getOpenApplicationJobId();
+    if (configuredId) {
+      try {
+        var byId = await resolveJobFromHrpops(configuredId);
+        if (byId) return markOpenApplication(byId);
+      } catch (_errId) {
+        /* fall through to title match */
+      }
+    }
+
+    try {
+      if (typeof hrpops.fetchJobs !== "function") return null;
+      var listed = await hrpops.fetchJobs({ includeTalentPool: true });
+      var isPool =
+        typeof hrpops.isTalentPoolJob === "function"
+          ? hrpops.isTalentPoolJob
+          : function (j) {
+              var title = String(
+                (j && (j.title || j.post || j.postName)) || ""
+              ).toLowerCase();
+              return /open\s*applications?|general\s*applications?|speculative|talent\s*pool|open\s*profile/.test(
+                title
+              );
+            };
+      var match = (listed.jobs || []).find(isPool);
+      if (!match) return null;
+      var mapped = mapHrpopsJob(
+        match,
+        match.jobPostId || match.job_code || match.JobPostId,
+        match.companyId || match.CompanyId || DEFAULT_COMPANY_ID
+      );
+      return markOpenApplication(mapped);
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  function renderOpenApplicationUnavailable() {
+    var hero = qs("#pr-hero");
+    var title = qs("#pr-title");
+    var meta = qs("#pr-meta");
+    var main = qs("#pr-main");
+
+    if (hero) hero.classList.add("is-not-found");
+    if (title) title.textContent = "Open application";
+    if (meta) {
+      meta.hidden = true;
+      meta.innerHTML = "";
+    }
+    document.title = "Open application | Nohitatu";
+    if (main) {
+      main.innerHTML =
+        '<div class="pr-not-found">' +
+        "<h2>Talent pool is not published yet</h2>" +
+        "<p>Create a public HRPops job named <strong>Open Application / Talent Pool</strong> (company " +
+        escapeHtml(DEFAULT_COMPANY_ID) +
+        "), then Get in touch applications will be stored under that opening.</p>" +
+        '<p>Meanwhile, email your resume to <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>.</p>' +
+        '<a class="pr-btn pr-btn-ink" href="Careers.html">View open positions <span aria-hidden="true">&#8594;</span></a>' +
+        "</div>";
+    }
+  }
+
+  function hrpopsVisibilityApi() {
+    return window.NH_HRPOPS_CAREERS || null;
+  }
+
+  /** Resolve Skill Set / field visibility for the public candidate form (fail closed). */
+  function resolveJobFieldVisibility(jobOrRaw) {
+    var api = hrpopsVisibilityApi();
+    if (jobOrRaw && jobOrRaw.fieldVisibility && jobOrRaw.fieldVisibility.skillSet) {
+      return jobOrRaw.fieldVisibility;
+    }
+    if (api && typeof api.resolveApplicationFieldVisibility === "function") {
+      return api.resolveApplicationFieldVisibility(jobOrRaw || {}, { failClosed: true });
+    }
+    /* No visibility helper loaded — fail closed for Skill Set. */
+    var rawList =
+      (jobOrRaw && (jobOrRaw.skillSetsAll || jobOrRaw.skillSets || jobOrRaw.SkillSets)) || [];
+    var any = Array.isArray(rawList) && rawList.length > 0;
+    return {
+      schemaOk: false,
+      skillSet: {
+        fieldKey: "skillSet",
+        show: !any,
+        reason: any ? "visibility-helper-missing-fail-closed" : "no-skills-configured",
+        visibleSkills: [],
+        allSkills: Array.isArray(rawList) ? rawList : [],
+        schemaOk: false
+      },
+      fields: {}
+    };
+  }
+
+  function skillSetVisibleOnForm(job) {
+    var vis = resolveJobFieldVisibility(job);
+    return !!(vis && vis.skillSet && vis.skillSet.show);
+  }
+
+  function candidateVisibleSkillPresets(job) {
+    var vis = resolveJobFieldVisibility(job);
+    if (vis && vis.skillSet && Array.isArray(vis.skillSet.visibleSkills)) {
+      return vis.skillSet.visibleSkills;
+    }
+    var api = hrpopsVisibilityApi();
+    if (api && typeof api.filterCandidateVisibleSkills === "function") {
+      return api.filterCandidateVisibleSkills(job && job.skillSets, { failClosed: true });
+    }
+    return [];
   }
 
   function mapHrpopsJob(raw, fallbackId, companyId) {
@@ -4047,6 +4598,9 @@
     var intern = cat.indexOf("intern") >= 0;
     var cid = raw.companyId || companyId || DEFAULT_COMPANY_ID;
     if (cid != null && Number(cid) === 0) cid = companyId || DEFAULT_COMPANY_ID;
+    var fieldVisibility = resolveJobFieldVisibility(raw);
+    var visibleSkills =
+      (fieldVisibility.skillSet && fieldVisibility.skillSet.visibleSkills) || [];
     return {
       jobid: raw.job_code || raw.jobPostId || fallbackId,
       post: raw.title || raw.post,
@@ -4057,7 +4611,15 @@
       expireDate: raw.expireDate || raw.expire_date,
       validationType: intern ? "I" : "J",
       companyId: cid || DEFAULT_COMPANY_ID,
-      skillSets: Array.isArray(raw.skillSets) ? raw.skillSets : [],
+      skillSets: visibleSkills,
+      skillSetsAll: Array.isArray(raw.skillSetsAll)
+        ? raw.skillSetsAll
+        : Array.isArray(raw.skillSets)
+          ? raw.skillSets
+          : Array.isArray(raw.SkillSets)
+            ? raw.SkillSets
+            : [],
+      fieldVisibility: fieldVisibility,
       source: "hrpops",
     };
   }
@@ -4099,18 +4661,26 @@
 
   async function mount() {
     var id = getId();
-    var job = await resolveJob(id);
+    var job = null;
 
-    if (!job) {
-      renderNotFound(
-        id,
-        id
-          ? "Open roles on the Careers page use HRPops job codes (company " +
-              DEFAULT_COMPANY_ID +
-              ")."
-          : ""
-      );
-      return;
+    if (id) {
+      job = await resolveJob(id);
+      if (!job) {
+        renderNotFound(
+          id,
+          "Open roles on the Careers page use HRPops job codes (company " +
+            DEFAULT_COMPANY_ID +
+            ")."
+        );
+        return;
+      }
+    } else {
+      /* Careers "Get in touch" — store under Open application / Talent pool. */
+      job = await resolveOpenApplicationJob();
+      if (!job) {
+        renderOpenApplicationUnavailable();
+        return;
+      }
     }
 
     var isIntern = String(job.validationType || "").toUpperCase() === "I";
@@ -4124,23 +4694,33 @@
     if (desc) {
       desc.setAttribute(
         "content",
-        "Apply for " + post + " (job code " + job.jobid + ") at Nohitatu."
+        job.openApplication
+          ? "Submit an open application to Nohitatu careers."
+          : "Apply for " + post + " (job code " + job.jobid + ") at Nohitatu."
       );
     }
 
     if (title) title.textContent = post;
     if (meta) {
       meta.hidden = false;
-      meta.innerHTML =
-        '<li><span class="pr-meta-label">Job code</span><span class="pr-meta-value pr-code">' +
-        escapeHtml(String(job.jobid)) +
-        "</span></li>" +
-        '<li><span class="pr-meta-label">Experience</span><span class="pr-meta-value">' +
-        escapeHtml(job.experience || "-") +
-        "</span></li>" +
-        '<li><span class="pr-meta-label">Location</span><span class="pr-meta-value">' +
-        escapeHtml(job.location || "-") +
-        "</span></li>";
+      if (job.openApplication) {
+        meta.innerHTML =
+          '<li><span class="pr-meta-label">Type</span><span class="pr-meta-value">Open application / Talent pool</span></li>' +
+          '<li><span class="pr-meta-label">Location</span><span class="pr-meta-value">' +
+          escapeHtml(job.location || "Nohitatu") +
+          "</span></li>";
+      } else {
+        meta.innerHTML =
+          '<li><span class="pr-meta-label">Job code</span><span class="pr-meta-value pr-code">' +
+          escapeHtml(String(job.jobid)) +
+          "</span></li>" +
+          '<li><span class="pr-meta-label">Experience</span><span class="pr-meta-value">' +
+          escapeHtml(job.experience || "-") +
+          "</span></li>" +
+          '<li><span class="pr-meta-label">Location</span><span class="pr-meta-value">' +
+          escapeHtml(job.location || "-") +
+          "</span></li>";
+      }
     }
 
     if (!main) return;
@@ -4150,6 +4730,8 @@
 
     var form = qs("#pr-form");
     revealForm(form);
+    wireOpenApplicationPrefs(form);
+    wireAboutYourselfCounter(form);
     wireSameAsCurrent(form);
     wirePhoneDigits(form);
     wireDobAge(form);
@@ -4179,10 +4761,18 @@
     }
 
     var skillsEl = qs("#pr-skills");
-    var presetSkills = Array.isArray(job.skillSets) ? job.skillSets : null;
-    await loadSkills(job.jobid, skillsEl, isIntern, presetSkills);
-    ensureKnownSkillsUi(form);
+    if (skillSetVisibleOnForm(job) && skillsEl) {
+      var presetSkills = candidateVisibleSkillPresets(job);
+      await loadSkills(job.jobid, skillsEl, isIntern, presetSkills);
+      ensureKnownSkillsUi(form);
+    } else {
+      knownSkills = [];
+    }
     await wireDraft(form, job, isIntern);
+    if (job.openApplication) {
+      var deptAfterDraft = fieldValue(form, "OpenAppDepartment");
+      fillOpenAppRoleCategory(form, deptAfterDraft, true);
+    }
     wireReturningApplicant(form, job, isIntern);
 
     async function postApplication(btn, btnLabel) {
@@ -4237,8 +4827,8 @@
         setStatus(
           "Could not reach the application server" +
             (err && err.message ? " (" + err.message + ")" : "") +
-            ". Email hrd@nohitatu.com with job code " +
-            job.jobid +
+            ". Email hrd@nohitatu.com" +
+            (job.openApplication ? "" : " with job code " + job.jobid) +
             " if this continues.",
           "error"
         );

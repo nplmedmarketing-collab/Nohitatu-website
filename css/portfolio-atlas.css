@@ -10,8 +10,8 @@
   --atlas-panel: #0c121c;
   --atlas-deep: #070b12;
   --atlas-film: #121a26;
-  --atlas-blue: var(--blue, #726cf4);
-  --atlas-blue-soft: rgba(114, 108, 244, 0.28);
+  --atlas-blue: var(--blue, #2c948c);
+  --atlas-blue-soft: rgba(44, 148, 140, 0.28);
   --atlas-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --atlas-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --atlas-gutter: max(24px, calc((100vw - min(1180px, 100% - 48px)) / 2));
@@ -38,9 +38,9 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(58% 42% at 12% 0%, rgba(114, 108, 244, 0.16), transparent 68%),
+    radial-gradient(58% 42% at 12% 0%, rgba(44, 148, 140, 0.16), transparent 68%),
     radial-gradient(46% 38% at 92% 8%, rgba(96, 76, 224, 0.12), transparent 70%),
-    radial-gradient(70% 50% at 50% 108%, rgba(114, 108, 244, 0.1), transparent 72%);
+    radial-gradient(70% 50% at 50% 108%, rgba(44, 148, 140, 0.1), transparent 72%);
 }
 
 .atlas::after {
@@ -247,14 +247,14 @@
 
 .atlas-tab-btn:hover {
   transform: translateY(-3px);
-  border-color: rgba(114, 108, 244, 0.5);
+  border-color: rgba(44, 148, 140, 0.5);
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .atlas-tab-btn:hover .atlas-tab-btn__icon {
   transform: translateY(-2px) scale(1.04);
-  background: rgba(114, 108, 244, 0.18);
-  border-color: rgba(114, 108, 244, 0.44);
+  background: rgba(44, 148, 140, 0.18);
+  border-color: rgba(44, 148, 140, 0.44);
   color: #fff;
 }
 
@@ -271,7 +271,7 @@
   transform: none;
   background: linear-gradient(135deg, #7d77f7 0%, var(--atlas-blue) 44%, #4f47c9 100%);
   border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 22px 48px rgba(114, 108, 244, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 22px 48px rgba(44, 148, 140, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .atlas-tab-btn.is-active::after {
@@ -372,8 +372,8 @@
 
 .atlas__search input[type="search"]:focus {
   background: rgba(9, 14, 22, 0.82);
-  border-color: rgba(114, 108, 244, 0.85);
-  box-shadow: 0 0 0 4px rgba(114, 108, 244, 0.18), 0 12px 28px rgba(0, 0, 0, 0.36);
+  border-color: rgba(44, 148, 140, 0.85);
+  box-shadow: 0 0 0 4px rgba(44, 148, 140, 0.18), 0 12px 28px rgba(0, 0, 0, 0.36);
 }
 
 .atlas__search:focus-within .search-icon {
@@ -399,8 +399,8 @@
 }
 
 .atlas__search-clear:hover {
-  background: rgba(114, 108, 244, 0.24);
-  border-color: rgba(114, 108, 244, 0.5);
+  background: rgba(44, 148, 140, 0.24);
+  border-color: rgba(44, 148, 140, 0.5);
   transform: rotate(90deg);
 }
 
@@ -416,9 +416,9 @@
   margin: 0;
   padding: 9px 15px;
   border-radius: 999px;
-  border: 1px solid rgba(114, 108, 244, 0.4);
-  background: linear-gradient(135deg, rgba(114, 108, 244, 0.24), rgba(114, 108, 244, 0.1));
-  box-shadow: 0 0 22px rgba(114, 108, 244, 0.16);
+  border: 1px solid rgba(44, 148, 140, 0.4);
+  background: linear-gradient(135deg, rgba(44, 148, 140, 0.24), rgba(44, 148, 140, 0.1));
+  box-shadow: 0 0 22px rgba(44, 148, 140, 0.16);
   font-family: var(--atlas-mono);
   font-size: 10.5px;
   font-weight: 600;
@@ -523,8 +523,8 @@
 
 .atlas__filters button:hover {
   color: #fff;
-  border-color: rgba(114, 108, 244, 0.55);
-  background: rgba(114, 108, 244, 0.16);
+  border-color: rgba(44, 148, 140, 0.55);
+  background: rgba(44, 148, 140, 0.16);
   transform: translateY(-2px);
 }
 
@@ -532,7 +532,7 @@
   background: linear-gradient(135deg, #7d77f7, #5b53d8);
   border-color: rgba(255, 255, 255, 0.32);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(114, 108, 244, 0.42);
+  box-shadow: 0 6px 18px rgba(44, 148, 140, 0.42);
 }
 
 .atlas__filters button.is-barren:not(.is-active) {
@@ -775,8 +775,8 @@
   align-items: center;
   padding: 4px 8px;
   border-radius: 7px;
-  background: rgba(114, 108, 244, 0.13);
-  border: 1px solid rgba(114, 108, 244, 0.26);
+  background: rgba(44, 148, 140, 0.13);
+  border: 1px solid rgba(44, 148, 140, 0.26);
   color: #c6c2ff;
   font-family: var(--atlas-mono);
   font-size: 9px;
@@ -826,10 +826,10 @@
 .pf-card:hover,
 .pf-card:focus-within {
   --pf-lift: translateY(-3px);
-  border-color: rgba(114, 108, 244, 0.48);
-  background: linear-gradient(105deg, rgba(114, 108, 244, 0.1) 0%, rgba(255, 255, 255, 0.03) 48%),
+  border-color: rgba(44, 148, 140, 0.48);
+  background: linear-gradient(105deg, rgba(44, 148, 140, 0.1) 0%, rgba(255, 255, 255, 0.03) 48%),
     var(--atlas-panel);
-  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(114, 108, 244, 0.14);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(44, 148, 140, 0.14);
 }
 
 .pf-card:hover .pf-card__media img,
@@ -882,7 +882,7 @@
   text-align: center;
   border-radius: 22px;
   border: 1px dashed rgba(255, 255, 255, 0.18);
-  background: radial-gradient(70% 90% at 50% 0%, rgba(114, 108, 244, 0.13), transparent 70%),
+  background: radial-gradient(70% 90% at 50% 0%, rgba(44, 148, 140, 0.13), transparent 70%),
     rgba(255, 255, 255, 0.02);
 }
 
@@ -899,8 +899,8 @@
   height: 46px;
   margin-bottom: 16px;
   border-radius: 14px;
-  border: 1px solid rgba(114, 108, 244, 0.42);
-  background: rgba(114, 108, 244, 0.14);
+  border: 1px solid rgba(44, 148, 140, 0.42);
+  background: rgba(44, 148, 140, 0.14);
   color: #bcb8ff;
   font-size: 18px;
 }
@@ -953,8 +953,8 @@
 }
 
 .atlas__empty-reset:hover {
-  background: rgba(114, 108, 244, 0.2);
-  border-color: rgba(114, 108, 244, 0.55);
+  background: rgba(44, 148, 140, 0.2);
+  border-color: rgba(44, 148, 140, 0.55);
   transform: translateY(-2px);
 }
 
@@ -992,14 +992,14 @@
   letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(114, 108, 244, 0.36);
+  box-shadow: 0 12px 30px rgba(44, 148, 140, 0.36);
   transition: transform 260ms var(--atlas-ease), box-shadow 260ms ease, background 260ms ease;
 }
 
 .pf-btn:hover {
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(114, 108, 244, 0.48);
+  box-shadow: 0 18px 40px rgba(44, 148, 140, 0.48);
 }
 
 .pf-btn:focus-visible {
@@ -1086,7 +1086,7 @@ body.pf-scroll-lock {
 }
 
 .atlas-modal__close:hover {
-  background: rgba(114, 108, 244, 0.6);
+  background: rgba(44, 148, 140, 0.6);
   transform: rotate(90deg);
 }
 
@@ -1102,7 +1102,7 @@ body.pf-scroll-lock {
   justify-content: center;
   padding: 22px;
   background:
-    radial-gradient(80% 70% at 50% 0%, rgba(114, 108, 244, 0.14), transparent 70%),
+    radial-gradient(80% 70% at 50% 0%, rgba(44, 148, 140, 0.14), transparent 70%),
     var(--atlas-deep);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
@@ -1159,8 +1159,8 @@ body.pf-scroll-lock {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--pf-dot, #726cf4);
-  box-shadow: 0 0 8px var(--pf-dot, #726cf4);
+  background: var(--pf-dot, #2c948c);
+  box-shadow: 0 0 8px var(--pf-dot, #2c948c);
 }
 
 .atlas-modal__meta .pf-card__badge--product {
@@ -1319,8 +1319,8 @@ body.pf-scroll-lock {
   margin-bottom: 24px;
   padding: 12px 16px;
   border-radius: 14px;
-  background: rgba(114, 108, 244, 0.12);
-  border: 1px solid rgba(114, 108, 244, 0.26);
+  background: rgba(44, 148, 140, 0.12);
+  border: 1px solid rgba(44, 148, 140, 0.26);
 }
 
 .demo-drawer__target .target-label {
@@ -1374,8 +1374,8 @@ body.pf-scroll-lock {
 .demo-drawer__field input:focus,
 .demo-drawer__field textarea:focus {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(114, 108, 244, 0.75);
-  box-shadow: 0 0 0 4px rgba(114, 108, 244, 0.16);
+  border-color: rgba(44, 148, 140, 0.75);
+  box-shadow: 0 0 0 4px rgba(44, 148, 140, 0.16);
 }
 
 .demo-drawer__status {
@@ -1414,14 +1414,14 @@ body.pf-scroll-lock {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
   font-weight: 700;
-  box-shadow: 0 12px 30px rgba(114, 108, 244, 0.4);
+  box-shadow: 0 12px 30px rgba(44, 148, 140, 0.4);
   cursor: pointer;
   transition: transform 220ms var(--atlas-ease), box-shadow 220ms ease;
 }
 
 .demo-drawer__submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(114, 108, 244, 0.52);
+  box-shadow: 0 18px 40px rgba(44, 148, 140, 0.52);
 }
 
 .demo-drawer__submit:focus-visible {

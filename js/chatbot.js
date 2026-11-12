@@ -3,7 +3,7 @@
    Calls FastAPI /api/chat; keeps branded panel + quick chips.
    Config: window.NOHI_CHAT_API or #chatbot-container[data-api]
    Default API: http://localhost:8010 (avoids common :8000 conflicts)
-   Cache: ?v=20260820icons
+   Cache: ?v=20261112chatfix1
    ========================================================================== */
 
 function initNohiChatbot() {
@@ -36,15 +36,15 @@ function initNohiChatbot() {
   /** Dual-tone mini-illustrations (brand violet + navy) - filled, not outline clones. */
   const TOPIC_ICONS = {
     products:
-      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2" width="12.5" height="9.5" rx="2" fill="#1a2332"/><rect x="6.5" y="6.2" width="14.5" height="11.8" rx="2.2" fill="#726cf4"/><rect x="9" y="9" width="9.5" height="1.7" rx="0.7" fill="#fff"/><rect x="9" y="12.2" width="6.2" height="1.7" rx="0.7" fill="#fff" opacity=".55"/><circle cx="18.4" cy="19.1" r="4.1" fill="#1a2332"/><path d="M16.6 19.15l1.3 1.3 2.5-2.65" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2" width="12.5" height="9.5" rx="2" fill="#1a2332"/><rect x="6.5" y="6.2" width="14.5" height="11.8" rx="2.2" fill="#2c948c"/><rect x="9" y="9" width="9.5" height="1.7" rx="0.7" fill="#fff"/><rect x="9" y="12.2" width="6.2" height="1.7" rx="0.7" fill="#fff" opacity=".55"/><circle cx="18.4" cy="19.1" r="4.1" fill="#1a2332"/><path d="M16.6 19.15l1.3 1.3 2.5-2.65" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     healthcare:
-      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.1c2.35 1.55 4.55 2.15 6.7 2.15v6.9c0 4.55-3 7.7-6.7 9.45C8.3 18.85 5.3 15.7 5.3 11.15v-6.9C7.45 4.25 9.65 3.65 12 2.1z" fill="#726cf4"/><path d="M12 6.4v8.1M8.05 10.45h7.9" fill="none" stroke="#fff" stroke-width="2.15" stroke-linecap="round"/><circle cx="18.6" cy="18" r="3.85" fill="#1a2332"/><path d="M17 18.05l1.15 1.15 2.15-2.25" fill="none" stroke="#fff" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.1c2.35 1.55 4.55 2.15 6.7 2.15v6.9c0 4.55-3 7.7-6.7 9.45C8.3 18.85 5.3 15.7 5.3 11.15v-6.9C7.45 4.25 9.65 3.65 12 2.1z" fill="#2c948c"/><path d="M12 6.4v8.1M8.05 10.45h7.9" fill="none" stroke="#fff" stroke-width="2.15" stroke-linecap="round"/><circle cx="18.6" cy="18" r="3.85" fill="#1a2332"/><path d="M17 18.05l1.15 1.15 2.15-2.25" fill="none" stroke="#fff" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     hire:
-      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.4" width="17.6" height="12" rx="2.2" fill="#1a2332"/><rect x="4.8" y="4.9" width="14.4" height="8.4" rx="1.3" fill="#726cf4"/><path d="M9.1 7.6L7.2 9.1l1.9 1.5M14.9 7.6l1.9 1.5-1.9 1.5" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.2" y="8.35" width="1.6" height="2.9" rx="0.5" fill="#1a2332" opacity=".35"/><path d="M2.4 16.6h19.2c.5 0 .9.4.9.9v1.1c0 .7-.6 1.3-1.3 1.3H2.8c-.7 0-1.3-.6-1.3-1.3v-1.1c0-.5.4-.9.9-.9z" fill="#1a2332"/><rect x="8.2" y="17.35" width="7.6" height="1.35" rx="0.65" fill="#726cf4"/></svg>',
+      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.4" width="17.6" height="12" rx="2.2" fill="#1a2332"/><rect x="4.8" y="4.9" width="14.4" height="8.4" rx="1.3" fill="#2c948c"/><path d="M9.1 7.6L7.2 9.1l1.9 1.5M14.9 7.6l1.9 1.5-1.9 1.5" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.2" y="8.35" width="1.6" height="2.9" rx="0.5" fill="#1a2332" opacity=".35"/><path d="M2.4 16.6h19.2c.5 0 .9.4.9.9v1.1c0 .7-.6 1.3-1.3 1.3H2.8c-.7 0-1.3-.6-1.3-1.3v-1.1c0-.5.4-.9.9-.9z" fill="#1a2332"/><rect x="8.2" y="17.35" width="7.6" height="1.35" rx="0.65" fill="#2c948c"/></svg>',
     sales:
-      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 4.2h10.8c1.7 0 3.1 1.4 3.1 3.1v5.2c0 1.7-1.4 3.1-3.1 3.1h-3.4l-3.6 3.1v-3.1H5.2c-1.7 0-3.1-1.4-3.1-3.1V7.3c0-1.7 1.4-3.1 3.1-3.1z" fill="#726cf4"/><circle cx="8.1" cy="9.85" r="1.15" fill="#fff"/><circle cx="11.6" cy="9.85" r="1.15" fill="#fff"/><circle cx="15.1" cy="9.85" r="1.15" fill="#fff"/><path d="M16.4 15.6c.55-.35 1.25-.2 1.65.3l1.05 1.35c.4.5.35 1.25-.15 1.7-1.15 1.05-3.05 1.45-5.05.35-2.35-1.3-4.25-3.2-5.55-5.55-1.1-2-.7-3.9.35-5.05.45-.5 1.2-.55 1.7-.15l1.35 1.05c.5.4.65 1.1.3 1.65l-.7 1.1c-.2.3-.15.7.1.95l2.05 2.05c.25.25.65.3.95.1l1.1-.7z" fill="#1a2332"/></svg>',
+      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 4.2h10.8c1.7 0 3.1 1.4 3.1 3.1v5.2c0 1.7-1.4 3.1-3.1 3.1h-3.4l-3.6 3.1v-3.1H5.2c-1.7 0-3.1-1.4-3.1-3.1V7.3c0-1.7 1.4-3.1 3.1-3.1z" fill="#2c948c"/><circle cx="8.1" cy="9.85" r="1.15" fill="#fff"/><circle cx="11.6" cy="9.85" r="1.15" fill="#fff"/><circle cx="15.1" cy="9.85" r="1.15" fill="#fff"/><path d="M16.4 15.6c.55-.35 1.25-.2 1.65.3l1.05 1.35c.4.5.35 1.25-.15 1.7-1.15 1.05-3.05 1.45-5.05.35-2.35-1.3-4.25-3.2-5.55-5.55-1.1-2-.7-3.9.35-5.05.45-.5 1.2-.55 1.7-.15l1.35 1.05c.5.4.65 1.1.3 1.65l-.7 1.1c-.2.3-.15.7.1.95l2.05 2.05c.25.25.65.3.95.1l1.1-.7z" fill="#1a2332"/></svg>',
     careers:
-      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 18.8V13.4c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v5.4" fill="#1a2332"/><path d="M9.6 18.8V10.1c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v8.7" fill="#726cf4"/><path d="M15 18.8V6.6c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v12.2" fill="#1a2332"/><circle cx="17.4" cy="4.35" r="2.55" fill="#726cf4"/><path d="M17.4 3.15l.45 1.1 1.2.1-1 .75.3 1.15-1-.65-1 .65.3-1.15-1-.75 1.2-.1z" fill="#fff"/><rect x="2.4" y="19.35" width="19.2" height="1.9" rx="0.7" fill="#1a2332"/></svg>'
+      '<svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 18.8V13.4c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v5.4" fill="#1a2332"/><path d="M9.6 18.8V10.1c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v8.7" fill="#2c948c"/><path d="M15 18.8V6.6c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v12.2" fill="#1a2332"/><circle cx="17.4" cy="4.35" r="2.55" fill="#2c948c"/><path d="M17.4 3.15l.45 1.1 1.2.1-1 .75.3 1.15-1-.65-1 .65.3-1.15-1-.75 1.2-.1z" fill="#fff"/><rect x="2.4" y="19.35" width="19.2" height="1.9" rx="0.7" fill="#1a2332"/></svg>'
   };
 
   /** Knowledge-base replies keyed by menu topic (1:1 chip -> answer). */
@@ -303,7 +303,8 @@ function initNohiChatbot() {
     let safe = escapeHtml(raw || '');
     safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\r\n|\r|\n/g, '<br>');
-    safe = safe.replace(/*\s*/g, '* ');
+    // Markdown "* " bullets → "• " (must use \* — bare /* starts a block comment)
+    safe = safe.replace(/(^|<br>)\s*\*\s+/g, '$1• ');
     safe = safe.replace(
       /\b([a-zA-Z0-9._%+-]+@nohitatu\.com)\b/g,
       '<a class="cb-cta" href="mailto:$1">$1</a>'

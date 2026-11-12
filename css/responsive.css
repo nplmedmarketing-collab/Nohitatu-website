@@ -2011,7 +2011,7 @@
   }
 
   .mobile-banner {
-    background: #022a5e url(../images/offerings/mobile.jpg) repeat fixed 0px -50px/cover;
+    background: #0b1a2d url(../images/offerings/mobile.jpg) repeat fixed 0px -50px/cover;
   }
 
   .browse-btn {
@@ -4318,7 +4318,7 @@
   }
 
   .lt-inner-banner.privacy-banner {
-    background: #022a5e url(../images/pages/privacy.jpg) no-repeat 0px 0px/cover;
+    background: #0b1a2d url(../images/pages/privacy.jpg) no-repeat 0px 0px/cover;
   }
 
   .privacy-banner .lt-content {
@@ -4646,7 +4646,7 @@
     font-weight: 700;
     text-transform: uppercase;
     font-family: poppins, sans-serif;
-    color: #022a5e;
+    color: #0b1a2d;
     margin: 0 auto 0;
     display: inline-block;
     padding: 0;
@@ -5084,7 +5084,7 @@
   }
 
   .top-address .h3 {
-    color: #0099da;
+    color: #2c948c;
   }
 
   .careers.post-resume .main-heading {
@@ -6088,12 +6088,12 @@
 
   .largest-company-sec.quality-testing-ms .wht-boxes.cols-sec .cols:nth-child(odd),
   .blockchain {
-    background: #0099da;
+    background: #2c948c;
   }
 
   .largest-company-sec.quality-testing-ms .wht-boxes.cols-sec .cols:nth-child(even),
   .iot {
-    background: #002958;
+    background: #0b1a2d;
   }
 
   .largest-company-sec.quality-testing-ms .wht-boxes .cols.box2 img {
@@ -6505,7 +6505,7 @@
   }
 
   .lt-inner-banner.privacy-banner {
-    background: #022a5e url(../images/pages/rcm.jpg) no-repeat -150px 0px/cover;
+    background: #0b1a2d url(../images/pages/rcm.jpg) no-repeat -150px 0px/cover;
     background-attachment: fixed;
   }
 
@@ -6644,7 +6644,7 @@
   }
 
   .hvQues button.btn.btn-link {
-    color: #56CBB9;
+    color: #84dcd5;
   }
 
   .footer-logos {

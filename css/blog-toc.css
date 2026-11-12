@@ -61,7 +61,7 @@
 .post-toc a:hover,
 .post-toc a:focus-visible,
 .post-toc a.is-active {
-    color: #726cf4;
+    color: #2c948c;
     transform: translateX(4px);
 }
 
@@ -93,8 +93,8 @@
         content: '';
         width: 8px;
         height: 8px;
-        border-right: 2px solid #726cf4;
-        border-bottom: 2px solid #726cf4;
+        border-right: 2px solid #2c948c;
+        border-bottom: 2px solid #2c948c;
         transform: rotate(45deg) translateY(-2px);
         transition: transform 180ms ease;
     }

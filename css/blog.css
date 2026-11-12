@@ -80,7 +80,7 @@
 }
 
 .btn-main {
-  background: #56cbb9;
+  background: #84dcd5;
   color: #fff !important;
   padding: 10px 20px;
   border-radius: 25px;
@@ -90,8 +90,8 @@
   text-transform: uppercase;
 }
 .btn-main:hover {
-  background: #56cbb9 !important;
-  color: #023575 !important;
+  background: #84dcd5 !important;
+  color: #0b1a2d !important;
 }
 
 @media screen and (max-width: 578px) {

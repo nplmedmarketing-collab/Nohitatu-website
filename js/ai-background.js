@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       speed: 0.5 + Math.random() * 0.9,
       fontSize: 12 + Math.floor(Math.random() * 6),
       opacity: 0.2 + Math.random() * 0.5,
-      color: Math.random() > 0.4 ? '#56CBB9' : '#019add'
+      color: Math.random() > 0.4 ? '#84dcd5' : '#2c948c'
     });
   }
 

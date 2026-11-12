@@ -22,13 +22,13 @@
     <meta property="og:site_name" content="Nohitatu" />
     <meta property="og:title" content="GitHub Copilot, ChatGPT & Vibe Coding: The New Reality of Software Development | Nohitatu" />
     <meta property="og:description" content="Explore how GitHub Copilot, ChatGPT, and vibe coding are changing software development, developer roles, and modern engineering workflows." />
-    <meta property="og:image" content="https://www.nohitatu.com/images/favicon/favicon.png" />
+    <meta property="og:image" content="https://www.nohitatu.com/images/blog/thumbnail/featured-ai-coding.jpg" />
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GitHub Copilot, ChatGPT & Vibe Coding: The New Reality of Software Development" />
     <meta name="twitter:description" content="Explore how GitHub Copilot, ChatGPT, and vibe coding are changing software development." />
-    <meta name="twitter:image" content="https://www.nohitatu.com/images/favicon/favicon.png" />
+    <meta name="twitter:image" content="https://www.nohitatu.com/images/blog/thumbnail/featured-ai-coding.jpg" />
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -59,14 +59,14 @@
     <link type="text/css" rel="stylesheet" href="../css/aos.css" />
     <link type="text/css" rel="stylesheet" href="../css/owl.carousel.css" />
     <link type="text/css" rel="stylesheet" href="../css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="../css/style.css?v=20261102cleanfooter2" />
+    <link type="text/css" rel="stylesheet" href="../css/style.css?v=20261112backtop1" />
     <link type="text/css" rel="stylesheet" href="../css/responsive.css" />
     <link type="text/css" rel="stylesheet" href="../css/themify-icons.css" />
     <link type="text/css" rel="stylesheet" href="../css/blog.css" />
     <link type="text/css" rel="stylesheet" href="../css/blog-toc.css?v=20260731f" />
-    <link type="text/css" rel="stylesheet" href="../css/chatbot.css?v=20260820icons" />
+    <link type="text/css" rel="stylesheet" href="../css/chatbot.css?v=20261106deployall1" />
     <script src="../js/jquery.min.js"></script>
-    <script src="../js/custom.js?v=20261102cardoverlap2"></script>
+    <script src="../js/custom.js?v=20261112backtop1"></script>
     <script src="../js/blog-toc.js?v=20260731f" defer></script>
     <style>
         body.blog-detail-page {
@@ -79,12 +79,16 @@
             box-shadow: none !important;
         }
 
-        .blog-detail-page header.logo-navbar .logo-on-dark {
-            display: none;
+        .blog-detail-page header.logo-navbar .logo-on-dark,
+        .blog-detail-page header.logo-navbar.white-header .logo-on-dark,
+        .blog-detail-page header.logo-navbar.blnk-header .logo-on-dark {
+            display: none !important;
         }
 
-        .blog-detail-page header.logo-navbar .logo-on-light {
-            display: block;
+        .blog-detail-page header.logo-navbar .logo-on-light,
+        .blog-detail-page header.logo-navbar.white-header .logo-on-light,
+        .blog-detail-page header.logo-navbar.blnk-header .logo-on-light {
+            display: block !important;
         }
 
         .blog-detail-page header.logo-navbar #navigation > li.nav-item > a {
@@ -93,8 +97,8 @@
         }
 
         .blog-detail-page header.logo-navbar #navigation > li.nav-item:hover > a {
-            color: #726cf4 !important;
-            -webkit-text-fill-color: #726cf4 !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
         }
 
         /* ============ Editorial post header: title left, image right ============ */
@@ -131,9 +135,9 @@
         }
 
         .back-to-blogs:hover {
-            color: #726cf4;
-            border-color: rgba(114, 108, 244, 0.35);
-            background: #f6f5ff;
+            color: #2c948c;
+            border-color: rgba(44, 148, 140, 0.35);
+            background: #f2f8f7;
         }
 
         .back-to-blogs svg {
@@ -155,7 +159,7 @@
 
         .post-hero h1 em {
             font-style: italic;
-            color: #726cf4;
+            color: #2c948c;
         }
 
         .post-meta {
@@ -173,7 +177,7 @@
         }
 
         .post-meta .post-cat {
-            color: #726cf4;
+            color: #2c948c;
         }
 
         .post-meta .dot {
@@ -234,7 +238,7 @@
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.2em;
-            color: #726cf4;
+            color: #2c948c;
         }
 
         .post-col h2 {
@@ -279,7 +283,7 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: #726cf4;
+            background: #2c948c;
         }
 
         /* Full-width fixed-background quote: content moves, image stays anchored */
@@ -291,7 +295,7 @@
             text-align: center;
             background-image:
                 linear-gradient(rgba(7, 18, 31, 0.7), rgba(7, 18, 31, 0.7)),
-                url('../images/blog/thumbnail/software_development.jpeg');
+                url('../images/blog/thumbnail/featured-ai-coding.jpg');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -426,7 +430,7 @@
                         <div class="row header-row">
                             <a href="/" class="header-logo" aria-label="Nohitatu home">
                                 <img class="logo-on-dark" src="../images/nohitatu-logo_white.png" alt="Nohitatu" />
-                                <img class="logo-on-light" src="../images/nohitatu-logo.png" alt="Nohitatu" />
+                                <img class="logo-on-light" src="../images/nohitatu-logo-dark.png" alt="Nohitatu" />
                             </a>
                             <div class="col-sm-12 right-menu text-center">
                                 <nav id="slidemenu">
@@ -466,23 +470,7 @@
                                                     <ul class="sub-menu">
                                                         <li><a href="../Software-Development">Software Development</a></li>
                                                         <li><a href="../Saas">Saas</a></li>
-                                                        <li class="new_mwnu">
-                                                            <span class="split"><a href="#">Revenue Cycle Management</a></span>
-                                                            <span class="split1">
-                                                                <div class="dropright">
-                                                                    <span type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="ti-angle-right"></i>
-                                                                    </span>
-                                                                    <div class="dropdown-menu hoveropen">
-                                                                        <ul>
-                                                                            <li><a href="../medical-billing-services">Medical Billing Services</a></li>
-                                                                            <li><a href="../medical-billing-services">Medical Billing Specialties</a></li>
-                                                                            <li><a href="../medical-billing-services">Medical Billing Software</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </span>
-                                                        </li>
+                                                        <li><a href="../medical-billing-services">Revenue Cycle Management</a></li>
                                                     </ul>
                                                 </div>
                                             </li>
@@ -520,7 +508,7 @@
                         </div>
                     </div>
                     <figure class="post-hero__media">
-                        <img src="../images/blog/thumbnail/githubcop.jpg" alt="AI-powered software development with GitHub Copilot and ChatGPT" />
+                        <img src="../images/blog/thumbnail/featured-ai-coding.jpg" alt="AI-powered software development with GitHub Copilot and ChatGPT" />
                     </figure>
                 </div>
             </div>
@@ -739,10 +727,7 @@
                                         <span>Quality-driven delivery</span>
                                     </div>
                                 </div>
-                            <div class="footer-contact-meta">
-                                <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>
-                            </div>
-                        </div>
+</div>
                     </div>
                 </div>
             </div>
@@ -769,12 +754,12 @@
             <div class="chatbot-header">
                 <div class="chatbot-header-content">
                     <div class="chatbot-avatar-box">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#726cf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2c948c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
                             <rect x="4" y="9" width="16" height="11" rx="3"></rect>
-                            <circle cx="9" cy="14" r="1.2" fill="#726cf4"></circle>
-                            <circle cx="15" cy="14" r="1.2" fill="#726cf4"></circle>
-                            <path d="M10 17.5h4" stroke="#726cf4"></path>
+                            <circle cx="9" cy="14" r="1.2" fill="#2c948c"></circle>
+                            <circle cx="15" cy="14" r="1.2" fill="#2c948c"></circle>
+                            <path d="M10 17.5h4" stroke="#2c948c"></path>
                         </svg>
                     </div>
                     <div class="chatbot-header-text">
@@ -792,11 +777,11 @@
                 </div>
                 <div class="quick-chips" role="group" aria-label="Choose one">
                     <span class="quick-chips-label">Popular Questions</span>
-                    <button type="button" class="chip-btn" data-topic="products" data-query="Tell me about shipped products and portfolio"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2" width="12.5" height="9.5" rx="2" fill="#1a2332"/><rect x="6.5" y="6.2" width="14.5" height="11.8" rx="2.2" fill="#726cf4"/><rect x="9" y="9" width="9.5" height="1.7" rx="0.7" fill="#fff"/><rect x="9" y="12.2" width="6.2" height="1.7" rx="0.7" fill="#fff" opacity=".55"/><circle cx="18.4" cy="19.1" r="4.1" fill="#1a2332"/><path d="M16.6 19.15l1.3 1.3 2.5-2.65" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="chip-label">Shipped Products</span></button>
-                    <button type="button" class="chip-btn" data-topic="healthcare" data-query="Tell me about healthcare tech and RCM solutions"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.1c2.35 1.55 4.55 2.15 6.7 2.15v6.9c0 4.55-3 7.7-6.7 9.45C8.3 18.85 5.3 15.7 5.3 11.15v-6.9C7.45 4.25 9.65 3.65 12 2.1z" fill="#726cf4"/><path d="M12 6.4v8.1M8.05 10.45h7.9" fill="none" stroke="#fff" stroke-width="2.15" stroke-linecap="round"/><circle cx="18.6" cy="18" r="3.85" fill="#1a2332"/><path d="M17 18.05l1.15 1.15 2.15-2.25" fill="none" stroke="#fff" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="chip-label">Healthcare RCM</span></button>
-                    <button type="button" class="chip-btn" data-topic="hire" data-query="How do I hire dedicated teams of certified professionals from Nohitatu?"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.4" width="17.6" height="12" rx="2.2" fill="#1a2332"/><rect x="4.8" y="4.9" width="14.4" height="8.4" rx="1.3" fill="#726cf4"/><path d="M9.1 7.6L7.2 9.1l1.9 1.5M14.9 7.6l1.9 1.5-1.9 1.5" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.2" y="8.35" width="1.6" height="2.9" rx="0.5" fill="#1a2332" opacity=".35"/><path d="M2.4 16.6h19.2c.5 0 .9.4.9.9v1.1c0 .7-.6 1.3-1.3 1.3H2.8c-.7 0-1.3-.6-1.3-1.3v-1.1c0-.5.4-.9.9-.9z" fill="#1a2332"/><rect x="8.2" y="17.35" width="7.6" height="1.35" rx="0.65" fill="#726cf4"/></svg><span class="chip-label">Hire Developers</span></button>
-                    <button type="button" class="chip-btn" data-topic="sales" data-query="I want to contact sales for a free project quote"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 4.2h10.8c1.7 0 3.1 1.4 3.1 3.1v5.2c0 1.7-1.4 3.1-3.1 3.1h-3.4l-3.6 3.1v-3.1H5.2c-1.7 0-3.1-1.4-3.1-3.1V7.3c0-1.7 1.4-3.1 3.1-3.1z" fill="#726cf4"/><circle cx="8.1" cy="9.85" r="1.15" fill="#fff"/><circle cx="11.6" cy="9.85" r="1.15" fill="#fff"/><circle cx="15.1" cy="9.85" r="1.15" fill="#fff"/><path d="M16.4 15.6c.55-.35 1.25-.2 1.65.3l1.05 1.35c.4.5.35 1.25-.15 1.7-1.15 1.05-3.05 1.45-5.05.35-2.35-1.3-4.25-3.2-5.55-5.55-1.1-2-.7-3.9.35-5.05.45-.5 1.2-.55 1.7-.15l1.35 1.05c.5.4.65 1.1.3 1.65l-.7 1.1c-.2.3-.15.7.1.95l2.05 2.05c.25.25.65.3.95.1l1.1-.7z" fill="#1a2332"/></svg><span class="chip-label">Contact Sales</span></button>
-                    <button type="button" class="chip-btn" data-topic="careers" data-query="Looking for a job at Nohitatu"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 18.8V13.4c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v5.4" fill="#1a2332"/><path d="M9.6 18.8V10.1c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v8.7" fill="#726cf4"/><path d="M15 18.8V6.6c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v12.2" fill="#1a2332"/><circle cx="17.4" cy="4.35" r="2.55" fill="#726cf4"/><path d="M17.4 3.15l.45 1.1 1.2.1-1 .75.3 1.15-1-.65-1 .65.3-1.15-1-.75 1.2-.1z" fill="#fff"/><rect x="2.4" y="19.35" width="19.2" height="1.9" rx="0.7" fill="#1a2332"/></svg><span class="chip-label">Careers &amp; Jobs</span></button>
+                    <button type="button" class="chip-btn" data-topic="products" data-query="Tell me about shipped products and portfolio"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2" width="12.5" height="9.5" rx="2" fill="#1a2332"/><rect x="6.5" y="6.2" width="14.5" height="11.8" rx="2.2" fill="#2c948c"/><rect x="9" y="9" width="9.5" height="1.7" rx="0.7" fill="#fff"/><rect x="9" y="12.2" width="6.2" height="1.7" rx="0.7" fill="#fff" opacity=".55"/><circle cx="18.4" cy="19.1" r="4.1" fill="#1a2332"/><path d="M16.6 19.15l1.3 1.3 2.5-2.65" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="chip-label">Shipped Products</span></button>
+                    <button type="button" class="chip-btn" data-topic="healthcare" data-query="Tell me about healthcare tech and RCM solutions"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.1c2.35 1.55 4.55 2.15 6.7 2.15v6.9c0 4.55-3 7.7-6.7 9.45C8.3 18.85 5.3 15.7 5.3 11.15v-6.9C7.45 4.25 9.65 3.65 12 2.1z" fill="#2c948c"/><path d="M12 6.4v8.1M8.05 10.45h7.9" fill="none" stroke="#fff" stroke-width="2.15" stroke-linecap="round"/><circle cx="18.6" cy="18" r="3.85" fill="#1a2332"/><path d="M17 18.05l1.15 1.15 2.15-2.25" fill="none" stroke="#fff" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="chip-label">Healthcare RCM</span></button>
+                    <button type="button" class="chip-btn" data-topic="hire" data-query="How do I hire dedicated teams of certified professionals from Nohitatu?"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.4" width="17.6" height="12" rx="2.2" fill="#1a2332"/><rect x="4.8" y="4.9" width="14.4" height="8.4" rx="1.3" fill="#2c948c"/><path d="M9.1 7.6L7.2 9.1l1.9 1.5M14.9 7.6l1.9 1.5-1.9 1.5" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.2" y="8.35" width="1.6" height="2.9" rx="0.5" fill="#1a2332" opacity=".35"/><path d="M2.4 16.6h19.2c.5 0 .9.4.9.9v1.1c0 .7-.6 1.3-1.3 1.3H2.8c-.7 0-1.3-.6-1.3-1.3v-1.1c0-.5.4-.9.9-.9z" fill="#1a2332"/><rect x="8.2" y="17.35" width="7.6" height="1.35" rx="0.65" fill="#2c948c"/></svg><span class="chip-label">Hire Developers</span></button>
+                    <button type="button" class="chip-btn" data-topic="sales" data-query="I want to contact sales for a free project quote"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 4.2h10.8c1.7 0 3.1 1.4 3.1 3.1v5.2c0 1.7-1.4 3.1-3.1 3.1h-3.4l-3.6 3.1v-3.1H5.2c-1.7 0-3.1-1.4-3.1-3.1V7.3c0-1.7 1.4-3.1 3.1-3.1z" fill="#2c948c"/><circle cx="8.1" cy="9.85" r="1.15" fill="#fff"/><circle cx="11.6" cy="9.85" r="1.15" fill="#fff"/><circle cx="15.1" cy="9.85" r="1.15" fill="#fff"/><path d="M16.4 15.6c.55-.35 1.25-.2 1.65.3l1.05 1.35c.4.5.35 1.25-.15 1.7-1.15 1.05-3.05 1.45-5.05.35-2.35-1.3-4.25-3.2-5.55-5.55-1.1-2-.7-3.9.35-5.05.45-.5 1.2-.55 1.7-.15l1.35 1.05c.5.4.65 1.1.3 1.65l-.7 1.1c-.2.3-.15.7.1.95l2.05 2.05c.25.25.65.3.95.1l1.1-.7z" fill="#1a2332"/></svg><span class="chip-label">Contact Sales</span></button>
+                    <button type="button" class="chip-btn" data-topic="careers" data-query="Looking for a job at Nohitatu"><svg class="chip-icon-svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 18.8V13.4c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v5.4" fill="#1a2332"/><path d="M9.6 18.8V10.1c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v8.7" fill="#2c948c"/><path d="M15 18.8V6.6c0-.7.55-1.25 1.25-1.25h2.9c.7 0 1.25.55 1.25 1.25v12.2" fill="#1a2332"/><circle cx="17.4" cy="4.35" r="2.55" fill="#2c948c"/><path d="M17.4 3.15l.45 1.1 1.2.1-1 .75.3 1.15-1-.65-1 .65.3-1.15-1-.75 1.2-.1z" fill="#fff"/><rect x="2.4" y="19.35" width="19.2" height="1.9" rx="0.7" fill="#1a2332"/></svg><span class="chip-label">Careers &amp; Jobs</span></button>
                 </div>
             </div>
 
@@ -829,7 +814,7 @@
         </button>
     </div>
 
-    <script src="../js/chatbot.js?v=20260820icons"></script>
+    <script src="../js/chatbot.js?v=20261112chatfix1"></script>
 </body>
 
 </html>

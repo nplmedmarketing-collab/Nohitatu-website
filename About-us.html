@@ -12,12 +12,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css?v=20261102cleanfooter2" />
+    <link rel="stylesheet" href="css/style.css?v=20261112backtop1" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/themify-icons.css" />
-    <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20261106deployall1" />
     <script src="js/jquery.min.js"></script>
-    <script src="js/custom.js?v=20261102cardoverlap2"></script>
+    <script src="js/custom.js?v=20261112backtop1"></script>
     <style>
         :root {
             --ink: #14243d;
@@ -222,21 +222,21 @@
         }
 
         body.about-page header.logo-navbar #navigation > li.nav-item:hover > a {
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
         }
 
         body.about-page header.logo-navbar #navigation > li.nav-item.active > a {
             background: none !important;
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
             -webkit-background-clip: border-box !important;
             background-clip: border-box !important;
         }
 
         body.about-page header.logo-navbar #navigation > li.nav-item > a::after {
-            background: #2c948c !important;
-        }
+            background: #0b1a2d !important;
+            background-image: none !important;}
 
         .section-kicker {
             display: inline-flex;
@@ -333,7 +333,7 @@
 
         body.about-page .story-item:hover {
             transform: translateY(-6px);
-            border-color: #c8c4ff;
+            border-color: #a8edea;
         }
 
         body.about-page .story-item__number {
@@ -342,7 +342,7 @@
             display: grid;
             place-items: center;
             border-radius: 8px;
-            background: #efedff;
+            background: #e6f7f5;
             color: var(--blue);
             font-family: "Plus Jakarta Sans", sans-serif;
             font-size: 15px;
@@ -375,13 +375,13 @@
 
         .ceo-grid {
             display: grid;
-            grid-template-columns: minmax(300px, 0.78fr) minmax(420px, 1.22fr);
-            gap: 92px;
+            grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+            gap: 64px;
             align-items: center;
         }
 
         .ceo-copy {
-            max-width: 500px;
+            max-width: 640px;
         }
 
         .ceo-copy h2 {
@@ -394,84 +394,52 @@
             line-height: 1.04;
         }
 
+        .ceo-role {
+            margin: 18px 0 0;
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
         .ceo-copy p {
-            margin: 24px 0 0;
+            margin: 18px 0 0;
             color: var(--muted);
             font-size: 16px;
-            line-height: 1.9;
+            line-height: 1.85;
+        }
+
+        .ceo-copy p:not(.ceo-role) {
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .ceo-copy blockquote {
+            margin: 26px 0 0;
+            padding: 2px 0 2px 18px;
+            border-left: 3px solid var(--blue);
+            color: var(--ink);
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.65;
         }
 
         .ceo-portrait {
-            position: relative;
-            width: min(100%, 300px);
-            aspect-ratio: 1;
-            min-height: 0;
-            margin: 0 auto;
+            width: min(100%, 440px);
+            margin: 0 0 0 auto;
             overflow: hidden;
-            border: 1px solid #dedbf2;
-            border-radius: 50%;
-            background: #fff;
-            isolation: isolate;
-            cursor: pointer;
+            border-radius: 16px;
+            background: #f6f7fb;
         }
 
         .ceo-portrait img {
             width: 100%;
-            height: 100%;
+            height: auto;
             display: block;
-            object-fit: cover;
-            object-position: center 18%;
-            transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .ceo-identity {
-            position: absolute;
-            z-index: 2;
-            inset: 0;
-            padding: 28px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(67, 72, 82, 0.76);
-            color: #fff;
-            opacity: 0;
-            transition: opacity 320ms ease;
-        }
-
-        .ceo-identity strong {
-            display: block;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            text-align: center;
-        }
-
-        .ceo-identity span {
-            display: block;
-            margin-top: 5px;
-            color: #bbb8ff;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .ceo-portrait:hover img,
-        .ceo-portrait:focus img {
-            transform: scale(1.035);
-        }
-
-        .ceo-portrait:hover .ceo-identity,
-        .ceo-portrait:focus .ceo-identity {
-            opacity: 1;
-        }
-
-        .ceo-portrait:focus-visible {
-            border-color: var(--blue);
-            outline: 2px solid var(--blue);
-            outline-offset: 4px;
+            object-fit: contain;
+            object-position: center top;
         }
 
         @media (prefers-reduced-motion: no-preference) {
@@ -486,7 +454,19 @@
             }
 
             .ceo-section.ceo-motion-ready .ceo-copy > :nth-child(3) {
-                transition-delay: 180ms;
+                transition-delay: 140ms;
+            }
+
+            .ceo-section.ceo-motion-ready .ceo-copy > :nth-child(4) {
+                transition-delay: 200ms;
+            }
+
+            .ceo-section.ceo-motion-ready .ceo-copy > :nth-child(5) {
+                transition-delay: 260ms;
+            }
+
+            .ceo-section.ceo-motion-ready .ceo-copy > :nth-child(6) {
+                transition-delay: 320ms;
             }
 
             .ceo-section.ceo-motion-ready .ceo-portrait {
@@ -593,7 +573,7 @@
         }
 
         .purpose-statement:hover {
-            background: #faf9ff;
+            background: #f2f8f7;
             transform: translateY(-4px);
         }
 
@@ -694,7 +674,7 @@
 
         .value-item:hover {
             padding-left: 12px;
-            background: #faf9ff;
+            background: #f2f8f7;
         }
 
         .value-item:hover::before {
@@ -862,7 +842,7 @@
 
         .approach-card:hover,
         .approach-card:focus-within {
-            border-color: #c8c4ff;
+            border-color: #a8edea;
             background: #fefeff;
             transform: translateY(-8px);
         }
@@ -1235,12 +1215,8 @@
             }
 
             .ceo-portrait {
-                width: min(100%, 260px);
-                border-radius: 50%;
-            }
-
-            .ceo-identity {
-                padding: 22px;
+                width: min(100%, 360px);
+                margin: 0 auto;
             }
 
             .purpose {
@@ -1329,21 +1305,21 @@
         }
 
         body.about-page header.logo-navbar #navigation > li.nav-item:hover > a {
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
         }
 
         body.about-page header.logo-navbar #navigation > li.nav-item.active > a {
             background: none !important;
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
             -webkit-background-clip: border-box !important;
             background-clip: border-box !important;
         }
 
         body.about-page header.logo-navbar #navigation > li.nav-item > a::after {
-            background: #2c948c !important;
-        }
+            background: #0b1a2d !important;
+            background-image: none !important;}
 
         body.about-page header.logo-navbar.white-header {
             background: transparent !important;
@@ -1365,14 +1341,14 @@
         }
 
         body.about-page header.logo-navbar.white-header #navigation > li.nav-item:hover > a {
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
         }
 
         body.about-page header.logo-navbar.white-header #navigation > li.nav-item.active > a {
             background: none !important;
-            color: #2c948c !important;
-            -webkit-text-fill-color: #2c948c !important;
+            color: #0b1a2d !important;
+            -webkit-text-fill-color: #0b1a2d !important;
             -webkit-background-clip: border-box !important;
             background-clip: border-box !important;
         }
@@ -1606,6 +1582,23 @@
                 line-height: 1.8;
             }
         }
+    
+        /* Logo: white over dark hero, black after scroll (hardened) */
+        body.about-page header.logo-navbar:not(.white-header) .header-logo .logo-on-dark,
+        body.about-page header.logo-navbar.blnk-header:not(.white-header) .header-logo .logo-on-dark {
+            display: block !important;
+        }
+        body.about-page header.logo-navbar:not(.white-header) .header-logo .logo-on-light,
+        body.about-page header.logo-navbar.blnk-header:not(.white-header) .header-logo .logo-on-light {
+            display: none !important;
+        }
+        body.about-page header.logo-navbar.white-header .header-logo .logo-on-dark {
+            display: none !important;
+        }
+        body.about-page header.logo-navbar.white-header .header-logo .logo-on-light {
+            display: block !important;
+        }
+
     </style>
 </head>
 <body class="home_body about-page">
@@ -1753,15 +1746,15 @@
                 <div class="ceo-copy">
                     <span class="section-kicker">Chapter 02 | Leadership</span>
                     <h2 id="ceo-heading">Meet our CEO</h2>
-                    <p>Strong partnerships begin with clear direction and accountable leadership. Our CEO brings people, technology, and business value together around one goal: making complex software journeys easier.</p>
+                    <p class="ceo-role">Ganesh Babu · Founder &amp; Chief Executive Officer</p>
+                    <p>Strong partnerships begin with clear direction and accountable leadership. Ganesh Babu founded Nohitatu in Chennai in 2003, and he still sets the standard for how the company works: technology should not merely keep up with change. It should shape what comes next.</p>
+                    <p>Under his leadership, Nohitatu grew from a Chennai engineering team into a global software company with delivery hubs in India, Singapore, and New York. Solution architects, full-stack engineers, and healthcare specialists build custom software, cloud-native SaaS, and revenue cycle platforms for clients who need the work done carefully and on time.</p>
+                    <p>Every engagement is held to one goal: make complex software journeys easier.</p>
+                    <blockquote>Behind our innovation curtain, our tech wizards conjure code that sparks digital magic. We don’t follow tech trends; we set them, forging a path into the digital frontier.</blockquote>
                 </div>
 
-                <figure class="ceo-portrait" tabindex="0" aria-label="Ganesh Babu, CEO">
+                <figure class="ceo-portrait">
                     <img src="images/ganesh-babu-ceo.png" alt="Ganesh Babu, CEO of Nohitatu" />
-                    <figcaption class="ceo-identity">
-                        <strong>Ganesh Babu</strong>
-                        <span>CEO</span>
-                    </figcaption>
                 </figure>
             </div>
         </section>
@@ -2069,10 +2062,7 @@
                                 <span>Quality-driven delivery</span>
                             </div>
                         </div>
-                        <div class="footer-contact-meta">
-                            <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>
-                        </div>
-                    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -2315,6 +2305,6 @@
         </button>
     </div>
 
-    <script src="js/chatbot.js?v=20260817backbtn"></script>
+    <script src="js/chatbot.js?v=20261112chatfix1"></script>
 </body>
 </html>

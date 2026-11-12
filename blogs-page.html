@@ -9,9 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20261102cleanfooter2" />
-    <link rel="stylesheet" href="css/chatbot.css?v=20260817backbtn" />
+    <link rel="stylesheet" href="css/style.css?v=20261112backtop1" />
+    <link rel="stylesheet" href="css/chatbot.css?v=20261106deployall1" />
     <script src="js/footer-reveal.js" defer></script>
+    <script src="js/back-to-top.js?v=20261112backtop1" defer></script>
     <style>
         :root {
             --ink: #15233c;
@@ -42,20 +43,42 @@
         }
 
         .site-header {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 20;
             background: transparent;
             border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-            transition: transform 0.34s ease;
+            transition: transform 0.34s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
             will-change: transform;
         }
 
         .site-header.nav-panel-hidden {
             transform: translateY(-110%) !important;
         }
+
+        /* Past dark hero: solid light chrome + black logo */
+        .site-header.is-solid {
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom-color: #e8eef2;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .site-header.is-solid .header-nav {
+            color: #0f172a;
+        }
+
+        .site-header.is-solid .mobile-nav-toggle span {
+            background: #0f172a;
+        }
+
+        .site-logo .logo-on-dark { display: block; }
+        .site-logo .logo-on-light { display: none; }
+        .site-header.is-solid .site-logo .logo-on-dark { display: none; }
+        .site-header.is-solid .site-logo .logo-on-light { display: block; }
 
         .header-inner {
             width: min(1180px, calc(100% - 48px));
@@ -67,7 +90,7 @@
             gap: 28px;
         }
 
-        /* Matches the shared .header-logo scale in css/style.css?v=20261102cleanfooter2 so the mark is
+        /* Matches the shared .header-logo scale in css/style.css so the mark is
            the same size on every page. */
         .site-logo img {
             display: block;
@@ -258,7 +281,7 @@
         .directory-aside span {
             display: block;
             margin-bottom: 14px;
-            color: var(--blue);
+            color: #20756e;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.15em;
@@ -303,7 +326,7 @@
         .article-number {
             align-self: start;
             padding-top: 5px;
-            color: var(--blue);
+            color: #20756e;
             font-family: "Playfair Display", Georgia, serif;
             font-size: 18px;
             font-weight: 600;
@@ -342,7 +365,7 @@
         }
 
         .article-meta .category {
-            color: var(--blue);
+            color: #20756e;
         }
 
         .article-copy h3 {
@@ -369,12 +392,12 @@
             place-items: center;
             border: 1px solid #b9dff1;
             border-radius: 50%;
-            color: var(--blue);
+            color: #20756e;
             transition: color 180ms ease, background-color 180ms ease;
         }
 
         .article-row.is-published:hover .article-arrow {
-            background: var(--blue);
+            background: #20756e;
             color: #fff;
         }
 
@@ -481,7 +504,7 @@
                 display: flex;
                 width: 100%;
                 padding: 84px 24px 34px;
-                background: transparent;
+                background: rgba(11, 26, 45, 0.98);
                 box-shadow: none;
                 flex-direction: column;
                 align-items: stretch;
@@ -575,11 +598,12 @@
 
     </style>
 </head>
-<body>
+<body class="blogs-page">
     <header class="site-header">
         <div class="header-inner">
             <a class="site-logo" href="index.html" aria-label="Nohitatu home">
-                <img src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                <img class="logo-on-dark" src="images/nohitatu-logo_white.png" alt="Nohitatu" />
+                <img class="logo-on-light" src="images/nohitatu-logo-dark.png" alt="Nohitatu" />
             </a>
             <button class="mobile-nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="blog-directory-navigation">
                 <span aria-hidden="true"></span>
@@ -627,7 +651,7 @@
                 <div class="article-list">
                     <a class="article-row is-published" href="blogs/Top-7-Benefits-of-Custom-Software-for-Businesses.html">
                         <span class="article-number">01</span>
-                        <figure class="article-thumb"><img src="images/blog/thumbnail/top7.jpg" alt="" /></figure>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/featured-software-strategy.jpg" alt="" /></figure>
                         <div class="article-copy">
                             <div class="article-meta"><span class="category">Software Strategy</span><span>08 Jan 2026</span><span>5 Min Read</span></div>
                             <h3>Top 7 Benefits of Custom Software Development for Businesses</h3>
@@ -638,7 +662,7 @@
 
                     <a class="article-row is-published" href="blogs/GitHub-Copilot-ChatGPT-Vibe-Coding-New-Reality-Software-Development.html">
                         <span class="article-number">02</span>
-                        <figure class="article-thumb"><img src="images/blog/thumbnail/githubcop.jpg" alt="" /></figure>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/featured-ai-coding.jpg" alt="" /></figure>
                         <div class="article-copy">
                             <div class="article-meta"><span class="category">AI &amp; Coding</span><span>08 Jan 2026</span><span>6 Min Read</span></div>
                             <h3>GitHub Copilot, ChatGPT &amp; Vibe Coding: The New Reality</h3>
@@ -649,7 +673,7 @@
 
                     <a class="article-row is-published" href="blogs/Why-Businesses-Need-AI-Driven-Custom-Software-Instead-of-Generic-SaaS-Solutions.html">
                         <span class="article-number">03</span>
-                        <figure class="article-thumb"><img src="images/blog/thumbnail/digital_transformation.jpeg" alt="" /></figure>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/featured-ai-strategy.jpg" alt="" /></figure>
                         <div class="article-copy">
                             <div class="article-meta"><span class="category">AI Strategy</span><span>18 Dec 2025</span><span>7 Min Read</span></div>
                             <h3>Why Businesses Need AI-Driven Custom Software Instead of Generic SaaS</h3>
@@ -660,7 +684,7 @@
 
                     <a class="article-row is-published" href="blogs/common_software_development_challenges.html">
                         <span class="article-number">04</span>
-                        <figure class="article-thumb"><img src="images/blog/thumbnail/software_development.jpeg" alt="" /></figure>
+                        <figure class="article-thumb"><img src="images/blog/thumbnail/featured-engineering.jpg" alt="" /></figure>
                         <div class="article-copy">
                             <div class="article-meta"><span class="category">Engineering</span><span>13 Oct 2025</span><span>7 Min Read</span></div>
                             <h3>10 Common Software Development Challenges and How to Overcome Them</h3>
@@ -815,10 +839,7 @@
                                 <span>Quality-driven delivery</span>
                             </div>
                         </div>
-                        <div class="footer-contact-meta">
-                            <a href="mailto:hrd@nohitatu.com">hrd@nohitatu.com</a>
-                        </div>
-                    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -905,8 +926,15 @@
             let lastScrollY = window.scrollY;
             let ticking = false;
 
+            const pastHero = () => {
+                const panel = document.querySelector('.nh-curtain-panel');
+                if (panel) return panel.getBoundingClientRect().top <= 100;
+                return Math.max(window.scrollY, 0) >= 80;
+            };
+
             const updateHeader = () => {
                 const currentScrollY = Math.max(window.scrollY, 0);
+                header.classList.toggle('is-solid', pastHero());
 
                 if (header.classList.contains('mobile-menu-open') || currentScrollY < 80 || currentScrollY < lastScrollY) {
                     header.classList.remove('nav-panel-hidden');
@@ -918,11 +946,13 @@
                 ticking = false;
             };
 
+            updateHeader();
             window.addEventListener('scroll', () => {
                 if (ticking) return;
                 window.requestAnimationFrame(updateHeader);
                 ticking = true;
             }, { passive: true });
+            window.addEventListener('resize', updateHeader, { passive: true });
         })();
     </script>
 
@@ -992,6 +1022,6 @@
         </button>
     </div>
 
-    <script src="js/chatbot.js?v=20260817backbtn"></script>
+    <script src="js/chatbot.js?v=20261112chatfix1"></script>
 </body>
 </html>
